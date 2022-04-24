@@ -1,8 +1,8 @@
 import {BasePlugin} from 'kaltura-player-js';
-import {SidePanelsManager} from './side-panels-manager';
+import {SidePanelsManager} from './services/side-panels/side-panels-manager';
 
-export const pluginName = 'sidePanelsManager';
-export class SidePanelsManagerService extends BasePlugin {
+export const pluginName = 'uiManagers';
+export class UIManagersPlugin extends BasePlugin {
   static defaultConfig = {};
 
   constructor(name: string, player: any) {

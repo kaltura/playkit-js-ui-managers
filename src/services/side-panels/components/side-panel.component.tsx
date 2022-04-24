@@ -21,13 +21,3 @@ export class Toggle extends Component<any, ToggleState> {
     return <div style={{display: this.state.on ? 'block' : 'none'}}>{this.props.children}</div>;
   }
 }
-
-// import {ui} from 'kaltura-player-js';
-// display(isActive: boolean) {
-//   if (isActive) {
-//     this.setState({isActive});
-//   } else {
-//     setTimeout(() => this.setState({isActive}), Number(ui.style.defaultTransitionTime));
-//
-//   }
-// }

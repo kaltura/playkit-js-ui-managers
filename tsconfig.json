@@ -19,8 +19,6 @@
     "sourceMap": true,
     "strict": true,
     "experimentalDecorators": true,
-//    "typeRoots": ["./../kaltura-player-js/tsss"]
-    "typeRoots": ["./node_modules/kaltura-player-js/ts-typed"]
   },
   "include": [
     "src/**/*.ts",
@@ -28,17 +26,3 @@
   ],
   "exclude": ["node_modules"]
 }
-
-//"allowJs": false,
-//"baseUrl": "./src",
-//"experimentalDecorators": true,
-//"jsx": "react-jsx",
-//"jsxImportSource": "preact",
-//"module": "commonjs",
-//"moduleResolution": "Node",
-//"preserveSymlinks": true,
-//"skipLibCheck": true,
-//"sourceMap": true,
-//"strict": true,
-//"target": "ES5",
-//"types": ["node"]

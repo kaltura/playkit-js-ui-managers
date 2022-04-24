@@ -2,7 +2,6 @@ import {h, createRef, RefObject, FunctionalComponent} from 'preact';
 import {ui} from 'kaltura-player-js';
 import {PanelItemData, SidePanelItem, SidePanelPosition} from './side-panel-item';
 import {Toggle} from './components/side-panel.component';
-import {Player} from 'kaltura-player-js/ts-typed/player';
 
 const {SidePanelModes, SidePanelPositions, ReservedPresetNames, ReservedPresetAreas} = ui;
 
@@ -14,11 +13,11 @@ const OPPOSITE_PANELS: Record<SidePanelPosition, SidePanelPosition> = {
 } as Record<SidePanelPosition, SidePanelPosition>;
 
 export class SidePanelsManager {
-  private readonly player: Player;
+  private readonly player: any;
   private readonly activePanels: Record<SidePanelPosition, PanelItemData | null>;
   private readonly componentsRegistry: Map<number, PanelItemData>;
 
-  constructor(player: Player) {
+  constructor(player: any) {
     this.player = player;
     this.activePanels = {top: null, bottom: null, right: null, left: null};
     this.componentsRegistry = new Map<number, PanelItemData>();
