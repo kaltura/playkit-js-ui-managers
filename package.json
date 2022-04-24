@@ -1,5 +1,5 @@
 {
-  "name": "@playkit-js/panels-manager",
+  "name": "@playkit-js/ui-manager",
   "version": "1.0.0",
   "description": "",
   "main": "build/src/index.js",
