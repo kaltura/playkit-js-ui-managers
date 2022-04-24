@@ -59,6 +59,7 @@ export class SidePanelsManager {
       item.componentRef.current?.toggle();
       this.expand(position, expandMode);
       this.activePanels[position] = item;
+      item.item.hooks.onActivate();
     }
   }
 
@@ -69,6 +70,7 @@ export class SidePanelsManager {
       this.activePanels[position]?.componentRef.current?.toggle();
       this.collapse(position);
       this.activePanels[position] = null;
+      item.item.hooks.onDeactivate();
     }
   }
 

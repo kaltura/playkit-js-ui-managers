@@ -13,6 +13,7 @@ export class SidePanelItem {
   public presets: ReservedPresetName[];
   public position: SidePanelPosition;
   public expandMode: SidePanelMode;
+  public hooks: {onActivate: () => void; onDeactivate: () => void};
 
   constructor(item: SidePanelItem) {
     this.renderIcon = item.renderIcon;
@@ -20,6 +21,14 @@ export class SidePanelItem {
     this.presets = item.presets || Object.values(ReservedPresetNames);
     this.position = item.position;
     this.expandMode = item.expandMode;
+    this.hooks = {
+      onActivate: (): void => {
+        return;
+      },
+      onDeactivate: (): void => {
+        return;
+      },
+    };
   }
 }
 
