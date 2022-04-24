@@ -9,7 +9,7 @@ export class UIManagersPlugin extends BasePlugin {
     super(name, player);
 
     const sidePanelsManager: SidePanelsManager = new SidePanelsManager(player);
-    player.registerService(pluginName, sidePanelsManager);
+    player.registerService('sidePanelsManager', sidePanelsManager);
   }
 
   reset(): void {
