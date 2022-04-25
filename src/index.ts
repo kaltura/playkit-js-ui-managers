@@ -4,7 +4,7 @@ import {pluginName, UIManagersPlugin} from './ui-managers';
 registerPlugin(pluginName, UIManagersPlugin);
 
 export {
-  SidePanelItem,
+  SidePanelItemDto,
   SidePanelPosition,
   SidePanelMode,
   ReservedPresetName,
