@@ -158,8 +158,8 @@ export class SidePanelsManager {
       Object.values(SidePanelModes).includes(expandMode) &&
       typeof renderContent === 'function' &&
       (typeof renderIcon === 'function' || undefined) &&
-      (typeof hooks?.onActivate === 'function' || null) &&
-      (typeof hooks?.onDeactivate === 'function' || null)
+      (hooks === undefined ||
+        ((typeof hooks?.onActivate === 'function' || null) && (typeof hooks?.onDeactivate === 'function' || null)))
     );
   }
 }
