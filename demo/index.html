@@ -3,10 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <title>UI Managers</title>
-    <script src="https://cdnapisec.kaltura.com/p/2215841/embedPlaykitJs/uiconf_id/42237501/"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+<!--    <script src="https://cdnapisec.kaltura.com/p/2215841/embedPlaykitJs/uiconf_id/42237501/"></script>-->
+    <script src="http://localhost:8080/kaltura-ovp-player.js"></script>
     <script src="./ui-manager.js"></script>
   </head>
   <body>
-    <h1>demo will be here</h1>
+    <div id="player-placeholder" style="width: 640px; height: 360px"></div>
+    <script type="module">
+      import './some-plugin.js'
+
+      const config = {
+        logLevel: 'DEBUG',
+        targetId: 'player-placeholder',
+        provider: {
+          partnerId: '2215841',
+          uiConfId: '42237501',
+        },
+        plugins: {
+          somePlugin: {},
+          uiManagers: {},
+        },
+      };
+
+      const player = KalturaPlayer.setup(config);
+      player.loadMedia({entryId: '1_ebs5e9cy'});
+      // player.loadMedia({entryId: '1_mwl8vadb'});
+    </script>
   </body>
 </html>

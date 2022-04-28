@@ -1,7 +1,9 @@
-import {h, createRef, RefObject, FunctionalComponent} from 'preact';
+import {h, createRef, RefObject, FunctionalComponent, ComponentClass} from 'preact';
 import {ui} from 'kaltura-player-js';
-import {ItemMetadata, SidePanelItemDto, SidePanelPosition} from './side-panel-item';
-import {Toggle} from './components/side-panel.component';
+import {SidePanelItemDto} from './side-panel-item-dto';
+import {Toggle} from './ui/side-panel.component';
+import {SidePanelPosition} from './types/types';
+import {ItemMetadata} from './item-metadata';
 
 const {SidePanelModes, SidePanelPositions, ReservedPresetNames, ReservedPresetAreas} = ui;
 
@@ -28,10 +30,11 @@ export class SidePanelsManager {
   public addItem(item: SidePanelItemDto): number {
     if (SidePanelsManager.validateItem(item)) {
       const newPanelItem: SidePanelItemDto = new SidePanelItemDto(item);
-      const {componentRef, removeComponentFunc} = this.injectComponent(item);
+      const {componentRef, removeComponentFunc} = this.injectPanelComponent(item);
       const newItemMetadata: ItemMetadata = new ItemMetadata(newPanelItem, componentRef, removeComponentFunc);
-      if (item.renderIcon) this.addIcon(newItemMetadata);
+      if (item.renderIcon) this.injectIconComponent(newItemMetadata);
       this.componentsRegistry.set(newItemMetadata.id, newItemMetadata);
+      this.logger.debug('1234 New Panel Item Added', item);
       return newItemMetadata.id;
     }
     this.logger.error('invalid SidePanelItem parameters', item);
@@ -104,9 +107,9 @@ export class SidePanelsManager {
     );
   }
 
-  private addIcon(panelItemData: ItemMetadata): void {
+  private injectIconComponent(panelItemData: ItemMetadata): void {
     const {id, item} = panelItemData;
-    const IconComponent: FunctionalComponent = item.renderIcon as FunctionalComponent;
+    const IconComponent: ComponentClass | FunctionalComponent = item.renderIcon!;
     const togglePanelFunc: () => void = () => this.toggle(id);
     this.player.ui.addComponent({
       label: `Side-Panel-Icon-${item.label}`,
@@ -122,9 +125,12 @@ export class SidePanelsManager {
     });
   }
 
-  private injectComponent(item: SidePanelItemDto): {componentRef: RefObject<Toggle>; removeComponentFunc: () => void} {
+  private injectPanelComponent(item: SidePanelItemDto): {
+    componentRef: RefObject<Toggle>;
+    removeComponentFunc: () => void;
+  } {
     const {label, position, renderContent} = item;
-    const SidePanelComponent: FunctionalComponent = renderContent as FunctionalComponent;
+    const SidePanelComponent: ComponentClass | FunctionalComponent = renderContent;
     const componentRef: RefObject<Toggle> = createRef();
     const removeComponentFunc = this.player.ui.addComponent({
       label: `Side-panel-${position}-${label}`,

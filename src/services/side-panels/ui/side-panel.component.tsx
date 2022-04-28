@@ -1,4 +1,4 @@
-import {h, Component, ComponentChild} from 'preact';
+import {h, Component, ComponentChild, RenderableProps} from 'preact';
 
 type ToggleState = {
   on: boolean;
@@ -17,7 +17,7 @@ export class Toggle extends Component<any, ToggleState> {
     });
   }
 
-  render(): ComponentChild {
+  render(props?: RenderableProps<any>, state?: Readonly<ToggleState>, context?: any): ComponentChild {
     return <div style={{display: this.state.on ? 'block' : 'none'}}>{this.props.children}</div>;
   }
 }
