@@ -1,5 +1,5 @@
 import {h, createRef, RefObject, FunctionalComponent, ComponentClass} from 'preact';
-import {ui} from 'kaltura-player-js';
+import {ui, KalturaPlayer, Logger} from 'kaltura-player-js';
 import {SidePanelItemDto} from './side-panel-item-dto';
 import {Toggle} from './ui/side-panel.component';
 import {SidePanelPosition} from './types/types';
@@ -15,12 +15,12 @@ const OPPOSITE_PANELS: Record<SidePanelPosition, SidePanelPosition> = {
 } as Record<SidePanelPosition, SidePanelPosition>;
 
 export class SidePanelsManager {
-  private readonly player: any;
+  private readonly player: KalturaPlayer;
   private readonly activePanels: Record<SidePanelPosition, ItemMetadata | null>;
   private readonly componentsRegistry: Map<number, ItemMetadata>;
-  private readonly logger: any;
+  private readonly logger: Logger;
 
-  constructor(player: any, logger: any) {
+  constructor(player: KalturaPlayer, logger: Logger) {
     this.player = player;
     this.activePanels = {top: null, bottom: null, right: null, left: null};
     this.componentsRegistry = new Map<number, ItemMetadata>();
@@ -57,7 +57,7 @@ export class SidePanelsManager {
       // Trying to activate an already active item
       if (this.isItemActive(itemId)) return;
       // Switch between items if currently there is an active one (without collapsing / expanding PS)
-      if (this.activePanels[position]) {
+      if (this.activePanels[position] !== null) {
         this.deactivateItem(this.activePanels[position]!.id);
       }
       // Deactivate the opposite panel if is active

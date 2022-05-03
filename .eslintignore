@@ -1,2 +1,4 @@
 build/
 webpack.config.js
+types.d.ts
+tsconfig.json

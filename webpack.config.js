@@ -3,7 +3,6 @@ const path = require('path');
 const config = {
   target: 'web',
   entry: './src/index.ts',
-  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -38,18 +37,6 @@ const config = {
 module.exports = (env, {mode}) => {
   if (mode === 'development') {
     config.devtool = 'source-map';
-    // config.entry = {'ui-manager': './src/index.ts',
-    //                 'plugin': './demo/plugin.js'};
-    // config.module.rules.push({
-    //   test: /\.css$/i,
-    //   use: ["style-loader", "css-loader"],
-    // });
-    // config.output = {
-    //   path: path.resolve(__dirname, 'build'),
-    //       filename: '[name].js',
-    //       // library: ['KalturaPlayer', 'plugins', 'share'],
-    //       // devtoolModuleFilenameTemplate: './share/[resource-path]'
-    // };
   }
   return config;
 };

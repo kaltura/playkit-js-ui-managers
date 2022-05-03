@@ -2,8 +2,8 @@
   "name": "@playkit-js/ui-managers",
   "version": "1.0.0",
   "description": "",
-  "main": "build/src/index.js",
-  "types": "build/src/index.d.ts",
+  "main": "src/index.ts",
+  "types": "index.d.ts",
   "files": [
     "build/src"
   ],
@@ -22,12 +22,10 @@
     "watch": "webpack --watch --mode development",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prettier:fix": "prettier --write .",
-    "eslint": "eslint . --color",
-    "lint": "gts lint",
-    "lint:fix": "gts fix",
-    "types:check": "tsc",
-    "clean": "gts clean",
-    "compile": "tsc"
+    "lint:check": "eslint . --color",
+    "lint:fix": "eslint --fix",
+    "types:check": "tsc src/index.ts --jsx react --jsxFactory h --noEmit",
+    "types:ganarate": "tsc src/index.ts --declaration --emitDeclarationOnly --outFile types.ts --jsx react --jsxFactory h"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
@@ -39,7 +37,6 @@
     "css-loader": "^6.7.1",
     "eslint": "^7.32.0",
     "eslint-config-preact": "^1.3.0",
-    "gts": "^3.1.0",
     "jest": "^27.5.1",
     "kaltura-player-js": "https://github.com/kaltura/kaltura-player-js.git#master",
     "preact": "^10.7.1",

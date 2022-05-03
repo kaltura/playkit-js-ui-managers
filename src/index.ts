@@ -1,6 +1,5 @@
 import {registerPlugin} from 'kaltura-player-js';
 import {pluginName, UIManagersPlugin} from './ui-managers';
-// import './plugin.tsx';
 
 registerPlugin(pluginName, UIManagersPlugin);
 
