@@ -31,7 +31,7 @@ export class SidePanelsManager {
     this.componentsRegistry = new Map<number, ItemWrapper>();
     this.logger = logger;
   }
-  
+
   public addItem(item: ISidePanelItemDto): number {
     if (SidePanelsManager.validateItem(item)) {
       const newPanelItem: SidePanelItemDto = new SidePanelItemDto(item);
