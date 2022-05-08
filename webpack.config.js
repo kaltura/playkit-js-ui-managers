@@ -29,7 +29,7 @@ const config = {
       directory: path.join(__dirname, 'demo'),
     },
     client: {
-      progress: true,
+      progress: true
     },
   },
 };

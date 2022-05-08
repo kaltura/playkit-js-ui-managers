@@ -1,9 +1,9 @@
 import {h, createRef, RefObject, FunctionalComponent, ComponentClass} from 'preact';
 import {ui, KalturaPlayer, Logger} from 'kaltura-player-js';
-import {SidePanelItemDto} from './side-panel-item-dto';
+import {ISidePanelItemDto, SidePanelItemDto} from './side-panel-item-dto';
 import {Toggle} from './ui/side-panel.component';
 import {SidePanelPosition} from './types/types';
-import {ItemMetadata} from './item-metadata';
+import {ItemWrapper} from './item-wrapper';
 
 const {SidePanelModes, SidePanelPositions, ReservedPresetNames, ReservedPresetAreas} = ui;
 
@@ -14,35 +14,40 @@ const OPPOSITE_PANELS: Record<SidePanelPosition, SidePanelPosition> = {
   [SidePanelPositions.LEFT]: SidePanelPositions.RIGHT,
 } as Record<SidePanelPosition, SidePanelPosition>;
 
+/**
+ * Class representing a socket connection.
+ *
+ * @class
+ */
 export class SidePanelsManager {
   private readonly player: KalturaPlayer;
-  private readonly activePanels: Record<SidePanelPosition, ItemMetadata | null>;
-  private readonly componentsRegistry: Map<number, ItemMetadata>;
+  private readonly activePanels: Record<SidePanelPosition, ItemWrapper | null>;
+  private readonly componentsRegistry: Map<number, ItemWrapper>;
   private readonly logger: Logger;
 
   constructor(player: KalturaPlayer, logger: Logger) {
     this.player = player;
     this.activePanels = {top: null, bottom: null, right: null, left: null};
-    this.componentsRegistry = new Map<number, ItemMetadata>();
+    this.componentsRegistry = new Map<number, ItemWrapper>();
     this.logger = logger;
   }
-
-  public addItem(item: SidePanelItemDto): number {
+  
+  public addItem(item: ISidePanelItemDto): number {
     if (SidePanelsManager.validateItem(item)) {
       const newPanelItem: SidePanelItemDto = new SidePanelItemDto(item);
       const {componentRef, removeComponentFunc} = this.injectPanelComponent(item);
-      const newItemMetadata: ItemMetadata = new ItemMetadata(newPanelItem, componentRef, removeComponentFunc);
-      if (item.renderIcon) this.injectIconComponent(newItemMetadata);
-      this.componentsRegistry.set(newItemMetadata.id, newItemMetadata);
+      const newItemWrapper: ItemWrapper = new ItemWrapper(newPanelItem, componentRef, removeComponentFunc);
+      if (item.renderIcon) this.injectIconComponent(newItemWrapper);
+      this.componentsRegistry.set(newItemWrapper.id, newItemWrapper);
       this.logger.debug('1234 New Panel Item Added', item);
-      return newItemMetadata.id;
+      return newItemWrapper.id;
     }
-    this.logger.error('invalid SidePanelItem parameters', item);
+    this.logger.warn('invalid SidePanelItem parameters', item);
     throw new Error('invalid SidePanelItem parameters');
   }
 
   public removeItem(itemId: number): void {
-    const item: ItemMetadata | undefined = this.componentsRegistry.get(itemId);
+    const item: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (item) {
       this.deactivateItem(itemId);
       item.removeComponentFunc();
@@ -51,9 +56,9 @@ export class SidePanelsManager {
   }
 
   public activateItem(itemId: number): void {
-    const item: ItemMetadata | undefined = this.componentsRegistry.get(itemId);
-    if (item) {
-      const {position, expandMode} = item.item;
+    const itemMetadata: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
+    if (itemMetadata) {
+      const {position, expandMode} = itemMetadata.item;
       // Trying to activate an already active item
       if (this.isItemActive(itemId)) return;
       // Switch between items if currently there is an active one (without collapsing / expanding PS)
@@ -66,27 +71,35 @@ export class SidePanelsManager {
         this.deactivateItem(this.activePanels[oppositePosition]!.id);
       }
       // Update new item as active
-      item.componentRef.current?.toggle();
+      itemMetadata.componentRef.current?.toggle();
       this.expand(position, expandMode);
-      this.activePanels[position] = item;
-      item.item.hooks?.onActivate?.();
+      this.activePanels[position] = itemMetadata;
+      itemMetadata.item.onActivate?.();
     }
   }
 
   public deactivateItem(itemId: number): void {
-    const item: ItemMetadata | undefined = this.componentsRegistry.get(itemId);
-    if (item) {
-      const {position} = item.item;
+    const itemMetadata: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
+    if (itemMetadata) {
+      const {position} = itemMetadata.item;
       this.activePanels[position]?.componentRef.current?.toggle();
       this.collapse(position);
       this.activePanels[position] = null;
-      item.item.hooks?.onDeactivate?.();
+      itemMetadata.item.onDeactivate?.();
     }
   }
 
   public isItemActive(itemId: number): boolean {
-    const item: ItemMetadata | undefined = this.componentsRegistry.get(itemId);
-    return item ? this.activePanels[item.item.position]?.id === itemId : false;
+    const itemMetadata: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
+    return itemMetadata ? this.activePanels[itemMetadata.item.position]?.id === itemId : false;
+  }
+
+  public reset(): void {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    for (const value of this.componentsRegistry.values()) {
+      this.deactivateItem(value.id);
+    }
   }
 
   private toggle(itemId: number): void {
@@ -107,7 +120,7 @@ export class SidePanelsManager {
     );
   }
 
-  private injectIconComponent(panelItemData: ItemMetadata): void {
+  private injectIconComponent(panelItemData: ItemWrapper): void {
     const {id, item} = panelItemData;
     const IconComponent: ComponentClass | FunctionalComponent = item.renderIcon!;
     const togglePanelFunc: () => void = () => this.toggle(id);
@@ -125,7 +138,7 @@ export class SidePanelsManager {
     });
   }
 
-  private injectPanelComponent(item: SidePanelItemDto): {
+  private injectPanelComponent(item: ISidePanelItemDto): {
     componentRef: RefObject<Toggle>;
     removeComponentFunc: () => void;
   } {
@@ -156,16 +169,16 @@ export class SidePanelsManager {
     return OPPOSITE_PANELS[position];
   }
 
-  private static validateItem(item: SidePanelItemDto): boolean {
-    const {label, renderContent, renderIcon, position, expandMode, hooks} = item;
+  private static validateItem(item: ISidePanelItemDto): boolean {
+    const {label, renderContent, renderIcon, position, expandMode, onActivate, onDeactivate} = item;
     return !!(
       label &&
       Object.values(SidePanelPositions).includes(position) &&
       Object.values(SidePanelModes).includes(expandMode) &&
       typeof renderContent === 'function' &&
-      (typeof renderIcon === 'function' || undefined) &&
-      (hooks === undefined ||
-        ((typeof hooks?.onActivate === 'function' || null) && (typeof hooks?.onDeactivate === 'function' || null)))
+      (typeof renderIcon === 'function' || renderIcon === undefined) &&
+      (typeof onActivate === 'function' || onActivate === undefined) &&
+      (typeof onDeactivate === 'function' || onDeactivate === undefined)
     );
   }
 }

@@ -4,8 +4,11 @@ type ToggleState = {
   on: boolean;
 };
 
+/**
+ * Toggle component rapper
+ * @internal
+ */
 export class Toggle extends Component<any, ToggleState> {
-  readonly state: ToggleState;
   constructor() {
     super();
     this.state = {on: false};
