@@ -10,6 +10,7 @@
     "eol-last": "off",
     "prettier/prettier": "error",
     "@typescript-eslint/explicit-function-return-type": "warn",
+    "@typescript-eslint/no-non-null-assertion": "off",
     "block-scoped-var": "error",
     "eqeqeq": "error",
     "no-var": "error",

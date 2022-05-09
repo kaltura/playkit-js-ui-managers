@@ -1,14 +1,18 @@
-import {h, Component, ComponentChild, RenderableProps} from 'preact';
+import {h, Component, ComponentChild, RefObject} from 'preact';
 
 type ToggleState = {
   on: boolean;
+};
+
+type ToggleProps = {
+  ref: RefObject<Toggle>;
 };
 
 /**
  * Toggle component rapper
  * @internal
  */
-export class Toggle extends Component<any, ToggleState> {
+export class Toggle extends Component<ToggleProps, ToggleState> {
   constructor() {
     super();
     this.state = {on: false};
@@ -20,7 +24,7 @@ export class Toggle extends Component<any, ToggleState> {
     });
   }
 
-  render(props?: RenderableProps<any>, state?: Readonly<ToggleState>, context?: any): ComponentChild {
+  render(): ComponentChild {
     return <div style={{display: this.state.on ? 'block' : 'none'}}>{this.props.children}</div>;
   }
 }

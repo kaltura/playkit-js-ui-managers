@@ -1,4 +1,4 @@
-import {BasePlugin, KalturaPlayer, ui} from 'kaltura-player-js';
+import {BasePlugin, KalturaPlayer} from 'kaltura-player-js';
 import {SidePanelsManager} from './services/side-panels/side-panels-manager';
 
 export const pluginName = 'uiManagers';
