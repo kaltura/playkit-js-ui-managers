@@ -27,25 +27,28 @@ export class SidePanelsManager {
     this.logger = logger;
   }
 
-  public addItem(item: ISidePanelItemDto): number {
+  public addItem(item: ISidePanelItemDto): number | void {
     if (SidePanelsManager.validateItem(item)) {
       const newPanelItem: SidePanelItem = new SidePanelItem(item);
       const {componentRef, removeComponentFunc} = this.injectPanelComponent(item);
       const newItemWrapper: ItemWrapper = new ItemWrapper(newPanelItem, componentRef, removeComponentFunc);
-      if (item.renderIcon) this.injectIconComponent(newItemWrapper);
+      if (item.renderIcon) {
+        const removeIconComponentFunc = this.injectIconComponent(newItemWrapper);
+        newItemWrapper.removeIconComponentFunc = removeIconComponentFunc;
+      }
       this.componentsRegistry.set(newItemWrapper.id, newItemWrapper);
       this.logger.debug('1234 New Panel Item Added', item);
       return newItemWrapper.id;
     }
     this.logger.warn('invalid SidePanelItem parameters', item);
-    throw new Error('invalid SidePanelItem parameters');
   }
 
   public removeItem(itemId: number): void {
     const item: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (item) {
       this.deactivateItem(itemId);
-      item.removeComponentFunc();
+      item.removePanelComponentFunc();
+      item.removeIconComponentFunc();
       this.componentsRegistry.delete(itemId);
     }
   }
@@ -91,7 +94,7 @@ export class SidePanelsManager {
 
   public reset(): void {
     for (const value of this.componentsRegistry.values()) {
-      this.deactivateItem(value.id);
+      this.removeItem(value.id);
     }
   }
 
@@ -113,11 +116,11 @@ export class SidePanelsManager {
     );
   }
 
-  private injectIconComponent(panelItemData: ItemWrapper): void {
+  private injectIconComponent(panelItemData: ItemWrapper): () => void {
     const {id, item} = panelItemData;
     const IconComponent: ComponentClass | FunctionalComponent = item.renderIcon!;
     const togglePanelFunc: () => void = () => this.toggle(id);
-    this.player.ui.addComponent({
+    const removeComponentFunc = this.player.ui.addComponent({
       label: `Side-Panel-Icon-${item.label}`,
       presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
       area: ReservedPresetAreas.TopBarRightControls,
@@ -129,9 +132,12 @@ export class SidePanelsManager {
         );
       },
     });
+    return removeComponentFunc;
   }
 
-  private injectPanelComponent(item: ISidePanelItemDto): {
+  private injectPanelComponent(
+    item: ISidePanelItemDto
+  ): {
     componentRef: RefObject<Toggle>;
     removeComponentFunc: () => void;
   } {
