@@ -28,7 +28,7 @@ export class SidePanelItem implements ISidePanelItemDto {
     this.label = item.label;
     this.renderIcon = item.renderIcon;
     this.renderContent = item.renderContent;
-    this.presets = item.presets || Object.values(ReservedPresetNames);
+    this.presets = item.presets || [ReservedPresetNames.Playback, ReservedPresetNames.Live];
     this.position = item.position;
     this.expandMode = item.expandMode;
     this.onActivate = item.onActivate;
