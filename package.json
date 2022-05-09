@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "build/ui-manager.js",
-  "types": "trpes/types.d.ts",
+  "types": "trpes/index.d.ts",
   "files": [
     "build/src"
   ],
@@ -25,7 +25,7 @@
     "lint:check": "eslint . --color",
     "lint:fix": "eslint --fix",
     "types:check": "tsc src/index.ts --jsx react --jsxFactory h --noEmit --target ESNext --moduleResolution node",
-    "types:ganarate": "tsc src/index.ts --declaration --emitDeclarationOnly --outFile types/types.ts --jsx react --jsxFactory h --stripInternal true --target ESNext --moduleResolution node"
+    "types:ganarate": "tsc src/index.ts --declaration --emitDeclarationOnly --outDir types --jsx react --jsxFactory h --stripInternal true --target ESNext --moduleResolution node"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
@@ -40,6 +40,7 @@
     "jest": "^27.5.1",
     "kaltura-player-js": "https://github.com/kaltura/kaltura-player-js.git#master",
     "preact": "^10.7.1",
+    "prettier": "^2.6.2",
     "ts-loader": "^9.2.8",
     "typescript": "^4.6.3",
     "webpack": "^5.72.0",

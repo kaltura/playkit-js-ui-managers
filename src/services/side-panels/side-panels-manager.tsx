@@ -1,9 +1,9 @@
 import {h, createRef, RefObject, FunctionalComponent, ComponentClass} from 'preact';
 import {ui, KalturaPlayer, Logger} from 'kaltura-player-js';
-import {ISidePanelItemDto, SidePanelItemDto} from './side-panel-item-dto';
+import {ISidePanelItemDto, SidePanelItem} from './models/side-panel-item-dto';
 import {Toggle} from './ui/side-panel.component';
 import {SidePanelPosition} from './types/types';
-import {ItemWrapper} from './item-wrapper';
+import {ItemWrapper} from './models/item-wrapper';
 
 const {SidePanelModes, SidePanelPositions, ReservedPresetNames, ReservedPresetAreas} = ui;
 
@@ -14,11 +14,6 @@ const OPPOSITE_PANELS: Record<SidePanelPosition, SidePanelPosition> = {
   [SidePanelPositions.LEFT]: SidePanelPositions.RIGHT,
 } as Record<SidePanelPosition, SidePanelPosition>;
 
-/**
- * Class representing a socket connection.
- *
- * @class
- */
 export class SidePanelsManager {
   private readonly player: KalturaPlayer;
   private readonly activePanels: Record<SidePanelPosition, ItemWrapper | null>;
@@ -34,7 +29,7 @@ export class SidePanelsManager {
 
   public addItem(item: ISidePanelItemDto): number {
     if (SidePanelsManager.validateItem(item)) {
-      const newPanelItem: SidePanelItemDto = new SidePanelItemDto(item);
+      const newPanelItem: SidePanelItem = new SidePanelItem(item);
       const {componentRef, removeComponentFunc} = this.injectPanelComponent(item);
       const newItemWrapper: ItemWrapper = new ItemWrapper(newPanelItem, componentRef, removeComponentFunc);
       if (item.renderIcon) this.injectIconComponent(newItemWrapper);
@@ -95,8 +90,6 @@ export class SidePanelsManager {
   }
 
   public reset(): void {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     for (const value of this.componentsRegistry.values()) {
       this.deactivateItem(value.id);
     }

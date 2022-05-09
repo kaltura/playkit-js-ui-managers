@@ -1,6 +1,6 @@
 import {ComponentClass, FunctionalComponent} from 'preact';
 import {ui} from 'kaltura-player-js';
-import {ReservedPresetName, SidePanelPosition, SidePanelMode} from './types/types';
+import {ReservedPresetName, SidePanelPosition, SidePanelMode} from '../types/types';
 const {ReservedPresetNames} = ui;
 
 export interface ISidePanelItemDto {
@@ -14,7 +14,7 @@ export interface ISidePanelItemDto {
   readonly onDeactivate?: () => void;
 }
 
-export class SidePanelItemDto implements ISidePanelItemDto {
+export class SidePanelItem implements ISidePanelItemDto {
   readonly label: string;
   readonly renderIcon?: ComponentClass | FunctionalComponent;
   readonly renderContent: ComponentClass | FunctionalComponent;

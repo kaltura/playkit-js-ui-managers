@@ -1,6 +1,6 @@
 import {RefObject} from 'preact';
-import {Toggle} from './ui/side-panel.component';
-import {SidePanelItemDto} from './side-panel-item-dto';
+import {Toggle} from '../ui/side-panel.component';
+import {SidePanelItem} from './side-panel-item-dto';
 
 /**
  * Panel item metadata
@@ -10,9 +10,9 @@ export class ItemWrapper {
   private static nextId = 0;
   readonly id: number;
   readonly removeComponentFunc: () => void;
-  readonly item: SidePanelItemDto;
+  readonly item: SidePanelItem;
   readonly componentRef: RefObject<Toggle>;
-  constructor(item: SidePanelItemDto, componentRef: RefObject<Toggle>, removeComponentFunc: () => void) {
+  constructor(item: SidePanelItem, componentRef: RefObject<Toggle>, removeComponentFunc: () => void) {
     this.id = ++ItemWrapper.nextId;
     this.item = item;
     this.removeComponentFunc = removeComponentFunc;
