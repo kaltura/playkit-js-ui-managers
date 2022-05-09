@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "build/ui-manager.js",
-  "types": "trpes/index.d.ts",
+  "types": "types/index.d.ts",
   "files": [
-    "build/src"
+    "build/",
+    "types/"
   ],
   "license": "Apache-2.0",
   "keywords": [
@@ -25,7 +26,7 @@
     "lint:check": "eslint . --color",
     "lint:fix": "eslint --fix",
     "types:check": "tsc src/index.ts --jsx react --jsxFactory h --noEmit --target ESNext --moduleResolution node",
-    "types:ganarate": "tsc src/index.ts --declaration --emitDeclarationOnly --outDir types --jsx react --jsxFactory h --stripInternal true --target ESNext --moduleResolution node"
+    "types:ganarate": "tsc src/index.ts --declaration --emitDeclarationOnly --outFile types/modules.ts --jsx react --jsxFactory h --stripInternal true --target ESNext --moduleResolution node"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
