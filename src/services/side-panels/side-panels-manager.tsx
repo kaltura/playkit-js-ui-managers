@@ -1,10 +1,9 @@
 import {h, createRef, RefObject, FunctionalComponent, ComponentClass} from 'preact';
 import {ui, KalturaPlayer, Logger} from 'kaltura-player-js';
-import {ISidePanelItemDto, SidePanelItem} from './models/side-panel-item-dto';
+import {SidePanelItemDto, SidePanelItem} from './models/side-panel-item-dto';
 import {Toggle} from './ui/side-panel.component';
 import {SidePanelPosition} from './types/types';
 import {ItemWrapper} from './models/item-wrapper';
-
 const {SidePanelModes, SidePanelPositions, ReservedPresetNames, ReservedPresetAreas} = ui;
 
 const OPPOSITE_PANELS: Record<SidePanelPosition, SidePanelPosition> = {
@@ -12,7 +11,7 @@ const OPPOSITE_PANELS: Record<SidePanelPosition, SidePanelPosition> = {
   [SidePanelPositions.BOTTOM]: SidePanelPositions.TOP,
   [SidePanelPositions.RIGHT]: SidePanelPositions.LEFT,
   [SidePanelPositions.LEFT]: SidePanelPositions.RIGHT,
-} as Record<SidePanelPosition, SidePanelPosition>;
+};
 
 export class SidePanelsManager {
   private readonly player: KalturaPlayer;
@@ -22,30 +21,30 @@ export class SidePanelsManager {
 
   constructor(player: KalturaPlayer, logger: Logger) {
     this.player = player;
-    this.activePanels = {top: null, bottom: null, right: null, left: null};
+    this.activePanels = {SidePanelTop: null, SidePanelBottom: null, SidePanelRight: null, SidePanelLeft: null};
     this.componentsRegistry = new Map<number, ItemWrapper>();
     this.logger = logger;
   }
 
-  public addItem(item: ISidePanelItemDto): number | void {
+  public addItem(item: SidePanelItemDto): number | void {
     if (SidePanelsManager.validateItem(item)) {
       const newPanelItem: SidePanelItem = new SidePanelItem(item);
-      const {componentRef, removeComponentFunc} = this.injectPanelComponent(item);
+      const {componentRef, removeComponentFunc} = this.injectPanelComponent(newPanelItem);
       const newItemWrapper: ItemWrapper = new ItemWrapper(newPanelItem, componentRef, removeComponentFunc);
       if (item.renderIcon) {
         newItemWrapper.removeIconComponentFunc = this.injectIconComponent(newItemWrapper);
       }
       this.componentsRegistry.set(newItemWrapper.id, newItemWrapper);
-      this.logger.debug('1234 New Panel Item Added', item);
+      this.logger.debug('New Panel Item Added', item);
       return newItemWrapper.id;
     }
-    this.logger.warn('invalid SidePanelItem parameters', item);
+    this.logger.warn('Invalid SidePanelItem parameters', item);
   }
 
   public removeItem(itemId: number): void {
     const item: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (item) {
-      this.deactivateItem(itemId);
+      if (this.isItemActive(itemId)) this.deactivateItem(itemId);
       item.removePanelComponentFunc();
       item.removeIconComponentFunc();
       this.componentsRegistry.delete(itemId);
@@ -78,6 +77,7 @@ export class SidePanelsManager {
   public deactivateItem(itemId: number): void {
     const itemMetadata: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (itemMetadata) {
+      if (!this.isItemActive(itemId)) return;
       const {position} = itemMetadata.item;
       this.activePanels[position]?.componentRef.current?.toggle();
       this.collapse(position);
@@ -106,13 +106,11 @@ export class SidePanelsManager {
   }
 
   private expand(position: SidePanelPosition, expandMode: string): void {
-    this.player.ui._uiManager.store.dispatch(ui.reducers.shell.actions.updateSidePanelMode(position, expandMode));
+    this.player.ui.store.dispatch(ui.reducers.shell.actions.updateSidePanelMode(position, expandMode));
   }
 
   private collapse(position: string): void {
-    this.player.ui._uiManager.store.dispatch(
-      ui.reducers.shell.actions.updateSidePanelMode(position, SidePanelModes.HIDDEN)
-    );
+    this.player.ui.store.dispatch(ui.reducers.shell.actions.updateSidePanelMode(position, SidePanelModes.HIDDEN));
   }
 
   private injectIconComponent(panelItemData: ItemWrapper): () => void {
@@ -121,7 +119,7 @@ export class SidePanelsManager {
     const togglePanelFunc: () => void = () => this.toggle(id);
     return this.player.ui.addComponent({
       label: `Side-Panel-Icon-${item.label}`,
-      presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
+      presets: item.presets,
       area: ReservedPresetAreas.TopBarRightControls,
       get: function MyComponent() {
         return (
@@ -134,17 +132,17 @@ export class SidePanelsManager {
   }
 
   private injectPanelComponent(
-    item: ISidePanelItemDto
+    item: SidePanelItemDto
   ): {
     componentRef: RefObject<Toggle>;
     removeComponentFunc: () => void;
   } {
-    const {label, position, renderContent} = item;
+    const {label, position, renderContent, presets} = item;
     const SidePanelComponent: ComponentClass | FunctionalComponent = renderContent;
     const componentRef: RefObject<Toggle> = createRef();
     const removeComponentFunc = this.player.ui.addComponent({
       label: `Side-panel-${position}-${label}`,
-      presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
+      presets,
       area: SidePanelsManager.getPanelArea(position),
       get: () => {
         return (
@@ -166,12 +164,13 @@ export class SidePanelsManager {
     return OPPOSITE_PANELS[position];
   }
 
-  private static validateItem(item: ISidePanelItemDto): boolean {
-    const {label, renderContent, renderIcon, position, expandMode, onActivate, onDeactivate} = item;
+  private static validateItem(item: SidePanelItemDto): boolean {
+    const {label, renderContent, renderIcon, position, expandMode, onActivate, onDeactivate, presets} = item;
     return !!(
       label &&
       Object.values(SidePanelPositions).includes(position) &&
       Object.values(SidePanelModes).includes(expandMode) &&
+      presets.every(preset => Object.values(ReservedPresetNames).includes(preset)) &&
       typeof renderContent === 'function' &&
       (typeof renderIcon === 'function' || renderIcon === undefined) &&
       (typeof onActivate === 'function' || onActivate === undefined) &&

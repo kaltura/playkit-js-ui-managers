@@ -1,34 +1,32 @@
 import {ComponentClass, FunctionalComponent} from 'preact';
-import {ui} from 'kaltura-player-js';
 import {ReservedPresetName, SidePanelPosition, SidePanelMode} from '../types/types';
-const {ReservedPresetNames} = ui;
 
-export interface ISidePanelItemDto {
+export interface SidePanelItemDto {
   readonly label: string;
   readonly renderIcon?: ComponentClass | FunctionalComponent;
   readonly renderContent: ComponentClass | FunctionalComponent;
-  readonly presets?: ReservedPresetName[];
+  readonly presets: ReservedPresetName[];
   readonly position: SidePanelPosition;
   readonly expandMode: SidePanelMode;
   readonly onActivate?: () => void;
   readonly onDeactivate?: () => void;
 }
 
-export class SidePanelItem implements ISidePanelItemDto {
+export class SidePanelItem implements SidePanelItemDto {
   readonly label: string;
   readonly renderIcon?: ComponentClass | FunctionalComponent;
   readonly renderContent: ComponentClass | FunctionalComponent;
-  readonly presets?: ReservedPresetName[];
+  readonly presets: ReservedPresetName[];
   readonly position: SidePanelPosition;
   readonly expandMode: SidePanelMode;
   readonly onActivate?: () => void;
   readonly onDeactivate?: () => void;
 
-  constructor(item: ISidePanelItemDto) {
+  constructor(item: SidePanelItemDto) {
     this.label = item.label;
     this.renderIcon = item.renderIcon;
     this.renderContent = item.renderContent;
-    this.presets = item.presets || [ReservedPresetNames.Playback, ReservedPresetNames.Live];
+    this.presets = item.presets;
     this.position = item.position;
     this.expandMode = item.expandMode;
     this.onActivate = item.onActivate;
