@@ -3,7 +3,7 @@
     "target": "ES5",
     "rootDir": ".",
     "outDir": "build",
-    "preserveSymlinks": false,
+    "preserveSymlinks": true,
     "jsx": "react",
     "jsxFactory": "h",
     "allowUnreachableCode": false,
