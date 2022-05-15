@@ -1,8 +1,7 @@
 import { h, Component, ComponentChild, RefObject } from 'preact';
 import * as styles from './toggel.scss';
 import { ui } from 'kaltura-player-js';
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore - temp until appropriate types will be added to kaltura-player-js
+
 const { defaultTransitionTime } = ui.style;
 
 type ToggleState = {
