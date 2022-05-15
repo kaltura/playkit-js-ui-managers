@@ -1,8 +1,8 @@
 .side-panel {
-  transition: all;
   visibility: hidden;
 }
 
 .active {
+  transition: visibility;
   visibility: visible;
 }
