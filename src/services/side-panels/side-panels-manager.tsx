@@ -9,7 +9,7 @@ const OPPOSITE_PANELS: Record<PlaykitUI.SidePanelPosition, PlaykitUI.SidePanelPo
   [SidePanelPositions.TOP]: SidePanelPositions.BOTTOM,
   [SidePanelPositions.BOTTOM]: SidePanelPositions.TOP,
   [SidePanelPositions.RIGHT]: SidePanelPositions.LEFT,
-  [SidePanelPositions.LEFT]: SidePanelPositions.RIGHT,
+  [SidePanelPositions.LEFT]: SidePanelPositions.RIGHT
 } as Record<PlaykitUI.SidePanelPosition, PlaykitUI.SidePanelPosition>;
 
 export class SidePanelsManager {
@@ -126,11 +126,13 @@ export class SidePanelsManager {
             <IconComponent />
           </div>
         );
-      },
+      }
     });
   }
 
-  private injectPanelComponent(item: SidePanelItemDto): {
+  private injectPanelComponent(
+    item: SidePanelItemDto
+  ): {
     componentRef: RefObject<Toggle>;
     removeComponentFunc: () => void;
   } {
@@ -147,7 +149,7 @@ export class SidePanelsManager {
             <SidePanelComponent />
           </Toggle>
         );
-      },
+      }
     });
 
     return { componentRef, removeComponentFunc };
@@ -167,7 +169,7 @@ export class SidePanelsManager {
       label &&
       Object.values(SidePanelPositions).includes(position) &&
       Object.values(SidePanelModes).includes(expandMode) &&
-      presets.every((preset) => Object.values(ReservedPresetNames).includes(preset)) &&
+      presets.every(preset => Object.values(ReservedPresetNames).includes(preset)) &&
       typeof renderContent === 'function' &&
       (typeof renderIcon === 'function' || renderIcon === undefined) &&
       (typeof onActivate === 'function' || onActivate === undefined) &&

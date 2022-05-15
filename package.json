@@ -27,7 +27,7 @@
     "watch": "webpack --watch --mode development",
     "test": "jest",
     "prettier:fix": "prettier --write .",
-    "lint:check": "esli  nt src --ext .ts,.tsx --color",
+    "lint:check": "eslint src --ext .ts,.tsx --color",
     "lint:fix": "npm run lint:check -- --fix",
     "types:check": "tsc src/index.ts --jsx react --jsxFactory h --noEmit --target ESNext --moduleResolution node",
     "types:ganarate": "tsc src/index.ts --declaration --emitDeclarationOnly --outFile types/modules.ts --jsx react --jsxFactory h --stripInternal true --target ESNext --moduleResolution node"
@@ -62,8 +62,5 @@
   "author": {
     "name": "Jonathan T. Gold",
     "email": "jonathan.gold@kaltura.com"
-  },
-  "dependencies": {
-    "css-loader": "^6.7.1"
   }
 }
