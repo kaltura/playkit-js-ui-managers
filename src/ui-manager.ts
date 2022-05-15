@@ -1,5 +1,5 @@
-import {BasePlugin, KalturaPlayer} from 'kaltura-player-js';
-import {SidePanelsManager} from './services/side-panels/side-panels-manager';
+import { BasePlugin, KalturaPlayer } from 'kaltura-player-js';
+import { SidePanelsManager } from './services/side-panels/side-panels-manager';
 
 export const pluginName = 'uiManagers';
 
@@ -7,7 +7,7 @@ export const pluginName = 'uiManagers';
  * manages the registration of UI services
  * @internal
  */
-export class UIManagersPlugin extends BasePlugin {
+export class UIManagers extends BasePlugin {
   protected static defaultConfig = {};
 
   constructor(name: string, player: KalturaPlayer) {

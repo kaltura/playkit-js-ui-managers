@@ -1,45 +1,40 @@
-declare module "services/side-panels/types/types" {
-    export type SidePanelPosition = 'top' | 'bottom' | 'right' | 'left';
-    export type SidePanelMode = 'alongside' | 'hidden' | 'over';
-    export type ReservedPresetName = 'Playback' | 'Live' | 'Idle' | 'Ads' | 'Error';
-}
 declare module "services/side-panels/models/side-panel-item-dto" {
     import { ComponentClass, FunctionalComponent } from 'preact';
-    import { ReservedPresetName, SidePanelPosition, SidePanelMode } from "services/side-panels/types/types";
-    export interface ISidePanelItemDto {
+    import { PlaykitUI } from 'kaltura-player-js';
+    export interface SidePanelItemDto {
         readonly label: string;
         readonly renderIcon?: ComponentClass | FunctionalComponent;
         readonly renderContent: ComponentClass | FunctionalComponent;
-        readonly presets?: ReservedPresetName[];
-        readonly position: SidePanelPosition;
-        readonly expandMode: SidePanelMode;
+        readonly presets: PlaykitUI.ReservedPresetName[];
+        readonly position: PlaykitUI.SidePanelPosition;
+        readonly expandMode: PlaykitUI.SidePanelMode;
         readonly onActivate?: () => void;
         readonly onDeactivate?: () => void;
     }
-    export class SidePanelItem implements ISidePanelItemDto {
+    export class SidePanelItem implements SidePanelItemDto {
         readonly label: string;
         readonly renderIcon?: ComponentClass | FunctionalComponent;
         readonly renderContent: ComponentClass | FunctionalComponent;
-        readonly presets?: ReservedPresetName[];
-        readonly position: SidePanelPosition;
-        readonly expandMode: SidePanelMode;
+        readonly presets: PlaykitUI.ReservedPresetName[];
+        readonly position: PlaykitUI.SidePanelPosition;
+        readonly expandMode: PlaykitUI.SidePanelMode;
         readonly onActivate?: () => void;
         readonly onDeactivate?: () => void;
-        constructor(item: ISidePanelItemDto);
+        constructor(item: SidePanelItemDto);
     }
 }
 declare module "services/side-panels/ui/side-panel.component" { }
 declare module "services/side-panels/models/item-wrapper" { }
 declare module "services/side-panels/side-panels-manager" {
     import { KalturaPlayer, Logger } from 'kaltura-player-js';
-    import { ISidePanelItemDto } from "services/side-panels/models/side-panel-item-dto";
+    import { SidePanelItemDto } from "services/side-panels/models/side-panel-item-dto";
     export class SidePanelsManager {
         private readonly player;
         private readonly activePanels;
         private readonly componentsRegistry;
         private readonly logger;
         constructor(player: KalturaPlayer, logger: Logger);
-        addItem(item: ISidePanelItemDto): number | void;
+        addItem(item: SidePanelItemDto): number | void;
         removeItem(itemId: number): void;
         activateItem(itemId: number): void;
         deactivateItem(itemId: number): void;
@@ -55,7 +50,7 @@ declare module "services/side-panels/side-panels-manager" {
         private static validateItem;
     }
 }
-declare module "services-manager" {
+declare module "ui-manager" {
     export const pluginName = "uiManagers";
 }
 declare module "index" { }

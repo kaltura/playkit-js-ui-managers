@@ -10,6 +10,27 @@ const config = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
+      {
+        test: /\.scss/,
+        use: [
+          'style-loader',
+          {
+            loader: "css-loader",
+            options: {
+              esModule: true,
+              modules: {
+                namedExport: true,
+              },
+            },
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
+      },
     ],
   },
   resolve: {
@@ -29,12 +50,12 @@ const config = {
       directory: path.join(__dirname, 'demo'),
     },
     client: {
-      progress: true
+      progress: true,
     },
   },
 };
 
-module.exports = (env, {mode}) => {
+module.exports = (env, { mode }) => {
   if (mode === 'development') {
     config.devtool = 'source-map';
   }

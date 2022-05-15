@@ -1,6 +1,6 @@
-import {RefObject} from 'preact';
-import {Toggle} from '../ui/side-panel.component';
-import {SidePanelItem} from './side-panel-item-dto';
+import { RefObject } from 'preact';
+import { Toggle } from '../ui/toggel';
+import { SidePanelItem } from './side-panel-item-dto';
 
 /**
  * Panel item metadata

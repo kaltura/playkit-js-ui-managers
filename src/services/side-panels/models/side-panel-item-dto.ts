@@ -1,13 +1,13 @@
-import {ComponentClass, FunctionalComponent} from 'preact';
-import {ReservedPresetName, SidePanelPosition, SidePanelMode} from '../types/types';
+import { ComponentClass, FunctionalComponent } from 'preact';
+import { PlaykitUI } from 'kaltura-player-js';
 
 export interface SidePanelItemDto {
   readonly label: string;
   readonly renderIcon?: ComponentClass | FunctionalComponent;
   readonly renderContent: ComponentClass | FunctionalComponent;
-  readonly presets: ReservedPresetName[];
-  readonly position: SidePanelPosition;
-  readonly expandMode: SidePanelMode;
+  readonly presets: PlaykitUI.ReservedPresetName[];
+  readonly position: PlaykitUI.SidePanelPosition;
+  readonly expandMode: PlaykitUI.SidePanelMode;
   readonly onActivate?: () => void;
   readonly onDeactivate?: () => void;
 }
@@ -16,9 +16,9 @@ export class SidePanelItem implements SidePanelItemDto {
   readonly label: string;
   readonly renderIcon?: ComponentClass | FunctionalComponent;
   readonly renderContent: ComponentClass | FunctionalComponent;
-  readonly presets: ReservedPresetName[];
-  readonly position: SidePanelPosition;
-  readonly expandMode: SidePanelMode;
+  readonly presets: PlaykitUI.ReservedPresetName[];
+  readonly position: PlaykitUI.SidePanelPosition;
+  readonly expandMode: PlaykitUI.SidePanelMode;
   readonly onActivate?: () => void;
   readonly onDeactivate?: () => void;
 
