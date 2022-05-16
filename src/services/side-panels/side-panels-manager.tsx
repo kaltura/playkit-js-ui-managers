@@ -57,8 +57,10 @@ export class SidePanelsManager {
       // Trying to activate an already active item
       if (this.isItemActive(itemId)) return;
       // Switch between items if currently there is an active one (without collapsing / expanding PS)
+      let switchMode = false;
       if (this.activePanels[position] !== null) {
-        this.deactivateItem(this.activePanels[position]!.id);
+        switchMode = true;
+        this.deactivateItem(this.activePanels[position]!.id, switchMode);
       }
       // Deactivate the opposite panel if is active
       const oppositePosition: PlaykitUI.SidePanelPosition = SidePanelsManager.getOppositePanelPosition(position);
@@ -66,19 +68,19 @@ export class SidePanelsManager {
         this.deactivateItem(this.activePanels[oppositePosition]!.id);
       }
       // Update new item as active
-      itemMetadata.componentRef.current?.toggle();
+      itemMetadata.componentRef.current?.toggle(switchMode);
       this.expand(position, expandMode);
       this.activePanels[position] = itemMetadata;
       itemMetadata.item.onActivate?.();
     }
   }
 
-  public deactivateItem(itemId: number): void {
+  public deactivateItem(itemId: number, switchMode?: boolean): void {
     const itemMetadata: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (itemMetadata) {
       if (!this.isItemActive(itemId)) return;
       const { position } = itemMetadata.item;
-      this.activePanels[position]?.componentRef.current?.toggle();
+      this.activePanels[position]?.componentRef.current?.toggle(switchMode);
       this.collapse(position);
       this.activePanels[position] = null;
       itemMetadata.item.onDeactivate?.();

@@ -17,12 +17,15 @@ type ToggleProps = {
  * @internal
  */
 export class Toggle extends Component<ToggleProps, ToggleState> {
+  switchMode: boolean;
   constructor() {
     super();
     this.state = { on: false };
+    this.switchMode = false;
   }
 
-  toggle(): void {
+  toggle(switchMode?: boolean): void {
+    this.switchMode = !!switchMode;
     this.setState((state: Readonly<ToggleState>) => {
       return { on: !state.on };
     });
@@ -32,7 +35,7 @@ export class Toggle extends Component<ToggleProps, ToggleState> {
     return (
       <div
         className={[styles.sidePanel, this.state.on ? styles.active : ''].join(' ')}
-        style={{ transitionDuration: `${defaultTransitionTime}ms` }}
+        style={!this.state.on && !this.switchMode ? { transition: `visibility ${defaultTransitionTime}ms` } : ''}
       >
         {this.props.children}
       </div>
