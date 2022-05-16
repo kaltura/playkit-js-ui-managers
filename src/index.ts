@@ -1,4 +1,4 @@
-import {registerPlugin} from 'kaltura-player-js';
-import {pluginName, UIManagersPlugin} from './services-managers';
+import { registerPlugin } from 'kaltura-player-js';
+import { pluginName, UIManagers } from './ui-managers';
 
-registerPlugin(pluginName, UIManagersPlugin);
+registerPlugin(pluginName, UIManagers);
