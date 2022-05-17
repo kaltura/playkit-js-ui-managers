@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-undef
 const { h, preact } = KalturaPlayer.ui;
 export class IconComponent extends preact.Component {
   render() {

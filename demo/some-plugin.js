@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-undef
 const { BasePlugin, registerPlugin } = KalturaPlayer;
 
 import { AnotherIconComponent, AnotherPanelItemComponent, IconComponent, PanelItemComponent } from './components.js';
@@ -42,7 +41,7 @@ export class somePlugin extends BasePlugin {
         this.player.getService('sidePanelsManager').isItemActive(panelItemAId);
         // false
       }, 2000);
-    })
+    });
   }
 
   static isValid() {
