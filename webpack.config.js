@@ -5,6 +5,9 @@ module.exports = (env, { mode }) => {
     target: 'web',
     entry: './src/index.ts',
     devtool: mode === 'development' ? 'source-map' : '',
+    optimization: {
+      minimize: mode !== 'development'
+    },
     module: {
       rules: [
         {
