@@ -9,7 +9,8 @@ module.exports = (env, { mode }) => {
       rules: [
         {
           test: /\.tsx?$/,
-          use: 'ts-loader',
+          loader: 'ts-loader',
+          options: { configFile: mode === 'development' ? 'tsconfig.dev.json' :  'tsconfig.prod.json'},
           exclude: /node_modules/,
         },
         {
