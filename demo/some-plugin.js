@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-undef
-const {BasePlugin, registerPlugin} = KalturaPlayer;
+const { BasePlugin, registerPlugin } = KalturaPlayer;
 
-import {AnotherIconComponent, AnotherPanelItemComponent, IconComponent, PanelItemComponent} from './components.js';
+import { AnotherIconComponent, AnotherPanelItemComponent, IconComponent, PanelItemComponent } from './components.js';
 
 export const pluginName = 'somePlugin';
 
@@ -13,28 +13,45 @@ export class somePlugin extends BasePlugin {
   }
 
   loadMedia() {
-    const aa = this.player.getService('sidePanelsManager').addItem({
+    const panelItemAId = this.player.getService('sidePanelsManager').addItem({
       label: 'A',
       expandMode: 'alongside',
       renderIcon: IconComponent,
       position: 'left',
+      presets: ['Playback', 'Live'],
       renderContent: PanelItemComponent,
     });
 
-    // eslint-disable-next-line no-console
-    console.log('1212', aa);
-
-    this.player.getService('sidePanelsManager').addItem({
+    const PanelItemBId = this.player.getService('sidePanelsManager').addItem({
       label: 'B',
       expandMode: 'alongside',
       renderIcon: AnotherIconComponent,
-      position: 'right',
+      position: 'left',
+      presets: ['Playback', 'Live'],
       renderContent: AnotherPanelItemComponent,
     });
+
+    this.ready.then(() => {
+      this.player.getService('sidePanelsManager').activateItem(panelItemAId);
+
+      this.player.getService('sidePanelsManager').isItemActive(panelItemAId);
+      // true
+      setTimeout(() => {
+        this.player.getService('sidePanelsManager').deactivateItem(panelItemAId);
+
+        this.player.getService('sidePanelsManager').isItemActive(panelItemAId);
+        // false
+      }, 2000);
+    })
   }
 
   static isValid() {
     return true;
+  }
+
+  reset() {
+    this.player.getService('sidePanelsManager').reset();
+    // deactivates and destroy all side panel item components and resets the state
   }
 }
 

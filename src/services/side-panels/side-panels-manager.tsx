@@ -47,6 +47,8 @@ export class SidePanelsManager {
       item.removePanelComponentFunc();
       item.removeIconComponentFunc();
       this.componentsRegistry.delete(itemId);
+    } else {
+      this.logger.warn(`${itemId} is not registered`);
     }
   }
 
@@ -72,6 +74,8 @@ export class SidePanelsManager {
       this.expand(position, expandMode);
       this.activePanels[position] = itemMetadata;
       itemMetadata.item.onActivate?.();
+    } else {
+      this.logger.warn(`${itemId} is not registered`);
     }
   }
 
@@ -84,6 +88,8 @@ export class SidePanelsManager {
       this.collapse(position);
       this.activePanels[position] = null;
       itemMetadata.item.onDeactivate?.();
+    } else {
+      this.logger.warn(`${itemId} is not registered`);
     }
   }
 
