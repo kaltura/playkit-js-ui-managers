@@ -37,7 +37,7 @@ export class somePlugin extends BasePlugin {
     });
 
     const PanelItemCId = this.player.getService('sidePanelsManager').addItem({
-      label: 'B',
+      label: 'C',
       expandMode: 'alongside',
       renderIcon: SomeIconComponent,
       position: 'bottom',
