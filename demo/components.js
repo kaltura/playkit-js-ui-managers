@@ -25,12 +25,12 @@ export class AnotherPanelItemComponent extends preact.Component {
 
 export class SomeIconComponent extends preact.Component {
   render() {
-    return h('div', { className: 'icon c' }, 'B');
+    return h('div', { className: 'icon c' }, 'C');
   }
 }
 
 export class SomePanelItemComponent extends preact.Component {
   render() {
-    return h('div', { className: 'panel c' }, 'B');
+    return h('div', { className: 'panel c' }, 'C');
   }
 }
