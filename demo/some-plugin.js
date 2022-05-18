@@ -1,11 +1,14 @@
 const { BasePlugin, registerPlugin } = KalturaPlayer;
 
 import {
-  AnotherIconComponent,
-  AnotherPanelItemComponent,
-  IconComponent,
   PanelItemComponent,
-  SomeIconComponent, SomePanelItemComponent
+  IconComponent,
+  AnotherPanelItemComponent,
+  AnotherIconComponent,
+  SomePanelItemComponent,
+  SomeIconComponent,
+  MorePanelItemComponent,
+  MoreIconComponent
 } from './components.js';
 
 export const pluginName = 'somePlugin';
@@ -24,7 +27,7 @@ export class somePlugin extends BasePlugin {
       renderIcon: IconComponent,
       position: 'left',
       presets: ['Playback', 'Live'],
-      renderContent: PanelItemComponent,
+      renderContent: PanelItemComponent
     });
 
     const PanelItemBId = this.player.getService('sidePanelsManager').addItem({
@@ -33,16 +36,25 @@ export class somePlugin extends BasePlugin {
       renderIcon: AnotherIconComponent,
       position: 'left',
       presets: ['Playback', 'Live'],
-      renderContent: AnotherPanelItemComponent,
+      renderContent: AnotherPanelItemComponent
     });
 
     const PanelItemCId = this.player.getService('sidePanelsManager').addItem({
       label: 'C',
       expandMode: 'alongside',
       renderIcon: SomeIconComponent,
+      position: 'right',
+      presets: ['Playback', 'Live'],
+      renderContent: SomePanelItemComponent
+    });
+
+    const PanelItemDId = this.player.getService('sidePanelsManager').addItem({
+      label: 'D',
+      expandMode: 'alongside',
+      renderIcon: MoreIconComponent,
       position: 'bottom',
       presets: ['Playback', 'Live'],
-      renderContent: SomePanelItemComponent,
+      renderContent: MorePanelItemComponent
     });
 
     this.ready.then(() => {

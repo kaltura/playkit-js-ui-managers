@@ -6,15 +6,15 @@ module.exports = (env, { mode }) => {
     entry: './src/index.ts',
     devtool: mode === 'development' ? 'source-map' : '',
     optimization: {
-      minimize: mode !== 'development',
+      minimize: mode !== 'development'
     },
     module: {
       rules: [
         {
           test: /\.tsx?$/,
           loader: 'ts-loader',
-          options: { configFile: mode === 'development' ? 'tsconfig.dev.json' :  'tsconfig.prod.json'},
-          exclude: /node_modules/,
+          options: { configFile: mode === 'development' ? 'tsconfig.dev.json' : 'tsconfig.prod.json' },
+          exclude: /node_modules/
         },
         {
           test: /\.scss/,
@@ -26,39 +26,39 @@ module.exports = (env, { mode }) => {
                 esModule: true,
                 modules: {
                   localIdentName: '[local]_[hash:base64:5]',
-                  namedExport: true,
-                },
-              },
+                  namedExport: true
+                }
+              }
             },
             {
               loader: 'sass-loader',
               options: {
-                sourceMap: mode === 'development',
-              },
-            },
-          ],
-        },
-      ],
+                sourceMap: mode === 'development'
+              }
+            }
+          ]
+        }
+      ]
     },
     resolve: {
-      extensions: ['.tsx', '.ts', '.js'],
+      extensions: ['.tsx', '.ts', '.js']
     },
     output: {
       filename: 'ui-managers.js',
       path: path.resolve(__dirname, 'dist'),
-      clean: true,
+      clean: true
     },
     externals: {
       'kaltura-player-js': 'root KalturaPlayer',
-      preact: 'root KalturaPlayer.ui.preact',
+      preact: 'root KalturaPlayer.ui.preact'
     },
     devServer: {
       static: {
-        directory: path.join(__dirname, 'demo'),
+        directory: path.join(__dirname, 'demo')
       },
       client: {
-        progress: true,
-      },
-    },
+        progress: true
+      }
+    }
   };
 };

@@ -34,3 +34,15 @@ export class SomePanelItemComponent extends preact.Component {
     return h('div', { className: 'panel c' }, 'C');
   }
 }
+
+export class MoreIconComponent extends preact.Component {
+  render() {
+    return h('div', { className: 'icon d' }, 'D');
+  }
+}
+
+export class MorePanelItemComponent extends preact.Component {
+  render() {
+    return h('div', { className: 'panel d' }, 'D');
+  }
+}
