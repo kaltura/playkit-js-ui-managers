@@ -63,10 +63,7 @@ export class somePlugin extends BasePlugin {
     return true;
   }
 
-  reset() {
-    this.player.getService('sidePanelsManager').reset();
-    // deactivates and destroy all side panel item components and resets the state
-  }
+  reset() {}
 }
 
 registerPlugin(pluginName, somePlugin);
