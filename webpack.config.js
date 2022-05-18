@@ -6,7 +6,7 @@ module.exports = (env, { mode }) => {
     entry: './src/index.ts',
     devtool: mode === 'development' ? 'source-map' : '',
     optimization: {
-      minimize: mode !== 'development'
+      minimize: mode !== 'development',
     },
     module: {
       rules: [
@@ -44,8 +44,8 @@ module.exports = (env, { mode }) => {
       extensions: ['.tsx', '.ts', '.js'],
     },
     output: {
-      filename: 'ui-manager.js',
-      path: path.resolve(__dirname, 'build'),
+      filename: 'ui-managers.js',
+      path: path.resolve(__dirname, 'dist'),
       clean: true,
     },
     externals: {

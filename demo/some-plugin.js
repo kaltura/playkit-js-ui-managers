@@ -1,6 +1,12 @@
 const { BasePlugin, registerPlugin } = KalturaPlayer;
 
-import { AnotherIconComponent, AnotherPanelItemComponent, IconComponent, PanelItemComponent } from './components.js';
+import {
+  AnotherIconComponent,
+  AnotherPanelItemComponent,
+  IconComponent,
+  PanelItemComponent,
+  SomeIconComponent, SomePanelItemComponent
+} from './components.js';
 
 export const pluginName = 'somePlugin';
 
@@ -30,15 +36,24 @@ export class somePlugin extends BasePlugin {
       renderContent: AnotherPanelItemComponent,
     });
 
+    const PanelItemCId = this.player.getService('sidePanelsManager').addItem({
+      label: 'B',
+      expandMode: 'alongside',
+      renderIcon: SomeIconComponent,
+      position: 'bottom',
+      presets: ['Playback', 'Live'],
+      renderContent: SomePanelItemComponent,
+    });
+
     this.ready.then(() => {
       this.player.getService('sidePanelsManager').activateItem(panelItemAId);
 
-      this.player.getService('sidePanelsManager').isItemActive(panelItemAId);
+      console.log(this.player.getService('sidePanelsManager').isItemActive(panelItemAId));
       // true
       setTimeout(() => {
         this.player.getService('sidePanelsManager').deactivateItem(panelItemAId);
 
-        this.player.getService('sidePanelsManager').isItemActive(panelItemAId);
+        console.log(this.player.getService('sidePanelsManager').isItemActive(panelItemAId));
         // false
       }, 2000);
     });
