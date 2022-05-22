@@ -1,5 +1,6 @@
 {
   "root": true,
+  "parser": "@typescript-eslint/parser",
   "extends": [
     "preact",
     "eslint:recommended",
@@ -31,6 +32,5 @@
         "property": "only"
       }
     ]
-  },
-  "parser": "@typescript-eslint/parser"
+  }
 }
