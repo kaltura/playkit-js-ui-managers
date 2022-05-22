@@ -13,7 +13,7 @@ module.exports = (env, { mode }) => {
         {
           test: /\.tsx?$/,
           loader: 'ts-loader',
-          options: { configFile: mode === 'development' ? 'tsconfig.dev.json' : 'tsconfig.prod.json' },
+          options: { configFile: mode === 'development' ? 'tsconfig.dev.json' : 'tsconfig.json' },
           exclude: /node_modules/
         },
         {

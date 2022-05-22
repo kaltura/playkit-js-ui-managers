@@ -138,9 +138,7 @@ export class SidePanelsManager {
     });
   }
 
-  private injectPanelComponent(
-    item: SidePanelItemDto
-  ): {
+  private injectPanelComponent(item: SidePanelItemDto): {
     componentRef: RefObject<Toggle>;
     removeComponentFunc: () => void;
   } {
@@ -177,7 +175,7 @@ export class SidePanelsManager {
       label &&
       Object.values(SidePanelPositions).includes(position) &&
       Object.values(SidePanelModes).includes(expandMode) &&
-      presets.every(preset => Object.values(ReservedPresetNames).includes(preset)) &&
+      presets.every((preset) => Object.values(ReservedPresetNames).includes(preset)) &&
       typeof renderContent === 'function' &&
       (typeof renderIcon === 'function' || renderIcon === undefined) &&
       (typeof onActivate === 'function' || onActivate === undefined) &&

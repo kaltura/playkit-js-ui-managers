@@ -27,6 +27,7 @@
     "watch": "webpack --watch --mode development",
     "test": "jest",
     "prepare:demo": "sh scripts/prepare-demo.sh",
+    "prettier:fix": "prettier --write .",
     "lint:check": "eslint src --ext .ts,.tsx --color",
     "lint:fix": "npm run lint:check -- --fix",
     "types:check": "tsc src/index.ts src/services/types/global.d.ts --jsx react --jsxFactory h --noEmit --target ESNext --moduleResolution node",
