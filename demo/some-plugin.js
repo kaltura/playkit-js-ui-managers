@@ -28,7 +28,9 @@ export class somePlugin extends BasePlugin {
       renderIcon: IconComponent,
       position: SidePanelPositions.LEFT,
       presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
-      renderContent: PanelItemComponent
+      renderContent: PanelItemComponent,
+      onActivate: () => { console.log('panel has now been activated') },
+      onDeactivate: () => { console.log('panel has now been deactivated') },
     });
 
     const PanelItemBId = this.player.getService('sidePanelsManager').addItem({
