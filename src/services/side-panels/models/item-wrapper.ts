@@ -9,21 +9,25 @@ import { SidePanelItem } from './side-panel-item-dto';
 export class ItemWrapper {
   private static nextId = 0;
   public readonly id: number;
-  public readonly removePanelComponentFunc: () => void;
-  public removeIconComponentFn: () => void;
+  public readonly removePanelComponentFn: () => void;
+  public removeIconComponentFunc: () => void;
   public readonly item: SidePanelItem;
   public readonly componentRef: RefObject<Toggle>;
   constructor(item: SidePanelItem, componentRef: RefObject<Toggle>, removePanelComponentFunc: () => void) {
     this.id = ++ItemWrapper.nextId;
     this.item = item;
-    this.removePanelComponentFunc = removePanelComponentFunc;
-    this.removeIconComponentFn = (): void => {
+    this.removePanelComponentFn = removePanelComponentFunc;
+    this.removeIconComponentFunc = (): void => {
       return;
     };
     this.componentRef = componentRef;
   }
 
-  set removeIconComponentFunc(removeIconComponentFunc: () => void) {
-    this.removeIconComponentFn = removeIconComponentFunc;
+  set removeIconComponentFn(removeIconComponentFunc: () => void) {
+    this.removeIconComponentFunc = removeIconComponentFunc;
+  }
+
+  get removeIconComponentFn(): () => void {
+    return this.removeIconComponentFunc;
   }
 }

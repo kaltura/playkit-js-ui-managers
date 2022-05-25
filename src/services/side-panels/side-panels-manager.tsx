@@ -31,7 +31,7 @@ export class SidePanelsManager {
       const { componentRef, removeComponentFunc } = this.injectPanelComponent(newPanelItem);
       const newItemWrapper: ItemWrapper = new ItemWrapper(newPanelItem, componentRef, removeComponentFunc);
       if (item.renderIcon) {
-        newItemWrapper.removeIconComponentFunc = this.injectIconComponent(newItemWrapper);
+        newItemWrapper.removeIconComponentFn = this.injectIconComponent(newItemWrapper);
       }
       this.componentsRegistry.set(newItemWrapper.id, newItemWrapper);
       this.logger.debug('New Panel Item Added', item);
@@ -44,8 +44,8 @@ export class SidePanelsManager {
     const item: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (item) {
       if (this.isItemActive(itemId)) this.deactivateItem(itemId);
-      item.removePanelComponentFunc();
-      item.removeIconComponentFunc();
+      item.removePanelComponentFn();
+      item.removeIconComponentFn();
       this.componentsRegistry.delete(itemId);
     } else {
       this.logger.warn(`${itemId} is not registered`);
