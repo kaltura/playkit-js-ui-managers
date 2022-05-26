@@ -23,7 +23,7 @@ declare module "services/side-panels/models/side-panel-item-dto" {
         constructor(item: SidePanelItemDto);
     }
 }
-declare module "services/side-panels/ui/side-panel.component" { }
+declare module "services/side-panels/ui/toggel" { }
 declare module "services/side-panels/models/item-wrapper" { }
 declare module "services/side-panels/side-panels-manager" {
     import { KalturaPlayer, Logger } from 'kaltura-player-js';
@@ -37,7 +37,7 @@ declare module "services/side-panels/side-panels-manager" {
         addItem(item: SidePanelItemDto): number | void;
         removeItem(itemId: number): void;
         activateItem(itemId: number): void;
-        deactivateItem(itemId: number): void;
+        deactivateItem(itemId: number, switchMode?: boolean): void;
         isItemActive(itemId: number): boolean;
         reset(): void;
         private toggle;
@@ -50,7 +50,7 @@ declare module "services/side-panels/side-panels-manager" {
         private static validateItem;
     }
 }
-declare module "ui-manager" {
+declare module "ui-managers" {
     export const pluginName = "uiManagers";
 }
 declare module "index" { }
