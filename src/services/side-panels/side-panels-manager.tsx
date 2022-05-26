@@ -31,7 +31,7 @@ export class SidePanelsManager {
       const { componentRef, removeComponentFunc } = this.injectPanelComponent(newPanelItem);
       const newItemWrapper: ItemWrapper = new ItemWrapper(newPanelItem, componentRef, removeComponentFunc);
       if (item.renderIcon) {
-        newItemWrapper.removeIconComponentFn = this.injectIconComponent(newItemWrapper);
+        newItemWrapper.removeIconComponentFunc = this.injectIconComponent(newItemWrapper);
       }
       this.componentsRegistry.set(newItemWrapper.id, newItemWrapper);
       this.logger.debug('New Panel Item Added', item);
@@ -44,8 +44,8 @@ export class SidePanelsManager {
     const item: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (item) {
       if (this.isItemActive(itemId)) this.deactivateItem(itemId);
-      item.removePanelComponentFn();
-      item.removeIconComponentFn();
+      item.removePanelComponentFunc();
+      item.removeIconComponentFunc();
       this.componentsRegistry.delete(itemId);
     } else {
       this.logger.warn(`${itemId} is not registered`);
@@ -138,7 +138,9 @@ export class SidePanelsManager {
     });
   }
 
-  private injectPanelComponent(item: SidePanelItemDto): {
+  private injectPanelComponent(
+    item: SidePanelItemDto
+  ): {
     componentRef: RefObject<Toggle>;
     removeComponentFunc: () => void;
   } {
@@ -175,7 +177,7 @@ export class SidePanelsManager {
       label &&
       Object.values(SidePanelPositions).includes(position) &&
       Object.values(SidePanelModes).includes(expandMode) &&
-      presets.every((preset) => Object.values(ReservedPresetNames).includes(preset)) &&
+      presets.every(preset => Object.values(ReservedPresetNames).includes(preset)) &&
       typeof renderContent === 'function' &&
       (typeof renderIcon === 'function' || renderIcon === undefined) &&
       (typeof onActivate === 'function' || onActivate === undefined) &&
