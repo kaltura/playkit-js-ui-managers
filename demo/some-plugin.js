@@ -1,4 +1,5 @@
-const { BasePlugin, registerPlugin } = KalturaPlayer;
+const { BasePlugin, registerPlugin, ui } = KalturaPlayer;
+const { SidePanelModes, SidePanelPositions, ReservedPresetNames } = ui;
 
 import {
   PanelItemComponent,
@@ -23,42 +24,44 @@ export class somePlugin extends BasePlugin {
   loadMedia() {
     const panelItemAId = this.player.getService('sidePanelsManager').addItem({
       label: 'A',
-      expandMode: 'alongside',
+      expandMode: SidePanelModes.ALONGSIDE,
       renderIcon: IconComponent,
-      position: 'left',
-      presets: ['Playback', 'Live'],
+      position: SidePanelPositions.LEFT,
+      presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
       renderContent: PanelItemComponent,
-      onToggleIcon: () => {
-        this.player.getService('sidePanelsManager').isItemActive(panelItemAId)
-          ? this.player.getService('sidePanelsManager').deactivateItem(panelItemAId)
-          : this.player.getService('sidePanelsManager').activateItem(panelItemAId);
-      }
+      onActivate: () => { console.log('panel has now been activated') },
+      onDeactivate: () => { console.log('panel has now been deactivated') },
+        onToggleIcon: () => {
+            this.player.getService('sidePanelsManager').isItemActive(panelItemAId)
+                ? this.player.getService('sidePanelsManager').deactivateItem(panelItemAId)
+                : this.player.getService('sidePanelsManager').activateItem(panelItemAId);
+        }
     });
 
     const PanelItemBId = this.player.getService('sidePanelsManager').addItem({
       label: 'B',
-      expandMode: 'alongside',
+      expandMode: SidePanelModes.ALONGSIDE,
       renderIcon: AnotherIconComponent,
-      position: 'left',
-      presets: ['Playback', 'Live'],
+      position: SidePanelPositions.LEFT,
+      presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
       renderContent: AnotherPanelItemComponent
     });
 
     const PanelItemCId = this.player.getService('sidePanelsManager').addItem({
       label: 'C',
-      expandMode: 'alongside',
+      expandMode: SidePanelModes.ALONGSIDE,
       renderIcon: SomeIconComponent,
-      position: 'right',
-      presets: ['Playback', 'Live'],
+      position: SidePanelPositions.RIGHT,
+      presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
       renderContent: SomePanelItemComponent
     });
 
     const PanelItemDId = this.player.getService('sidePanelsManager').addItem({
       label: 'D',
-      expandMode: 'alongside',
+      expandMode: SidePanelModes.OVER,
       renderIcon: MoreIconComponent,
-      position: 'bottom',
-      presets: ['Playback', 'Live'],
+      position: SidePanelPositions.BOTTOM,
+      presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
       renderContent: MorePanelItemComponent
     });
 

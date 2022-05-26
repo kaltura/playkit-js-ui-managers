@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./src/services/side-panels/ui/panel-item-wrapper/panel-item-wrapper.component.scss":
-/*!**************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./src/services/side-panels/ui/panel-item-wrapper/panel-item-wrapper.component.scss ***!
-  \**************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./src/services/side-panels/ui/toggel.scss":
+/*!*********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./src/services/side-panels/ui/toggel.scss ***!
+  \*********************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -14,19 +14,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
 /* harmony export */   "sidePanel": () => (/* binding */ sidePanel)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".side-panel_cktsP {\n  visibility: hidden; }\n\n.active_TYqXV {\n  visibility: visible; }\n", "",{"version":3,"sources":["webpack://./src/services/side-panels/ui/panel-item-wrapper/panel-item-wrapper.component.scss"],"names":[],"mappings":"AAAA;EACE,kBAAkB,EAAA;;AAGpB;EACE,mBAAmB,EAAA","sourcesContent":[".side-panel {\n  visibility: hidden;\n}\n\n.active {\n  visibility: visible;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".side-panel_eQxAW {\n  visibility: hidden; }\n\n.active_evVeN {\n  visibility: visible; }\n", "",{"version":3,"sources":["webpack://./src/services/side-panels/ui/toggel.scss"],"names":[],"mappings":"AAAA;EACE,kBAAkB,EAAA;;AAGpB;EACE,mBAAmB,EAAA","sourcesContent":[".side-panel {\n  visibility: hidden;\n}\n\n.active {\n  visibility: visible;\n}"],"sourceRoot":""}]);
 // Exports
-var sidePanel = "side-panel_cktsP";
-var active = "active_TYqXV";
+var sidePanel = "side-panel_eQxAW";
+var active = "active_evVeN";
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
@@ -174,31 +174,31 @@ module.exports = function (item) {
 
 /***/ }),
 
-/***/ "./src/services/side-panels/ui/panel-item-wrapper/panel-item-wrapper.component.scss":
-/*!******************************************************************************************!*\
-  !*** ./src/services/side-panels/ui/panel-item-wrapper/panel-item-wrapper.component.scss ***!
-  \******************************************************************************************/
+/***/ "./src/services/side-panels/ui/toggel.scss":
+/*!*************************************************!*\
+  !*** ./src/services/side-panels/ui/toggel.scss ***!
+  \*************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "active": () => (/* reexport safe */ _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_panel_item_wrapper_component_scss__WEBPACK_IMPORTED_MODULE_6__.active),
+/* harmony export */   "active": () => (/* reexport safe */ _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_toggel_scss__WEBPACK_IMPORTED_MODULE_6__.active),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   "sidePanel": () => (/* reexport safe */ _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_panel_item_wrapper_component_scss__WEBPACK_IMPORTED_MODULE_6__.sidePanel)
+/* harmony export */   "sidePanel": () => (/* reexport safe */ _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_toggel_scss__WEBPACK_IMPORTED_MODULE_6__.sidePanel)
 /* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_panel_item_wrapper_component_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!../../../../../../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./panel-item-wrapper.component.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./src/services/side-panels/ui/panel-item-wrapper/panel-item-wrapper.component.scss");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_toggel_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!../../../../../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./toggel.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./src/services/side-panels/ui/toggel.scss");
 
       
       
@@ -220,12 +220,12 @@ options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWi
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_panel_item_wrapper_component_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_toggel_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
 
 
 
 
-       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_panel_item_wrapper_component_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_panel_item_wrapper_component_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_panel_item_wrapper_component_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_toggel_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_toggel_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_1_use_1_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_1_use_2_toggel_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -546,35 +546,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ItemWrapper": () => (/* binding */ ItemWrapper)
 /* harmony export */ });
-/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "preact");
-/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(preact__WEBPACK_IMPORTED_MODULE_0__);
-
 /**
  * Panel item metadata
  * @internal
  */
 class ItemWrapper {
-    constructor(item, panelItemComponentRef, removePanelComponentFunc) {
+    constructor(item, componentRef, removePanelComponentFunc) {
         this.id = ++ItemWrapper.nextId;
         this.item = item;
-        this.removePanelComponentFn = removePanelComponentFunc;
-        this.removeIconComponentFunc = () => {
+        this.removePanelComponentFunc = removePanelComponentFunc;
+        this.removeIconComponentFn = () => {
             return;
         };
-        this.panelItemComponentRef = panelItemComponentRef;
-        this.iconComponentRefOb = (0,preact__WEBPACK_IMPORTED_MODULE_0__.createRef)();
+        this.componentRef = componentRef;
     }
-    set removeIconComponentFn(removeIconComponentFunc) {
-        this.removeIconComponentFunc = removeIconComponentFunc;
-    }
-    get removeIconComponentFn() {
-        return this.removeIconComponentFunc;
-    }
-    set iconComponentRef(iconComponentRef) {
-        this.iconComponentRefOb = iconComponentRef;
-    }
-    get iconComponentRef() {
-        return this.iconComponentRefOb;
+    set removeIconComponentFunc(removeIconComponentFunc) {
+        this.removeIconComponentFn = removeIconComponentFunc;
     }
 }
 ItemWrapper.nextId = 0;
@@ -600,7 +587,6 @@ class SidePanelItem {
         this.presets = item.presets;
         this.position = item.position;
         this.expandMode = item.expandMode;
-        this.onToggleIcon = item.onToggleIcon;
         this.onActivate = item.onActivate;
         this.onDeactivate = item.onDeactivate;
     }
@@ -624,10 +610,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var kaltura_player_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! kaltura-player-js */ "kaltura-player-js");
 /* harmony import */ var kaltura_player_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(kaltura_player_js__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _models_side_panel_item_dto__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./models/side-panel-item-dto */ "./src/services/side-panels/models/side-panel-item-dto.ts");
-/* harmony import */ var _ui_panel_item_wrapper_panel_item_wrapper_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui/panel-item-wrapper/panel-item-wrapper.component */ "./src/services/side-panels/ui/panel-item-wrapper/panel-item-wrapper.component.tsx");
-/* harmony import */ var _ui_icon_wrapper_icon_wrapper_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ui/icon-wrapper/icon-wrapper.component */ "./src/services/side-panels/ui/icon-wrapper/icon-wrapper.component.tsx");
-/* harmony import */ var _models_item_wrapper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./models/item-wrapper */ "./src/services/side-panels/models/item-wrapper.ts");
-
+/* harmony import */ var _ui_toggel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui/toggel */ "./src/services/side-panels/ui/toggel.tsx");
+/* harmony import */ var _models_item_wrapper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./models/item-wrapper */ "./src/services/side-panels/models/item-wrapper.ts");
 
 
 
@@ -651,9 +635,9 @@ class SidePanelsManager {
         if (SidePanelsManager.validateItem(item)) {
             const newPanelItem = new _models_side_panel_item_dto__WEBPACK_IMPORTED_MODULE_2__.SidePanelItem(item);
             const { componentRef, removeComponentFunc } = this.injectPanelComponent(newPanelItem);
-            const newItemWrapper = new _models_item_wrapper__WEBPACK_IMPORTED_MODULE_5__.ItemWrapper(newPanelItem, componentRef, removeComponentFunc);
+            const newItemWrapper = new _models_item_wrapper__WEBPACK_IMPORTED_MODULE_4__.ItemWrapper(newPanelItem, componentRef, removeComponentFunc);
             if (item.renderIcon) {
-                newItemWrapper.removeIconComponentFn = this.injectIconComponent(newItemWrapper);
+                newItemWrapper.removeIconComponentFunc = this.injectIconComponent(newItemWrapper);
             }
             this.componentsRegistry.set(newItemWrapper.id, newItemWrapper);
             this.logger.debug('New Panel Item Added', item);
@@ -666,8 +650,8 @@ class SidePanelsManager {
         if (item) {
             if (this.isItemActive(itemId))
                 this.deactivateItem(itemId);
-            item.removePanelComponentFn();
-            item.removeIconComponentFn();
+            item.removePanelComponentFunc();
+            item.removeIconComponentFunc();
             this.componentsRegistry.delete(itemId);
         }
         else {
@@ -693,7 +677,7 @@ class SidePanelsManager {
                 this.deactivateItem(this.activePanels[oppositePosition].id);
             }
             // Update new item as active
-            itemMetadata.panelItemComponentRef.current?.toggle(switchMode);
+            itemMetadata.componentRef.current?.toggle(switchMode);
             this.expand(position, expandMode);
             this.activePanels[position] = itemMetadata;
             itemMetadata.item.onActivate?.();
@@ -708,7 +692,7 @@ class SidePanelsManager {
             if (!this.isItemActive(itemId))
                 return;
             const { position } = itemMetadata.item;
-            this.activePanels[position]?.panelItemComponentRef.current?.toggle(switchMode);
+            this.activePanels[position]?.componentRef.current?.toggle(switchMode);
             this.collapse(position);
             this.activePanels[position] = null;
             itemMetadata.item.onDeactivate?.();
@@ -743,15 +727,14 @@ class SidePanelsManager {
     injectIconComponent(panelItemData) {
         const { id, item } = panelItemData;
         const IconComponent = item.renderIcon;
-        const componentRef = (0,preact__WEBPACK_IMPORTED_MODULE_0__.createRef)();
-        const togglePanelFunc = item.onToggleIcon || (() => this.toggle(id));
+        const togglePanelFunc = () => this.toggle(id);
         return this.player.ui.addComponent({
             label: `Side-Panel-Icon-${item.label}`,
             presets: item.presets,
             area: ReservedPresetAreas.TopBarRightControls,
             get: function MyComponent() {
-                return ((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_ui_icon_wrapper_icon_wrapper_component__WEBPACK_IMPORTED_MODULE_4__.IconWrapper, { ref: componentRef, onClick: togglePanelFunc },
-                    (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(IconComponent, { isActive: false })));
+                return ((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("div", { onClick: togglePanelFunc },
+                    (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(IconComponent, null)));
             }
         });
     }
@@ -764,8 +747,8 @@ class SidePanelsManager {
             presets,
             area: SidePanelsManager.getPanelArea(position),
             get: () => {
-                return ((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_ui_panel_item_wrapper_panel_item_wrapper_component__WEBPACK_IMPORTED_MODULE_3__.PanelItemWrapper, { ref: componentRef },
-                    (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(SidePanelComponent, { isActive: false })));
+                return ((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_ui_toggel__WEBPACK_IMPORTED_MODULE_3__.Toggle, { ref: componentRef },
+                    (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(SidePanelComponent, null)));
             }
         });
         return { componentRef, removeComponentFunc };
@@ -781,7 +764,7 @@ class SidePanelsManager {
         return !!(label &&
             Object.values(SidePanelPositions).includes(position) &&
             Object.values(SidePanelModes).includes(expandMode) &&
-            presets.every((preset) => Object.values(ReservedPresetNames).includes(preset)) &&
+            presets.every(preset => Object.values(ReservedPresetNames).includes(preset)) &&
             typeof renderContent === 'function' &&
             (typeof renderIcon === 'function' || renderIcon === undefined) &&
             (typeof onActivate === 'function' || onActivate === undefined) &&
@@ -792,54 +775,19 @@ class SidePanelsManager {
 
 /***/ }),
 
-/***/ "./src/services/side-panels/ui/icon-wrapper/icon-wrapper.component.tsx":
-/*!*****************************************************************************!*\
-  !*** ./src/services/side-panels/ui/icon-wrapper/icon-wrapper.component.tsx ***!
-  \*****************************************************************************/
+/***/ "./src/services/side-panels/ui/toggel.tsx":
+/*!************************************************!*\
+  !*** ./src/services/side-panels/ui/toggel.tsx ***!
+  \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "IconWrapper": () => (/* binding */ IconWrapper)
+/* harmony export */   "Toggle": () => (/* binding */ Toggle)
 /* harmony export */ });
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "preact");
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(preact__WEBPACK_IMPORTED_MODULE_0__);
-
-/**
- * Toggle component rapper
- * @internal
- */
-class IconWrapper extends preact__WEBPACK_IMPORTED_MODULE_0__.Component {
-    constructor() {
-        super();
-        this.state = { on: false };
-    }
-    toggle() {
-        this.setState((state) => {
-            return { on: !state.on };
-        });
-    }
-    render() {
-        return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("div", { onClick: this.props.onClick }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.cloneElement)(this.props.children, { isActive: this.state.on }));
-    }
-}
-
-
-/***/ }),
-
-/***/ "./src/services/side-panels/ui/panel-item-wrapper/panel-item-wrapper.component.tsx":
-/*!*****************************************************************************************!*\
-  !*** ./src/services/side-panels/ui/panel-item-wrapper/panel-item-wrapper.component.tsx ***!
-  \*****************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "PanelItemWrapper": () => (/* binding */ PanelItemWrapper)
-/* harmony export */ });
-/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "preact");
-/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(preact__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _panel_item_wrapper_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./panel-item-wrapper.component.scss */ "./src/services/side-panels/ui/panel-item-wrapper/panel-item-wrapper.component.scss");
+/* harmony import */ var _toggel_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./toggel.scss */ "./src/services/side-panels/ui/toggel.scss");
 /* harmony import */ var kaltura_player_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! kaltura-player-js */ "kaltura-player-js");
 /* harmony import */ var kaltura_player_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(kaltura_player_js__WEBPACK_IMPORTED_MODULE_2__);
 
@@ -850,7 +798,7 @@ const { defaultTransitionTime } = kaltura_player_js__WEBPACK_IMPORTED_MODULE_2__
  * Toggle component rapper
  * @internal
  */
-class PanelItemWrapper extends preact__WEBPACK_IMPORTED_MODULE_0__.Component {
+class Toggle extends preact__WEBPACK_IMPORTED_MODULE_0__.Component {
     constructor() {
         super();
         this.state = { on: false };
@@ -863,7 +811,7 @@ class PanelItemWrapper extends preact__WEBPACK_IMPORTED_MODULE_0__.Component {
         });
     }
     render() {
-        return ((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("div", { className: [_panel_item_wrapper_component_scss__WEBPACK_IMPORTED_MODULE_1__.sidePanel, this.state.on ? _panel_item_wrapper_component_scss__WEBPACK_IMPORTED_MODULE_1__.active : ''].join(' '), style: !this.state.on && !this.switchMode ? { transition: `visibility ${defaultTransitionTime}ms` } : '' }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.cloneElement)(this.props.children, { isActive: this.state.on })));
+        return ((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("div", { className: [_toggel_scss__WEBPACK_IMPORTED_MODULE_1__.sidePanel, this.state.on ? _toggel_scss__WEBPACK_IMPORTED_MODULE_1__.active : ''].join(' '), style: !this.state.on && !this.switchMode ? { transition: `visibility ${defaultTransitionTime}ms` } : '' }, this.props.children));
     }
 }
 
