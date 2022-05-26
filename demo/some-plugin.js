@@ -27,7 +27,12 @@ export class somePlugin extends BasePlugin {
       renderIcon: IconComponent,
       position: 'left',
       presets: ['Playback', 'Live'],
-      renderContent: PanelItemComponent
+      renderContent: PanelItemComponent,
+      onToggleIcon: () => {
+        this.player.getService('sidePanelsManager').isItemActive(panelItemAId)
+          ? this.player.getService('sidePanelsManager').deactivateItem(panelItemAId)
+          : this.player.getService('sidePanelsManager').activateItem(panelItemAId);
+      }
     });
 
     const PanelItemBId = this.player.getService('sidePanelsManager').addItem({

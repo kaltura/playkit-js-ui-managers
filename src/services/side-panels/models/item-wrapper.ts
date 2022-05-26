@@ -1,5 +1,6 @@
-import { RefObject } from 'preact';
-import { Toggle } from '../ui/toggel';
+import { RefObject, createRef } from 'preact';
+import { PanelItemWrapper } from '../ui/panel-item-wrapper/panel-item-wrapper.component';
+import { IconWrapper } from '../ui/icon-wrapper/icon-wrapper.component';
 import { SidePanelItem } from './side-panel-item-dto';
 
 /**
@@ -12,15 +13,17 @@ export class ItemWrapper {
   public readonly removePanelComponentFn: () => void;
   public removeIconComponentFunc: () => void;
   public readonly item: SidePanelItem;
-  public readonly componentRef: RefObject<Toggle>;
-  constructor(item: SidePanelItem, componentRef: RefObject<Toggle>, removePanelComponentFunc: () => void) {
+  public readonly panelItemComponentRef: RefObject<PanelItemWrapper>;
+  public iconComponentRefOb: RefObject<IconWrapper> | undefined;
+  constructor(item: SidePanelItem, panelItemComponentRef: RefObject<PanelItemWrapper>, removePanelComponentFunc: () => void) {
     this.id = ++ItemWrapper.nextId;
     this.item = item;
     this.removePanelComponentFn = removePanelComponentFunc;
     this.removeIconComponentFunc = (): void => {
       return;
     };
-    this.componentRef = componentRef;
+    this.panelItemComponentRef = panelItemComponentRef;
+    this.iconComponentRefOb = createRef();
   }
 
   set removeIconComponentFn(removeIconComponentFunc: () => void) {
@@ -29,5 +32,13 @@ export class ItemWrapper {
 
   get removeIconComponentFn(): () => void {
     return this.removeIconComponentFunc;
+  }
+
+  set iconComponentRef(iconComponentRef: RefObject<IconWrapper> | undefined) {
+    this.iconComponentRefOb = iconComponentRef;
+  }
+
+  get iconComponentRef(): RefObject<IconWrapper> | undefined {
+    return this.iconComponentRefOb;
   }
 }

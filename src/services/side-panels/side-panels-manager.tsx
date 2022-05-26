@@ -1,7 +1,8 @@
 import { h, createRef, RefObject, FunctionalComponent, ComponentClass } from 'preact';
 import { ui, KalturaPlayer, Logger, PlaykitUI } from 'kaltura-player-js';
-import { SidePanelItemDto, SidePanelItem } from './models/side-panel-item-dto';
-import { Toggle } from './ui/toggel';
+import { SidePanelItemDto, SidePanelItem, renderContentProps } from './models/side-panel-item-dto';
+import { PanelItemWrapper } from './ui/panel-item-wrapper/panel-item-wrapper.component';
+import { IconWrapper } from './ui/icon-wrapper/icon-wrapper.component';
 import { ItemWrapper } from './models/item-wrapper';
 const { SidePanelModes, SidePanelPositions, ReservedPresetNames, ReservedPresetAreas } = ui;
 
@@ -70,7 +71,7 @@ export class SidePanelsManager {
         this.deactivateItem(this.activePanels[oppositePosition]!.id);
       }
       // Update new item as active
-      itemMetadata.componentRef.current?.toggle(switchMode);
+      itemMetadata.panelItemComponentRef.current?.toggle(switchMode);
       this.expand(position, expandMode);
       this.activePanels[position] = itemMetadata;
       itemMetadata.item.onActivate?.();
@@ -84,7 +85,7 @@ export class SidePanelsManager {
     if (itemMetadata) {
       if (!this.isItemActive(itemId)) return;
       const { position } = itemMetadata.item;
-      this.activePanels[position]?.componentRef.current?.toggle(switchMode);
+      this.activePanels[position]?.panelItemComponentRef.current?.toggle(switchMode);
       this.collapse(position);
       this.activePanels[position] = null;
       itemMetadata.item.onDeactivate?.();
@@ -122,38 +123,39 @@ export class SidePanelsManager {
 
   private injectIconComponent(panelItemData: ItemWrapper): () => void {
     const { id, item } = panelItemData;
-    const IconComponent: ComponentClass | FunctionalComponent = item.renderIcon!;
-    const togglePanelFunc: () => void = () => this.toggle(id);
+    const IconComponent: ComponentClass<renderContentProps> | FunctionalComponent<renderContentProps> = item.renderIcon!;
+    const componentRef: RefObject<IconWrapper> = createRef();
+    const togglePanelFunc: () => void = item.onToggleIcon || (() => this.toggle(id));
     return this.player.ui.addComponent({
       label: `Side-Panel-Icon-${item.label}`,
       presets: item.presets,
       area: ReservedPresetAreas.TopBarRightControls,
       get: function MyComponent() {
         return (
-          <div onClick={togglePanelFunc}>
-            <IconComponent />
-          </div>
+          <IconWrapper ref={componentRef} onClick={togglePanelFunc}>
+            <IconComponent isActive={false} />
+          </IconWrapper>
         );
       }
     });
   }
 
   private injectPanelComponent(item: SidePanelItemDto): {
-    componentRef: RefObject<Toggle>;
+    componentRef: RefObject<PanelItemWrapper>;
     removeComponentFunc: () => void;
   } {
     const { label, position, renderContent, presets } = item;
-    const SidePanelComponent: ComponentClass | FunctionalComponent = renderContent;
-    const componentRef: RefObject<Toggle> = createRef();
+    const SidePanelComponent: ComponentClass<renderContentProps> | FunctionalComponent<renderContentProps> = renderContent;
+    const componentRef: RefObject<PanelItemWrapper> = createRef();
     const removeComponentFunc = this.player.ui.addComponent({
       label: `Side-panel-${position}-${label}`,
       presets,
       area: SidePanelsManager.getPanelArea(position),
       get: () => {
         return (
-          <Toggle ref={componentRef}>
-            <SidePanelComponent />
-          </Toggle>
+          <PanelItemWrapper ref={componentRef}>
+            <SidePanelComponent isActive={false} />
+          </PanelItemWrapper>
         );
       }
     });

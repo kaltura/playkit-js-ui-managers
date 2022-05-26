@@ -1,5 +1,5 @@
-import { h, Component, ComponentChild, RefObject } from 'preact';
-import * as styles from './toggel.scss';
+import { h, Component, ComponentChild, RefObject, cloneElement, VNode } from 'preact';
+import * as styles from './panel-item-wrapper.component.scss';
 import { ui } from 'kaltura-player-js';
 
 const { defaultTransitionTime } = ui.style;
@@ -9,14 +9,14 @@ type ToggleState = {
 };
 
 type ToggleProps = {
-  ref: RefObject<Toggle>;
+  ref: RefObject<PanelItemWrapper>;
 };
 
 /**
  * Toggle component rapper
  * @internal
  */
-export class Toggle extends Component<ToggleProps, ToggleState> {
+export class PanelItemWrapper extends Component<ToggleProps, ToggleState> {
   switchMode: boolean;
   constructor() {
     super();
@@ -37,7 +37,7 @@ export class Toggle extends Component<ToggleProps, ToggleState> {
         className={[styles.sidePanel, this.state.on ? styles.active : ''].join(' ')}
         style={!this.state.on && !this.switchMode ? { transition: `visibility ${defaultTransitionTime}ms` } : ''}
       >
-        {this.props.children}
+        {cloneElement(this.props.children as VNode, { isActive: this.state.on })}
       </div>
     );
   }
