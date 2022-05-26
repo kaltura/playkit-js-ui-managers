@@ -1,5 +1,6 @@
 {
   "root": true,
+  "parser": "@typescript-eslint/parser",
   "extends": [
     "preact",
     "eslint:recommended",
@@ -13,6 +14,7 @@
     "@typescript-eslint/explicit-function-return-type": "warn",
     "@typescript-eslint/no-non-null-assertion": "off",
     "block-scoped-var": "error",
+    "arrow-parens": "error",
     "eqeqeq": "error",
     "no-var": "error",
     "no-console": "error",
@@ -31,6 +33,5 @@
         "property": "only"
       }
     ]
-  },
-  "parser": "@typescript-eslint/parser"
+  }
 }
