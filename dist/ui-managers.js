@@ -650,10 +650,12 @@ class SidePanelsManager {
     addItem(item) {
         if (SidePanelsManager.validateItem(item)) {
             const newPanelItem = new _models_side_panel_item_dto__WEBPACK_IMPORTED_MODULE_2__.SidePanelItem(item);
-            const { componentRef, removeComponentFunc } = this.injectPanelComponent(newPanelItem);
-            const newItemWrapper = new _models_item_wrapper__WEBPACK_IMPORTED_MODULE_5__.ItemWrapper(newPanelItem, componentRef, removeComponentFunc);
+            const { componentRef, removeComponentFn } = this.injectPanelComponent(newPanelItem);
+            const newItemWrapper = new _models_item_wrapper__WEBPACK_IMPORTED_MODULE_5__.ItemWrapper(newPanelItem, componentRef, removeComponentFn);
             if (item.renderIcon) {
-                newItemWrapper.removeIconComponentFn = this.injectIconComponent(newItemWrapper);
+                const { componentRef, removeComponentFn } = this.injectIconComponent(newItemWrapper);
+                newItemWrapper.removeIconComponentFn = removeComponentFn;
+                newItemWrapper.iconComponentRef = componentRef;
             }
             this.componentsRegistry.set(newItemWrapper.id, newItemWrapper);
             this.logger.debug('New Panel Item Added', item);
@@ -693,7 +695,8 @@ class SidePanelsManager {
                 this.deactivateItem(this.activePanels[oppositePosition].id);
             }
             // Update new item as active
-            itemMetadata.panelItemComponentRef.current?.toggle(switchMode);
+            itemMetadata.panelItemComponentRef.current.toggle(switchMode);
+            itemMetadata.iconComponentRef?.current.toggle();
             this.expand(position, expandMode);
             this.activePanels[position] = itemMetadata;
             itemMetadata.item.onActivate?.();
@@ -708,7 +711,8 @@ class SidePanelsManager {
             if (!this.isItemActive(itemId))
                 return;
             const { position } = itemMetadata.item;
-            this.activePanels[position]?.panelItemComponentRef.current?.toggle(switchMode);
+            this.activePanels[position]?.panelItemComponentRef.current.toggle(switchMode);
+            itemMetadata.iconComponentRef?.current.toggle();
             this.collapse(position);
             this.activePanels[position] = null;
             itemMetadata.item.onDeactivate?.();
@@ -745,7 +749,7 @@ class SidePanelsManager {
         const IconComponent = item.renderIcon;
         const componentRef = (0,preact__WEBPACK_IMPORTED_MODULE_0__.createRef)();
         const togglePanelFunc = item.onToggleIcon || (() => this.toggle(id));
-        return this.player.ui.addComponent({
+        const removeComponentFn = this.player.ui.addComponent({
             label: `Side-Panel-Icon-${item.label}`,
             presets: item.presets,
             area: ReservedPresetAreas.TopBarRightControls,
@@ -754,12 +758,13 @@ class SidePanelsManager {
                     (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(IconComponent, { isActive: false })));
             }
         });
+        return { componentRef, removeComponentFn };
     }
     injectPanelComponent(item) {
         const { label, position, renderContent, presets } = item;
         const SidePanelComponent = renderContent;
         const componentRef = (0,preact__WEBPACK_IMPORTED_MODULE_0__.createRef)();
-        const removeComponentFunc = this.player.ui.addComponent({
+        const removeComponentFn = this.player.ui.addComponent({
             label: `Side-panel-${position}-${label}`,
             presets,
             area: SidePanelsManager.getPanelArea(position),
@@ -768,7 +773,7 @@ class SidePanelsManager {
                     (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(SidePanelComponent, { isActive: false })));
             }
         });
-        return { componentRef, removeComponentFunc };
+        return { componentRef, removeComponentFn };
     }
     static getPanelArea(position) {
         return `SidePanel${position.charAt(0).toUpperCase()}${position.slice(1)}`;
@@ -861,6 +866,9 @@ class PanelItemWrapper extends preact__WEBPACK_IMPORTED_MODULE_0__.Component {
         this.setState((state) => {
             return { on: !state.on };
         });
+    }
+    update() {
+        this.forceUpdate();
     }
     render() {
         return ((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("div", { className: [_panel_item_wrapper_component_scss__WEBPACK_IMPORTED_MODULE_1__.sidePanel, this.state.on ? _panel_item_wrapper_component_scss__WEBPACK_IMPORTED_MODULE_1__.active : ''].join(' '), style: !this.state.on && !this.switchMode ? { transition: `visibility ${defaultTransitionTime}ms` } : '' }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.cloneElement)(this.props.children, { isActive: this.state.on })));

@@ -31,6 +31,10 @@ export class PanelItemWrapper extends Component<ToggleProps, ToggleState> {
     });
   }
 
+  update(): void {
+    this.forceUpdate();
+  }
+
   render(): ComponentChild {
     return (
       <div

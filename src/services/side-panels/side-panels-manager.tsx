@@ -29,10 +29,12 @@ export class SidePanelsManager {
   public addItem(item: SidePanelItemDto): number | void {
     if (SidePanelsManager.validateItem(item)) {
       const newPanelItem: SidePanelItem = new SidePanelItem(item);
-      const { componentRef, removeComponentFunc } = this.injectPanelComponent(newPanelItem);
-      const newItemWrapper: ItemWrapper = new ItemWrapper(newPanelItem, componentRef, removeComponentFunc);
+      const { componentRef, removeComponentFn } = this.injectPanelComponent(newPanelItem);
+      const newItemWrapper: ItemWrapper = new ItemWrapper(newPanelItem, componentRef, removeComponentFn);
       if (item.renderIcon) {
-        newItemWrapper.removeIconComponentFn = this.injectIconComponent(newItemWrapper);
+        const { componentRef, removeComponentFn } = this.injectIconComponent(newItemWrapper);
+        newItemWrapper.removeIconComponentFn = removeComponentFn;
+        newItemWrapper.iconComponentRef = componentRef;
       }
       this.componentsRegistry.set(newItemWrapper.id, newItemWrapper);
       this.logger.debug('New Panel Item Added', item);
@@ -71,7 +73,8 @@ export class SidePanelsManager {
         this.deactivateItem(this.activePanels[oppositePosition]!.id);
       }
       // Update new item as active
-      itemMetadata.panelItemComponentRef.current?.toggle(switchMode);
+      itemMetadata.panelItemComponentRef.current!.toggle(switchMode);
+      itemMetadata.iconComponentRef?.current!.toggle();
       this.expand(position, expandMode);
       this.activePanels[position] = itemMetadata;
       itemMetadata.item.onActivate?.();
@@ -85,7 +88,8 @@ export class SidePanelsManager {
     if (itemMetadata) {
       if (!this.isItemActive(itemId)) return;
       const { position } = itemMetadata.item;
-      this.activePanels[position]?.panelItemComponentRef.current?.toggle(switchMode);
+      itemMetadata.panelItemComponentRef.current!.toggle(switchMode);
+      itemMetadata.iconComponentRef?.current!.toggle();
       this.collapse(position);
       this.activePanels[position] = null;
       itemMetadata.item.onDeactivate?.();
@@ -96,7 +100,20 @@ export class SidePanelsManager {
 
   public isItemActive(itemId: number): boolean {
     const itemMetadata: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
-    return itemMetadata ? this.activePanels[itemMetadata.item.position]?.id === itemId : false;
+    if (itemMetadata) {
+      return this.activePanels[itemMetadata.item.position]?.id === itemId;
+    }
+    this.logger.warn(`${itemId} is not registered`);
+    return false;
+  }
+
+  public update(itemId: number): void {
+    const itemMetadata: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
+    if (itemMetadata) {
+      itemMetadata.panelItemComponentRef.current!.update();
+    } else {
+      this.logger.warn(`${itemId} is not registered`);
+    }
   }
 
   public reset(): void {
@@ -121,12 +138,15 @@ export class SidePanelsManager {
     this.player.ui.store.dispatch(ui.reducers.shell.actions.updateSidePanelMode(position, SidePanelModes.HIDDEN));
   }
 
-  private injectIconComponent(panelItemData: ItemWrapper): () => void {
+  private injectIconComponent(panelItemData: ItemWrapper): {
+    componentRef: RefObject<IconWrapper>;
+    removeComponentFn: () => void;
+  } {
     const { id, item } = panelItemData;
     const IconComponent: ComponentClass<renderContentProps> | FunctionalComponent<renderContentProps> = item.renderIcon!;
     const componentRef: RefObject<IconWrapper> = createRef();
     const togglePanelFunc: () => void = item.onToggleIcon || ((): void => this.toggle(id));
-    return this.player.ui.addComponent({
+    const removeComponentFn = this.player.ui.addComponent({
       label: `Side-Panel-Icon-${item.label}`,
       presets: item.presets,
       area: ReservedPresetAreas.TopBarRightControls,
@@ -138,16 +158,17 @@ export class SidePanelsManager {
         );
       }
     });
+    return { componentRef, removeComponentFn };
   }
 
   private injectPanelComponent(item: SidePanelItemDto): {
     componentRef: RefObject<PanelItemWrapper>;
-    removeComponentFunc: () => void;
+    removeComponentFn: () => void;
   } {
     const { label, position, renderContent, presets } = item;
     const SidePanelComponent: ComponentClass<renderContentProps> | FunctionalComponent<renderContentProps> = renderContent;
     const componentRef: RefObject<PanelItemWrapper> = createRef();
-    const removeComponentFunc = this.player.ui.addComponent({
+    const removeComponentFn = this.player.ui.addComponent({
       label: `Side-panel-${position}-${label}`,
       presets,
       area: SidePanelsManager.getPanelArea(position),
@@ -159,8 +180,7 @@ export class SidePanelsManager {
         );
       }
     });
-
-    return { componentRef, removeComponentFunc };
+    return { componentRef, removeComponentFn };
   }
 
   private static getPanelArea(position: string): string {
