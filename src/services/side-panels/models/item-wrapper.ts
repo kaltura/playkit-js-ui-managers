@@ -11,34 +11,34 @@ export class ItemWrapper {
   private static nextId = 0;
   public readonly id: number;
   public readonly removePanelComponentFn: () => void;
-  public removeIconComponentFunc: () => void;
+  private _removeIconComponentFu: () => void;
   public readonly item: SidePanelItem;
   public readonly panelItemComponentRef: RefObject<PanelItemWrapper>;
-  public iconComponentRefOb: RefObject<IconWrapper> | undefined;
+  private _iconComponentRef: RefObject<IconWrapper> | undefined;
   constructor(item: SidePanelItem, panelItemComponentRef: RefObject<PanelItemWrapper>, removePanelComponentFunc: () => void) {
     this.id = ++ItemWrapper.nextId;
     this.item = item;
     this.removePanelComponentFn = removePanelComponentFunc;
-    this.removeIconComponentFunc = (): void => {
+    this._removeIconComponentFu = (): void => {
       return;
     };
     this.panelItemComponentRef = panelItemComponentRef;
-    this.iconComponentRefOb = createRef();
+    this._iconComponentRef = createRef();
   }
 
-  set removeIconComponentFn(removeIconComponentFunc: () => void) {
-    this.removeIconComponentFunc = removeIconComponentFunc;
+  public set removeIconComponentFn(removeIconComponentFunc: () => void) {
+    this._removeIconComponentFu = removeIconComponentFunc;
   }
 
-  get removeIconComponentFn(): () => void {
-    return this.removeIconComponentFunc;
+  public get removeIconComponentFn(): () => void {
+    return this._removeIconComponentFu;
   }
 
-  set iconComponentRef(iconComponentRef: RefObject<IconWrapper> | undefined) {
-    this.iconComponentRefOb = iconComponentRef;
+  public set iconComponentRef(iconComponentRef: RefObject<IconWrapper> | undefined) {
+    this._iconComponentRef = iconComponentRef;
   }
 
-  get iconComponentRef(): RefObject<IconWrapper> | undefined {
-    return this.iconComponentRefOb;
+  public get iconComponentRef(): RefObject<IconWrapper> | undefined {
+    return this._iconComponentRef;
   }
 }

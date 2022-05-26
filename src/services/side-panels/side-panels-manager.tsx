@@ -125,7 +125,7 @@ export class SidePanelsManager {
     const { id, item } = panelItemData;
     const IconComponent: ComponentClass<renderContentProps> | FunctionalComponent<renderContentProps> = item.renderIcon!;
     const componentRef: RefObject<IconWrapper> = createRef();
-    const togglePanelFunc: () => void = item.onToggleIcon || (() => this.toggle(id));
+    const togglePanelFunc: () => void = item.onToggleIcon || ((): void => this.toggle(id));
     return this.player.ui.addComponent({
       label: `Side-Panel-Icon-${item.label}`,
       presets: item.presets,
