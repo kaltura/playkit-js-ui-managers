@@ -31,7 +31,7 @@ export class somePlugin extends BasePlugin {
       renderContent: PanelItemComponent,
       onActivate: () => { console.log('panel has now been activated') },
       onDeactivate: () => { console.log('panel has now been deactivated') },
-        onToggleIcon: () => {
+      onToggleIcon: () => {
             this.player.getService('sidePanelsManager').isItemActive(panelItemAId)
                 ? this.player.getService('sidePanelsManager').deactivateItem(panelItemAId)
                 : this.player.getService('sidePanelsManager').activateItem(panelItemAId);
