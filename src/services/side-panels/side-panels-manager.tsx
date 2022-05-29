@@ -1,6 +1,6 @@
 import { h, createRef, RefObject, FunctionalComponent, ComponentClass } from 'preact';
 import { ui, KalturaPlayer, Logger, PlaykitUI } from 'kaltura-player-js';
-import { SidePanelItemDto, SidePanelItem, renderContentProps } from './models/side-panel-item-dto';
+import { SidePanelItemDto, SidePanelItem, PanelComponentProps } from './models/side-panel-item-dto';
 import { PanelItemWrapper } from './ui/panel-item-wrapper/panel-item-wrapper.component';
 import { IconWrapper } from './ui/icon-wrapper/icon-wrapper.component';
 import { ItemWrapper } from './models/item-wrapper';
@@ -32,7 +32,7 @@ export class SidePanelsManager {
       const { componentRef, removeComponentFn } = this.injectPanelComponent(newPanelItem);
       const currentPanelItemId = ItemWrapper.peekNextId();
       let newItemWrapper: ItemWrapper;
-      if (item.renderIcon) {
+      if (item.iconComponent) {
         const { iconComponentRef, removeIconComponentFn } = this.injectIconComponent(newPanelItem, currentPanelItemId);
         newItemWrapper = new ItemWrapper(newPanelItem, componentRef, removeComponentFn, iconComponentRef, removeIconComponentFn);
       } else {
@@ -147,8 +147,8 @@ export class SidePanelsManager {
     iconComponentRef: RefObject<IconWrapper>;
     removeIconComponentFn: () => void;
   } {
-    const { presets, label, renderIcon } = panelItemData;
-    const IconComponent: ComponentClass<renderContentProps> | FunctionalComponent<renderContentProps> = renderIcon!;
+    const { presets, label, iconComponent } = panelItemData;
+    const IconComponent: ComponentClass<PanelComponentProps> | FunctionalComponent<PanelComponentProps> = iconComponent!;
     const iconComponentRef: RefObject<IconWrapper> = createRef();
     const togglePanelFunc: () => void = (): void => this.toggle(panelItemId);
     const removeIconComponentFn = this.player.ui.addComponent({
@@ -170,8 +170,8 @@ export class SidePanelsManager {
     componentRef: RefObject<PanelItemWrapper>;
     removeComponentFn: () => void;
   } {
-    const { label, position, renderContent, presets } = item;
-    const SidePanelComponent: ComponentClass<renderContentProps> | FunctionalComponent<renderContentProps> = renderContent;
+    const { label, position, panelComponent, presets } = item;
+    const SidePanelComponent: ComponentClass<PanelComponentProps> | FunctionalComponent<PanelComponentProps> = panelComponent;
     const componentRef: RefObject<PanelItemWrapper> = createRef();
     const removeComponentFn = this.player.ui.addComponent({
       label: `Side-panel-${position}-${label}`,
@@ -197,14 +197,14 @@ export class SidePanelsManager {
   }
 
   private static validateItem(item: SidePanelItemDto): boolean {
-    const { label, renderContent, renderIcon, position, expandMode, onActivate, onDeactivate, presets } = item;
+    const { label, panelComponent, iconComponent, position, expandMode, onActivate, onDeactivate, presets } = item;
     return !!(
       label &&
       Object.values(SidePanelPositions).includes(position) &&
       Object.values(SidePanelModes).includes(expandMode) &&
       presets.every((preset) => Object.values(ReservedPresetNames).includes(preset)) &&
-      typeof renderContent === 'function' &&
-      (typeof renderIcon === 'function' || renderIcon === undefined) &&
+      typeof panelComponent === 'function' &&
+      (typeof iconComponent === 'function' || iconComponent === undefined) &&
       (typeof onActivate === 'function' || onActivate === undefined) &&
       (typeof onDeactivate === 'function' || onDeactivate === undefined)
     );

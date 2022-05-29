@@ -1,16 +1,16 @@
 import { ComponentClass, FunctionalComponent } from 'preact';
 import { PlaykitUI } from 'kaltura-player-js';
 
-export type renderContentProps = {
+export type PanelComponentProps = {
   isActive: boolean;
 };
 
-export type RenderIconProps = renderContentProps;
+export type IconComponentProps = PanelComponentProps;
 
 export interface SidePanelItemDto {
   readonly label: string;
-  readonly renderIcon?: ComponentClass<RenderIconProps> | FunctionalComponent<RenderIconProps>;
-  readonly renderContent: ComponentClass<renderContentProps> | FunctionalComponent<renderContentProps>;
+  readonly iconComponent?: ComponentClass<IconComponentProps> | FunctionalComponent<IconComponentProps>;
+  readonly panelComponent: ComponentClass<PanelComponentProps> | FunctionalComponent<PanelComponentProps>;
   readonly presets: PlaykitUI.ReservedPresetName[];
   readonly position: PlaykitUI.SidePanelPosition;
   readonly expandMode: PlaykitUI.SidePanelMode;
@@ -21,8 +21,8 @@ export interface SidePanelItemDto {
 
 export class SidePanelItem implements SidePanelItemDto {
   public readonly label: string;
-  public readonly renderIcon?: ComponentClass<RenderIconProps> | FunctionalComponent<RenderIconProps>;
-  public readonly renderContent: ComponentClass<renderContentProps> | FunctionalComponent<renderContentProps>;
+  public readonly iconComponent?: ComponentClass<IconComponentProps> | FunctionalComponent<IconComponentProps>;
+  public readonly panelComponent: ComponentClass<PanelComponentProps> | FunctionalComponent<PanelComponentProps>;
   public readonly presets: PlaykitUI.ReservedPresetName[];
   public readonly position: PlaykitUI.SidePanelPosition;
   public readonly expandMode: PlaykitUI.SidePanelMode;
@@ -31,8 +31,8 @@ export class SidePanelItem implements SidePanelItemDto {
 
   constructor(item: SidePanelItemDto) {
     this.label = item.label;
-    this.renderIcon = item.renderIcon;
-    this.renderContent = item.renderContent;
+    this.iconComponent = item.iconComponent;
+    this.panelComponent = item.panelComponent;
     this.presets = item.presets;
     this.position = item.position;
     this.expandMode = item.expandMode;
