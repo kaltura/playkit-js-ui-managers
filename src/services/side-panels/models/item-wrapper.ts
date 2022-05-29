@@ -11,10 +11,10 @@ export class ItemWrapper {
   private static nextId = 0;
   public readonly id: number;
   public readonly removePanelComponentFn: () => void;
-  public removeIconComponentFn: () => void;
+  public readonly removeIconComponentFn: () => void;
   public readonly item: SidePanelItem;
   public readonly panelItemComponentRef: RefObject<PanelItemWrapper>;
-  public iconComponentRef: RefObject<IconWrapper> | undefined;
+  public readonly iconComponentRef: RefObject<IconWrapper> | undefined;
   constructor(
     item: SidePanelItem,
     panelItemComponentRef: RefObject<PanelItemWrapper>,
