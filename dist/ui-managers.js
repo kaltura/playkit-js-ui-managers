@@ -546,35 +546,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ItemWrapper": () => (/* binding */ ItemWrapper)
 /* harmony export */ });
-/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "preact");
-/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(preact__WEBPACK_IMPORTED_MODULE_0__);
-
 /**
  * Panel item metadata
  * @internal
  */
 class ItemWrapper {
-    constructor(item, panelItemComponentRef, removePanelComponentFunc) {
+    constructor(item, panelItemComponentRef, removePanelComponentFn, iconComponentRef, removeIconComponentFn) {
         this.id = ++ItemWrapper.nextId;
         this.item = item;
-        this.removePanelComponentFn = removePanelComponentFunc;
-        this._removeIconComponentFu = () => {
-            return;
-        };
+        this.removePanelComponentFn = removePanelComponentFn;
+        this.removeIconComponentFn =
+            removeIconComponentFn ||
+                (() => {
+                    return;
+                });
         this.panelItemComponentRef = panelItemComponentRef;
-        this._iconComponentRef = (0,preact__WEBPACK_IMPORTED_MODULE_0__.createRef)();
+        this.iconComponentRef = iconComponentRef;
     }
-    set removeIconComponentFn(removeIconComponentFunc) {
-        this._removeIconComponentFu = removeIconComponentFunc;
-    }
-    get removeIconComponentFn() {
-        return this._removeIconComponentFu;
-    }
-    set iconComponentRef(iconComponentRef) {
-        this._iconComponentRef = iconComponentRef;
-    }
-    get iconComponentRef() {
-        return this._iconComponentRef;
+    static peekNextId() {
+        return ItemWrapper.nextId + 1;
     }
 }
 ItemWrapper.nextId = 0;
@@ -651,11 +641,14 @@ class SidePanelsManager {
         if (SidePanelsManager.validateItem(item)) {
             const newPanelItem = new _models_side_panel_item_dto__WEBPACK_IMPORTED_MODULE_2__.SidePanelItem(item);
             const { componentRef, removeComponentFn } = this.injectPanelComponent(newPanelItem);
-            const newItemWrapper = new _models_item_wrapper__WEBPACK_IMPORTED_MODULE_5__.ItemWrapper(newPanelItem, componentRef, removeComponentFn);
+            const currentPanelItemId = _models_item_wrapper__WEBPACK_IMPORTED_MODULE_5__.ItemWrapper.peekNextId();
+            let newItemWrapper;
             if (item.renderIcon) {
-                const { componentRef, removeComponentFn } = this.injectIconComponent(newItemWrapper);
-                newItemWrapper.removeIconComponentFn = removeComponentFn;
-                newItemWrapper.iconComponentRef = componentRef;
+                const { iconComponentRef, removeIconComponentFn } = this.injectIconComponent(newPanelItem, currentPanelItemId);
+                newItemWrapper = new _models_item_wrapper__WEBPACK_IMPORTED_MODULE_5__.ItemWrapper(newPanelItem, componentRef, removeComponentFn, iconComponentRef, removeIconComponentFn);
+            }
+            else {
+                newItemWrapper = new _models_item_wrapper__WEBPACK_IMPORTED_MODULE_5__.ItemWrapper(newPanelItem, componentRef, removeComponentFn);
             }
             this.componentsRegistry.set(newItemWrapper.id, newItemWrapper);
             this.logger.debug('New Panel Item Added', item);
@@ -711,7 +704,7 @@ class SidePanelsManager {
             if (!this.isItemActive(itemId))
                 return;
             const { position } = itemMetadata.item;
-            this.activePanels[position]?.panelItemComponentRef.current.toggle(switchMode);
+            itemMetadata.panelItemComponentRef.current.toggle(switchMode);
             itemMetadata.iconComponentRef?.current.toggle();
             this.collapse(position);
             this.activePanels[position] = null;
@@ -723,7 +716,20 @@ class SidePanelsManager {
     }
     isItemActive(itemId) {
         const itemMetadata = this.componentsRegistry.get(itemId);
-        return itemMetadata ? this.activePanels[itemMetadata.item.position]?.id === itemId : false;
+        if (itemMetadata) {
+            return this.activePanels[itemMetadata.item.position]?.id === itemId;
+        }
+        this.logger.warn(`${itemId} is not registered`);
+        return false;
+    }
+    update(itemId) {
+        const itemMetadata = this.componentsRegistry.get(itemId);
+        if (itemMetadata) {
+            itemMetadata.panelItemComponentRef.current.update();
+        }
+        else {
+            this.logger.warn(`${itemId} is not registered`);
+        }
     }
     reset() {
         for (const value of this.componentsRegistry.values()) {
@@ -744,21 +750,21 @@ class SidePanelsManager {
     collapse(position) {
         this.player.ui.store.dispatch(kaltura_player_js__WEBPACK_IMPORTED_MODULE_1__.ui.reducers.shell.actions.updateSidePanelMode(position, SidePanelModes.HIDDEN));
     }
-    injectIconComponent(panelItemData) {
-        const { id, item } = panelItemData;
-        const IconComponent = item.renderIcon;
-        const componentRef = (0,preact__WEBPACK_IMPORTED_MODULE_0__.createRef)();
-        const togglePanelFunc = item.onToggleIcon || (() => this.toggle(id));
-        const removeComponentFn = this.player.ui.addComponent({
-            label: `Side-Panel-Icon-${item.label}`,
-            presets: item.presets,
+    injectIconComponent(panelItemData, panelItemId) {
+        const { presets, label, onToggleIcon, renderIcon } = panelItemData;
+        const IconComponent = renderIcon;
+        const iconComponentRef = (0,preact__WEBPACK_IMPORTED_MODULE_0__.createRef)();
+        const togglePanelFunc = onToggleIcon || (() => this.toggle(panelItemId));
+        const removeIconComponentFn = this.player.ui.addComponent({
+            label: `Side-Panel-Icon-${label}`,
+            presets,
             area: ReservedPresetAreas.TopBarRightControls,
             get: function MyComponent() {
-                return ((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_ui_icon_wrapper_icon_wrapper_component__WEBPACK_IMPORTED_MODULE_4__.IconWrapper, { ref: componentRef, onClick: togglePanelFunc },
+                return ((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_ui_icon_wrapper_icon_wrapper_component__WEBPACK_IMPORTED_MODULE_4__.IconWrapper, { ref: iconComponentRef, onClick: togglePanelFunc },
                     (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(IconComponent, { isActive: false })));
             }
         });
-        return { componentRef, removeComponentFn };
+        return { iconComponentRef, removeIconComponentFn };
     }
     injectPanelComponent(item) {
         const { label, position, renderContent, presets } = item;

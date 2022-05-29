@@ -26,7 +26,6 @@ export class SidePanelItem implements SidePanelItemDto {
   public readonly presets: PlaykitUI.ReservedPresetName[];
   public readonly position: PlaykitUI.SidePanelPosition;
   public readonly expandMode: PlaykitUI.SidePanelMode;
-  public readonly onToggleIcon?: () => void;
   public readonly onActivate?: () => void;
   public readonly onDeactivate?: () => void;
 
@@ -37,7 +36,6 @@ export class SidePanelItem implements SidePanelItemDto {
     this.presets = item.presets;
     this.position = item.position;
     this.expandMode = item.expandMode;
-    this.onToggleIcon = item.onToggleIcon;
     this.onActivate = item.onActivate;
     this.onDeactivate = item.onDeactivate;
   }

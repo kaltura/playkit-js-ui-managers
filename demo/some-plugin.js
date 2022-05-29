@@ -30,12 +30,7 @@ export class somePlugin extends BasePlugin {
       presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
       renderContent: PanelItemComponent,
       onActivate: () => { console.log('panel has now been activated') },
-      onDeactivate: () => { console.log('panel has now been deactivated') },
-      onToggleIcon: () => {
-            this.player.getService('sidePanelsManager').isItemActive(panelItemAId)
-                ? this.player.getService('sidePanelsManager').deactivateItem(panelItemAId)
-                : this.player.getService('sidePanelsManager').activateItem(panelItemAId);
-        }
+      onDeactivate: () => { console.log('panel has now been deactivated') }
     });
 
     const PanelItemBId = this.player.getService('sidePanelsManager').addItem({
