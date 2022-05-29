@@ -29,7 +29,10 @@ export class SomeIconComponent extends preact.Component {
       'div',
       {
         className: 'icon c',
-        style: { backgroundColor: this.props.isActive ? 'darkgreen' : 'green' }
+        style: {
+          backgroundColor: this.props.isActive ? 'whitesmoke' : 'green',
+          color: this.props.isActive ? 'green' : 'whitesmoke',
+        }
       },
       'C'
     );

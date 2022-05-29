@@ -2,10 +2,10 @@
   "name": "@playkit-js/ui-managers",
   "version": "1.0.0",
   "description": "",
-  "main": "build/ui-manager.js",
+  "main": "dist/ui-manager.js",
   "types": "types/index.d.ts",
   "files": [
-    "build/",
+    "dist/ui-managers.js",
     "types/"
   ],
   "license": "Apache-2.0",
