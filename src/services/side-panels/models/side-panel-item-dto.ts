@@ -20,15 +20,15 @@ export interface SidePanelItemDto {
 }
 
 export class SidePanelItem implements SidePanelItemDto {
-  readonly label: string;
-  readonly renderIcon?: ComponentClass<RenderIconProps> | FunctionalComponent<RenderIconProps>;
-  readonly renderContent: ComponentClass<renderContentProps> | FunctionalComponent<renderContentProps>;
-  readonly presets: PlaykitUI.ReservedPresetName[];
-  readonly position: PlaykitUI.SidePanelPosition;
-  readonly expandMode: PlaykitUI.SidePanelMode;
-  readonly onToggleIcon?: () => void;
-  readonly onActivate?: () => void;
-  readonly onDeactivate?: () => void;
+  public readonly label: string;
+  public readonly renderIcon?: ComponentClass<RenderIconProps> | FunctionalComponent<RenderIconProps>;
+  public readonly renderContent: ComponentClass<renderContentProps> | FunctionalComponent<renderContentProps>;
+  public readonly presets: PlaykitUI.ReservedPresetName[];
+  public readonly position: PlaykitUI.SidePanelPosition;
+  public readonly expandMode: PlaykitUI.SidePanelMode;
+  public readonly onToggleIcon?: () => void;
+  public readonly onActivate?: () => void;
+  public readonly onDeactivate?: () => void;
 
   constructor(item: SidePanelItemDto) {
     this.label = item.label;

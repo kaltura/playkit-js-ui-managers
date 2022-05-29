@@ -17,7 +17,7 @@ type ToggleProps = {
  * @internal
  */
 export class PanelItemWrapper extends Component<ToggleProps, ToggleState> {
-  switchMode: boolean;
+  private switchMode: boolean;
   constructor() {
     super();
     this.state = { on: false };
