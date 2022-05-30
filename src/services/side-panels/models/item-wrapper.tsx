@@ -12,12 +12,12 @@ import { PanelComponentProps, SidePanelItem } from './side-panel-item-dto';
 export class ItemWrapper {
   private static nextId = 0;
   public readonly id: number;
-  private player: KalturaPlayer;
-  public item: SidePanelItem;
-  public panelItemComponentRef!: RefObject<PanelItemWrapper>;
-  public removePanelComponentFn!: () => void;
-  public iconComponentRef: RefObject<IconWrapper> | undefined;
-  public removeIconComponentFn: (() => void) | undefined;
+  private readonly player: KalturaPlayer;
+  public readonly item: SidePanelItem;
+  private panelItemComponentRef!: RefObject<PanelItemWrapper>;
+  private removePanelComponentFn!: () => void;
+  private iconComponentRef: RefObject<IconWrapper> | undefined;
+  private removeIconComponentFn: (() => void) | undefined;
   constructor(item: SidePanelItem, player: KalturaPlayer, onToggleIcon: (panelItemId: number) => void) {
     this.id = ++ItemWrapper.nextId;
     this.item = item;
@@ -34,6 +34,10 @@ export class ItemWrapper {
   public remove(): void {
     this.removePanelComponentFn();
     if (this.item.iconComponent) this.removeIconComponentFn!();
+  }
+
+  public update(): void {
+    this.panelItemComponentRef.current!.update();
   }
 
   private injectPanelComponent(): void {

@@ -97,7 +97,7 @@ export class SidePanelsManager {
   public update(itemId: number): void {
     const itemWrapper: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (itemWrapper) {
-      itemWrapper.panelItemComponentRef.current!.update();
+      itemWrapper.update();
     } else {
       this.logger.warn(`${itemId} is not registered`);
     }
