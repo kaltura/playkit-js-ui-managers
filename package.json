@@ -18,6 +18,8 @@
     "ui-managers",
     "kaltura",
     "player",
+    "side-panels",
+    "uper-bar",
     "playkit-js"
   ],
   "scripts": {
