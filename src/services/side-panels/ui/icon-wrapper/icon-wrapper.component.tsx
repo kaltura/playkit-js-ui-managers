@@ -1,26 +1,26 @@
 import { h, Component, ComponentChild, RefObject, cloneElement, VNode } from 'preact';
 
-type ToggleState = {
+type IconWrapperState = {
   on: boolean;
 };
 
-type ToggleProps = {
+type IconWrapperProps = {
   ref: RefObject<IconWrapper>;
   onClick: () => void;
 };
 
 /**
- * Toggle component rapper
+ * IconWrapper component
  * @internal
  */
-export class IconWrapper extends Component<ToggleProps, ToggleState> {
+export class IconWrapper extends Component<IconWrapperProps, IconWrapperState> {
   constructor() {
     super();
     this.state = { on: false };
   }
 
   toggle(): void {
-    this.setState((state: Readonly<ToggleState>) => {
+    this.setState((state: Readonly<IconWrapperState>) => {
       return { on: !state.on };
     });
   }

@@ -14,7 +14,6 @@ export interface SidePanelItemDto {
   readonly presets: PlaykitUI.ReservedPresetName[];
   readonly position: PlaykitUI.SidePanelPosition;
   readonly expandMode: PlaykitUI.SidePanelMode;
-  readonly onToggleIcon?: () => void;
   readonly onActivate?: () => void;
   readonly onDeactivate?: () => void;
 }

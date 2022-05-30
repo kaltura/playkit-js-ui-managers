@@ -4,19 +4,19 @@ import { ui } from 'kaltura-player-js';
 
 const { defaultTransitionTime } = ui.style;
 
-type ToggleState = {
+type PanelItemWrapperState = {
   on: boolean;
 };
 
-type ToggleProps = {
+type PanelItemWrapperProps = {
   ref: RefObject<PanelItemWrapper>;
 };
 
 /**
- * Toggle component rapper
+ * PanelItemWrapper component
  * @internal
  */
-export class PanelItemWrapper extends Component<ToggleProps, ToggleState> {
+export class PanelItemWrapper extends Component<PanelItemWrapperProps, PanelItemWrapperState> {
   private switchMode: boolean;
   constructor() {
     super();
@@ -26,7 +26,7 @@ export class PanelItemWrapper extends Component<ToggleProps, ToggleState> {
 
   toggle(switchMode?: boolean): void {
     this.switchMode = !!switchMode;
-    this.setState((state: Readonly<ToggleState>) => {
+    this.setState((state: Readonly<PanelItemWrapperState>) => {
       return { on: !state.on };
     });
   }
