@@ -536,35 +536,72 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
-/***/ "./src/services/side-panels/models/item-wrapper.ts":
-/*!*********************************************************!*\
-  !*** ./src/services/side-panels/models/item-wrapper.ts ***!
-  \*********************************************************/
+/***/ "./src/services/side-panels/models/item-wrapper.tsx":
+/*!**********************************************************!*\
+  !*** ./src/services/side-panels/models/item-wrapper.tsx ***!
+  \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ItemWrapper": () => (/* binding */ ItemWrapper)
 /* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "preact");
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(preact__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var kaltura_player_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! kaltura-player-js */ "kaltura-player-js");
+/* harmony import */ var kaltura_player_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(kaltura_player_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _ui_panel_item_wrapper_panel_item_wrapper_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/panel-item-wrapper/panel-item-wrapper.component */ "./src/services/side-panels/ui/panel-item-wrapper/panel-item-wrapper.component.tsx");
+/* harmony import */ var _ui_icon_wrapper_icon_wrapper_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/icon-wrapper/icon-wrapper.component */ "./src/services/side-panels/ui/icon-wrapper/icon-wrapper.component.tsx");
+
+
+const { ReservedPresetAreas } = kaltura_player_js__WEBPACK_IMPORTED_MODULE_1__.ui;
+
+
 /**
  * Panel item metadata
  * @internal
  */
 class ItemWrapper {
-    constructor(item, panelItemComponentRef, removePanelComponentFn, iconComponentRef, removeIconComponentFn) {
+    constructor(item, player, onToggleIcon) {
         this.id = ++ItemWrapper.nextId;
         this.item = item;
-        this.removePanelComponentFn = removePanelComponentFn;
-        this.removeIconComponentFn =
-            removeIconComponentFn ||
-                (() => {
-                    return;
-                });
-        this.panelItemComponentRef = panelItemComponentRef;
-        this.iconComponentRef = iconComponentRef;
+        this.player = player;
+        this.injectPanelComponent();
+        if (item.iconComponent)
+            this.injectIconComponent(onToggleIcon);
     }
-    static peekNextId() {
-        return ItemWrapper.nextId + 1;
+    injectPanelComponent() {
+        const { label, position, panelComponent, presets } = this.item;
+        const SidePanelComponent = panelComponent;
+        const componentRef = (0,preact__WEBPACK_IMPORTED_MODULE_0__.createRef)();
+        this.removePanelComponentFn = this.player.ui.addComponent({
+            label: `Side-panel-${position}-${label}`,
+            presets,
+            area: ItemWrapper.getPanelArea(position),
+            get: () => {
+                return ((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_ui_panel_item_wrapper_panel_item_wrapper_component__WEBPACK_IMPORTED_MODULE_2__.PanelItemWrapper, { ref: componentRef },
+                    (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(SidePanelComponent, { isActive: false })));
+            }
+        });
+    }
+    injectIconComponent(onToggleIcon) {
+        const { presets, label, iconComponent } = this.item;
+        const IconComponent = iconComponent;
+        const iconComponentRef = (0,preact__WEBPACK_IMPORTED_MODULE_0__.createRef)();
+        this.removeIconComponentFn = this.player.ui.addComponent({
+            label: `Side-Panel-Icon-${label}`,
+            presets,
+            area: ReservedPresetAreas.TopBarRightControls,
+            get: function MyComponent() {
+                return ((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_ui_icon_wrapper_icon_wrapper_component__WEBPACK_IMPORTED_MODULE_3__.IconWrapper, { ref: iconComponentRef, onClick: () => {
+                        onToggleIcon(this.id);
+                    } },
+                    (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(IconComponent, { isActive: false })));
+            }
+        });
+    }
+    static getPanelArea(position) {
+        return `SidePanel${position.charAt(0).toUpperCase()}${position.slice(1)}`;
     }
 }
 ItemWrapper.nextId = 0;
@@ -572,58 +609,22 @@ ItemWrapper.nextId = 0;
 
 /***/ }),
 
-/***/ "./src/services/side-panels/models/side-panel-item-dto.ts":
-/*!****************************************************************!*\
-  !*** ./src/services/side-panels/models/side-panel-item-dto.ts ***!
-  \****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "SidePanelItem": () => (/* binding */ SidePanelItem)
-/* harmony export */ });
-class SidePanelItem {
-    constructor(item) {
-        this.label = item.label;
-        this.renderIcon = item.renderIcon;
-        this.renderContent = item.renderContent;
-        this.presets = item.presets;
-        this.position = item.position;
-        this.expandMode = item.expandMode;
-        this.onToggleIcon = item.onToggleIcon;
-        this.onActivate = item.onActivate;
-        this.onDeactivate = item.onDeactivate;
-    }
-}
-
-
-/***/ }),
-
-/***/ "./src/services/side-panels/side-panels-manager.tsx":
-/*!**********************************************************!*\
-  !*** ./src/services/side-panels/side-panels-manager.tsx ***!
-  \**********************************************************/
+/***/ "./src/services/side-panels/side-panels-manager.ts":
+/*!*********************************************************!*\
+  !*** ./src/services/side-panels/side-panels-manager.ts ***!
+  \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SidePanelsManager": () => (/* binding */ SidePanelsManager)
 /* harmony export */ });
-/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "preact");
-/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(preact__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var kaltura_player_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! kaltura-player-js */ "kaltura-player-js");
-/* harmony import */ var kaltura_player_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(kaltura_player_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _models_side_panel_item_dto__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./models/side-panel-item-dto */ "./src/services/side-panels/models/side-panel-item-dto.ts");
-/* harmony import */ var _ui_panel_item_wrapper_panel_item_wrapper_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui/panel-item-wrapper/panel-item-wrapper.component */ "./src/services/side-panels/ui/panel-item-wrapper/panel-item-wrapper.component.tsx");
-/* harmony import */ var _ui_icon_wrapper_icon_wrapper_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ui/icon-wrapper/icon-wrapper.component */ "./src/services/side-panels/ui/icon-wrapper/icon-wrapper.component.tsx");
-/* harmony import */ var _models_item_wrapper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./models/item-wrapper */ "./src/services/side-panels/models/item-wrapper.ts");
+/* harmony import */ var kaltura_player_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! kaltura-player-js */ "kaltura-player-js");
+/* harmony import */ var kaltura_player_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(kaltura_player_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _models_item_wrapper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./models/item-wrapper */ "./src/services/side-panels/models/item-wrapper.tsx");
 
 
-
-
-
-
-const { SidePanelModes, SidePanelPositions, ReservedPresetNames, ReservedPresetAreas } = kaltura_player_js__WEBPACK_IMPORTED_MODULE_1__.ui;
+const { SidePanelModes, SidePanelPositions, ReservedPresetNames } = kaltura_player_js__WEBPACK_IMPORTED_MODULE_0__.ui;
 const OPPOSITE_PANELS = {
     [SidePanelPositions.TOP]: SidePanelPositions.BOTTOM,
     [SidePanelPositions.BOTTOM]: SidePanelPositions.TOP,
@@ -639,17 +640,7 @@ class SidePanelsManager {
     }
     addItem(item) {
         if (SidePanelsManager.validateItem(item)) {
-            const newPanelItem = new _models_side_panel_item_dto__WEBPACK_IMPORTED_MODULE_2__.SidePanelItem(item);
-            const { componentRef, removeComponentFn } = this.injectPanelComponent(newPanelItem);
-            const currentPanelItemId = _models_item_wrapper__WEBPACK_IMPORTED_MODULE_5__.ItemWrapper.peekNextId();
-            let newItemWrapper;
-            if (item.renderIcon) {
-                const { iconComponentRef, removeIconComponentFn } = this.injectIconComponent(newPanelItem, currentPanelItemId);
-                newItemWrapper = new _models_item_wrapper__WEBPACK_IMPORTED_MODULE_5__.ItemWrapper(newPanelItem, componentRef, removeComponentFn, iconComponentRef, removeIconComponentFn);
-            }
-            else {
-                newItemWrapper = new _models_item_wrapper__WEBPACK_IMPORTED_MODULE_5__.ItemWrapper(newPanelItem, componentRef, removeComponentFn);
-            }
+            const newItemWrapper = new _models_item_wrapper__WEBPACK_IMPORTED_MODULE_1__.ItemWrapper(item, this.player, this.toggle);
             this.componentsRegistry.set(newItemWrapper.id, newItemWrapper);
             this.logger.debug('New Panel Item Added', item);
             return newItemWrapper.id;
@@ -657,12 +648,13 @@ class SidePanelsManager {
         this.logger.warn('Invalid SidePanelItem parameters', item);
     }
     removeItem(itemId) {
-        const item = this.componentsRegistry.get(itemId);
-        if (item) {
+        const itemWrapper = this.componentsRegistry.get(itemId);
+        if (itemWrapper) {
             if (this.isItemActive(itemId))
                 this.deactivateItem(itemId);
-            item.removePanelComponentFn();
-            item.removeIconComponentFn();
+            itemWrapper.removePanelComponentFn();
+            if (itemWrapper.item.iconComponent)
+                itemWrapper.removeIconComponentFn();
             this.componentsRegistry.delete(itemId);
         }
         else {
@@ -745,56 +737,22 @@ class SidePanelsManager {
         }
     }
     expand(position, expandMode) {
-        this.player.ui.store.dispatch(kaltura_player_js__WEBPACK_IMPORTED_MODULE_1__.ui.reducers.shell.actions.updateSidePanelMode(position, expandMode));
+        this.player.ui.store.dispatch(kaltura_player_js__WEBPACK_IMPORTED_MODULE_0__.ui.reducers.shell.actions.updateSidePanelMode(position, expandMode));
     }
     collapse(position) {
-        this.player.ui.store.dispatch(kaltura_player_js__WEBPACK_IMPORTED_MODULE_1__.ui.reducers.shell.actions.updateSidePanelMode(position, SidePanelModes.HIDDEN));
-    }
-    injectIconComponent(panelItemData, panelItemId) {
-        const { presets, label, onToggleIcon, renderIcon } = panelItemData;
-        const IconComponent = renderIcon;
-        const iconComponentRef = (0,preact__WEBPACK_IMPORTED_MODULE_0__.createRef)();
-        const togglePanelFunc = onToggleIcon || (() => this.toggle(panelItemId));
-        const removeIconComponentFn = this.player.ui.addComponent({
-            label: `Side-Panel-Icon-${label}`,
-            presets,
-            area: ReservedPresetAreas.TopBarRightControls,
-            get: function MyComponent() {
-                return ((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_ui_icon_wrapper_icon_wrapper_component__WEBPACK_IMPORTED_MODULE_4__.IconWrapper, { ref: iconComponentRef, onClick: togglePanelFunc },
-                    (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(IconComponent, { isActive: false })));
-            }
-        });
-        return { iconComponentRef, removeIconComponentFn };
-    }
-    injectPanelComponent(item) {
-        const { label, position, renderContent, presets } = item;
-        const SidePanelComponent = renderContent;
-        const componentRef = (0,preact__WEBPACK_IMPORTED_MODULE_0__.createRef)();
-        const removeComponentFn = this.player.ui.addComponent({
-            label: `Side-panel-${position}-${label}`,
-            presets,
-            area: SidePanelsManager.getPanelArea(position),
-            get: () => {
-                return ((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_ui_panel_item_wrapper_panel_item_wrapper_component__WEBPACK_IMPORTED_MODULE_3__.PanelItemWrapper, { ref: componentRef },
-                    (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(SidePanelComponent, { isActive: false })));
-            }
-        });
-        return { componentRef, removeComponentFn };
-    }
-    static getPanelArea(position) {
-        return `SidePanel${position.charAt(0).toUpperCase()}${position.slice(1)}`;
+        this.player.ui.store.dispatch(kaltura_player_js__WEBPACK_IMPORTED_MODULE_0__.ui.reducers.shell.actions.updateSidePanelMode(position, SidePanelModes.HIDDEN));
     }
     static getOppositePanelPosition(position) {
         return OPPOSITE_PANELS[position];
     }
     static validateItem(item) {
-        const { label, renderContent, renderIcon, position, expandMode, onActivate, onDeactivate, presets } = item;
+        const { label, panelComponent, iconComponent, position, expandMode, onActivate, onDeactivate, presets } = item;
         return !!(label &&
             Object.values(SidePanelPositions).includes(position) &&
             Object.values(SidePanelModes).includes(expandMode) &&
             presets.every((preset) => Object.values(ReservedPresetNames).includes(preset)) &&
-            typeof renderContent === 'function' &&
-            (typeof renderIcon === 'function' || renderIcon === undefined) &&
+            typeof panelComponent === 'function' &&
+            (typeof iconComponent === 'function' || iconComponent === undefined) &&
             (typeof onActivate === 'function' || onActivate === undefined) &&
             (typeof onDeactivate === 'function' || onDeactivate === undefined));
     }
@@ -817,7 +775,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(preact__WEBPACK_IMPORTED_MODULE_0__);
 
 /**
- * Toggle component rapper
+ * IconWrapper component
  * @internal
  */
 class IconWrapper extends preact__WEBPACK_IMPORTED_MODULE_0__.Component {
@@ -858,7 +816,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const { defaultTransitionTime } = kaltura_player_js__WEBPACK_IMPORTED_MODULE_2__.ui.style;
 /**
- * Toggle component rapper
+ * PanelItemWrapper component
  * @internal
  */
 class PanelItemWrapper extends preact__WEBPACK_IMPORTED_MODULE_0__.Component {
@@ -897,7 +855,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var kaltura_player_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! kaltura-player-js */ "kaltura-player-js");
 /* harmony import */ var kaltura_player_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(kaltura_player_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _services_side_panels_side_panels_manager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services/side-panels/side-panels-manager */ "./src/services/side-panels/side-panels-manager.tsx");
+/* harmony import */ var _services_side_panels_side_panels_manager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services/side-panels/side-panels-manager */ "./src/services/side-panels/side-panels-manager.ts");
 
 
 const pluginName = 'uiManagers';
