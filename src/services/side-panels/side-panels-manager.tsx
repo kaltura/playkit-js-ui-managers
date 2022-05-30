@@ -26,7 +26,7 @@ export class SidePanelsManager {
     this.logger = logger;
   }
 
-  addItem(item: SidePanelItemDto): number | void {
+  public addItem(item: SidePanelItemDto): number | void {
     if (SidePanelsManager.validateItem(item)) {
       const newPanelItem: SidePanelItem = new SidePanelItem(item);
       const { componentRef, removeComponentFn } = this.injectPanelComponent(newPanelItem);
@@ -45,7 +45,7 @@ export class SidePanelsManager {
     this.logger.warn('Invalid SidePanelItem parameters', item);
   }
 
-  removeItem(itemId: number): void {
+  public removeItem(itemId: number): void {
     const item: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (item) {
       if (this.isItemActive(itemId)) this.deactivateItem(itemId);
@@ -57,7 +57,7 @@ export class SidePanelsManager {
     }
   }
 
-  activateItem(itemId: number): void {
+  public activateItem(itemId: number): void {
     const itemMetadata: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (itemMetadata) {
       const { position, expandMode } = itemMetadata.item;
@@ -85,7 +85,7 @@ export class SidePanelsManager {
     }
   }
 
-  deactivateItem(itemId: number, switchMode?: boolean): void {
+  public deactivateItem(itemId: number, switchMode?: boolean): void {
     const itemMetadata: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (itemMetadata) {
       if (!this.isItemActive(itemId)) return;
@@ -100,7 +100,7 @@ export class SidePanelsManager {
     }
   }
 
-  isItemActive(itemId: number): boolean {
+  public isItemActive(itemId: number): boolean {
     const itemMetadata: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (itemMetadata) {
       return this.activePanels[itemMetadata.item.position]?.id === itemId;
@@ -109,7 +109,7 @@ export class SidePanelsManager {
     return false;
   }
 
-  update(itemId: number): void {
+  public update(itemId: number): void {
     const itemMetadata: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (itemMetadata) {
       itemMetadata.panelItemComponentRef.current!.update();
@@ -118,7 +118,7 @@ export class SidePanelsManager {
     }
   }
 
-  reset(): void {
+  public reset(): void {
     for (const value of this.componentsRegistry.values()) {
       this.removeItem(value.id);
     }
