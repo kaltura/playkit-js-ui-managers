@@ -37,8 +37,7 @@ export class SidePanelsManager {
     const itemWrapper: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (itemWrapper) {
       if (this.isItemActive(itemId)) this.deactivateItem(itemId);
-      itemWrapper.removePanelComponentFn();
-      if (itemWrapper.item.iconComponent) itemWrapper.removeIconComponentFn!();
+      itemWrapper.remove();
       this.componentsRegistry.delete(itemId);
     } else {
       this.logger.warn(`${itemId} is not registered`);

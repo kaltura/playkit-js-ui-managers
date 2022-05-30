@@ -31,6 +31,11 @@ export class ItemWrapper {
     if (this.item.iconComponent) this.iconComponentRef!.current!.toggle();
   }
 
+  public remove(): void {
+    this.removePanelComponentFn();
+    if (this.item.iconComponent) this.removeIconComponentFn!();
+  }
+
   private injectPanelComponent(): void {
     const { label, position, panelComponent, presets } = this.item;
     const SidePanelComponent: ComponentClass<PanelComponentProps> | FunctionalComponent<PanelComponentProps> = panelComponent;
