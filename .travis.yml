@@ -83,6 +83,10 @@ jobs:
     # Required tests
     - stage: Tests
       if: ((branch = master) OR (tag IS present) OR (type = pull_request)) AND commit_message !~ /^chore\(release\)/
+      name: 'Running build'
+      env: TRAVIS_MODE=build
+    - stage: Tests
+      if: ((branch = master) OR (tag IS present) OR (type = pull_request)) AND commit_message !~ /^chore\(release\)/
       name: 'Running lint'
       env: TRAVIS_MODE=lint
     - stage: Tests

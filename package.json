@@ -35,7 +35,8 @@
     "prettier:fix": "prettier --write .",
     "release": "standard-version",
     "pushTaggedRelease": "git push --follow-tags --no-verify origin master",
-    "prepare:demo": "sh scripts/prepare-demo.sh"
+    "prepare:demo": "sh scripts/prepare-demo.sh",
+    "commit:dist": "git add --force --all dist && (git commit -m 'chore: update dist' || exit 0)"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",

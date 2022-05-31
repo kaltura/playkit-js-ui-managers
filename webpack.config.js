@@ -1,10 +1,9 @@
 const path = require('path');
 
 module.exports = (env, { mode }) => {
-  return {
+  const config = {
     target: 'web',
     entry: './src/index.ts',
-    devtool: mode === 'development' ? 'source-map' : '',
     optimization: {
       minimize: mode !== 'development'
     },
@@ -61,4 +60,6 @@ module.exports = (env, { mode }) => {
       }
     }
   };
+  mode === 'development' ? config.devtool = 'source-map' : '';
+  return config;
 };

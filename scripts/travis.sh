@@ -2,7 +2,9 @@
 # https://docs.travis-ci.com/user/customizing-the-build/#Implementing-Complex-Build-Steps
 set -ev
 yarn install
-if [ "${TRAVIS_MODE}" = "lint" ]; then
+if [ "${TRAVIS_MODE}" = "build" ]; then
+  yarn run lint:check
+elif [ "${TRAVIS_MODE}" = "build" ]; then
   yarn run lint:check
 elif [ "${TRAVIS_MODE}" = "types" ]; then
   yarn run types:check
@@ -30,8 +32,10 @@ elif [ "${TRAVIS_MODE}" = "release" ] || [ "${TRAVIS_MODE}" = "releaseCanary" ];
     conventional-github-releaser -p angular -t $GH_TOKEN || true
   fi
   echo "Building..."
-  yarn run build:prod
+  yarn run build:prod && yarn run prepare:demo && yarn run commit:dist
   echo "Finish building"
+  echo "Push Build to origin..."
+  git push https://$GH_TOKEN@github.com/kaltura/playkit-js-ui-managers "master" > /dev/null 2>&1
 elif [ "${TRAVIS_MODE}" = "deploy" ]; then
   echo "Deploy..."
 else
