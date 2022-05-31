@@ -35,7 +35,7 @@ export class ItemWrapper {
     this.isActive = true;
   }
 
-  public deactivate(switchMode: boolean): void {
+  public deactivate(switchMode = false): void {
     this.panelItemComponentRef.current!.off(switchMode);
     if (this.item.iconComponent) this.iconComponentRef!.current!.off();
     this.item.onDeactivate?.();
@@ -63,7 +63,7 @@ export class ItemWrapper {
       get: () => {
         return (
           <PanelItemWrapper ref={componentRef}>
-            <SidePanelComponent isActive={false} />
+            <SidePanelComponent isActive={this.isActive} />
           </PanelItemWrapper>
         );
       }
@@ -88,7 +88,7 @@ export class ItemWrapper {
               onClick(itemId);
             }}
           >
-            <IconComponent isActive={false} />
+            <IconComponent isActive={this.isActive} />
           </IconWrapper>
         );
       }

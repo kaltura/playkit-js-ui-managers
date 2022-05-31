@@ -28,7 +28,7 @@ export class PanelItemWrapper extends Component<PanelItemWrapperProps, PanelItem
     this.setState({ on: true });
   }
 
-  off(switchMode = false): void {
+  off(switchMode: boolean): void {
     this.switchMode = switchMode;
     this.setState({ on: false });
   }

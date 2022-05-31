@@ -32,7 +32,6 @@ declare module "services/side-panels/side-panels-manager" {
         removeItem(itemId: number): void;
         activateItem(itemId: number): void;
         deactivateItem(itemId: number): void;
-        private _deactivateItem;
         isItemActive(itemId: number): boolean;
         update(itemId: number): void;
         reset(): void;

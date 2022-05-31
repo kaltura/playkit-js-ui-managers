@@ -70,15 +70,11 @@ export class SidePanelsManager {
   }
 
   public deactivateItem(itemId: number): void {
-    this._deactivateItem(itemId);
-  }
-
-  private _deactivateItem(itemId: number, switchMode = false): void {
     const itemWrapper: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (itemWrapper) {
       if (!this.isItemActive(itemId)) return;
       const { position } = itemWrapper.item;
-      itemWrapper.deactivate(switchMode);
+      itemWrapper.deactivate();
       this.collapse(position);
       this.activePanels[position] = null;
     } else {
