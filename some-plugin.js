@@ -24,40 +24,40 @@ export class somePlugin extends BasePlugin {
   loadMedia() {
     const panelItemAId = this.player.getService('sidePanelsManager').addItem({
       label: 'A',
-      expandMode: SidePanelModes.ALONGSIDE,
-      renderIcon: IconComponent,
-      position: SidePanelPositions.LEFT,
+      panelComponent: PanelItemComponent,
+      iconComponent: IconComponent,
       presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
-      renderContent: PanelItemComponent,
+      position: SidePanelPositions.LEFT,
+      expandMode: SidePanelModes.ALONGSIDE,
       onActivate: () => { console.log('panel has now been activated') },
-      onDeactivate: () => { console.log('panel has now been deactivated') },
+      onDeactivate: () => { console.log('panel has now been deactivated') }
     });
 
     const PanelItemBId = this.player.getService('sidePanelsManager').addItem({
       label: 'B',
-      expandMode: SidePanelModes.ALONGSIDE,
-      renderIcon: AnotherIconComponent,
-      position: SidePanelPositions.LEFT,
+      panelComponent: AnotherPanelItemComponent,
+      iconComponent: AnotherIconComponent,
       presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
-      renderContent: AnotherPanelItemComponent
+      position: SidePanelPositions.LEFT,
+      expandMode: SidePanelModes.ALONGSIDE
     });
 
     const PanelItemCId = this.player.getService('sidePanelsManager').addItem({
       label: 'C',
-      expandMode: SidePanelModes.OVER,
-      renderIcon: SomeIconComponent,
-      position: SidePanelPositions.RIGHT,
+      panelComponent: SomePanelItemComponent,
+      iconComponent: SomeIconComponent,
       presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
-      renderContent: SomePanelItemComponent
+      position: SidePanelPositions.RIGHT,
+      expandMode: SidePanelModes.OVER
     });
 
     const PanelItemDId = this.player.getService('sidePanelsManager').addItem({
       label: 'D',
-      expandMode: SidePanelModes.OVER,
-      renderIcon: MoreIconComponent,
-      position: SidePanelPositions.BOTTOM,
+      panelComponent: MorePanelItemComponent,
+      iconComponent: MoreIconComponent,
       presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
-      renderContent: MorePanelItemComponent
+      position: SidePanelPositions.BOTTOM,
+      expandMode: SidePanelModes.ALONGSIDE,
     });
 
     this.ready.then(() => {
