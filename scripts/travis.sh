@@ -3,8 +3,8 @@
 set -ev
 yarn install
 if [ "${TRAVIS_MODE}" = "build" ]; then
-  yarn run lint:check
-elif [ "${TRAVIS_MODE}" = "build" ]; then
+  yarn run build:prod
+elif [ "${TRAVIS_MODE}" = "lint" ]; then
   yarn run lint:check
 elif [ "${TRAVIS_MODE}" = "types" ]; then
   yarn run types:check
