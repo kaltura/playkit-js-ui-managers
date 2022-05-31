@@ -36,7 +36,7 @@
     "release": "standard-version",
     "pushTaggedRelease": "git push --follow-tags --no-verify origin master",
     "prepare:demo": "sh scripts/prepare-demo.sh",
-    "commit:dist": "git add --force --all dist && (git commit -m 'chore: update dist' || exit 0)"
+    "commit:dist": "git add --force --all dist demo/index.html && (git commit -m 'chore: update dist' || exit 0)"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
