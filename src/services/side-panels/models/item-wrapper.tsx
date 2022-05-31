@@ -18,24 +18,28 @@ export class ItemWrapper {
   private removePanelComponentFn!: () => void;
   private iconComponentRef: RefObject<IconWrapper> | undefined;
   private removeIconComponentFn: (() => void) | undefined;
-  constructor(item: SidePanelItem, player: KalturaPlayer, onToggleIcon: (panelItemId: number) => void) {
+  private isActive: boolean;
+  constructor(item: SidePanelItem, player: KalturaPlayer, onClick: (panelItemId: number) => void) {
     this.id = ++ItemWrapper.nextId;
     this.item = item;
     this.player = player;
+    this.isActive = false;
     this.injectPanelComponent();
-    if (item.iconComponent) this.injectIconComponent(onToggleIcon);
+    if (item.iconComponent) this.injectIconComponent(onClick);
   }
 
   public activate(): void {
     this.panelItemComponentRef.current!.on();
     if (this.item.iconComponent) this.iconComponentRef!.current!.on();
     this.item.onActivate?.();
+    this.isActive = true;
   }
 
   public deactivate(switchMode: boolean): void {
     this.panelItemComponentRef.current!.off(switchMode);
     if (this.item.iconComponent) this.iconComponentRef!.current!.off();
     this.item.onDeactivate?.();
+    this.isActive = false;
   }
 
   public remove(): void {
@@ -66,7 +70,7 @@ export class ItemWrapper {
     });
   }
 
-  private injectIconComponent(onToggleIcon: (panelItemId: number) => void): void {
+  private injectIconComponent(onClick: (panelItemId: number) => void): void {
     const { presets, label, iconComponent } = this.item;
     const IconComponent: ComponentClass<PanelComponentProps> | FunctionalComponent<PanelComponentProps> = iconComponent!;
     const componentRef: RefObject<IconWrapper> = createRef();
@@ -81,7 +85,7 @@ export class ItemWrapper {
           <IconWrapper
             ref={componentRef}
             onClick={(): void => {
-              onToggleIcon(itemId);
+              onClick(itemId);
             }}
           >
             <IconComponent isActive={false} />

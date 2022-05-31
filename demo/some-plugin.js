@@ -48,7 +48,7 @@ export class somePlugin extends BasePlugin {
       iconComponent: SomeIconComponent,
       presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
       position: SidePanelPositions.RIGHT,
-      expandMode: SidePanelModes.ALONGSIDE
+      expandMode: SidePanelModes.OVER
     });
 
     const PanelItemDId = this.player.getService('sidePanelsManager').addItem({
@@ -57,7 +57,7 @@ export class somePlugin extends BasePlugin {
       iconComponent: MoreIconComponent,
       presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
       position: SidePanelPositions.BOTTOM,
-      expandMode: SidePanelModes.OVER,
+      expandMode: SidePanelModes.ALONGSIDE,
     });
 
     this.ready.then(() => {

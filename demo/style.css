@@ -1,7 +1,7 @@
 .icon {
   width: 30px;
   height: 30px;
-  color: white;
+  background: whitesmoke;
   font-size: 25px;
   display: flex;
   align-items: center;
@@ -12,25 +12,42 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  color: white;
+  color: whitesmoke;
   font-size: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.a {
-  background: red;
+.a-icon {
+  color: red;
 }
 
-.b {
-  background: blue;
+.a-panel {
+  background-color: red;
 }
 
-.c {
-  background: green;
+.b-icon {
+  color: blue;
 }
 
-.d {
-  background: yellow;
+.b-panel {
+  background-color: blue;
+}
+
+.c-icon {
+  color: green;
+}
+
+.c-panel {
+  background-color: green;
+  opacity: 0.5;
+}
+
+.d-icon {
+  color: yellow;
+}
+
+.c-panel {
+  background-color: yellow;
 }
