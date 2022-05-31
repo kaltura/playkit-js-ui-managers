@@ -2,10 +2,10 @@
   "name": "@playkit-js/ui-managers",
   "version": "1.0.0",
   "description": "",
-  "main": "build/ui-manager.js",
+  "main": "dist/ui-manager.js",
   "types": "types/index.d.ts",
   "files": [
-    "build/",
+    "dist/ui-managers.js",
     "types/"
   ],
   "license": "Apache-2.0",
@@ -18,6 +18,8 @@
     "ui-managers",
     "kaltura",
     "player",
+    "side-panels",
+    "uper-bar",
     "playkit-js"
   ],
   "scripts": {
@@ -25,7 +27,7 @@
     "watch": "webpack --watch --mode development",
     "build:dev": "webpack --mode development",
     "build:prod": "webpack --mode production",
-    "test": "jest",
+    "test": "echo \"no test specified\" && exit 0",
     "types:check": "tsc src/index.ts src/services/types/global.d.ts --jsx react --jsxFactory h --noEmit --target ESNext --moduleResolution node",
     "types:ganarate": "tsc src/index.ts src/services/types/global.d.ts --declaration --emitDeclarationOnly --outFile types/modules.ts --jsx react --jsxFactory h --stripInternal true --target ESNext --moduleResolution node",
     "lint:check": "eslint src --ext .ts,.tsx --color",
@@ -33,7 +35,8 @@
     "prettier:fix": "prettier --write .",
     "release": "standard-version",
     "pushTaggedRelease": "git push --follow-tags --no-verify origin master",
-    "prepare:demo": "sh scripts/prepare-demo.sh"
+    "prepare:demo": "sh scripts/prepare-demo.sh",
+    "commit:dist": "git add --force --all dist demo/index.html && (git commit -m 'chore: update dist' || exit 0)"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
@@ -52,6 +55,8 @@
     "jest": "^28.1.0",
     "kaltura-player-js": "https://github.com/kaltura/kaltura-player-js.git#master",
     "prettier": "^2.6.2",
+    "sass": "^1.52.1",
+    "sass-loader": "^13.0.0",
     "standard-version": "^9.5.0",
     "style-loader": "^3.3.1",
     "ts-jest": "^28.0.2",

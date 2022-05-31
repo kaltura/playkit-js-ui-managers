@@ -3,7 +3,7 @@ sudo: required
 dist: xenial
 language: node_js
 node_js:
-  - '12'
+  - '16'
 
 addons:
   chrome: stable
@@ -81,6 +81,10 @@ jobs:
       after_deploy:
         - ./scripts/after_deploy.sh "$JENKINS_CANARY_TOKEN"
     # Required tests
+    - stage: Tests
+      if: ((branch = master) OR (tag IS present) OR (type = pull_request)) AND commit_message !~ /^chore\(release\)/
+      name: 'Running build'
+      env: TRAVIS_MODE=build
     - stage: Tests
       if: ((branch = master) OR (tag IS present) OR (type = pull_request)) AND commit_message !~ /^chore\(release\)/
       name: 'Running lint'
