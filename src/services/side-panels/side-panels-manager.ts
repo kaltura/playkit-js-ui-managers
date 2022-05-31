@@ -54,7 +54,7 @@ export class SidePanelsManager {
       let switchMode = false;
       if (this.activePanels[position] !== null) {
         switchMode = true;
-        this.deactivateItem(this.activePanels[position]!.id, switchMode);
+        this._deactivateItem(this.activePanels[position]!.id, switchMode);
       }
       // Deactivate the opposite panel if is active
       const oppositePosition: PlaykitUI.SidePanelPosition = SidePanelsManager.getOppositePanelPosition(position);
@@ -62,24 +62,26 @@ export class SidePanelsManager {
         this.deactivateItem(this.activePanels[oppositePosition]!.id);
       }
       // Update new item as active
-      itemWrapper.toggle(switchMode);
+      itemWrapper.activate();
       this.expand(position, expandMode);
       this.activePanels[position] = itemWrapper;
-      itemWrapper.item.onActivate?.();
     } else {
       this.logger.warn(`${itemId} is not registered`);
     }
   }
 
-  public deactivateItem(itemId: number, switchMode = false): void {
+  public deactivateItem(itemId: number): void {
+    this._deactivateItem(itemId);
+  }
+
+  private _deactivateItem(itemId: number, switchMode = false): void {
     const itemWrapper: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (itemWrapper) {
       if (!this.isItemActive(itemId)) return;
       const { position } = itemWrapper.item;
-      itemWrapper.toggle(switchMode);
+      itemWrapper.deactivate(switchMode);
       this.collapse(position);
       this.activePanels[position] = null;
-      itemWrapper.item.onDeactivate?.();
     } else {
       this.logger.warn(`${itemId} is not registered`);
     }

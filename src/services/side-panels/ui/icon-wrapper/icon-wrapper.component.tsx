@@ -19,10 +19,12 @@ export class IconWrapper extends Component<IconWrapperProps, IconWrapperState> {
     this.state = { on: false };
   }
 
-  toggle(): void {
-    this.setState((state: Readonly<IconWrapperState>) => {
-      return { on: !state.on };
-    });
+  on(): void {
+    this.setState({ on: true });
+  }
+
+  off(): void {
+    this.setState({ on: false });
   }
 
   render(): ComponentChild {

@@ -570,10 +570,24 @@ class ItemWrapper {
         if (item.iconComponent)
             this.injectIconComponent(onToggleIcon);
     }
+    toggle(switchMode) {
+        this.panelItemComponentRef.current.toggle(switchMode);
+        if (this.item.iconComponent)
+            this.iconComponentRef.current.toggle();
+    }
+    remove() {
+        this.removePanelComponentFn();
+        if (this.item.iconComponent)
+            this.removeIconComponentFn();
+    }
+    update() {
+        this.panelItemComponentRef.current.update();
+    }
     injectPanelComponent() {
         const { label, position, panelComponent, presets } = this.item;
         const SidePanelComponent = panelComponent;
         const componentRef = (0,preact__WEBPACK_IMPORTED_MODULE_0__.createRef)();
+        this.panelItemComponentRef = componentRef;
         this.removePanelComponentFn = this.player.ui.addComponent({
             label: `Side-panel-${position}-${label}`,
             presets,
@@ -587,14 +601,16 @@ class ItemWrapper {
     injectIconComponent(onToggleIcon) {
         const { presets, label, iconComponent } = this.item;
         const IconComponent = iconComponent;
-        const iconComponentRef = (0,preact__WEBPACK_IMPORTED_MODULE_0__.createRef)();
+        const componentRef = (0,preact__WEBPACK_IMPORTED_MODULE_0__.createRef)();
+        const itemId = this.id;
+        this.iconComponentRef = componentRef;
         this.removeIconComponentFn = this.player.ui.addComponent({
             label: `Side-Panel-Icon-${label}`,
             presets,
             area: ReservedPresetAreas.TopBarRightControls,
             get: function MyComponent() {
-                return ((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_ui_icon_wrapper_icon_wrapper_component__WEBPACK_IMPORTED_MODULE_3__.IconWrapper, { ref: iconComponentRef, onClick: () => {
-                        onToggleIcon(this.id);
+                return ((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_ui_icon_wrapper_icon_wrapper_component__WEBPACK_IMPORTED_MODULE_3__.IconWrapper, { ref: componentRef, onClick: () => {
+                        onToggleIcon(itemId);
                     } },
                     (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(IconComponent, { isActive: false })));
             }
@@ -640,7 +656,7 @@ class SidePanelsManager {
     }
     addItem(item) {
         if (SidePanelsManager.validateItem(item)) {
-            const newItemWrapper = new _models_item_wrapper__WEBPACK_IMPORTED_MODULE_1__.ItemWrapper(item, this.player, this.toggle);
+            const newItemWrapper = new _models_item_wrapper__WEBPACK_IMPORTED_MODULE_1__.ItemWrapper(item, this.player, (id) => this.toggle(id));
             this.componentsRegistry.set(newItemWrapper.id, newItemWrapper);
             this.logger.debug('New Panel Item Added', item);
             return newItemWrapper.id;
@@ -652,9 +668,7 @@ class SidePanelsManager {
         if (itemWrapper) {
             if (this.isItemActive(itemId))
                 this.deactivateItem(itemId);
-            itemWrapper.removePanelComponentFn();
-            if (itemWrapper.item.iconComponent)
-                itemWrapper.removeIconComponentFn();
+            itemWrapper.remove();
             this.componentsRegistry.delete(itemId);
         }
         else {
@@ -662,9 +676,9 @@ class SidePanelsManager {
         }
     }
     activateItem(itemId) {
-        const itemMetadata = this.componentsRegistry.get(itemId);
-        if (itemMetadata) {
-            const { position, expandMode } = itemMetadata.item;
+        const itemWrapper = this.componentsRegistry.get(itemId);
+        if (itemWrapper) {
+            const { position, expandMode } = itemWrapper.item;
             // Trying to activate an already active item
             if (this.isItemActive(itemId))
                 return;
@@ -672,7 +686,7 @@ class SidePanelsManager {
             let switchMode = false;
             if (this.activePanels[position] !== null) {
                 switchMode = true;
-                this.deactivateItem(this.activePanels[position].id, switchMode);
+                this._deactivateItem(this.activePanels[position].id, switchMode);
             }
             // Deactivate the opposite panel if is active
             const oppositePosition = SidePanelsManager.getOppositePanelPosition(position);
@@ -680,44 +694,45 @@ class SidePanelsManager {
                 this.deactivateItem(this.activePanels[oppositePosition].id);
             }
             // Update new item as active
-            itemMetadata.panelItemComponentRef.current.toggle(switchMode);
-            itemMetadata.iconComponentRef?.current.toggle();
+            itemWrapper.toggle(switchMode);
             this.expand(position, expandMode);
-            this.activePanels[position] = itemMetadata;
-            itemMetadata.item.onActivate?.();
+            this.activePanels[position] = itemWrapper;
+            itemWrapper.item.onActivate?.();
         }
         else {
             this.logger.warn(`${itemId} is not registered`);
         }
     }
-    deactivateItem(itemId, switchMode) {
-        const itemMetadata = this.componentsRegistry.get(itemId);
-        if (itemMetadata) {
+    deactivateItem(itemId) {
+        this._deactivateItem(itemId);
+    }
+    _deactivateItem(itemId, switchMode = false) {
+        const itemWrapper = this.componentsRegistry.get(itemId);
+        if (itemWrapper) {
             if (!this.isItemActive(itemId))
                 return;
-            const { position } = itemMetadata.item;
-            itemMetadata.panelItemComponentRef.current.toggle(switchMode);
-            itemMetadata.iconComponentRef?.current.toggle();
+            const { position } = itemWrapper.item;
+            itemWrapper.toggle(switchMode);
             this.collapse(position);
             this.activePanels[position] = null;
-            itemMetadata.item.onDeactivate?.();
+            itemWrapper.item.onDeactivate?.();
         }
         else {
             this.logger.warn(`${itemId} is not registered`);
         }
     }
     isItemActive(itemId) {
-        const itemMetadata = this.componentsRegistry.get(itemId);
-        if (itemMetadata) {
-            return this.activePanels[itemMetadata.item.position]?.id === itemId;
+        const itemWrapper = this.componentsRegistry.get(itemId);
+        if (itemWrapper) {
+            return this.activePanels[itemWrapper.item.position]?.id === itemId;
         }
         this.logger.warn(`${itemId} is not registered`);
         return false;
     }
     update(itemId) {
-        const itemMetadata = this.componentsRegistry.get(itemId);
-        if (itemMetadata) {
-            itemMetadata.panelItemComponentRef.current.update();
+        const itemWrapper = this.componentsRegistry.get(itemId);
+        if (itemWrapper) {
+            itemWrapper.update();
         }
         else {
             this.logger.warn(`${itemId} is not registered`);

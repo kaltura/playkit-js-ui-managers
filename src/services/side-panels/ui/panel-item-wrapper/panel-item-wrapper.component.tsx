@@ -24,11 +24,13 @@ export class PanelItemWrapper extends Component<PanelItemWrapperProps, PanelItem
     this.switchMode = false;
   }
 
-  toggle(switchMode?: boolean): void {
-    this.switchMode = !!switchMode;
-    this.setState((state: Readonly<PanelItemWrapperState>) => {
-      return { on: !state.on };
-    });
+  on(): void {
+    this.setState({ on: true });
+  }
+
+  off(switchMode = false): void {
+    this.switchMode = switchMode;
+    this.setState({ on: false });
   }
 
   update(): void {

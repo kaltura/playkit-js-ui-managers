@@ -12,8 +12,8 @@ import { PanelComponentProps, SidePanelItem } from './side-panel-item-dto';
 export class ItemWrapper {
   private static nextId = 0;
   public readonly id: number;
-  private readonly player: KalturaPlayer;
   public readonly item: SidePanelItem;
+  private readonly player: KalturaPlayer;
   private panelItemComponentRef!: RefObject<PanelItemWrapper>;
   private removePanelComponentFn!: () => void;
   private iconComponentRef: RefObject<IconWrapper> | undefined;
@@ -26,9 +26,16 @@ export class ItemWrapper {
     if (item.iconComponent) this.injectIconComponent(onToggleIcon);
   }
 
-  public toggle(switchMode: boolean): void {
-    this.panelItemComponentRef.current!.toggle(switchMode);
-    if (this.item.iconComponent) this.iconComponentRef!.current!.toggle();
+  public activate(): void {
+    this.panelItemComponentRef.current!.on();
+    if (this.item.iconComponent) this.iconComponentRef!.current!.on();
+    this.item.onActivate?.();
+  }
+
+  public deactivate(switchMode: boolean): void {
+    this.panelItemComponentRef.current!.off(switchMode);
+    if (this.item.iconComponent) this.iconComponentRef!.current!.off();
+    this.item.onDeactivate?.();
   }
 
   public remove(): void {
