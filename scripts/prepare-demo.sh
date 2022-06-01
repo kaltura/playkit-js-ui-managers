@@ -7,7 +7,7 @@ prod_url="https:\/\/raw.githack.com\/kaltura\/playkit-js-ui-managers\/master\/di
 search="$local_url"
 replace="$prod_url"
 
-if [[ ("$1" == "dev") ]]; then
+if [ "$1" = "dev" ]; then
   search="$prod_url"
   replace="$local_url"
 fi
