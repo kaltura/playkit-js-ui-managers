@@ -2,11 +2,6 @@
 # https://docs.travis-ci.com/user/customizing-the-build/#Implementing-Complex-Build-Steps
 set -ev
 
-#if [[ "$TRAVIS_BRANCH" = "master" ]] && [[ "$TRAVIS_EVENT_TYPE" != "pull_request" ]] && [[ ! "$TRAVIS_COMMIT_MESSAGE" =~ ^(chore).*(update dist)$ ]] && [[ ! "$TRAVIS_COMMIT_MESSAGE" =~ ^chore\(release\) ]]; then
-#  echo "Prepare Canary"
-#  git checkout master
-#fi
-
 yarn install
 if [ "${TRAVIS_MODE}" = "build" ]; then
   yarn run build:prod
@@ -40,9 +35,10 @@ elif [ "${TRAVIS_MODE}" = "release" ] || [ "${TRAVIS_MODE}" = "releaseCanary" ];
   echo "Building..."
   yarn run build:prod
   echo "Finish building"
-#  && yarn run prepare:demo && yarn run commit:dist
-#  echo "Push Build to origin..."
-#  git push https://$GH_TOKEN@github.com/kaltura/playkit-js-ui-managers "master"
+  echo "update dist..."
+  yarn run prepare:demo && yarn run commit:dist
+  echo "Push dist to origin..."
+  git push -f https://$GH_TOKEN@github.com/kaltura/playkit-js-ui-managers "master"
 elif [ "${TRAVIS_MODE}" = "deploy" ]; then
   echo "Deploy..."
 else

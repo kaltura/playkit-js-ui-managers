@@ -1,8 +1,8 @@
 #!/bin/bash
 
 filename="index.html"
-local_url=".\/ui-managers.js"
-prod_url="https:\/\/raw.githack.com\/kaltura\/playkit-js-ui-managers\/master\/dist\/ui-managers.js"
+local_url="<script src=\".\/playkit-ui-managers.js\"><\/script>"
+prod_url="<script src=\"https:\/\/raw.githack.com\/kaltura\/playkit-js-ui-managers\/master\/dist\/playkit-ui-managers.js\"><\/script>"
 
 search="$local_url"
 replace="$prod_url"
