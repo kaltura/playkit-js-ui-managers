@@ -66,7 +66,8 @@ jobs:
             branch: master
     # publish canary package if on master
     - stage: Release canary
-      if: (branch = master) AND (type != pull_request) AND commit_message !~ /^chore\(release\)/
+      if: (branch = master) AND (type != pull_request) AND commit_message !~ /^chore\(release\)/ AND commit_message !~ /^(chore).*(update dist)$/
+      name: 'Release canary'
       env: TRAVIS_MODE=releaseCanary
       deploy:
         provider: npm
@@ -82,18 +83,18 @@ jobs:
         - ./scripts/after_deploy.sh "$JENKINS_CANARY_TOKEN"
     # Required tests
     - stage: Tests
-      if: ((branch = master) OR (tag IS present) OR (type = pull_request)) AND commit_message !~ /^chore\(release\)/
+      if: ((branch = master) OR (tag IS present) OR (type = pull_request)) AND commit_message !~ /^chore\(release\)/ AND commit_message !~ /^(chore).*(update dist)$/
       name: 'Running build'
       env: TRAVIS_MODE=build
     - stage: Tests
-      if: ((branch = master) OR (tag IS present) OR (type = pull_request)) AND commit_message !~ /^chore\(release\)/
+      if: ((branch = master) OR (tag IS present) OR (type = pull_request)) AND commit_message !~ /^chore\(release\)/ AND commit_message !~ /^(chore).*(update dist)$/
       name: 'Running lint'
       env: TRAVIS_MODE=lint
     - stage: Tests
-      if: ((branch = master) OR (tag IS present) OR (type = pull_request)) AND commit_message !~ /^chore\(release\)/
+      if: ((branch = master) OR (tag IS present) OR (type = pull_request)) AND commit_message !~ /^chore\(release\)/ AND commit_message !~ /^(chore).*(update dist)$/
       name: 'Running types check'
       env: TRAVIS_MODE=types
     - stage: Tests
-      if: ((branch = master) OR (tag IS present) OR (type = pull_request)) AND commit_message !~ /^chore\(release\)/
+      if: ((branch = master) OR (tag IS present) OR (type = pull_request)) AND commit_message !~ /^chore\(release\)/ AND commit_message !~ /^(chore).*(update dist)$/
       name: 'Running unit tests'
       env: TRAVIS_MODE=unitTests
