@@ -1,12 +1,13 @@
 const path = require('path');
 
 module.exports = (env, { mode }) => {
-  const config = {
+  return {
     target: 'web',
     entry: './src/index.ts',
     optimization: {
       minimize: mode !== 'development'
     },
+    devtool: 'source-map',
     module: {
       rules: [
         {
@@ -43,7 +44,7 @@ module.exports = (env, { mode }) => {
       extensions: ['.tsx', '.ts', '.js']
     },
     output: {
-      filename: 'ui-managers.js',
+      filename: 'playkit-ui-managers.js',
       path: path.resolve(__dirname, 'dist'),
       clean: true
     },
@@ -60,6 +61,4 @@ module.exports = (env, { mode }) => {
       }
     }
   };
-  mode === 'development' ? config.devtool = 'source-map' : '';
-  return config;
 };
