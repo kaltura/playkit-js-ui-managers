@@ -40,10 +40,12 @@ elif [ "${TRAVIS_MODE}" = "release" ] || [ "${TRAVIS_MODE}" = "releaseCanary" ];
   echo "Building..."
   yarn run build:prod
   echo "Finish building"
-  echo "update dist..."
-  yarn run prepare:demo && yarn run commit:dist
-  echo "Push dist to origin..."
-  git push -f https://$GH_TOKEN@github.com/kaltura/playkit-js-ui-managers "master"
+  if [ "${TRAVIS_MODE}" = "releaseCanary" ]; then
+    echo "update dist..."
+    yarn run prepare:demo && yarn run commit:dist
+    echo "Push dist to origin..."
+    git push -f https://$GH_TOKEN@github.com/kaltura/playkit-js-ui-managers "master"
+  fi
 elif [ "${TRAVIS_MODE}" = "deploy" ]; then
   echo "Deploy..."
 else
