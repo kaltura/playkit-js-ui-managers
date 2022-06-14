@@ -13,12 +13,14 @@ playkit-js-ui-managers works as a plugin of [kaltura player]
 
 playkit-js-ui-managers is written in [ECMAScript6] (`*.js`) and [TypeScript] (`*.ts`) (strongly typed superset of ES6), and transpiled in ECMAScript5 using [Babel](https://babeljs.io/) and the [TypeScript compiler].
 
-[kaltura player]: https://github.com/kaltura/kaltura-player-js
 [Webpack] is used to build the distro bundle and serve the local development environment.
+
+[kaltura player]: https://github.com/kaltura/kaltura-player-js.
 [ecmascript6]: https://github.com/ericdouglas/ES6-Learning#articles--tutorials
 [typescript]: https://www.typescriptlang.org/
 [typescript compiler]: https://www.typescriptlang.org/docs/handbook/compiler-options.html
 [webpack]: https://webpack.js.org/
+
 
 ## servises
 
