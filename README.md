@@ -108,7 +108,11 @@ An overview of this project's design, can be found [here](https://kaltura.atlass
 
 ## API docs and usage guide
 
-[API and usage docs, with code examples](./docs/API.md)
+[API docs](https://kaltura.github.io/playkit-js-ui-managers/docs/api/index.html)
+
+## usage guide
+
+[usage guide](https://kaltura.github.io/playkit-js-ui-managers/docs/api/index.html)
 
 ## Demo
 
@@ -129,11 +133,6 @@ playkit-js-ui-managers is supported on:
 - Edge for Windows 10+
 - Safari 8+ for MacOS 10.10+
 - Safari for ipadOS 13+
-
-## Using playkit-js-ui-managers
-
-[API and usage docs, with code examples](./docs/API.md)
-
 
 ## License
 

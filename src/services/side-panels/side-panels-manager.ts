@@ -16,6 +16,9 @@ export class SidePanelsManager {
   private readonly componentsRegistry: Map<number, ItemWrapper>;
   private readonly logger: Logger;
 
+  /**
+   * @ignore
+   */
   constructor(player: KalturaPlayer, logger: Logger) {
     this.player = player;
     this.activePanels = { top: null, bottom: null, right: null, left: null };
@@ -100,6 +103,9 @@ export class SidePanelsManager {
     }
   }
 
+  /**
+   * @ignore
+   */
   public reset(): void {
     for (const value of this.componentsRegistry.values()) {
       this.removeItem(value.id);
