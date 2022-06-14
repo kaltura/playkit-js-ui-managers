@@ -127,4 +127,4 @@ playkit-js-ui-managers is supported on:
 
 ## License
 
-HLS.js is released under [Apache 2.0 License](LICENSE)
+playkit-js-ui-managers is released under [Apache 2.0 License](LICENSE)
