@@ -11,7 +11,8 @@ It relies on [kaltura player] core API for managing UI features.
 
 playkit-js-ui-managers works as a plugin of [kaltura player]
 
-playkit-js-ui-managers is written in [ECMAScript6] (`*.js`) and [TypeScript] (`*.ts`) (strongly typed superset of ES6), and transpiled in ECMAScript5 using [Babel](https://babeljs.io/) and the [TypeScript compiler].
+playkit-js-ui-managers is written in [ECMAScript6] (`*.js`) and [TypeScript] (`*.ts`) (strongly typed superset of ES6), 
+and transpiled in ECMAScript5 using [Babel](https://babeljs.io/) and the [TypeScript compiler].
 
 [Webpack] is used to build the distro bundle and serve the local development environment.
 
@@ -21,14 +22,23 @@ playkit-js-ui-managers is written in [ECMAScript6] (`*.js`) and [TypeScript] (`*
 [typescript compiler]: https://www.typescriptlang.org/docs/handbook/compiler-options.html
 [webpack]: https://webpack.js.org/
 
-
 ## services
 
-- Side Panels
-    - add and remove side panel items
-    - activate/deactivate side panel items
-- Upper bar manager
-    - soon
+- ###Side Panels
+  Enable to manage side panel items in one place\
+  \
+  that's includes:
+  - Add item
+  - Remove item
+  - Activate item
+  - Detivate item
+  
+- ###Upper bar manager
+  Enable to manage icons in one place\
+  \
+  that's includes:
+  - Add icon
+  - Remove icon
     
 ## Getting started with development
 
