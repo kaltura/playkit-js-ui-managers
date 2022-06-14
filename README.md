@@ -118,7 +118,7 @@ playkit-js-ui-managers is supported on:
 - Safari 8+ for MacOS 10.10+
 - Safari for ipadOS 13+
 
-## Using HLS.js and Player Integration
+## Using playkit-js-ui-managers
 
 [API and usage docs, with code examples](./docs/API.md)
 
