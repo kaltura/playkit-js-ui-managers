@@ -4,8 +4,8 @@
 
 # playkit-js-ui-managers
 
-playkit-js-ui-managers is a [kaltura player] plugin JavaScript library that group several UI services together in order to simplify and 
-facilitate the customization of the [kaltura player] UI by providing a simple and clean API.
+playkit-js-ui-managers is a [kaltura player] plugin JavaScript library that group several UI services together,
+in order to simplify and facilitate the customization of the [kaltura player] UI by providing a simple and clean API.
 
 It relies on [kaltura player] core API for managing UI features.
 
