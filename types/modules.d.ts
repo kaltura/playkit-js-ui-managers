@@ -1,4 +1,4 @@
-declare module "services/side-panels/models/side-panel-item-dto" {
+declare module "services/side-panels/models/side-panel-item" {
     import { ComponentClass, FunctionalComponent } from 'preact';
     import { PlaykitUI } from 'kaltura-player-js';
     export type PanelComponentProps = {
@@ -21,7 +21,7 @@ declare module "services/side-panels/ui/icon-wrapper/icon-wrapper.component" { }
 declare module "services/side-panels/models/item-wrapper" { }
 declare module "services/side-panels/side-panels-manager" {
     import { KalturaPlayer, Logger } from 'kaltura-player-js';
-    import { SidePanelItem } from "services/side-panels/models/side-panel-item-dto";
+    import { SidePanelItem } from "services/side-panels/models/side-panel-item";
     export class SidePanelsManager {
         private readonly player;
         private readonly activePanels;
