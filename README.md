@@ -22,7 +22,7 @@ playkit-js-ui-managers is written in [ECMAScript6] (`*.js`) and [TypeScript] (`*
 [webpack]: https://webpack.js.org/
 
 
-## servises
+## services
 
 - Side Panels
     - add and remove side panel items
