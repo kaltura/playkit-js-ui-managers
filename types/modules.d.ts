@@ -27,18 +27,28 @@ declare module "services/side-panels/side-panels-manager" {
         private readonly activePanels;
         private readonly componentsRegistry;
         private readonly logger;
+        /**
+         * @ignore
+         */
         constructor(player: KalturaPlayer, logger: Logger);
         addItem(item: SidePanelItem): number | void;
         removeItem(itemId: number): void;
         activateItem(itemId: number): void;
         deactivateItem(itemId: number): void;
         isItemActive(itemId: number): boolean;
+        /**
+         * Rerender (uses preact Component.forceUpdate api under the hoods) the side panel item component
+         * It's just for backward compatibility you should not use it.
+         */
         update(itemId: number): void;
+        /**
+         * @ignore
+         */
         reset(): void;
         private toggle;
         private expand;
         private collapse;
-        private static getOppositePanelPosition;
+        private static getCounterPanelPosition;
         private static validateItem;
     }
 }

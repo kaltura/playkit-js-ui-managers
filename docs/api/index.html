@@ -5,8 +5,9 @@
 <a href="#playkit-js-ui-managers" id="playkit-js-ui-managers" style="color: inherit; text-decoration: none;">
   <h1>playkit-js-ui-managers</h1>
 </a>
-<p>playkit-js-ui-managers is a <a href="https://github.com/kaltura/kaltura-player-js.">kaltura player</a> plugin JavaScript library that group several UI services together,
+<p>playkit-js-ui-managers is a <a href="https://github.com/kaltura/kaltura-player-js.">kaltura player</a> plugin that groups several UI services,
 in order to simplify and facilitate the customization of the <a href="https://github.com/kaltura/kaltura-player-js.">kaltura player</a> UI by providing a simple and clean API.</p>
+<p>Each service manages a different area of UI functionality</p>
 <p>It relies on <a href="https://github.com/kaltura/kaltura-player-js.">kaltura player</a> core API for managing UI features.</p>
 <p>playkit-js-ui-managers works as a plugin of <a href="https://github.com/kaltura/kaltura-player-js.">kaltura player</a></p>
 <p>playkit-js-ui-managers is written in <a href="https://github.com/ericdouglas/ES6-Learning#articles--tutorials">ECMAScript6</a> (<code>*.js</code>) and <a href="https://www.typescriptlang.org/">TypeScript</a> (<code>*.ts</code>) (strongly typed superset of ES6), 
@@ -18,19 +19,17 @@ and transpiled in ECMAScript5 using <a href="https://babeljs.io/">Babel</a> and 
 </a>
 <ul>
 <li><p>###Side Panels
-Enable to manage side panel items in one place<br><br>that&#39;s includes:</p>
+manages and controls the side panel items<br><br>that&#39;s includes:</p>
 <ul>
-<li>Add item</li>
-<li>Remove item</li>
-<li>Activate item</li>
-<li>Detivate item</li>
+<li>When an item is activated in the panel, the other items are automatically deactivated in that panel.</li>
+<li>Automatically deactivates a panel when its counter panel is activated<br><br>Full API documentation can be found <a href="https://kaltura.github.io/playkit-js-ui-managers/docs/api/classes/side_panels_manager.SidePanelsManager.html">here</a></li>
 </ul>
 </li>
 <li><p>###Upper bar manager
-Enable to manage icons in one place<br><br>that&#39;s includes:</p>
+manages and controls the upper bar menu<br><br>that&#39;s includes:</p>
 <ul>
-<li>Add icon</li>
-<li>Remove icon</li>
+<li>sets the order icons are shown.</li>
+<li>Increases and decreases the number of icons that appear depending on the size of the player<br><br>Full API documentation can be found <a href="https://kaltura.github.io/playkit-js-ui-managers/docs/api/classes/upper_bar_manager.UpperBarManager.html">here</a></li>
 </ul>
 </li>
 </ul>
@@ -82,15 +81,15 @@ Enable to manage icons in one place<br><br>that&#39;s includes:</p>
 </a>
 <p>An overview of this project&#39;s design, can be found <a href="https://kaltura.atlassian.net/wiki/spaces/PROD/pages/3554412657/Side+Panel+Manager+-+Design+Document">here</a>.</p>
 
-<a href="#api-docs-and-usage-guide" id="api-docs-and-usage-guide" style="color: inherit; text-decoration: none;">
-  <h2>API docs and usage guide</h2>
+<a href="#api-docs" id="api-docs" style="color: inherit; text-decoration: none;">
+  <h2>API docs</h2>
 </a>
 <p><a href="https://kaltura.github.io/playkit-js-ui-managers/docs/api/index.html">API docs</a></p>
 
 <a href="#usage-guide" id="usage-guide" style="color: inherit; text-decoration: none;">
   <h2>usage guide</h2>
 </a>
-<p><a href="https://kaltura.github.io/playkit-js-ui-managers/docs/api/index.html">usage guide</a></p>
+<p><a href="./docs/guide.md">usage guide</a></p>
 
 <a href="#demo" id="demo" style="color: inherit; text-decoration: none;">
   <h2>Demo</h2>
@@ -112,11 +111,6 @@ Enable to manage icons in one place<br><br>that&#39;s includes:</p>
 <li>Safari 8+ for MacOS 10.10+</li>
 <li>Safari for ipadOS 13+</li>
 </ul>
-
-<a href="#using-playkit-js-ui-managers" id="using-playkit-js-ui-managers" style="color: inherit; text-decoration: none;">
-  <h2>Using playkit-js-ui-managers</h2>
-</a>
-<p><a href="./docs/API.md">API and usage docs, with code examples</a></p>
 
 <a href="#license" id="license" style="color: inherit; text-decoration: none;">
   <h2>License</h2>

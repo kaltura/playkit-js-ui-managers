@@ -4,8 +4,10 @@
 
 # playkit-js-ui-managers
 
-playkit-js-ui-managers is a [kaltura player] plugin JavaScript library that group several UI services together,
+playkit-js-ui-managers is a [kaltura player] plugin that groups several UI services,
 in order to simplify and facilitate the customization of the [kaltura player] UI by providing a simple and clean API.
+
+Each service manages a different area of UI functionality
 
 It relies on [kaltura player] core API for managing UI features.
 
@@ -25,20 +27,22 @@ and transpiled in ECMAScript5 using [Babel](https://babeljs.io/) and the [TypeSc
 ## services
 
 - ###Side Panels
-  Enable to manage side panel items in one place\
+  manages and controls the side panel items\
   \
   that's includes:
-  - Add item
-  - Remove item
-  - Activate item
-  - Detivate item
+  - When an item is activated in the panel, the other items are automatically deactivated in that panel.
+  - Automatically deactivates a panel when its counter panel is activated\
+  \
+    Full API documentation can be found [here](https://kaltura.github.io/playkit-js-ui-managers/docs/api/classes/side_panels_manager.SidePanelsManager.html)
   
 - ###Upper bar manager
-  Enable to manage icons in one place\
+  manages and controls the upper bar menu\
   \
   that's includes:
-  - Add icon
-  - Remove icon
+  - sets the order icons are shown.
+  - Increases and decreases the number of icons that appear depending on the size of the player\
+  \
+    Full API documentation can be found [here](https://kaltura.github.io/playkit-js-ui-managers/docs/api/classes/upper_bar_manager.UpperBarManager.html)
     
 ## Getting started with development
 
@@ -51,6 +55,16 @@ cd playkit-js-ui-managers
 
 # Run dev-server for demo page (recompiles on file-watch, and write to actual dist fs artifacts)
 npm run dev
+
+# Before submitting a PR - Run the pre commit command
+npm run pre:commit
+
+# this command will run:
+
+# 1. types check
+# 2. lint check
+# 3. generate/update types
+# 4. generate/update docs
 ```
 
 The dev server will host files on port 8000. Once started, the demo can be found running at http://localhost:8000/.
@@ -106,13 +120,13 @@ npm run test:watch
 
 An overview of this project's design, can be found [here](https://kaltura.atlassian.net/wiki/spaces/PROD/pages/3554412657/Side+Panel+Manager+-+Design+Document).
 
-## API docs and usage guide
+## API docs
 
 [API docs](https://kaltura.github.io/playkit-js-ui-managers/docs/api/index.html)
 
 ## usage guide
 
-[usage guide](https://kaltura.github.io/playkit-js-ui-managers/docs/api/index.html)
+[usage guide](./docs/guide.md)
 
 ## Demo
 
