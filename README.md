@@ -7,11 +7,9 @@
 playkit-js-ui-managers is a [kaltura player] plugin that groups several UI services,
 in order to simplify and facilitate the customization of the [kaltura player] UI by providing a simple and clean API.
 
-Each service manages a different area of UI functionality
+Each service manages a different area of UI functionality.
 
 It relies on [kaltura player] core API for managing UI features.
-
-playkit-js-ui-managers works as a plugin of [kaltura player]
 
 playkit-js-ui-managers is written in [ECMAScript6] (`*.js`) and [TypeScript] (`*.ts`) (strongly typed superset of ES6), 
 and transpiled in ECMAScript5 using [Babel](https://babeljs.io/) and the [TypeScript compiler].
@@ -27,20 +25,18 @@ and transpiled in ECMAScript5 using [Babel](https://babeljs.io/) and the [TypeSc
 ## services
 
 - ###Side Panels
-  manages and controls the side panel items\
+  manages and controls the side panel items, including: \
   \
-  that's includes:
-  - When an item is activated in the panel, the other items are automatically deactivated in that panel.
+  - When an item is activated in a panel, the other items in that panel are automatically deactivated.
   - Automatically deactivates a panel when its counter panel is activated\
   \
     Full API documentation can be found [here](https://kaltura.github.io/playkit-js-ui-managers/docs/api/classes/side_panels_manager.SidePanelsManager.html)
   
 - ###Upper bar manager
-  manages and controls the upper bar menu\
+  manages and controls the upper bar menu, including: \
   \
-  that's includes:
-  - sets the order icons are shown.
-  - Increases and decreases the number of icons that appear depending on the size of the player\
+  - Setting the order in which icons are shown.
+  - Increasing and decreasing the number of icons that appear depending on the size of the player\
   \
     Full API documentation can be found [here](https://kaltura.github.io/playkit-js-ui-managers/docs/api/classes/upper_bar_manager.UpperBarManager.html)
     
@@ -102,7 +98,7 @@ Run type-check to verify TypeScript types
 npm run types:check
 ```
 
-### Automated tests (Mocha/Karma)
+### Automated tests (Cypress)
 
 Run all tests at once:
 
@@ -124,7 +120,7 @@ An overview of this project's design, can be found [here](https://kaltura.atlass
 
 [API docs](https://kaltura.github.io/playkit-js-ui-managers/docs/api/index.html)
 
-## usage guide
+## Usage guide
 
 [usage guide](./docs/guide.md)
 

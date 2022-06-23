@@ -9,14 +9,14 @@
 
 ### First step: setup
 
-First include `playkit-ui-managers.js` after kaltura-player script in your web page.
+First include `playkit-ui-managers.js` **after** kaltura-player script in your web page.
 
 ```html
   <script src="https://raw.githack.com/kaltura/kaltura-player-js/master/dist/kaltura-ovp-player.js"></script>
   <script src="./playkit-ui-managers.js"></script>
 ```
 
-Add the ui-managers to the setup config like any other plugin in addition to the plugin uses the ui-managers.
+Add the ui-managers to the player config under the plugins section along with the rest of plugins.
 
 ```js
     const config = {
@@ -35,7 +35,7 @@ const player = KalturaPlayer.setup(config);
 
 ### Second step: access and use the desired service inside the plugin
 
-get and use the desired service using the player's api inside the loadMedia() hook of your plugin
+Now You can access and use the desired service by using the player's API inside the loadMedia() hook of your plugin
 
 ```js
 export const pluginName = 'somePlugin';
