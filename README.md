@@ -24,7 +24,7 @@ and transpiled in ECMAScript5 using [Babel](https://babeljs.io/) and the [TypeSc
 
 ## services
 
-- ###Side Panels
+- ### Side Panels
   manages and controls the side panel items, including: \
   \
   - When an item is activated in a panel, the other items in that panel are automatically deactivated.
@@ -32,7 +32,7 @@ and transpiled in ECMAScript5 using [Babel](https://babeljs.io/) and the [TypeSc
   \
     Full API documentation can be found [here](https://kaltura.github.io/playkit-js-ui-managers/docs/api/classes/side_panels_manager.SidePanelsManager.html)
   
-- ###Upper bar manager
+- ### Upper bar manager
   manages and controls the upper bar menu, including: \
   \
   - Setting the order in which icons are shown.
