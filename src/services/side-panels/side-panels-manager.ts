@@ -111,6 +111,18 @@ export class SidePanelsManager {
    * @ignore
    */
   public reset(): void {
+    this.logger.debug('reset');
+  }
+
+  /**
+   * @ignore
+   */
+  public destroy(): void {
+    this.logger.debug('destroy');
+    this.removeAllItems();
+  }
+
+  private removeAllItems(): void {
     for (const value of this.componentsRegistry.values()) {
       this.removeItem(value.id);
     }
