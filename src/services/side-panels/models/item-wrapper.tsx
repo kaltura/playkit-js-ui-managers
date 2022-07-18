@@ -3,7 +3,7 @@ import { KalturaPlayer, ui } from 'kaltura-player-js';
 const { ReservedPresetAreas } = ui;
 import { PanelItemWrapper } from '../ui/panel-item-wrapper/panel-item-wrapper.component';
 import { IconWrapper } from '../ui/icon-wrapper/icon-wrapper.component';
-import { PanelComponentProps, SidePanelItem } from './side-panel-item-dto';
+import { PanelComponentProps, SidePanelItem } from './side-panel-item';
 
 /**
  * Panel item metadata

@@ -1,9 +1,9 @@
 import { ui, KalturaPlayer, Logger, PlaykitUI } from 'kaltura-player-js';
-import { SidePanelItem } from './models/side-panel-item-dto';
+import { SidePanelItem } from './models/side-panel-item';
 import { ItemWrapper } from './models/item-wrapper';
 const { SidePanelModes, SidePanelPositions, ReservedPresetNames } = ui;
 
-const OPPOSITE_PANELS: Record<PlaykitUI.SidePanelPosition, PlaykitUI.SidePanelPosition> = {
+const COUNTER_PANELS: Record<PlaykitUI.SidePanelPosition, PlaykitUI.SidePanelPosition> = {
   [SidePanelPositions.TOP]: SidePanelPositions.BOTTOM,
   [SidePanelPositions.BOTTOM]: SidePanelPositions.TOP,
   [SidePanelPositions.RIGHT]: SidePanelPositions.LEFT,
@@ -16,6 +16,9 @@ export class SidePanelsManager {
   private readonly componentsRegistry: Map<number, ItemWrapper>;
   private readonly logger: Logger;
 
+  /**
+   * @ignore
+   */
   constructor(player: KalturaPlayer, logger: Logger) {
     this.player = player;
     this.activePanels = { top: null, bottom: null, right: null, left: null };
@@ -55,10 +58,10 @@ export class SidePanelsManager {
       if (previousItemWrapper !== null) {
         previousItemWrapper.deactivate(true);
       }
-      // Deactivate the opposite panel if is active
-      const oppositePosition: PlaykitUI.SidePanelPosition = SidePanelsManager.getOppositePanelPosition(position);
-      if (this.activePanels[oppositePosition]) {
-        this.deactivateItem(this.activePanels[oppositePosition]!.id);
+      // Deactivate the counter panel if is active
+      const counterPosition: PlaykitUI.SidePanelPosition = SidePanelsManager.getCounterPanelPosition(position);
+      if (this.activePanels[counterPosition]) {
+        this.deactivateItem(this.activePanels[counterPosition]!.id);
       }
       // Update new item as active
       itemWrapper.activate();
@@ -91,6 +94,10 @@ export class SidePanelsManager {
     return false;
   }
 
+  /**
+   * Rerender (uses preact Component.forceUpdate api under the hoods) the side panel item component
+   * It's just for backward compatibility you should not use it.
+   */
   public update(itemId: number): void {
     const itemWrapper: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (itemWrapper) {
@@ -100,6 +107,9 @@ export class SidePanelsManager {
     }
   }
 
+  /**
+   * @ignore
+   */
   public reset(): void {
     for (const value of this.componentsRegistry.values()) {
       this.removeItem(value.id);
@@ -122,8 +132,8 @@ export class SidePanelsManager {
     this.player.ui.store.dispatch(ui.reducers.shell.actions.updateSidePanelMode(position, SidePanelModes.HIDDEN));
   }
 
-  private static getOppositePanelPosition(position: PlaykitUI.SidePanelPosition): PlaykitUI.SidePanelPosition {
-    return OPPOSITE_PANELS[position];
+  private static getCounterPanelPosition(position: PlaykitUI.SidePanelPosition): PlaykitUI.SidePanelPosition {
+    return COUNTER_PANELS[position];
   }
 
   private static validateItem(item: SidePanelItem): boolean {

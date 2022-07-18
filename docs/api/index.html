@@ -1,0 +1,119 @@
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@playkit-js/ui-managers</title><meta name="description" content="Documentation for @playkit-js/ui-managers"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">@playkit-js/ui-managers</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1> @playkit-js/ui-managers </h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography"><p><a href="https://app.travis-ci.com/kaltura/playkit-js-ui-managers"><img src="https://app.travis-ci.com/kaltura/playkit-js-ui-managers.svg?branch=master" alt="Build Status"></a>
+<a href="https://www.npmjs.com/package/@playkit-js/ui-managers"><img src="https://img.shields.io/npm/v/@playkit-js/ui-managers/latest.svg" alt=""></a>
+<a href="https://www.npmjs.com/package/@playkit-js/ui-managers/v/canary"><img src="https://img.shields.io/npm/v/@playkit-js/ui-managers/canary.svg" alt=""></a></p>
+
+<a href="#playkit-js-ui-managers" id="playkit-js-ui-managers" style="color: inherit; text-decoration: none;">
+  <h1>playkit-js-ui-managers</h1>
+</a>
+<p>playkit-js-ui-managers is a <a href="https://github.com/kaltura/kaltura-player-js.">kaltura player</a> plugin that groups several UI services,
+in order to simplify and facilitate the customization of the <a href="https://github.com/kaltura/kaltura-player-js.">kaltura player</a> UI by providing a simple and clean API.</p>
+<p>Each service manages a different area of UI functionality</p>
+<p>It relies on <a href="https://github.com/kaltura/kaltura-player-js.">kaltura player</a> core API for managing UI features.</p>
+<p>playkit-js-ui-managers works as a plugin of <a href="https://github.com/kaltura/kaltura-player-js.">kaltura player</a></p>
+<p>playkit-js-ui-managers is written in <a href="https://github.com/ericdouglas/ES6-Learning#articles--tutorials">ECMAScript6</a> (<code>*.js</code>) and <a href="https://www.typescriptlang.org/">TypeScript</a> (<code>*.ts</code>) (strongly typed superset of ES6), 
+and transpiled in ECMAScript5 using <a href="https://babeljs.io/">Babel</a> and the <a href="https://www.typescriptlang.org/docs/handbook/compiler-options.html">TypeScript compiler</a>.</p>
+<p><a href="https://webpack.js.org/">Webpack</a> is used to build the distro bundle and serve the local development environment.</p>
+
+<a href="#services" id="services" style="color: inherit; text-decoration: none;">
+  <h2>services</h2>
+</a>
+<ul>
+<li><p>###Side Panels
+manages and controls the side panel items<br><br>that&#39;s includes:</p>
+<ul>
+<li>When an item is activated in the panel, the other items are automatically deactivated in that panel.</li>
+<li>Automatically deactivates a panel when its counter panel is activated<br><br>Full API documentation can be found <a href="https://kaltura.github.io/playkit-js-ui-managers/docs/api/classes/side_panels_manager.SidePanelsManager.html">here</a></li>
+</ul>
+</li>
+<li><p>###Upper bar manager
+manages and controls the upper bar menu<br><br>that&#39;s includes:</p>
+<ul>
+<li>sets the order icons are shown.</li>
+<li>Increases and decreases the number of icons that appear depending on the size of the player<br><br>Full API documentation can be found <a href="https://kaltura.github.io/playkit-js-ui-managers/docs/api/classes/upper_bar_manager.UpperBarManager.html">here</a></li>
+</ul>
+</li>
+</ul>
+
+<a href="#getting-started-with-development" id="getting-started-with-development" style="color: inherit; text-decoration: none;">
+  <h2>Getting started with development</h2>
+</a>
+<pre><code class="language-sh"><span class="hl-0"># First, checkout the repository and install the required dependencies</span><br/><span class="hl-1">git clone https://github.com/kaltura/playkit-js-ui-managers.git</span><br/><br/><span class="hl-0"># Navigate to the repo dir</span><br/><span class="hl-2">cd</span><span class="hl-1"> playkit-js-ui-managers</span><br/><br/><span class="hl-0"># Run dev-server for demo page (recompiles on file-watch, and write to actual dist fs artifacts)</span><br/><span class="hl-1">npm run dev</span>
+</code></pre>
+<p>The dev server will host files on port 8000. Once started, the demo can be found running at <a href="http://localhost:8000/">http://localhost:8000/</a>.</p>
+<p>Before submitting a PR, please see our <a href="CONTRIBUTING.md">contribution guidelines</a>.</p>
+
+<a href="#linter-eslint" id="linter-eslint" style="color: inherit; text-decoration: none;">
+  <h3>Linter (ESlint)</h3>
+</a>
+<p>Run linter:</p>
+<pre><code><span class="hl-3">npm</span><span class="hl-1"> </span><span class="hl-3">run</span><span class="hl-1"> </span><span class="hl-4">lint</span><span class="hl-1">:</span><span class="hl-3">check</span>
+</code></pre>
+<p>Run linter with auto-fix mode:</p>
+<pre><code><span class="hl-3">npm</span><span class="hl-1"> </span><span class="hl-3">run</span><span class="hl-1"> </span><span class="hl-4">lint</span><span class="hl-1">:</span><span class="hl-3">fix</span>
+</code></pre>
+
+<a href="#formatting-code" id="formatting-code" style="color: inherit; text-decoration: none;">
+  <h3>Formatting Code</h3>
+</a>
+<p>Run prettier to format code</p>
+<pre><code><span class="hl-3">npm</span><span class="hl-1"> </span><span class="hl-3">run</span><span class="hl-1"> </span><span class="hl-4">prettier</span><span class="hl-1">:</span><span class="hl-3">fix</span>
+</code></pre>
+
+<a href="#type-check" id="type-check" style="color: inherit; text-decoration: none;">
+  <h3>Type Check</h3>
+</a>
+<p>Run type-check to verify TypeScript types</p>
+<pre><code><span class="hl-3">npm</span><span class="hl-1"> </span><span class="hl-3">run</span><span class="hl-1"> </span><span class="hl-4">types</span><span class="hl-1">:</span><span class="hl-3">check</span>
+</code></pre>
+
+<a href="#automated-tests-mochakarma" id="automated-tests-mochakarma" style="color: inherit; text-decoration: none;">
+  <h3>Automated tests (Mocha/Karma)</h3>
+</a>
+<p>Run all tests at once:</p>
+<pre><code><span class="hl-3">npm</span><span class="hl-1"> </span><span class="hl-3">test</span>
+</code></pre>
+<p>Run unit tests in watch mode:</p>
+<pre><code><span class="hl-3">npm</span><span class="hl-1"> </span><span class="hl-3">run</span><span class="hl-1"> </span><span class="hl-4">test</span><span class="hl-1">:</span><span class="hl-3">watch</span>
+</code></pre>
+
+<a href="#design" id="design" style="color: inherit; text-decoration: none;">
+  <h2>Design</h2>
+</a>
+<p>An overview of this project&#39;s design, can be found <a href="https://kaltura.atlassian.net/wiki/spaces/PROD/pages/3554412657/Side+Panel+Manager+-+Design+Document">here</a>.</p>
+
+<a href="#api-docs" id="api-docs" style="color: inherit; text-decoration: none;">
+  <h2>API docs</h2>
+</a>
+<p><a href="https://kaltura.github.io/playkit-js-ui-managers/docs/api/index.html">API docs</a></p>
+
+<a href="#usage-guide" id="usage-guide" style="color: inherit; text-decoration: none;">
+  <h2>usage guide</h2>
+</a>
+<p><a href="./docs/guide.md">usage guide</a></p>
+
+<a href="#demo" id="demo" style="color: inherit; text-decoration: none;">
+  <h2>Demo</h2>
+</a>
+<p><a href="https://kaltura.github.io/playkit-js-ui-managers/demo/index.html">https://kaltura.github.io/playkit-js-ui-managers/demo/index.html</a></p>
+
+<a href="#compatibility" id="compatibility" style="color: inherit; text-decoration: none;">
+  <h2>Compatibility</h2>
+</a>
+<p>playkit-js-ui-managers is only compatible with browsers supporting MediaSource extensions (MSE) API with &#39;video/MP4&#39; mime-type inputs.</p>
+<p>playkit-js-ui-managers is supported on:</p>
+<ul>
+<li>Chrome 39+ for Android</li>
+<li>Chrome 39+ for Desktop</li>
+<li>Firefox 41+ for Android</li>
+<li>Firefox 42+ for Desktop</li>
+<li>IE11 for Windows 8.1+</li>
+<li>Edge for Windows 10+</li>
+<li>Safari 8+ for MacOS 10.10+</li>
+<li>Safari for ipadOS 13+</li>
+</ul>
+
+<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+  <h2>License</h2>
+</a>
+<p>playkit-js-ui-managers is released under <a href="LICENSE">Apache 2.0 License</a></p>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/models_side_panel_item.html">models/side-<wbr/>panel-<wbr/>item</a></li><li class=" tsd-kind-module"><a href="modules/side_panels_manager.html">side-<wbr/>panels-<wbr/>manager</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>

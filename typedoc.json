@@ -1,0 +1,11 @@
+{
+  "entryPoints": [
+    "src/services/side-panels/models/side-panel-item.ts",
+    "src/services/side-panels/side-panels-manager.ts"
+  ],
+  "out": "docs/api",
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeInternal": true,
+  "entryPointStrategy": "Expand"
+}
