@@ -9,6 +9,7 @@
     "types/"
   ],
   "license": "Apache-2.0",
+  "homepage": "https://github.com/kaltura/playkit-js-google-tag-manager",
   "repository": {
     "type": "git",
     "url": "https://github.com/kaltura/playkit-js-ui-managers"

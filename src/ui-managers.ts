@@ -1,5 +1,6 @@
 import { BasePlugin, KalturaPlayer } from 'kaltura-player-js';
 import { SidePanelsManager } from './services/side-panels/side-panels-manager';
+import { UpperBarManager } from './services/upper-bar/upper-bar-manager';
 
 export const pluginName = 'uiManagers';
 
@@ -13,6 +14,7 @@ export class UIManagers extends BasePlugin {
   constructor(name: string, player: KalturaPlayer) {
     super(name, player);
     player.registerService('sidePanelsManager', new SidePanelsManager(player, this.logger));
+    player.registerService('upperBarManager', new UpperBarManager(player, this.logger));
   }
 
   public static isValid(): boolean {
