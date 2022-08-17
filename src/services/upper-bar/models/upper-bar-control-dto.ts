@@ -4,7 +4,6 @@ export type UpperBarControlProps = {
 };
 
 export interface UpperBarControlDto {
-  label: string;
   onClick: () => void;
   component: ComponentClass<UpperBarControlProps> | FunctionalComponent<UpperBarControlProps>;
 }

@@ -29,8 +29,8 @@
     "build:dev": "webpack --mode development",
     "build:prod": "webpack --mode production",
     "test": "echo \"no test specified\" && exit 0",
-    "types:check": "tsc src/index.ts src/services/types/global.d.ts --jsx react --jsxFactory h --noEmit --target ESNext --moduleResolution node",
-    "types:ganarate": "tsc src/index.ts src/services/types/global.d.ts --declaration --emitDeclarationOnly --outFile types/modules.ts --jsx react --jsxFactory h --stripInternal true --target ESNext --moduleResolution node",
+    "types:check": "tsc src/index.ts src/types/global.d.ts --jsx react --jsxFactory h --noEmit --target ESNext --moduleResolution node",
+    "types:ganarate": "tsc src/index.ts src/types/global.d.ts --declaration --emitDeclarationOnly --outFile types/modules.ts --jsx react --jsxFactory h --stripInternal true --target ESNext --moduleResolution node",
     "docs:ganarate": "typedoc",
     "lint:check": "eslint src --ext .ts,.tsx --color",
     "lint:fix": "npm run lint:check -- --fix",
@@ -79,5 +79,10 @@
   "author": {
     "name": "Jonathan T. Gold",
     "email": "jonathan.gold@kaltura.com"
-  }
+  },
+  "contributors": [
+    "Jonathan T. Gold",
+    "Gilad Nadav",
+    "Sivan Arganov"
+  ]
 }

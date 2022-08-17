@@ -27,9 +27,7 @@ export class ItemWrapper {
     this.injectPanelComponent();
     if (item.iconComponent) {
       const itemId = this.id;
-      const label = this.item.label;
       this.iconId = this.upperBarManager.addControl({
-        label: label,
         onClick: () => onClick(itemId),
         component: this.item.iconComponent!
       });
@@ -37,8 +35,7 @@ export class ItemWrapper {
   }
 
   public activate(): void {
-    this.panelItemComponentRef.current!.on();
-    // if (this.item.iconComponent) this.iconComponentRef!.current!.on();
+    this.panelItemComponentRef?.current?.on() || setImmediate(() => this.panelItemComponentRef!.current!.on());
     if (this.item.iconComponent) this.upperBarManager.activateControl(this.iconId!);
     this.item.onActivate?.();
     this.isActive = true;
@@ -53,7 +50,6 @@ export class ItemWrapper {
 
   public remove(): void {
     this.removePanelComponentFn();
-    // if (this.item.iconComponent) this.removeIconComponentFn!();
     if (this.item.iconComponent) this.upperBarManager.removeControl(this.iconId!);
   }
 
