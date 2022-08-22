@@ -30,8 +30,8 @@ export class SomeIconComponent extends preact.Component {
       {
         className: 'icon c-icon',
         style: {
-          backgroundColor: this.props.isActive ? 'green' : 'whitesmoke',
-          color: this.props.isActive ?  'whitesmoke' : 'green',
+          backgroundColor: this.props.isActive ? 'green' : '',
+          color: this.props.isActive ?  'whitesmoke' : '',
         }
       },
       'C'

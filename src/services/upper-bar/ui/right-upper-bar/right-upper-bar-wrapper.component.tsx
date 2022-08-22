@@ -39,30 +39,48 @@ export class RightUpperBarWrapper extends Component<RightUpperBarWrapperProps, R
     this.moreIcon = new ControlWrapper({ component: More, onClick: (): void => {} });
   }
 
+  private splitControlsIntoDisplayedAndDropdown(playerSize: number): {
+    displayedControls: ControlWrapper[];
+    dropdownControls: ControlWrapper[];
+  } {
+    switch (playerSize) {
+      case PLAYER_SIZE.TINY:
+        return { displayedControls: [], dropdownControls: [] };
+      case PLAYER_SIZE.EXTRA_SMALL:
+      case PLAYER_SIZE.SMALL:
+        return this.splitControls(2);
+      default:
+        return this.splitControls(4);
+    }
+  }
+
   update(icons: ControlWrapper[]): void {
     this.setState({ controls: icons });
   }
 
+  private splitControls(numberOfDisplayedIcon: number): {
+    displayedControls: ControlWrapper[];
+    dropdownControls: ControlWrapper[];
+  } {
+    let displayedControls: ControlWrapper[];
+    let dropdownControls: ControlWrapper[];
+    if (this.state.controls.length > numberOfDisplayedIcon + 1) {
+      displayedControls = this.state.controls.slice(0, numberOfDisplayedIcon);
+      displayedControls.push(this.moreIcon);
+      dropdownControls = this.state.controls.slice(numberOfDisplayedIcon);
+    } else {
+      displayedControls = this.state.controls;
+      dropdownControls = [];
+    }
+    return { displayedControls, dropdownControls };
+  }
+
   render(): ComponentChild {
-    let displayedControls: ControlWrapper[] = [];
-    // const dropdownControls = [];
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    switch (this.props.playerSize) {
-      case PLAYER_SIZE.TINY:
-        displayedControls = [];
-        break;
-      case PLAYER_SIZE.EXTRA_SMALL:
-      case PLAYER_SIZE.SMALL:
-        displayedControls = this.state.controls.slice(0, 2);
-        displayedControls.push(this.moreIcon);
-        break;
-      default:
-        displayedControls = this.state.controls.slice(0, 4);
-        displayedControls.push(this.moreIcon);
-    }
+    const { displayedControls, dropdownControls } = this.splitControlsIntoDisplayedAndDropdown(this.props.playerSize);
     // eslint-disable-next-line no-console
-    console.log('1111', this.props, displayedControls);
+    console.log({ controls: this.state.controls }, { displayedControls }, { dropdownControls });
     return (
       <div className={styles.rightUpperBarWrapperContainer}>
         {displayedControls.map(({ id, component, onClick, isActive, iconComponentRef }) => {
