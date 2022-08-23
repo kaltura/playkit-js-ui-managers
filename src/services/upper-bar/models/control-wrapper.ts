@@ -1,6 +1,6 @@
 import { createRef, RefObject, ComponentClass, FunctionalComponent } from 'preact';
 import { UpperBarControlDto, UpperBarControlProps } from './upper-bar-control-dto';
-import { RightUpperBarControlWrapper } from '../ui/icon-wrapper/right-upper-bar-control-wrapper.component';
+import { RightUpperBarControlWrapper } from '../ui/right-upper-bar-control-wrapper/right-upper-bar-control-wrapper.component';
 
 /**
  * Panel item metadata

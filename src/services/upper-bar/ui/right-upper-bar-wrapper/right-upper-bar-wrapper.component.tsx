@@ -1,7 +1,7 @@
 import { h, Component, ComponentChild, RefObject, ComponentClass, FunctionalComponent } from 'preact';
 import { ControlWrapper } from '../../models/control-wrapper';
 import { UpperBarControlProps } from '../../models/upper-bar-control-dto';
-import { RightUpperBarControlWrapper } from '../icon-wrapper/right-upper-bar-control-wrapper.component';
+import { RightUpperBarControlWrapper } from '../right-upper-bar-control-wrapper/right-upper-bar-control-wrapper.component';
 import * as styles from './right-upper-bar-wrapper.component.scss';
 import { ui } from 'kaltura-player-js';
 import { More } from '../more/more.component';
@@ -31,12 +31,9 @@ type RightUpperBarWrapperProps = {
  */
 @connect(mapStateToProps, null, null, { forwardRef: true })
 export class RightUpperBarWrapper extends Component<RightUpperBarWrapperProps, RightUpperBarWrapperState> {
-  private moreIcon: ControlWrapper;
   constructor() {
     super();
     this.state = { controls: [] };
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    this.moreIcon = new ControlWrapper({ component: More, onClick: (): void => {} });
   }
 
   private splitControlsIntoDisplayedAndDropdown(playerSize: number): {
@@ -66,7 +63,6 @@ export class RightUpperBarWrapper extends Component<RightUpperBarWrapperProps, R
     let dropdownControls: ControlWrapper[];
     if (this.state.controls.length > numberOfDisplayedIcon + 1) {
       displayedControls = this.state.controls.slice(0, numberOfDisplayedIcon);
-      displayedControls.push(this.moreIcon);
       dropdownControls = this.state.controls.slice(numberOfDisplayedIcon);
     } else {
       displayedControls = this.state.controls;
@@ -79,8 +75,6 @@ export class RightUpperBarWrapper extends Component<RightUpperBarWrapperProps, R
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const { displayedControls, dropdownControls } = this.splitControlsIntoDisplayedAndDropdown(this.props.playerSize);
-    // eslint-disable-next-line no-console
-    console.log({ controls: this.state.controls }, { displayedControls }, { dropdownControls });
     return (
       <div className={styles.rightUpperBarWrapperContainer}>
         {displayedControls.map(({ id, component, onClick, isActive, iconComponentRef }) => {
@@ -91,6 +85,7 @@ export class RightUpperBarWrapper extends Component<RightUpperBarWrapperProps, R
             </RightUpperBarControlWrapper>
           );
         })}
+        {dropdownControls.length && <More controls={dropdownControls} />}
       </div>
     );
   }

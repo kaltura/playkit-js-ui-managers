@@ -2,7 +2,7 @@ import { KalturaPlayer, Logger, ui } from 'kaltura-player-js';
 import { UpperBarControlDto } from './models/upper-bar-control-dto';
 import { ControlWrapper } from './models/control-wrapper';
 import { h, RefObject, createRef } from 'preact';
-import { RightUpperBarWrapper } from './ui/right-upper-bar/right-upper-bar-wrapper.component';
+import { RightUpperBarWrapper } from './ui/right-upper-bar-wrapper/right-upper-bar-wrapper.component';
 const { ReservedPresetAreas } = ui;
 
 export class UpperBarManager {

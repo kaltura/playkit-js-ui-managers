@@ -4,13 +4,9 @@
   font-family: cursive;
   font-size: 30px;
   text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
-  font-weight: bolder;
   display: flex;
   align-items: center;
   justify-content: center;
-  -webkit-animation: scale 1s ease-in-out infinite alternate;
-  -moz-animation: scale 1s ease-in-out infinite alternate;
-  animation: scale 1s ease-in-out infinite alternate;
 }
 
 .panel {
@@ -22,9 +18,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  -webkit-animation: glow 1s ease-in-out infinite alternate;
-  -moz-animation: glow 1s ease-in-out infinite alternate;
-  animation: glow 1s ease-in-out infinite alternate;
+  -webkit-animation: glow 1s ease-in-out infinite alternate, scale 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate, scale 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate, scale 1s ease-in-out infinite alternate;
 
 }
 
