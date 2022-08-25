@@ -16,7 +16,8 @@ export class Dropdown extends Component<DropdownProps> {
   render(): ComponentChild {
     return (
       <div className={styles.moreDropdown}>
-        {this.props.controls.map(({ id, component, onClick, isActive, iconComponentRef }) => {
+        {/*{this.props.controls.map(({ id, label, component, onClick, isActive, iconComponentRef }) => {*/}
+        {this.props.controls.map(({ id, label, component, onClick, iconComponentRef }) => {
           const ControlComponent: ComponentClass<UpperBarControlProps> | FunctionalComponent<UpperBarControlProps> = component!;
           return (
             <div key={id} className={styles.dropdownItem} onClick={onClick}>
@@ -26,9 +27,10 @@ export class Dropdown extends Component<DropdownProps> {
                   return;
                 }}
               >
-                <ControlComponent isActive={isActive} />
+                {/*<ControlComponent isActive={isActive} />*/}
+                <ControlComponent />
               </RightUpperBarControlWrapper>
-              <span className={styles.dropdownItemDescription}> Report Video</span>
+              <span className={styles.dropdownItemDescription}>{label}</span>
             </div>
           );
         })}

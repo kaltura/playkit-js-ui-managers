@@ -1,4 +1,5 @@
-import { h, Component, ComponentChild, RefObject, cloneElement, VNode } from 'preact';
+// import { h, Component, ComponentChild, RefObject, cloneElement, VNode } from 'preact';
+import { h, Component, ComponentChild } from 'preact';
 import * as styles from './right-upper-bar-control-wrapper.scss';
 
 type RightUpperBarControlWrapperState = {
@@ -6,7 +7,7 @@ type RightUpperBarControlWrapperState = {
 };
 
 type RightUpperBarControlWrapperProps = {
-  ref: RefObject<RightUpperBarControlWrapper>;
+  // ref: RefObject<RightUpperBarControlWrapper>;
   onClick: () => void;
 };
 
@@ -14,6 +15,7 @@ type RightUpperBarControlWrapperProps = {
  * IconWrapper component
  * @internal
  */
+
 export class RightUpperBarControlWrapper extends Component<RightUpperBarControlWrapperProps, RightUpperBarControlWrapperState> {
   constructor() {
     super();
@@ -31,7 +33,8 @@ export class RightUpperBarControlWrapper extends Component<RightUpperBarControlW
   render(): ComponentChild {
     return (
       <div className={styles.upperBarControlWrapper} onClick={this.props.onClick}>
-        {cloneElement(this.props.children as VNode, { isActive: this.state.on })}
+        {/*{cloneElement(this.props.children as VNode, { isActive: this.state.on })}*/}
+        {this.props.children}
       </div>
     );
   }

@@ -28,6 +28,7 @@ export class ItemWrapper {
     if (item.iconComponent) {
       const itemId = this.id;
       this.iconId = this.upperBarManager.addControl({
+        label: this.item.label,
         onClick: () => onClick(itemId),
         component: this.item.iconComponent!
       });
@@ -35,15 +36,19 @@ export class ItemWrapper {
   }
 
   public activate(): void {
-    this.panelItemComponentRef?.current?.on() || setImmediate(() => this.panelItemComponentRef!.current!.on());
-    if (this.item.iconComponent) this.upperBarManager.activateControl(this.iconId!);
-    this.item.onActivate?.();
-    this.isActive = true;
+    if (this.panelItemComponentRef.current) {
+      this.panelItemComponentRef.current!.on();
+      // if (this.item.iconComponent) this.upperBarManager.activateControl(this.iconId!);
+      this.item.onActivate?.();
+      this.isActive = true;
+    } else {
+      setTimeout(() => this.activate());
+    }
   }
 
   public deactivate(switchMode = false): void {
     this.panelItemComponentRef.current!.off(switchMode);
-    if (this.item.iconComponent) this.upperBarManager.deactivateControl(this.iconId!);
+    // if (this.item.iconComponent) this.upperBarManager.deactivateControl(this.iconId!);
     this.item.onDeactivate?.();
     this.isActive = false;
   }
@@ -54,7 +59,7 @@ export class ItemWrapper {
   }
 
   public update(): void {
-    this.panelItemComponentRef.current!.update();
+    this.panelItemComponentRef.current!.forceUpdate();
   }
 
   private injectPanelComponent(): void {

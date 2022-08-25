@@ -4,24 +4,34 @@
   padding: 5px;
   width: 166px;
   background-color: #222222;
+  border-radius: 4px;
   top: 120%;
   right: 0;
-}
 
-.dropdown-item {
-  border-radius: 4px;
-  display: flex;
-  margin: 2px 0;
-}
+  .dropdown-item {
+    border-radius: 4px;
+    padding: 2px 0;
+    display: flex;
+    margin: 2px 0;
 
-.dropdown-item:hover {
-  background-color: #444444;
-}
+    // '.icon' should be replaced with our spec icon control selector
+    & .icon {
+      font-size: 20px;
+      width: 26px;
+      height: 26px;
+    }
 
-.dropdown-item-description {
-  display: flex;
-  flex: 1;
-  font-size: 14px;
-  align-items: center;
-  padding-left: 12px;
+    // '.icon' should be replaced with our spec icon control selector
+    &:hover, &:hover .icon {
+      background-color: #444444;
+    }
+
+    .dropdown-item-description {
+      display: flex;
+      flex: 1;
+      font-size: 14px;
+      align-items: center;
+      padding-left: 9px;
+    }
+  }
 }

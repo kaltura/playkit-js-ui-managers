@@ -1,4 +1,4 @@
-import { h, Component, ComponentChild, RefObject, cloneElement, VNode } from 'preact';
+import { h, Component, ComponentChild, RefObject } from 'preact';
 import * as styles from './panel-item-wrapper.component.scss';
 import { ui } from 'kaltura-player-js';
 
@@ -33,17 +33,13 @@ export class PanelItemWrapper extends Component<PanelItemWrapperProps, PanelItem
     this.setState({ on: false });
   }
 
-  update(): void {
-    this.forceUpdate();
-  }
-
   render(): ComponentChild {
     return (
       <div
         className={[styles.sidePanel, this.state.on ? styles.active : ''].join(' ')}
         style={!this.state.on && !this.switchMode ? { transition: `visibility ${defaultTransitionTime}ms` } : ''}
       >
-        {cloneElement(this.props.children as VNode, { isActive: this.state.on })}
+        {this.props.children}
       </div>
     );
   }
