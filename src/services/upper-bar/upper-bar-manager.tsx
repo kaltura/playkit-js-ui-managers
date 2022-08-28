@@ -6,7 +6,7 @@ import { DisplayedBar } from './ui/displayed-bar/displayed-bar.component';
 import { KalturaPluginNames } from '../../ui-managers';
 const { ReservedPresetAreas, ReservedPresetNames } = ui;
 
-type UpperBarManagerConfig = { pluginsIconsOrder: { [key in KalturaPluginNames]: number } };
+type UpperBarManagerConfig = { pluginsIconsOrder: { [key in KalturaPluginNames | string]: number } };
 
 export class UpperBarManager {
   private readonly player: KalturaPlayer;
@@ -53,7 +53,7 @@ export class UpperBarManager {
     return !!this.componentsRegistry.get(itemId);
   }
 
-  private injectDisplayedBarComponentWrapper(iconsOrder: { [key in KalturaPluginNames]: number }): void {
+  private injectDisplayedBarComponentWrapper(iconsOrder: { [key in KalturaPluginNames | string]: number }): void {
     this.player.ui.addComponent({
       label: 'Right-Upper-Bar-Wrapper',
       presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],

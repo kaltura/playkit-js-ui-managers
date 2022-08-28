@@ -27,7 +27,7 @@ export type UiManagerConfig = {
  * manages the registration of UI services
  * @internal
  */
-export class UIManagers extends BasePlugin {
+export class UIManagers extends BasePlugin<UiManagerConfig> {
   protected static defaultConfig: UiManagerConfig = {
     upperBarManager: {
       pluginsIconsOrder: {
