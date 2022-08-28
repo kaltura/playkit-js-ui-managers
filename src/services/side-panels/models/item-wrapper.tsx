@@ -27,7 +27,7 @@ export class ItemWrapper {
     this.injectPanelComponent();
     if (item.iconComponent) {
       const itemId = this.id;
-      this.iconId = this.upperBarManager.addControl({
+      this.iconId = this.upperBarManager.add({
         label: this.item.label,
         onClick: () => onClick(itemId),
         component: this.item.iconComponent!
@@ -55,7 +55,7 @@ export class ItemWrapper {
 
   public remove(): void {
     this.removePanelComponentFn();
-    if (this.item.iconComponent) this.upperBarManager.removeControl(this.iconId!);
+    if (this.item.iconComponent) this.upperBarManager.remove(this.iconId!);
   }
 
   public update(): void {

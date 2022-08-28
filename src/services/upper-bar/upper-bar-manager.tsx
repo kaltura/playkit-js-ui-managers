@@ -1,98 +1,70 @@
 import { KalturaPlayer, Logger, ui } from 'kaltura-player-js';
-import { UpperBarControlDto } from './models/upper-bar-control-dto';
-import { ControlWrapper } from './models/control-wrapper';
+import { IconDto } from './models/icon-dto';
+import { IconModel } from './models/icon-model';
 import { h, RefObject, createRef } from 'preact';
-import { RightUpperBarWrapper } from './ui/right-upper-bar-wrapper/right-upper-bar-wrapper.component';
+import { DisplayedBar } from './ui/displayed-bar/displayed-bar.component';
 import { KalturaPluginNames } from '../../ui-managers';
-const { ReservedPresetAreas } = ui;
+const { ReservedPresetAreas, ReservedPresetNames } = ui;
 
 type UpperBarManagerConfig = { pluginsIconsOrder: { [key in KalturaPluginNames]: number } };
 
 export class UpperBarManager {
   private readonly player: KalturaPlayer;
-  private readonly componentsRegistry: Map<number, ControlWrapper>;
   private readonly logger: Logger;
-  private componentRef: RefObject<RightUpperBarWrapper>;
+  private readonly componentsRegistry: Map<number, IconModel>;
+  private readonly displayedBarComponentRef: RefObject<DisplayedBar>;
   /**
    * @ignore
    */
   constructor(player: KalturaPlayer, logger: Logger, config: UpperBarManagerConfig) {
     this.player = player;
-    this.componentsRegistry = new Map<number, ControlWrapper>();
+    this.componentsRegistry = new Map<number, IconModel>();
     this.logger = logger;
-    this.componentRef = createRef();
-    this.setRightUpperBarWrapper(config.pluginsIconsOrder);
+    this.displayedBarComponentRef = createRef();
+    this.injectDisplayedBarComponentWrapper(config.pluginsIconsOrder);
   }
 
-  public addControl(upperBarControl: UpperBarControlDto): number | undefined {
-    if (UpperBarManager.validateItem(upperBarControl)) {
-      const newItemWrapper: ControlWrapper = new ControlWrapper(upperBarControl);
-      this.componentsRegistry.set(newItemWrapper.id, newItemWrapper);
-      const controls = Array.from(this.componentsRegistry.values());
-      this.componentRef.current!.update(controls);
-      this.logger.debug(`Control Id: '${newItemWrapper.id}' '${newItemWrapper.label}' added`);
-      // newItemWrapper.iconComponentRef = this.componentRef.current!.RightUpperBarControlWrapperRef;
-      // this.activateControl(newItemWrapper.id);
-      return newItemWrapper.id;
+  public add(icon: IconDto): number | undefined {
+    if (UpperBarManager.validateItem(icon)) {
+      const newIcon: IconModel = new IconModel(icon);
+      this.componentsRegistry.set(newIcon.id, newIcon);
+      const icons = Array.from(this.componentsRegistry.values());
+      this.displayedBarComponentRef.current!.update(icons);
+      this.logger.debug(`Icon Id: '${newIcon.id}' '${newIcon.label}' added`);
+      return newIcon.id;
     }
-    this.logger.warn('Invalid upperBarControl parameters', upperBarControl);
+    this.logger.warn('Invalid Icon parameters', icon);
     return undefined;
   }
 
-  public removeControl(itemId: number): void {
-    const itemWrapper: ControlWrapper | undefined = this.componentsRegistry.get(itemId);
-    if (itemWrapper) {
-      // itemWrapper.remove();
+  public remove(itemId: number): void {
+    const icon: IconModel | undefined = this.componentsRegistry.get(itemId);
+    if (icon) {
       this.componentsRegistry.delete(itemId);
-      const controls = Array.from(this.componentsRegistry.values());
-      this.componentRef.current!.update(controls);
-      this.logger.debug(`Control Id: '${itemWrapper.id}' Label: '${itemWrapper.label}' removed`);
+      const icons = Array.from(this.componentsRegistry.values());
+      this.displayedBarComponentRef.current!.update(icons);
+      this.logger.debug(`Icon Id: '${icon.id}' Label: '${icon.label}' removed`);
     } else {
       this.logger.warn(`${itemId} is not registered`);
     }
   }
 
-  // public activateControl(itemId: number): void {
-  //   const itemWrapper: ControlWrapper | undefined = this.componentsRegistry.get(itemId);
-  //   if (itemWrapper) {
-  //     if (this.isItemActive(itemId)) return;
-  //     itemWrapper.activate();
-  //   } else {
-  //     this.logger.warn(`${itemId} is not registered`);
-  //   }
-  // }
-  //
-  // public deactivateControl(itemId: number): void {
-  //   const itemWrapper: ControlWrapper | undefined = this.componentsRegistry.get(itemId);
-  //   if (itemWrapper) {
-  //     if (!this.isItemActive(itemId)) return;
-  //     itemWrapper.deactivate();
-  //   } else {
-  //     this.logger.warn(`${itemId} is not registered`);
-  //   }
-  // }
-  //
-  // public isItemActive(itemId: number): boolean {
-  //   const itemWrapper: ControlWrapper | undefined = this.componentsRegistry.get(itemId);
-  //   if (itemWrapper) {
-  //     return itemWrapper.isActive;
-  //   }
-  //   this.logger.warn(`${itemId} is not registered`);
-  //   return false;
-  // }
+  public isActive(itemId: number): boolean {
+    return !!this.componentsRegistry.get(itemId);
+  }
 
-  private setRightUpperBarWrapper(iconsOrder: { [key in KalturaPluginNames]: number }): void {
+  private injectDisplayedBarComponentWrapper(iconsOrder: { [key in KalturaPluginNames]: number }): void {
     this.player.ui.addComponent({
       label: 'Right-Upper-Bar-Wrapper',
-      presets: ['Playback', 'Live'],
+      presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
       area: ReservedPresetAreas.TopBarRightControls,
       get: () => {
-        return <RightUpperBarWrapper ref={this.componentRef} iconsOrder={iconsOrder} />;
+        return <DisplayedBar ref={this.displayedBarComponentRef} iconsOrder={iconsOrder} />;
       }
     });
   }
 
-  private static validateItem(control: UpperBarControlDto): boolean {
-    return typeof control.onClick === 'function' && typeof control.component === 'function';
+  private static validateItem(icon: IconDto): boolean {
+    return typeof icon.onClick === 'function' && typeof icon.component === 'function';
   }
 }
