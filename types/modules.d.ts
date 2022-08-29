@@ -1,13 +1,12 @@
-declare module "services/side-panels/models/side-panel-item" {
+declare module "services/side-panels-manager/models/side-panel-item" {
     import { ComponentClass, FunctionalComponent } from 'preact';
     import { PlaykitUI } from 'kaltura-player-js';
     export type PanelComponentProps = {
         isActive: boolean;
     };
-    export type IconComponentProps = PanelComponentProps;
     export interface SidePanelItem {
         readonly label: string;
-        readonly iconComponent?: ComponentClass<IconComponentProps> | FunctionalComponent<IconComponentProps>;
+        readonly iconComponent?: ComponentClass<Record<string, never>> | FunctionalComponent<Record<string, never>>;
         readonly panelComponent: ComponentClass<PanelComponentProps> | FunctionalComponent<PanelComponentProps>;
         readonly presets: PlaykitUI.ReservedPresetName[];
         readonly position: PlaykitUI.SidePanelPosition;
@@ -16,12 +15,101 @@ declare module "services/side-panels/models/side-panel-item" {
         readonly onDeactivate?: () => void;
     }
 }
-declare module "services/side-panels/ui/panel-item-wrapper/panel-item-wrapper.component" { }
-declare module "services/side-panels/ui/icon-wrapper/icon-wrapper.component" { }
-declare module "services/side-panels/models/item-wrapper" { }
-declare module "services/side-panels/side-panels-manager" {
+declare module "services/side-panels-manager/ui/panel-item-wrapper/panel-item-wrapper.component" { }
+declare module "services/upper-bar-manager/models/icon-dto" {
+    import { ComponentClass, FunctionalComponent } from 'preact';
+    import { KalturaPluginNames } from "ui-managers";
+    export interface IconDto {
+        label: KalturaPluginNames | string;
+        component: ComponentClass<Record<string, never>> | FunctionalComponent<Record<string, never>>;
+        onClick: () => void;
+    }
+}
+declare module "services/upper-bar-manager/models/icon-model" { }
+declare module "services/upper-bar-manager/ui/icon-wrapper/icon-wrapper.component" {
+    import { Component, ComponentChild } from 'preact';
+    type IconWrapperProps = {
+        onClick: () => void;
+    };
+    export class IconWrapper extends Component<IconWrapperProps> {
+        render(): ComponentChild;
+    }
+}
+declare module "services/upper-bar-manager/ui/dropdown-bar/dropdown-bar.component" {
+    import { Component, ComponentChild } from 'preact';
+    import { IconModel } from "services/upper-bar-manager/models/icon-model";
+    type DropdownBarProps = {
+        controls: IconModel[];
+    };
+    export class DropdownBar extends Component<DropdownBarProps> {
+        render(): ComponentChild;
+    }
+}
+declare module "services/upper-bar-manager/ui/more-icon/more-icon.component" {
+    import { Component, ComponentChild } from 'preact';
+    import { IconModel } from "services/upper-bar-manager/models/icon-model";
+    type MoreIconState = {
+        toggle: boolean;
+    };
+    type MoreIconProps = {
+        icons: IconModel[];
+    };
+    export class MoreIcon extends Component<MoreIconProps, MoreIconState> {
+        constructor();
+        private handleOnClick;
+        render(): ComponentChild;
+    }
+}
+declare module "services/upper-bar-manager/ui/displayed-bar/displayed-bar.component" {
+    import { Component, ComponentChild, RefObject } from 'preact';
+    import { IconModel } from "services/upper-bar-manager/models/icon-model";
+    import { KalturaPluginNames } from "ui-managers";
+    type DisplayedBarState = {
+        controls: IconModel[];
+    };
+    type DisplayedBarProps = {
+        ref: RefObject<DisplayedBar>;
+        iconsOrder: {
+            [key in KalturaPluginNames | string]: number;
+        };
+    };
+    export class DisplayedBar extends Component<DisplayedBarProps, DisplayedBarState> {
+        constructor();
+        private splitControlsIntoDisplayedAndDropdown;
+        update(icons: IconModel[]): void;
+        private splitControls;
+        render(): ComponentChild;
+    }
+}
+declare module "services/upper-bar-manager/upper-bar-manager" {
     import { KalturaPlayer, Logger } from 'kaltura-player-js';
-    import { SidePanelItem } from "services/side-panels/models/side-panel-item";
+    import { IconDto } from "services/upper-bar-manager/models/icon-dto";
+    import { KalturaPluginNames } from "ui-managers";
+    type UpperBarManagerConfig = {
+        pluginsIconsOrder: {
+            [key in KalturaPluginNames | string]: number;
+        };
+    };
+    export class UpperBarManager {
+        private readonly player;
+        private readonly logger;
+        private readonly componentsRegistry;
+        private readonly displayedBarComponentRef;
+        /**
+         * @ignore
+         */
+        constructor(player: KalturaPlayer, logger: Logger, config: UpperBarManagerConfig);
+        add(icon: IconDto): number | undefined;
+        remove(itemId: number): void;
+        isActive(itemId: number): boolean;
+        private injectDisplayedBarComponentWrapper;
+        private static validateItem;
+    }
+}
+declare module "services/side-panels-manager/models/item-wrapper" { }
+declare module "services/side-panels-manager/side-panels-manager" {
+    import { KalturaPlayer, Logger } from 'kaltura-player-js';
+    import { SidePanelItem } from "services/side-panels-manager/models/side-panel-item";
     export class SidePanelsManager {
         private readonly player;
         private readonly activePanels;
@@ -31,8 +119,8 @@ declare module "services/side-panels/side-panels-manager" {
          * @ignore
          */
         constructor(player: KalturaPlayer, logger: Logger);
-        addItem(item: SidePanelItem): number | void;
-        removeItem(itemId: number): void;
+        add(item: SidePanelItem): number | void;
+        remove(itemId: number): void;
         activateItem(itemId: number): void;
         deactivateItem(itemId: number): void;
         isItemActive(itemId: number): boolean;
@@ -45,6 +133,11 @@ declare module "services/side-panels/side-panels-manager" {
          * @ignore
          */
         reset(): void;
+        /**
+         * @ignore
+         */
+        destroy(): void;
+        private removeAllItems;
         private toggle;
         private expand;
         private collapse;
@@ -54,5 +147,13 @@ declare module "services/side-panels/side-panels-manager" {
 }
 declare module "ui-managers" {
     export const pluginName = "uiManagers";
+    export type KalturaPluginNames = 'Navigation' | 'Q&A' | 'Transcript' | 'Download' | 'Playlist' | 'Related' | 'Share' | 'Info' | 'Moderation';
+    export type UiManagerConfig = {
+        upperBarManager: {
+            pluginsIconsOrder: {
+                [key in KalturaPluginNames | string]: number;
+            };
+        };
+    };
 }
 declare module "index" { }
