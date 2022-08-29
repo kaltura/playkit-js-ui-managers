@@ -1,6 +1,6 @@
 import { BasePlugin, KalturaPlayer } from 'kaltura-player-js';
-import { SidePanelsManager } from './services/side-panels/side-panels-manager';
-import { UpperBarManager } from './services/upper-bar/upper-bar-manager';
+import { SidePanelsManager } from './services/side-panels-manager/side-panels-manager';
+import { UpperBarManager } from './services/upper-bar-manager/upper-bar-manager';
 
 export const pluginName = 'uiManagers';
 

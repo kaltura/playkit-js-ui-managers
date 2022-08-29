@@ -20,8 +20,8 @@ export class somePlugin extends BasePlugin {
   constructor(name, player) {
     super(name, player);
     this.player.ready().then(() => {
-      const panelItemAId = this.player.getService('sidePanelsManager').addItem({
-        label: 'A',
+      const panelItemAId = this.player.getService('sidePanelsManager').add({
+        label: 'Panel A',
         panelComponent: PanelItemComponent,
         iconComponent: IconComponent,
         presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
@@ -35,8 +35,8 @@ export class somePlugin extends BasePlugin {
         }
       });
 
-      const PanelItemBId = this.player.getService('sidePanelsManager').addItem({
-        label: 'B',
+      const PanelItemBId = this.player.getService('sidePanelsManager').add({
+        label: 'Panel B',
         panelComponent: AnotherPanelItemComponent,
         iconComponent: AnotherIconComponent,
         presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
@@ -44,8 +44,8 @@ export class somePlugin extends BasePlugin {
         expandMode: SidePanelModes.ALONGSIDE
       });
 
-      const PanelItemCId = this.player.getService('sidePanelsManager').addItem({
-        label: 'C',
+      const PanelItemCId = this.player.getService('sidePanelsManager').add({
+        label: 'Panel C',
         panelComponent: SomePanelItemComponent,
         iconComponent: SomeIconComponent,
         presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
@@ -53,8 +53,8 @@ export class somePlugin extends BasePlugin {
         expandMode: SidePanelModes.OVER
       });
 
-      const PanelItemDId = this.player.getService('sidePanelsManager').addItem({
-        label: 'D',
+      const PanelItemDId = this.player.getService('sidePanelsManager').add({
+        label: 'Panel D',
         panelComponent: MorePanelItemComponent,
         iconComponent: MoreIconComponent,
         presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],

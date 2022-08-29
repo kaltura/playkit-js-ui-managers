@@ -16,13 +16,14 @@
 
     // '.icon' should be replaced with our spec icon control selector
     & .icon {
-      font-size: 20px;
       width: 26px;
       height: 26px;
+      background-color: transparent;
     }
 
     // '.icon' should be replaced with our spec icon control selector
-    &:hover, &:hover .icon {
+    //&:hover, &:hover .icon {
+    &:hover {
       background-color: #444444;
     }
 

@@ -1,76 +1,52 @@
-.icon {
-  width: 32px;
-  height: 32px;
-  font-family: cursive;
-  font-size: 30px;
-  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.panel {
-  width: 100%;
+body, html {
   height: 100%;
-  color: white;
-  font-family: cursive;
-  font-size: 130px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  -webkit-animation: glow 1s ease-in-out infinite alternate, scale 1s ease-in-out infinite alternate;
-  -moz-animation: glow 1s ease-in-out infinite alternate, scale 1s ease-in-out infinite alternate;
-  animation: glow 1s ease-in-out infinite alternate, scale 1s ease-in-out infinite alternate;
-
+  background-image: linear-gradient(140deg, #eadedb 0%, #7caaa6 50%, #80a0af 75%);
+  flex-direction: column;
 }
 
-.a-icon {
-  color: red;
+a {
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
 }
 
-.a-panel {
-  background-color: red;
+.link {
+  background: red;
+  min-width: 50%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 35px;
+  padding: 20px;
+  background-image: linear-gradient(140deg, #eadedb 0%, #49f2e2 50%, #ddea98 75%);
+  margin-bottom: 20px;
+  font-family: cursive;
 }
 
-.b-icon {
-  color: blue;
+.link:hover {
+  transform: scale(1.02);
+  background-image: linear-gradient(140deg, #ffffff 0%, #06f2dc 50%, #d1f125 75%);
+  font-size: 37px;
 }
 
-.b-panel {
-  background-color: blue;
+.header {
+  color: white;
+  font-size: 7vw;
+  font-family: cursive;
+  margin-bottom: 15%;
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px yellow, 0 0 40px yellow, 0 0 50px yellow, 0 0 60px yellow, 0 0 70px yellow;
 }
 
-.c-icon {
-  color: green;
-}
-
-.c-panel {
-  background-color: green;
-  opacity: 0.5;
-}
-
-.d-icon {
-  color: yellow;
-}
-
-.d-panel {
-  background-color: yellow;
-}
-
-@-webkit-keyframes glow {
-  from {
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
-  }
-  to {
-    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
-  }
-}
-
-@-webkit-keyframes scale {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform:scale(1.2);;
-  }
+.arrow {
+  border: solid white;
+  border-width: 0 4px 4px 0;
+  display: inline-block;
+  padding: 5px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
 }

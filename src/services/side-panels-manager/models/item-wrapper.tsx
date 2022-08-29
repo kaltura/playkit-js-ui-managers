@@ -2,7 +2,7 @@ import { h, createRef, RefObject, FunctionalComponent, ComponentClass } from 'pr
 import { KalturaPlayer } from 'kaltura-player-js';
 import { PanelItemWrapper } from '../ui/panel-item-wrapper/panel-item-wrapper.component';
 import { PanelComponentProps, SidePanelItem } from './side-panel-item';
-import { UpperBarManager } from '../../upper-bar/upper-bar-manager';
+import { UpperBarManager } from '../../upper-bar-manager/upper-bar-manager';
 
 /**
  * Panel item metadata

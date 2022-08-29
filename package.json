@@ -38,7 +38,7 @@
     "release": "standard-version",
     "pushTaggedRelease": "git push --follow-tags --no-verify origin master",
     "prepare:demo": "sh scripts/prepare-demo.sh",
-    "commit:dist": "git add --force --all dist demo/index.html && (git commit -m 'chore: update dist' || exit 0)",
+    "commit:dist": "git add --force --all dist demo/side-panels/index.html demo/uppar-bar-manager/index.html && (git commit -m 'chore: update dist' || exit 0)",
     "pre:commit": "npm run types:check && npm run lint:check && npm run types:ganarate && npm run docs:ganarate"
   },
   "devDependencies": {

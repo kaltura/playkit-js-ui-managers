@@ -25,17 +25,7 @@ export class AnotherPanelItemComponent extends preact.Component {
 
 export class SomeIconComponent extends preact.Component {
   render() {
-    return h(
-      'div',
-      {
-        className: 'icon c-icon',
-        style: {
-          backgroundColor: this.props.isActive ? 'green' : '',
-          color: this.props.isActive ?  'whitesmoke' : '',
-        }
-      },
-      'C'
-    );
+    return h('div', { className: 'icon c-icon' }, 'C');
   }
 }
 

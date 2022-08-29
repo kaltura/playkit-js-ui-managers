@@ -26,7 +26,7 @@ export class SidePanelsManager {
     this.logger = logger;
   }
 
-  public addItem(item: SidePanelItem): number | void {
+  public add(item: SidePanelItem): number | void {
     if (SidePanelsManager.validateItem(item)) {
       const newItemWrapper: ItemWrapper = new ItemWrapper(item, this.player, (id: number) => this.toggle(id));
       this.componentsRegistry.set(newItemWrapper.id, newItemWrapper);
@@ -36,7 +36,7 @@ export class SidePanelsManager {
     this.logger.warn('Invalid SidePanelItem parameters', item);
   }
 
-  public removeItem(itemId: number): void {
+  public remove(itemId: number): void {
     const itemWrapper: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (itemWrapper) {
       if (this.isItemActive(itemId)) this.deactivateItem(itemId);
@@ -124,7 +124,7 @@ export class SidePanelsManager {
 
   private removeAllItems(): void {
     for (const value of this.componentsRegistry.values()) {
-      this.removeItem(value.id);
+      this.remove(value.id);
     }
   }
 

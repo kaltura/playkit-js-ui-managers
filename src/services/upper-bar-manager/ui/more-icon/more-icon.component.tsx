@@ -27,7 +27,7 @@ export class MoreIcon extends Component<MoreIconProps, MoreIconState> {
 
   render(): ComponentChild {
     return (
-      <div className={ui.style.controlButton + ' ' + styles.moreIcon} onClick={() => this.handleOnClick()}>
+      <div className={ui.style.upperBarIcon + ' ' + styles.moreIcon} onClick={() => this.handleOnClick()} tabIndex={0}>
         <Icon color={'#FFF'} id={'id111'} path={ICON_PATH} viewBox={`0 0 32 32`} />
         {this.state.toggle && (
           <div>
