@@ -7,9 +7,8 @@
 </a>
 <p>playkit-js-ui-managers is a <a href="https://github.com/kaltura/kaltura-player-js.">kaltura player</a> plugin that groups several UI services,
 in order to simplify and facilitate the customization of the <a href="https://github.com/kaltura/kaltura-player-js.">kaltura player</a> UI by providing a simple and clean API.</p>
-<p>Each service manages a different area of UI functionality</p>
+<p>Each service manages a different area of UI functionality.</p>
 <p>It relies on <a href="https://github.com/kaltura/kaltura-player-js.">kaltura player</a> core API for managing UI features.</p>
-<p>playkit-js-ui-managers works as a plugin of <a href="https://github.com/kaltura/kaltura-player-js.">kaltura player</a></p>
 <p>playkit-js-ui-managers is written in <a href="https://github.com/ericdouglas/ES6-Learning#articles--tutorials">ECMAScript6</a> (<code>*.js</code>) and <a href="https://www.typescriptlang.org/">TypeScript</a> (<code>*.ts</code>) (strongly typed superset of ES6), 
 and transpiled in ECMAScript5 using <a href="https://babeljs.io/">Babel</a> and the <a href="https://www.typescriptlang.org/docs/handbook/compiler-options.html">TypeScript compiler</a>.</p>
 <p><a href="https://webpack.js.org/">Webpack</a> is used to build the distro bundle and serve the local development environment.</p>
@@ -18,18 +17,24 @@ and transpiled in ECMAScript5 using <a href="https://babeljs.io/">Babel</a> and 
   <h2>services</h2>
 </a>
 <ul>
-<li><p>###Side Panels
-manages and controls the side panel items<br><br>that&#39;s includes:</p>
+<li>
+<a href="#side-panels" id="side-panels" style="color: inherit; text-decoration: none;">
+  <h3>Side Panels</h3>
+</a>
+<p>manages and controls the side panel items, including: <br>\</p>
 <ul>
-<li>When an item is activated in the panel, the other items are automatically deactivated in that panel.</li>
+<li>When an item is activated in a panel, the other items in that panel are automatically deactivated.</li>
 <li>Automatically deactivates a panel when its counter panel is activated<br><br>Full API documentation can be found <a href="https://kaltura.github.io/playkit-js-ui-managers/docs/api/classes/side_panels_manager.SidePanelsManager.html">here</a></li>
 </ul>
 </li>
-<li><p>###Upper bar manager
-manages and controls the upper bar menu<br><br>that&#39;s includes:</p>
+<li>
+<a href="#upper-bar-manager" id="upper-bar-manager" style="color: inherit; text-decoration: none;">
+  <h3>Upper bar manager</h3>
+</a>
+<p>manages and controls the upper bar menu, including: <br>\</p>
 <ul>
-<li>sets the order icons are shown.</li>
-<li>Increases and decreases the number of icons that appear depending on the size of the player<br><br>Full API documentation can be found <a href="https://kaltura.github.io/playkit-js-ui-managers/docs/api/classes/upper_bar_manager.UpperBarManager.html">here</a></li>
+<li>Setting the order in which icons are shown.</li>
+<li>Increasing and decreasing the number of icons that appear depending on the size of the player<br><br>Full API documentation can be found <a href="https://kaltura.github.io/playkit-js-ui-managers/docs/api/classes/upper_bar_manager.UpperBarManager.html">here</a></li>
 </ul>
 </li>
 </ul>
@@ -37,7 +42,7 @@ manages and controls the upper bar menu<br><br>that&#39;s includes:</p>
 <a href="#getting-started-with-development" id="getting-started-with-development" style="color: inherit; text-decoration: none;">
   <h2>Getting started with development</h2>
 </a>
-<pre><code class="language-sh"><span class="hl-0"># First, checkout the repository and install the required dependencies</span><br/><span class="hl-1">git clone https://github.com/kaltura/playkit-js-ui-managers.git</span><br/><br/><span class="hl-0"># Navigate to the repo dir</span><br/><span class="hl-2">cd</span><span class="hl-1"> playkit-js-ui-managers</span><br/><br/><span class="hl-0"># Run dev-server for demo page (recompiles on file-watch, and write to actual dist fs artifacts)</span><br/><span class="hl-1">npm run dev</span>
+<pre><code class="language-sh"><span class="hl-0"># First, checkout the repository and install the required dependencies</span><br/><span class="hl-1">git clone https://github.com/kaltura/playkit-js-ui-managers.git</span><br/><br/><span class="hl-0"># Navigate to the repo dir</span><br/><span class="hl-2">cd</span><span class="hl-1"> playkit-js-ui-managers</span><br/><br/><span class="hl-0"># Run dev-server for demo page (recompiles on file-watch, and write to actual dist fs artifacts)</span><br/><span class="hl-1">npm run dev</span><br/><br/><span class="hl-0"># Before submitting a PR - Run the pre commit command</span><br/><span class="hl-1">npm run pre:commit</span><br/><br/><span class="hl-0"># this command will run:</span><br/><br/><span class="hl-0"># 1. types check</span><br/><span class="hl-0"># 2. lint check</span><br/><span class="hl-0"># 3. generate/update types</span><br/><span class="hl-0"># 4. generate/update docs</span>
 </code></pre>
 <p>The dev server will host files on port 8000. Once started, the demo can be found running at <a href="http://localhost:8000/">http://localhost:8000/</a>.</p>
 <p>Before submitting a PR, please see our <a href="CONTRIBUTING.md">contribution guidelines</a>.</p>
@@ -66,8 +71,8 @@ manages and controls the upper bar menu<br><br>that&#39;s includes:</p>
 <pre><code><span class="hl-3">npm</span><span class="hl-1"> </span><span class="hl-3">run</span><span class="hl-1"> </span><span class="hl-4">types</span><span class="hl-1">:</span><span class="hl-3">check</span>
 </code></pre>
 
-<a href="#automated-tests-mochakarma" id="automated-tests-mochakarma" style="color: inherit; text-decoration: none;">
-  <h3>Automated tests (Mocha/Karma)</h3>
+<a href="#automated-tests-cypress" id="automated-tests-cypress" style="color: inherit; text-decoration: none;">
+  <h3>Automated tests (Cypress)</h3>
 </a>
 <p>Run all tests at once:</p>
 <pre><code><span class="hl-3">npm</span><span class="hl-1"> </span><span class="hl-3">test</span>
@@ -87,7 +92,7 @@ manages and controls the upper bar menu<br><br>that&#39;s includes:</p>
 <p><a href="https://kaltura.github.io/playkit-js-ui-managers/docs/api/index.html">API docs</a></p>
 
 <a href="#usage-guide" id="usage-guide" style="color: inherit; text-decoration: none;">
-  <h2>usage guide</h2>
+  <h2>Usage guide</h2>
 </a>
 <p><a href="./docs/guide.md">usage guide</a></p>
 
@@ -116,4 +121,4 @@ manages and controls the upper bar menu<br><br>that&#39;s includes:</p>
   <h2>License</h2>
 </a>
 <p>playkit-js-ui-managers is released under <a href="LICENSE">Apache 2.0 License</a></p>
-</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/models_side_panel_item.html">models/side-<wbr/>panel-<wbr/>item</a></li><li class=" tsd-kind-module"><a href="modules/side_panels_manager.html">side-<wbr/>panels-<wbr/>manager</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/side_panels_manager_models_side_panel_item.html">side-<wbr/>panels-<wbr/>manager/models/side-<wbr/>panel-<wbr/>item</a></li><li class=" tsd-kind-module"><a href="modules/side_panels_manager_side_panels_manager.html">side-<wbr/>panels-<wbr/>manager/side-<wbr/>panels-<wbr/>manager</a></li><li class=" tsd-kind-module"><a href="modules/upper_bar_manager_models_icon_dto.html">upper-<wbr/>bar-<wbr/>manager/models/icon-<wbr/>dto</a></li><li class=" tsd-kind-module"><a href="modules/upper_bar_manager_upper_bar_manager.html">upper-<wbr/>bar-<wbr/>manager/upper-<wbr/>bar-<wbr/>manager</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
