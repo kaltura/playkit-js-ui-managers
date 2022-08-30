@@ -11,7 +11,7 @@ export class DropdownBar extends Component<DropdownBarProps> {
   render(): ComponentChild {
     return (
       <div className={styles.moreDropdown}>
-        {this.props.controls.map(({ id, label, component, onClick }) => {
+        {this.props.controls.map(({ id, label, component, onClick, componentRef }) => {
           const ControlComponent = component!;
           return (
             <div key={id} className={styles.dropdownItem} onClick={onClick}>
@@ -19,6 +19,7 @@ export class DropdownBar extends Component<DropdownBarProps> {
                 onClick={(): void => {
                   return;
                 }}
+                ref={componentRef}
               >
                 <ControlComponent />
               </IconWrapper>

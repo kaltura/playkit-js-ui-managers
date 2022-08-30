@@ -77,10 +77,10 @@ export class DisplayedBar extends Component<DisplayedBarProps, DisplayedBarState
     const { displayedControls, dropdownControls } = this.splitControlsIntoDisplayedAndDropdown(this.props.playerSize);
     return (
       <div className={styles.rightUpperBarWrapperContainer}>
-        {displayedControls.map(({ id, component, onClick }) => {
+        {displayedControls.map(({ id, component, onClick, componentRef }) => {
           const IconWrapperComponent = component!;
           return (
-            <IconWrapper key={id} onClick={onClick}>
+            <IconWrapper key={id} onClick={onClick} ref={componentRef}>
               <IconWrapperComponent />
             </IconWrapper>
           );

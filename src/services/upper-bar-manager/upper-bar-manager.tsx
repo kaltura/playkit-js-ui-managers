@@ -53,6 +53,15 @@ export class UpperBarManager {
     return !!this.componentsRegistry.get(itemId);
   }
 
+  public update(iconId: number): void {
+    const icon: IconModel | undefined = this.componentsRegistry.get(iconId);
+    if (icon) {
+      icon.update();
+    } else {
+      this.logger.warn(`${iconId} is not registered`);
+    }
+  }
+
   private injectDisplayedBarComponentWrapper(iconsOrder: { [key in KalturaPluginNames | string]: number }): void {
     this.player.ui.addComponent({
       label: 'Right-Upper-Bar-Wrapper',
