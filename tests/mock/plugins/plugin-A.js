@@ -1,9 +1,9 @@
-const { BasePlugin, registerPlugin, ui } = KalturaPlayer;
-const { h, preact, style } = KalturaPlayer.ui;
+import { BasePlugin, registerPlugin, ui } from 'kaltura-player-js';
+const { h, preact } = ui;
 
 class IconComponent extends preact.Component {
   render() {
-    return h('div', { className: 'icon' + ' ' + ui.style.upperBarIcon }, 'A');
+    return h('div', null, 'A');
   }
 }
 
@@ -16,7 +16,7 @@ export class PluginA extends BasePlugin {
     super(name, player);
     this.player.ready().then(() => {
       const pluginAId = this.player.getService('upperBarManager').add({
-        label: 'Plugin A',
+        label: 'pluginA',
         component: IconComponent,
         onClick: () => alert('hello from plugin A')
       });

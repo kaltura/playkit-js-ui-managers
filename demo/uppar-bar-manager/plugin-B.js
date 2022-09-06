@@ -14,8 +14,13 @@ export class PluginB extends BasePlugin {
 
   constructor(name, player) {
     super(name, player);
+    this.iconId = null;
+    this.addUpperBarIcon();
+  }
+
+  addUpperBarIcon() {
     this.player.ready().then(() => {
-      const pluginBId = this.player.getService('upperBarManager').add({
+      this.iconId = this.player.getService('upperBarManager').add({
         label: 'Plugin B',
         component: IconComponent,
         onClick: () => alert('hello from plugin B')
@@ -28,6 +33,10 @@ export class PluginB extends BasePlugin {
   }
 
   reset() {}
+
+  destroy() {
+    this.player.getService('upperBarManager').remove(this.iconId);
+  }
 }
 
 registerPlugin(pluginName, PluginB);

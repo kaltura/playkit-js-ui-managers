@@ -4,6 +4,7 @@ import { setup } from 'kaltura-player-js';
 import { IconComponent } from '../mock/compenents/icon.component';
 import { config, targetId } from '../mock/config';
 import { mediaData } from '../mock/media-sourc';
+import '../mock/plugins/index';
 
 describe('Upper Bar Manager', function () {
   let player;
@@ -26,7 +27,7 @@ describe('Upper Bar Manager', function () {
     }
   });
 
-  it('Add icon', async()  => {
+  it('Add icon', async () => {
     // Given
     player = setup(config);
     upperBarManagerService = player.getService('upperBarManager');
@@ -41,7 +42,7 @@ describe('Upper Bar Manager', function () {
     expect(upperBarManagerService.componentsRegistry.get(iconId).label).equal('icon');
   });
 
-  it('Remove icon', async()  => {
+  it('Remove icon', async () => {
     // Given
     player = setup(config);
     upperBarManagerService = player.getService('upperBarManager');
@@ -56,7 +57,7 @@ describe('Upper Bar Manager', function () {
     expect(upperBarManagerService.componentsRegistry.size).to.equal(0);
   });
 
-  it('Is Icon Active', async()  => {
+  it('Is Icon Active', async () => {
     // Given
     player = setup(config);
     upperBarManagerService = player.getService('upperBarManager');
@@ -71,5 +72,92 @@ describe('Upper Bar Manager', function () {
     // Expect
     expect(upperBarManagerService.isActive(iconId1)).to.be.false;
     expect(upperBarManagerService.isActive(iconId2)).to.be.true;
+  });
+
+  it('icons order state compatible with the configuration', (done) => {
+    // Given
+    const pluginsConfig = {
+      uiManagers: {
+        upperBarManager: {
+          pluginsIconsOrder: {
+            pluginC: 100,
+            pluginF: 110,
+            pluginA: 120,
+            pluginD: 130,
+            pluginE: 140,
+            pluginB: 150
+          }
+        }
+      },
+      pluginA: {},
+      pluginB: {},
+      pluginC: {},
+      pluginD: {},
+      pluginE: {},
+      pluginF: {}
+    };
+
+    player = setup({ ...config, plugins: pluginsConfig });
+    upperBarManagerService = player.getService('upperBarManager');
+    player.setMedia({ sources: { ...mediaData } });
+
+    player.ready().then(() => {
+      setTimeout(() => {
+        const displayedBarComponentState = upperBarManagerService.displayedBarComponentRef.current.state;
+        expect(displayedBarComponentState.controls[0].label).to.be.equal('pluginC');
+        expect(displayedBarComponentState.controls[1].label).to.be.equal('pluginF');
+        expect(displayedBarComponentState.controls[2].label).to.be.equal('pluginA');
+        expect(displayedBarComponentState.controls[3].label).to.be.equal('pluginD');
+        expect(displayedBarComponentState.controls[4].label).to.be.equal('pluginE');
+        expect(displayedBarComponentState.controls[5].label).to.be.equal('pluginB');
+        done();
+      });
+    });
+  });
+
+  it('icons order state is preserved on change media', (done) => {
+    // Given
+    const pluginsConfig = {
+      uiManagers: {
+        upperBarManager: {
+          pluginsIconsOrder: {
+            pluginC: 100,
+            pluginF: 110,
+            pluginA: 120,
+            pluginD: 130,
+            pluginE: 140,
+            pluginB: 150
+          }
+        }
+      },
+      pluginA: {},
+      pluginB: {},
+      pluginC: {},
+      pluginD: {},
+      pluginE: {},
+      pluginF: {}
+    };
+
+    player = setup({ ...config, plugins: pluginsConfig });
+    upperBarManagerService = player.getService('upperBarManager');
+    player.setMedia({ sources: { ...mediaData } });
+
+    player.ready().then(() => {
+      setTimeout(() => {
+        // console.log(upperBarManagerService.displayedBarComponentRef.current.state.controls.map(({id, label}) => ({id, label})))
+        const previousComponentControlsState = JSON.parse(JSON.stringify(upperBarManagerService.displayedBarComponentRef.current.state.controls.map(({id, label}) => ({id, label}))));
+        const previousServiceRegistryState = JSON.parse(JSON.stringify(Array.from(upperBarManagerService.componentsRegistry.values()).map(({id, label}) => ({id, label}))));
+
+        player.setMedia({ sources: { ...mediaData } });
+
+        setTimeout(() => {
+          const currentComponentControlsState = upperBarManagerService.displayedBarComponentRef.current.state.controls.map(({id, label}) => ({id, label}));
+          const currentServiceRegistryState = Array.from(upperBarManagerService.componentsRegistry.values()).map(({id, label}) => ({id, label}));
+          expect(previousComponentControlsState).to.be.deep.equal(currentComponentControlsState);
+          expect(previousServiceRegistryState).to.be.deep.equal(currentServiceRegistryState);
+          done();
+        }, 100);
+      }, 100);
+    });
   });
 });
