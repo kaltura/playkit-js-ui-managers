@@ -98,7 +98,7 @@ Run type-check to verify TypeScript types
 npm run types:check
 ```
 
-### Automated tests (Cypress)
+### Automated tests (Mocha/Karma)
 
 Run all tests at once:
 
