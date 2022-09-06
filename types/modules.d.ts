@@ -25,14 +25,30 @@ declare module "services/upper-bar-manager/models/icon-dto" {
         onClick: () => void;
     }
 }
-declare module "services/upper-bar-manager/models/icon-model" { }
 declare module "services/upper-bar-manager/ui/icon-wrapper/icon-wrapper.component" {
-    import { Component, ComponentChild } from 'preact';
+    import { Component, ComponentChild, RefObject } from 'preact';
     type IconWrapperProps = {
+        ref: RefObject<IconWrapper>;
         onClick: () => void;
     };
     export class IconWrapper extends Component<IconWrapperProps> {
         render(): ComponentChild;
+    }
+}
+declare module "services/upper-bar-manager/models/icon-model" {
+    import { ComponentClass, FunctionalComponent, RefObject } from 'preact';
+    import { IconDto } from "services/upper-bar-manager/models/icon-dto";
+    import { KalturaPluginNames } from "ui-managers";
+    import { IconWrapper } from "services/upper-bar-manager/ui/icon-wrapper/icon-wrapper.component";
+    export class IconModel {
+        private static nextId;
+        readonly id: number;
+        label: KalturaPluginNames | string;
+        componentRef: RefObject<IconWrapper>;
+        onClick: () => void;
+        component: ComponentClass<Record<string, never>> | FunctionalComponent<Record<string, never>>;
+        constructor(item: IconDto);
+        update(): void;
     }
 }
 declare module "services/upper-bar-manager/ui/dropdown-bar/dropdown-bar.component" {
@@ -102,6 +118,7 @@ declare module "services/upper-bar-manager/upper-bar-manager" {
         add(icon: IconDto): number | undefined;
         remove(itemId: number): void;
         isActive(itemId: number): boolean;
+        update(iconId: number): void;
         private injectDisplayedBarComponentWrapper;
         private static validateItem;
     }
