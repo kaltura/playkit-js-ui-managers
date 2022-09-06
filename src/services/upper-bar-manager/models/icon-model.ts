@@ -3,10 +3,6 @@ import { IconDto } from './icon-dto';
 import { KalturaPluginNames } from '../../../ui-managers';
 import { IconWrapper } from '../ui/icon-wrapper/icon-wrapper.component';
 
-/**
- * Panel item metadata
- * @internal
- */
 export class IconModel {
   private static nextId = 0;
   public readonly id: number;
