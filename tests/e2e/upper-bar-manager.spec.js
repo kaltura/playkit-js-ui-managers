@@ -144,7 +144,6 @@ describe('Upper Bar Manager', function () {
 
     player.ready().then(() => {
       setTimeout(() => {
-        // console.log(upperBarManagerService.displayedBarComponentRef.current.state.controls.map(({id, label}) => ({id, label})))
         const previousComponentControlsState = JSON.parse(JSON.stringify(upperBarManagerService.displayedBarComponentRef.current.state.controls.map(({id, label}) => ({id, label}))));
         const previousServiceRegistryState = JSON.parse(JSON.stringify(Array.from(upperBarManagerService.componentsRegistry.values()).map(({id, label}) => ({id, label}))));
 

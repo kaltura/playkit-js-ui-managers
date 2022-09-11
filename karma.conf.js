@@ -5,11 +5,6 @@ delete webpackConfig.output;
 delete webpackConfig.devServer;
 webpackConfig.devtool = 'inline-source-map'
 
-// Remove coverage post-processor for JavaScript debugging when running `test:unit:debug`
-// if (process.env.DEBUG_UNIT_TESTS) {
-//   karmaWebpack.module.rules = [];
-// }
-
 module.exports = function (config) {
   config.set({
     // frameworks to use

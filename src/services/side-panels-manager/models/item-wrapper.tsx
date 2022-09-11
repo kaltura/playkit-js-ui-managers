@@ -29,8 +29,9 @@ export class ItemWrapper {
       const itemId = this.id;
       this.iconId = this.upperBarManager.add({
         label: this.item.label,
+        svgIcon: this.item.iconComponent!.svgIcon,
         onClick: () => onClick(itemId),
-        component: this.item.iconComponent!
+        component: this.item.iconComponent!.component!
       });
     }
   }
@@ -55,7 +56,7 @@ export class ItemWrapper {
 
   public remove(): void {
     this.removePanelComponentFn();
-    if (this.item.iconComponent) this.upperBarManager.remove(this.iconId!);
+    if (this.item.iconComponent?.component) this.upperBarManager.remove(this.iconId!);
   }
 
   public update(): void {

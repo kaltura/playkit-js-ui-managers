@@ -1,38 +1,37 @@
 .more-dropdown {
   position: absolute;
-  color: white;
-  padding: 5px;
-  width: 166px;
-  background-color: #222222;
+  padding: 8px 4px;
+  width: 166px;  // replace to min-width and grow with text
+  background-color: #222222; // should be replaced with the $tone-7 global variable from playkit-ui ();
   border-radius: 4px;
-  top: 120%;
+  top: 44px;
   right: 0;
 
   .dropdown-item {
     border-radius: 4px;
-    padding: 2px 0;
+    padding: 4px 12px 4px 15px;
     display: flex;
-    margin: 2px 0;
+    margin: 4px 0;
 
-    // '.icon' should be replaced with our spec icon control selector
-    & .icon {
-      width: 26px;
-      height: 26px;
-      background-color: transparent;
+    .icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    // '.icon' should be replaced with our spec icon control selector
-    //&:hover, &:hover .icon {
     &:hover {
-      background-color: #444444;
+      background-color: #444444;  // should be replaced with the $tone-6 global variable from playkit-ui ();
     }
 
     .dropdown-item-description {
       display: flex;
       flex: 1;
       font-size: 14px;
+      font-weight: 700;
       align-items: center;
-      padding-left: 9px;
+      padding-left: 11px;
     }
   }
 }
