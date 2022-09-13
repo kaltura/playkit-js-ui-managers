@@ -9,5 +9,6 @@
   "excludePrivate": true,
   "excludeProtected": true,
   "excludeInternal": true,
+  "excludeExternal": true,
   "entryPointStrategy": "expand"
 }
