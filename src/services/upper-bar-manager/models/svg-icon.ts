@@ -1,4 +1,4 @@
 export interface SvgIcon {
-    path: string;
-    viewBox?: string;
+  path: string;
+  viewBox?: string;
 }

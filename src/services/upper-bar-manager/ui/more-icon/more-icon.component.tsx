@@ -1,8 +1,9 @@
 import { h, Component, ComponentChild, createRef, RefObject, Fragment } from 'preact';
-import { ui } from 'kaltura-player-js';
+import { PlaykitUI, ui } from 'kaltura-player-js';
 import * as styles from './more-icon.component.scss';
 import { IconModel } from '../../models/icon-model';
 import { DropdownBar } from '../dropdown-bar/dropdown-bar.component';
+import EventManager = PlaykitUI.EventManager;
 
 const { Icon, Tooltip } = ui.Components;
 const { withEventManager } = ui.Event;
@@ -17,7 +18,7 @@ type MoreIconState = {
 type MoreIconProps = {
   icons: IconModel[];
   moreIconTxt?: string;
-  eventManager?: any;
+  eventManager?: EventManager;
 };
 
 @withEventManager
@@ -30,11 +31,12 @@ export class MoreIcon extends Component<MoreIconProps, MoreIconState> {
     this.myRef = createRef();
   }
 
-  componentDidMount() {
-    this.props.eventManager.listen(document, 'click', (e: PointerEvent) => this.handleClickOutside(e));
+  componentDidMount(): void {
+    this.props.eventManager!.listen(document, 'click', (e: PointerEvent) => this.handleClickOutside(e));
   }
 
-  handleClickOutside(event: PointerEvent) {
+  handleClickOutside(event: PointerEvent): void {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (this.myRef && !this.myRef.current!.contains(event.target)) {
       this.setState({ toggle: false });

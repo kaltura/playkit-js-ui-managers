@@ -2,7 +2,7 @@ import { ComponentClass, FunctionalComponent, RefObject, createRef } from 'preac
 import { IconDto } from './icon-dto';
 import { KalturaPluginNames } from '../../../ui-managers';
 import { IconWrapper } from '../ui/icon-wrapper/icon-wrapper.component';
-import {SvgIcon} from "./svg-icon";
+import { SvgIcon } from './svg-icon';
 
 export class IconModel {
   private static nextId = 0;

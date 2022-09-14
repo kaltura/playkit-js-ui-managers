@@ -156,7 +156,8 @@ export class SidePanelsManager {
       Object.values(SidePanelModes).includes(expandMode) &&
       presets.every((preset) => Object.values(ReservedPresetNames).includes(preset)) &&
       typeof panelComponent === 'function' &&
-      ((typeof iconComponent?.component === 'function' && typeof iconComponent?.svgIcon.path === 'string') || iconComponent === undefined) &&
+      ((typeof iconComponent?.component === 'function' && typeof iconComponent?.svgIcon.path === 'string') ||
+        iconComponent === undefined) &&
       (typeof onActivate === 'function' || onActivate === undefined) &&
       (typeof onDeactivate === 'function' || onDeactivate === undefined)
     );
