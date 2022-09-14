@@ -24,11 +24,11 @@ type MoreIconProps = {
 @withEventManager
 @withText({ moreIconTxt: 'controls.moreIcon' })
 export class MoreIcon extends Component<MoreIconProps, MoreIconState> {
-  private myRef: RefObject<HTMLDivElement>;
+  private readonly moreButtonRef: RefObject<HTMLButtonElement>;
   constructor() {
     super();
     this.state = { toggle: false };
-    this.myRef = createRef();
+    this.moreButtonRef = createRef();
   }
 
   componentDidMount(): void {
@@ -38,7 +38,7 @@ export class MoreIcon extends Component<MoreIconProps, MoreIconState> {
   handleClickOutside(event: PointerEvent): void {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    if (this.myRef && !this.myRef.current!.contains(event.target)) {
+    if (this.moreButtonRef && !this.moreButtonRef.current!.contains(event.target)) {
       this.setState({ toggle: false });
     }
   }
@@ -60,8 +60,8 @@ export class MoreIcon extends Component<MoreIconProps, MoreIconState> {
       <>
         <div style={{ position: 'relative' }}>
           <Tooltip label={this.props.moreIconTxt!}>
-            <div
-              ref={this.myRef}
+            <button
+              ref={this.moreButtonRef}
               className={`${ui.style.upperBarIcon} ${styles.moreIcon}`}
               onClick={(): void => this.handleOnClick()}
               onKeyDown={(event): void => this.handleOnKeyDown(event)}
@@ -69,7 +69,7 @@ export class MoreIcon extends Component<MoreIconProps, MoreIconState> {
               aria-label={this.props.moreIconTxt}
             >
               <Icon color={'#FFF'} id={'id111'} path={ICON_PATH} viewBox={'0 0 32 32'} />
-            </div>
+            </button>
           </Tooltip>
           {this.state.toggle && (
             <div>

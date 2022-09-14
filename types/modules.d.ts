@@ -1,12 +1,22 @@
+declare module "services/upper-bar-manager/models/svg-icon" {
+    export interface SvgIcon {
+        path: string;
+        viewBox?: string;
+    }
+}
 declare module "services/side-panels-manager/models/side-panel-item" {
     import { ComponentClass, FunctionalComponent } from 'preact';
     import { PlaykitUI } from 'kaltura-player-js';
+    import { SvgIcon } from "services/upper-bar-manager/models/svg-icon";
     export type PanelComponentProps = {
         isActive: boolean;
     };
     export interface SidePanelItem {
         readonly label: string;
-        readonly iconComponent?: ComponentClass<Record<string, never>> | FunctionalComponent<Record<string, never>>;
+        readonly iconComponent?: {
+            component: ComponentClass<Record<string, never>> | FunctionalComponent<Record<string, never>>;
+            svgIcon: SvgIcon;
+        };
         readonly panelComponent: ComponentClass<PanelComponentProps> | FunctionalComponent<PanelComponentProps>;
         readonly presets: PlaykitUI.ReservedPresetName[];
         readonly position: PlaykitUI.SidePanelPosition;
@@ -19,9 +29,11 @@ declare module "services/side-panels-manager/ui/panel-item-wrapper/panel-item-wr
 declare module "services/upper-bar-manager/models/icon-dto" {
     import { ComponentClass, FunctionalComponent } from 'preact';
     import { KalturaPluginNames } from "ui-managers";
+    import { SvgIcon } from "services/upper-bar-manager/models/svg-icon";
     export interface IconDto {
         label: KalturaPluginNames | string;
         component: ComponentClass<Record<string, never>> | FunctionalComponent<Record<string, never>>;
+        svgIcon: SvgIcon;
         onClick: () => void;
     }
 }
@@ -40,6 +52,7 @@ declare module "services/upper-bar-manager/models/icon-model" {
     import { IconDto } from "services/upper-bar-manager/models/icon-dto";
     import { KalturaPluginNames } from "ui-managers";
     import { IconWrapper } from "services/upper-bar-manager/ui/icon-wrapper/icon-wrapper.component";
+    import { SvgIcon } from "services/upper-bar-manager/models/svg-icon";
     export class IconModel {
         private static nextId;
         readonly id: number;
@@ -47,6 +60,7 @@ declare module "services/upper-bar-manager/models/icon-model" {
         componentRef: RefObject<IconWrapper>;
         onClick: () => void;
         component: ComponentClass<Record<string, never>> | FunctionalComponent<Record<string, never>>;
+        svgIcon: SvgIcon;
         constructor(item: IconDto);
         update(): void;
     }
@@ -63,16 +77,24 @@ declare module "services/upper-bar-manager/ui/dropdown-bar/dropdown-bar.componen
 }
 declare module "services/upper-bar-manager/ui/more-icon/more-icon.component" {
     import { Component, ComponentChild } from 'preact';
+    import { PlaykitUI } from 'kaltura-player-js';
     import { IconModel } from "services/upper-bar-manager/models/icon-model";
+    import EventManager = PlaykitUI.EventManager;
     type MoreIconState = {
         toggle: boolean;
     };
     type MoreIconProps = {
         icons: IconModel[];
+        moreIconTxt?: string;
+        eventManager?: EventManager;
     };
     export class MoreIcon extends Component<MoreIconProps, MoreIconState> {
+        private readonly moreButtonRef;
         constructor();
+        componentDidMount(): void;
+        handleClickOutside(event: PointerEvent): void;
         private handleOnClick;
+        private handleOnKeyDown;
         render(): ComponentChild;
     }
 }

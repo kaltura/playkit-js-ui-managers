@@ -44,7 +44,7 @@ export class UIManagers extends BasePlugin<UiManagerConfig> {
     }
   };
 
-  constructor(name: string, player: KalturaPlayer, config: UiManagerConfig) {
+  constructor(name: string, player: KalturaPlayer, config?: UiManagerConfig) {
     super(name, player, config);
     player.registerService('sidePanelsManager', new SidePanelsManager(player, this.logger));
     player.registerService('upperBarManager', new UpperBarManager(player, this.logger, this.config.upperBarManager));
