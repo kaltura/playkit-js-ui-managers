@@ -1,8 +1,10 @@
+@import '~@playkit-js/playkit-js-ui';
+
 .more-dropdown {
   position: absolute;
   padding: 8px 4px;
   width: 166px;  // replace to min-width and grow with text
-  background-color: #222222; // should be replaced with the $tone-7 global variable from playkit-ui ();
+  background-color: $tone-7;
   border-radius: 4px;
   top: 44px;
   right: 0;
@@ -22,7 +24,7 @@
     }
 
     &:hover {
-      background-color: #444444;  // should be replaced with the $tone-6 global variable from playkit-ui ();
+      background-color: $tone-6;
     }
 
     .dropdown-item-description {
