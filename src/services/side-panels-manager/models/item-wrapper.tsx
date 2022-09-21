@@ -39,7 +39,6 @@ export class ItemWrapper {
   public activate(): void {
     if (this.panelItemComponentRef.current) {
       this.panelItemComponentRef.current!.on();
-      // if (this.item.iconComponent) this.upperBarManager.activateControl(this.iconId!);
       this.item.onActivate?.();
       this.isActive = true;
     } else {
@@ -49,7 +48,6 @@ export class ItemWrapper {
 
   public deactivate(switchMode = false): void {
     this.panelItemComponentRef.current!.off(switchMode);
-    // if (this.item.iconComponent) this.upperBarManager.deactivateControl(this.iconId!);
     this.item.onDeactivate?.();
     this.isActive = false;
   }

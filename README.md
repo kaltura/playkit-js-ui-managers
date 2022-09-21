@@ -25,19 +25,19 @@ and transpiled in ECMAScript5 using [Babel](https://babeljs.io/) and the [TypeSc
 ## services
 
 - ### Side Panels
-  manages and controls the side panel items, including: \
-  \
+  Manages and controls the side panel, including: 
+  
   - When an item is activated in a panel, the other items in that panel are automatically deactivated.
   - Automatically deactivates a panel when its counter panel is activated\
-  \
+  
     Full API documentation can be found [here](https://kaltura.github.io/playkit-js-ui-managers/docs/api/classes/side_panels_manager.SidePanelsManager.html)
   
 - ### Upper bar manager
-  manages and controls the upper bar menu, including: \
-  \
+  Mnages and controls the upper bar menu, including: 
+  
   - Setting the order in which icons are shown.
   - Increasing and decreasing the number of icons that appear depending on the size of the player\
-  \
+  
     Full API documentation can be found [here](https://kaltura.github.io/playkit-js-ui-managers/docs/api/classes/upper_bar_manager.UpperBarManager.html)
     
 ## Getting started with development

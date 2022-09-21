@@ -4,6 +4,7 @@ import * as styles from './more-icon.component.scss';
 import { IconModel } from '../../models/icon-model';
 import { DropdownBar } from '../dropdown-bar/dropdown-bar.component';
 import EventManager = PlaykitUI.EventManager;
+import { pluginName } from '../../../../ui-managers';
 
 const { Icon, Tooltip } = ui.Components;
 const { withEventManager } = ui.Event;
@@ -68,7 +69,7 @@ export class MoreIcon extends Component<MoreIconProps, MoreIconState> {
               tabIndex={0}
               aria-label={this.props.moreIconTxt}
             >
-              <Icon color={'#FFF'} id={'id111'} path={ICON_PATH} viewBox={'0 0 32 32'} />
+              <Icon id={`${pluginName}-upper-bar-manager`} path={ICON_PATH} viewBox={'0 0 32 32'} />
             </button>
           </Tooltip>
           {this.state.toggle && (
