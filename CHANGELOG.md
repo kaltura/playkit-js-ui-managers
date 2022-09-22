@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.2](https://github.com/kaltura/playkit-js-ui-managers/compare/v1.2.1...v1.2.2) (2022-08-04)
+
+
+### Bug Fixes
+
+* **FEC-12132:** Add documentation ([#8](https://github.com/kaltura/playkit-js-ui-managers/issues/8)) ([b3b9e3e](https://github.com/kaltura/playkit-js-ui-managers/commit/b3b9e3efa8f6d7b120de1fabbb551c5e9689a0e9))
+* **FEC-12335:** Side Panel Item gets refreshed in every 'change media' ([#9](https://github.com/kaltura/playkit-js-ui-managers/issues/9)) ([56062b7](https://github.com/kaltura/playkit-js-ui-managers/commit/56062b71218d1393cf3de09b62a2c2da4a10363c))
+
 ### [1.2.1](https://github.com/kaltura/playkit-js-ui-managers/compare/v1.2.0...v1.2.1) (2022-06-09)
 
 ## 1.2.0 (2022-06-09)
