@@ -33,7 +33,7 @@ and transpiled in ECMAScript5 using [Babel](https://babeljs.io/) and the [TypeSc
     Full API documentation can be found [here](https://kaltura.github.io/playkit-js-ui-managers/docs/api/classes/side_panels_manager.SidePanelsManager.html)
   
 - ### Upper bar manager
-  Mnages and controls the upper bar menu, including: 
+  Manages and controls the upper bar menu, including: 
   
   - Setting the order in which icons are shown.
   - Increasing and decreasing the number of icons that appear depending on the size of the player\
