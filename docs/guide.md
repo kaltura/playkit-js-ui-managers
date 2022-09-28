@@ -3,6 +3,7 @@
 - [Getting started](#getting-started)
     - [First step: setup](#first-step-setup)
     - [Second step: access and use the desired service inside the plugin](#second-step-access-and-use-the-desired-service-inside-the-plugin)
+- [Configuration](#configuration)
 - [Full working example](https://github.com/kaltura/playkit-js-ui-managers/tree/master/demo)
 
 ## Getting started
@@ -35,7 +36,8 @@ const player = KalturaPlayer.setup(config);
 
 ### Second step: access and use the desired service inside the plugin
 
-Now You can access and use the desired service by using the player's API inside the loadMedia() hook of your plugin
+Now You can access the desired service by using the player's getService API once the player.ready() promise resolved
+
 
 ```js
 export const pluginName = 'somePlugin';
@@ -45,21 +47,21 @@ export class somePlugin extends BasePlugin {
 
   constructor(name, player) {
     super(name, player);
+    this.addPanel();
   }
 
-  loadMedia() {
-    const panelItemId = this.player.getService('sidePanelsManager').addItem({
-      label: 'A',
-      panelComponent: PanelItemComponent,
-      iconComponent: IconComponent,
-      presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
-      position: SidePanelPositions.LEFT,
-      expandMode: SidePanelModes.ALONGSIDE,
-    });
-
+  addPanel() {
     this.ready.then(() => {
+      const panelItemId = this.player.getService('sidePanelsManager').add({
+        label: 'A',
+        panelComponent: PanelItemComponent,
+        iconComponent: IconComponent,
+        presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
+        position: SidePanelPositions.LEFT,
+        expandMode: SidePanelModes.ALONGSIDE,
+      });
+      
       this.player.getService('sidePanelsManager').activateItem(panelItemId);
-
       console.log(this.player.getService('sidePanelsManager').isItemActive(panelItemAId));
       // true
     });
@@ -67,9 +69,18 @@ export class somePlugin extends BasePlugin {
 }
 ```
 
+## Configuration
+
+You can see the Ui managers plugin full configuration options [here](https://kaltura.github.io/playkit-js-ui-managers/docs/api/types/types_ui_managers_config.UiManagerConfig.html)
+
+You can find configuration example [here](https://github.com/kaltura/playkit-js-ui-managers/tree/master/demo/uppar-bar-manager/index.html)
+
+
 ## Full working example
 
-[Full working example](https://github.com/kaltura/playkit-js-ui-managers/tree/master/demo)
+[Uppar Bar Manager](https://github.com/kaltura/playkit-js-ui-managers/tree/master/demo/uppar-bar-manager)
+
+[Side Panels Manager](https://github.com/kaltura/playkit-js-ui-managers/tree/master/demo/side-panels-manager)
 
 ## API docs
 

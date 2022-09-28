@@ -4,7 +4,7 @@ import { IconWrapper } from '../icon-wrapper/icon-wrapper.component';
 import * as styles from './displayed-bar.component.scss';
 import { ui } from 'kaltura-player-js';
 import { MoreIcon } from '../more-icon/more-icon.component';
-import { KalturaPluginNames } from '../../../../ui-managers';
+import { KalturaPluginNames } from '../../../../types/ui-managers-config';
 
 const { PLAYER_SIZE } = ui.Components;
 const { connect } = ui.redux;
