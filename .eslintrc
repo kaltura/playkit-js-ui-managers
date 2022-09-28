@@ -8,6 +8,7 @@
   ],
   "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
+    "react/prefer-stateless-function": "off",
     "max-len": ["warn", { "code": 130 }],
     "eol-last": "off",
     "prettier/prettier": "error",
@@ -68,5 +69,10 @@
         ]
       }
     }
-  ]
+  ],
+  "settings": {
+    "jest": {
+      "version": 26
+    }
+  }
 }

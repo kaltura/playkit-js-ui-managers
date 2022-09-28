@@ -1,11 +1,13 @@
 {
   "entryPoints": [
-    "src/services/side-panels/models/side-panel-item.ts",
-    "src/services/side-panels/side-panels-manager.ts"
+    "src/services/side-panels-manager/models/side-panel-item.ts",
+    "src/services/side-panels-manager/side-panels-manager.ts",
+    "src/services/upper-bar-manager/models/icon-dto.ts",
+    "src/services/upper-bar-manager/upper-bar-manager.tsx"
   ],
   "out": "docs/api",
   "excludePrivate": true,
   "excludeProtected": true,
   "excludeInternal": true,
-  "entryPointStrategy": "Expand"
+  "entryPointStrategy": "expand"
 }
