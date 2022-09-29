@@ -10,5 +10,6 @@
   "excludePrivate": true,
   "excludeProtected": true,
   "excludeInternal": true,
-  "entryPointStrategy": "expand"
+  "entryPointStrategy": "expand",
+  "theme": "default"
 }
