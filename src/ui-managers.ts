@@ -1,27 +1,9 @@
 import { BasePlugin, KalturaPlayer } from 'kaltura-player-js';
 import { SidePanelsManager } from './services/side-panels-manager/side-panels-manager';
 import { UpperBarManager } from './services/upper-bar-manager/upper-bar-manager';
+import { UiManagerConfig } from './types/ui-managers-config';
 
 export const pluginName = 'uiManagers';
-
-export type KalturaPluginNames =
-  | 'Navigation'
-  | 'Q&A'
-  | 'Transcript'
-  | 'Download'
-  | 'Playlist'
-  | 'Related'
-  | 'Share'
-  | 'Info'
-  | 'Moderation';
-
-export type UiManagerConfig = {
-  upperBarManager: {
-    pluginsIconsOrder: {
-      [key in KalturaPluginNames | string]: number;
-    };
-  };
-};
 
 /**
  * manages the registration of UI services

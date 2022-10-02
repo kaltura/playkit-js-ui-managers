@@ -1,8 +1,8 @@
 import { ComponentClass, FunctionalComponent, RefObject, createRef } from 'preact';
 import { IconDto } from './icon-dto';
-import { KalturaPluginNames } from '../../../ui-managers';
 import { IconWrapper } from '../ui/icon-wrapper/icon-wrapper.component';
 import { SvgIcon } from './svg-icon';
+import { KalturaPluginNames } from '../../../types/ui-managers-config';
 
 export class IconModel {
   private static nextId = 0;

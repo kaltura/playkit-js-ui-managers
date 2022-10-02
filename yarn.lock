@@ -1157,9 +1157,9 @@
   integrity sha512-VnTobs14bS8Y8WeskkcBkm4+upUTO1hJRNOue/QNMA4lDqIFQ4gbYepkDRuuK8H5bENUmhbkNO9VluHNhTqx+w==
 
 "@playkit-js/playkit-js-ui@canary":
-  version "0.72.3-canary.8fb280d"
-  resolved "https://registry.yarnpkg.com/@playkit-js/playkit-js-ui/-/playkit-js-ui-0.72.3-canary.8fb280d.tgz#d3f130519e6e55f03689fd07c8e5887cdab3153a"
-  integrity sha512-rA1OpqTC/v4YoY5QchBs+2XvgKQw3JCWCR4kRlWwYMLgYy35JIHVK/TTTRdNKL4P+8zfLQ2uWC41O4xNgSnD2Q==
+  version "0.72.3-canary.e10264f"
+  resolved "https://registry.yarnpkg.com/@playkit-js/playkit-js-ui/-/playkit-js-ui-0.72.3-canary.e10264f.tgz#92c28fed8349f66b67136858feae67eb33172470"
+  integrity sha512-uK/BrA43Xyvs9P5lV830LTK1Opq++KHqQZzxGNe92ZoeXTgq0NssPD6yNKBlL7yd5Jmn50pBdoqogCUdvBSXfw==
   dependencies:
     preact "^10.3.4"
     preact-i18n "^2.0.0-preactx.2"
@@ -2048,9 +2048,9 @@ camelcase@^6.0.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001304, caniuse-lite@^1.0.30001400:
-  version "1.0.30001412"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001412.tgz#30f67d55a865da43e0aeec003f073ea8764d5d7c"
-  integrity sha512-+TeEIee1gS5bYOiuf+PS/kp2mrXic37Hl66VY6EAfxasIk5fELTktK2oOezYed12H8w7jt3s512PpulQidPjwA==
+  version "1.0.30001414"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001414.tgz#5f1715e506e71860b4b07c50060ea6462217611e"
+  integrity sha512-t55jfSaWjCdocnFdKQoO+d2ct9C59UZg4dY3OnUlSZ447r8pUtIKdp0hpAzrGFultmTC+Us+KpKi4GZl/LXlFg==
 
 chai@^4.3.6:
   version "4.3.6"
@@ -2685,9 +2685,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.4.251:
-  version "1.4.266"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.266.tgz#b2ce973eedbff309e2b98d1ed348e447bd4681fe"
-  integrity sha512-saJTYECxUSv7eSpnXw0XIEvUkP9x4s/x2mm3TVX7k4rIFS6f5TjBih1B5h437WzIhHQjid+d8ouQzPQskMervQ==
+  version "1.4.268"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.268.tgz#5a902075f0209a628837e508a66d40ace04d54ab"
+  integrity sha512-PO90Bv++vEzdln+eA9qLg1IRnh0rKETus6QkTzcFm5P3Wg3EQBZud5dcnzkpYXuIKWBjKe5CO8zjz02cicvn1g==
 
 eme-encryption-scheme-polyfill@^2.1.1:
   version "2.1.1"
@@ -4039,7 +4039,7 @@ just-extend@^4.0.2:
 
 "kaltura-player-js@https://github.com/kaltura/kaltura-player-js.git#master":
   version "3.6.1"
-  resolved "https://github.com/kaltura/kaltura-player-js.git#47b019fc35c84eae56e5942c514ea51019e07e34"
+  resolved "https://github.com/kaltura/kaltura-player-js.git#269ef0170e0a9fff3a7ea9de2b341a32d66a93ab"
   dependencies:
     "@babel/polyfill" "^7.0.0"
     "@playkit-js/playkit-js" "0.80.5"
