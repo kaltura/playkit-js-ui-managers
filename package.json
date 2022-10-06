@@ -98,5 +98,8 @@
     "Jonathan T. Gold",
     "Gilad Nadav",
     "Sivan Arganov"
-  ]
+  ],
+  "kaltura": {
+    "name": "uiManagers"
+  }
 }
