@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/kaltura/playkit-js-ui-managers/compare/v1.2.2...v1.3.0) (2022-10-03)
+
+
+### Features
+
+* **FEC-12097:** More plugins - Manage the UI & order of the plugin icons ([#10](https://github.com/kaltura/playkit-js-ui-managers/issues/10)) ([f78a6d8](https://github.com/kaltura/playkit-js-ui-managers/commit/f78a6d899d185f4f732b734a11e5d7d0603e677b)), closes [kaltura/playkit-js-ui#688](https://github.com/kaltura/playkit-js-ui/issues/688) [kaltura/kaltura-player-js#563](https://github.com/kaltura/kaltura-player-js/issues/563)
+
+
+### Bug Fixes
+
+* commit:dist ([#11](https://github.com/kaltura/playkit-js-ui-managers/issues/11)) ([9e219ee](https://github.com/kaltura/playkit-js-ui-managers/commit/9e219ee8895385b9b39103ea6b65fc843f88b2ba))
+
 ### [1.2.2](https://github.com/kaltura/playkit-js-ui-managers/compare/v1.2.1...v1.2.2) (2022-08-04)
 
 
