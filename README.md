@@ -30,7 +30,7 @@ and transpiled in ECMAScript5 using [Babel](https://babeljs.io/) and the [TypeSc
   - When an item is activated in a panel, the other items in that panel are automatically deactivated.
   - Automatically deactivates a panel when its counter panel is activated\
   
-    Full API documentation can be found [here](https://kaltura.github.io/playkit-js-ui-managers/docs/api/classes/side_panels_manager.SidePanelsManager.html)
+    Full API documentation can be found [here](https://kaltura.github.io/playkit-js-ui-managers/docs/api/classes/services_upper_bar_manager_upper_bar_manager.UpperBarManager.html)
   
 - ### Upper bar manager
   Manages and controls the upper bar menu, including: 
@@ -38,7 +38,7 @@ and transpiled in ECMAScript5 using [Babel](https://babeljs.io/) and the [TypeSc
   - Setting the order in which icons are shown.
   - Increasing and decreasing the number of icons that appear depending on the size of the player\
   
-    Full API documentation can be found [here](https://kaltura.github.io/playkit-js-ui-managers/docs/api/classes/upper_bar_manager.UpperBarManager.html)
+    Full API documentation can be found [here](https://kaltura.github.io/playkit-js-ui-managers/docs/api/classes/services_side_panels_manager_side_panels_manager.SidePanelsManager.html)
     
 ## Getting started with development
 
