@@ -5,7 +5,7 @@ const ICON_PATH = 'M318.641 446.219l236.155-142.257c-0.086-1.754-0.129-3.52-0.12
 
 class IconComponent extends preact.Component {
   render() {
-    return h('div', { className: 'icon' + ' ' + ui.style.upperBarIcon }, 'C');
+    return h('div', { className: 'icon' + ' ' + ui.style.upperBarIcon, tabIndex: 0 }, 'C');
   }
 }
 

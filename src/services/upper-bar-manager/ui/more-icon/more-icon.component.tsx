@@ -9,6 +9,7 @@ import { pluginName } from '../../../../ui-managers';
 const { Icon, Tooltip } = ui.Components;
 const { withEventManager } = ui.Event;
 const { withText } = ui.preacti18n;
+const { KeyMap } = ui.utils;
 const ICON_PATH =
   // eslint-disable-next-line max-len
   'M16 22a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm0-11a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm0-11a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2z';
@@ -49,9 +50,9 @@ export class MoreIcon extends Component<MoreIconProps, MoreIconState> {
   }
 
   private handleOnKeyDown(event: KeyboardEvent): void {
-    if (event.key === 'Enter') {
+    if (event.keyCode === KeyMap.ENTER || event.keyCode === KeyMap.SPACE) {
       event.preventDefault();
-      this.setState({ toggle: true });
+      this.setState((prevState) => ({ toggle: !prevState.toggle }));
     }
   }
 
