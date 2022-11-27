@@ -1,11 +1,5 @@
 .icon {
-  width: 36px;
-  height: 36px;
   font-size: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
 }
 
 .icon:hover {
@@ -27,7 +21,7 @@
 
 }
 
-.a-icon {
+.icon.a-icon {
   color: red;
 }
 
@@ -35,7 +29,7 @@
   background-color: red;
 }
 
-.b-icon {
+.icon.b-icon {
   color: blue;
 }
 
@@ -43,7 +37,7 @@
   background-color: blue;
 }
 
-.c-icon {
+.icon.c-icon {
   color: green;
 }
 
@@ -52,7 +46,7 @@
   opacity: 0.5;
 }
 
-.d-icon {
+.icon.d-icon {
   color: yellow;
 }
 
@@ -60,7 +54,7 @@
   background-color: yellow;
 }
 
-.e-icon {
+.icon.e-icon {
   color: orange;
 }
 
@@ -68,7 +62,7 @@
   background-color: orange;
 }
 
-.f-icon {
+.icon.f-icon {
   color: #28b9d0;
 }
 

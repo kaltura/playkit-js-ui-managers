@@ -1,7 +1,9 @@
-const { h, preact } = KalturaPlayer.ui;
+const { ui } = KalturaPlayer;
+const { h, preact } = ui;
+
 export class IconComponent extends preact.Component {
   render() {
-    return h('div', { className: 'icon a-icon' }, 'A');
+    return h('div', { tabIndex: 0, className: ui.style.upperBarIcon + ' ' + 'icon a-icon' }, 'A');
   }
 }
 
@@ -13,7 +15,7 @@ export class PanelItemComponent extends preact.Component {
 
 export class AnotherIconComponent extends preact.Component {
   render() {
-    return h('div', { className: 'icon b-icon' }, 'B');
+    return h('div', { tabIndex: 0, className: ui.style.upperBarIcon + ' ' + 'icon b-icon' }, 'B');
   }
 }
 
@@ -25,7 +27,7 @@ export class AnotherPanelItemComponent extends preact.Component {
 
 export class SomeIconComponent extends preact.Component {
   render() {
-    return h('div', { className: 'icon c-icon' }, 'C');
+    return h('div', { tabIndex: 0, className: ui.style.upperBarIcon + ' ' + 'icon c-icon' }, 'C');
   }
 }
 
@@ -37,7 +39,7 @@ export class SomePanelItemComponent extends preact.Component {
 
 export class MoreIconComponent extends preact.Component {
   render() {
-    return h('div', { className: 'icon d-icon' }, 'D');
+    return h('div', { tabIndex: 0, className: ui.style.upperBarIcon + ' ' + 'icon d-icon' }, 'D');
   }
 }
 
