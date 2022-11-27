@@ -5,6 +5,7 @@ import * as styles from './displayed-bar.component.scss';
 import { ui } from 'kaltura-player-js';
 import { MoreIcon } from '../more-icon/more-icon.component';
 import { KalturaPluginNames } from '../../../../types/ui-managers-config';
+const { KeyMap } = ui.utils;
 
 const { PLAYER_SIZE } = ui.Components;
 const { connect } = ui.redux;
