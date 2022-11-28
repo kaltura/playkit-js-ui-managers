@@ -3,10 +3,20 @@ import { IconDto } from './models/icon-dto';
 import { IconModel } from './models/icon-model';
 import { h, RefObject, createRef } from 'preact';
 import { DisplayedBar } from './ui/displayed-bar/displayed-bar.component';
-import { KalturaPluginNames } from '../../types/ui-managers-config';
 const { ReservedPresetAreas, ReservedPresetNames } = ui;
 
-type UpperBarManagerConfig = { pluginsIconsOrder: { [key in KalturaPluginNames | string]: number } };
+export type KalturaPluginNames =
+  | 'Navigation'
+  | 'Q&A'
+  | 'Transcript'
+  | 'Download'
+  | 'Playlist'
+  | 'Related'
+  | 'Share'
+  | 'Info'
+  | 'Moderation';
+
+export type UpperBarManagerConfig = { pluginsIconsOrder: { [key in KalturaPluginNames | string]: number } };
 
 export class UpperBarManager {
   private readonly player: KalturaPlayer;

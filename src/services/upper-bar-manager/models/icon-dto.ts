@@ -1,6 +1,6 @@
 import { ComponentClass, FunctionalComponent } from 'preact';
 import { SvgIcon } from './svg-icon';
-import { KalturaPluginNames } from '../../../types/ui-managers-config';
+import { KalturaPluginNames } from '../upper-bar-manager';
 
 export interface IconDto {
   /**

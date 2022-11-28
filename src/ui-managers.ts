@@ -2,6 +2,7 @@ import { BasePlugin, KalturaPlayer } from 'kaltura-player-js';
 import { SidePanelsManager } from './services/side-panels-manager/side-panels-manager';
 import { UpperBarManager } from './services/upper-bar-manager/upper-bar-manager';
 import { UiManagerConfig } from './types/ui-managers-config';
+import { ThemesManager } from './services/themes-manager/themes-manager';
 
 export const pluginName = 'uiManagers';
 
@@ -30,6 +31,7 @@ export class UIManagers extends BasePlugin<UiManagerConfig> {
     super(name, player, config);
     player.registerService('sidePanelsManager', new SidePanelsManager(player, this.logger));
     player.registerService('upperBarManager', new UpperBarManager(player, this.logger, this.config.upperBarManager));
+    player.registerService('themesManager', new ThemesManager(player, this.logger, this.config.themesManager));
   }
 
   public static isValid(): boolean {
