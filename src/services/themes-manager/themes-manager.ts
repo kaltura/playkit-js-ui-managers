@@ -33,10 +33,10 @@ export class ThemesManager {
     return hsl[0];
   }
 
-  private setColors(config: ThemesManagerConfig) {
+  private setColors(config: ThemesManagerConfig): void {
     if (config.primaryColor) {
       this.setColor(cssVarNames.PRIMARY_COLOR, config.primaryColor);
-      this.setSvgIcons(config.primaryColor);
+      this.setSvgFillColor(config.primaryColor);
       ui.style.brandColor = config.primaryColor;
     }
     if (config.secondaryColor) {
@@ -44,18 +44,18 @@ export class ThemesManager {
     }
   }
 
-  private setColor(cssVarName: string, color: string) {
+  private setColor(cssVarName: string, color: string): void {
     const hue = this.getHueComponent(color);
     document.querySelector<HTMLElement>('.playkit-player')!.style.setProperty(cssVarName, `${hue}deg`);
   }
 
-  private setSvgIcons(color: string): void {
-    for (const item of dynamicColoredIconsSvgUrlVars) {
-      const dataUrl = getComputedStyle(document.querySelector('.playkit-player')!).getPropertyValue(item);
+  private setSvgFillColor(color: string): void {
+    for (const varName of dynamicColoredIconsSvgUrlVars) {
+      const svgUrl = getComputedStyle(document.querySelector(`.${ui.style.player}`)!).getPropertyValue(varName);
       color = color.replace('#', '%23');
       document
-        .querySelector<HTMLElement>('.playkit-player')!
-        .style.setProperty(item, dataUrl.replace(/fill='%23([a-f0-9]{3}){1,2}\b'/, `fill='${color}'`));
+        .querySelector<HTMLElement>(`.${ui.style.player}`)!
+        .style.setProperty(varName, svgUrl.replace(/fill='%23([a-f0-9]{3}){1,2}\b'/, `fill='${color}'`));
     }
   }
 }
