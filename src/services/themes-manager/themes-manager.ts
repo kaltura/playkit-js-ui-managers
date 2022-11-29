@@ -1,10 +1,29 @@
 import { KalturaPlayer, Logger, ui } from 'kaltura-player-js';
 import { hexToHsl } from './color-format-convertors';
-export type ThemesManagerConfig = { primaryColor: string; secondaryColor: string };
+export type ThemesManagerConfig = {
+  colors: {
+    primary: string;
+    secondary: string;
+    success: string;
+    danger: string;
+    warning: string;
+    live: string;
+    playerBackground: string;
+  };
+};
 
-const cssVarNames = {
-  PRIMARY_COLOR: '--playkit-primary-hsl-hue',
-  SECONDARY_COLOR: '--playkit-secondary-hsl-hue'
+type ColorType = keyof ThemesManagerConfig['colors'];
+
+const cssVarNames: ThemesManagerConfig = {
+  colors: {
+    primary: '--playkit-primary-hsl-hue',
+    secondary: '--playkit-secondary-hsl-hue',
+    success: '--playkit-success-hsl-hue',
+    danger: '--playkit-danger-hsl-hue',
+    warning: '--playkit-warning-hsl-hue',
+    live: '--playkit-live-color',
+    playerBackground: '--playkit-player-background-color'
+  }
 };
 
 const dynamicColoredIconsSvgUrlVars = [
@@ -34,13 +53,13 @@ export class ThemesManager {
   }
 
   private setColors(config: ThemesManagerConfig): void {
-    if (config.primaryColor) {
-      this.setColor(cssVarNames.PRIMARY_COLOR, config.primaryColor);
-      this.setSvgFillColor(config.primaryColor);
-      ui.style.brandColor = config.primaryColor;
+    if (config.colors.primary) {
+      // this.setColor(cssVarNames.colors.primary, config.colors.primary);
+      this.setSvgFillColor(config.colors.primary);
     }
-    if (config.secondaryColor) {
-      this.setColor(cssVarNames.SECONDARY_COLOR, config.secondaryColor);
+
+    for (const color in config.colors) {
+      this.setColor(cssVarNames.colors[color as ColorType], config.colors[color as ColorType]);
     }
   }
 
@@ -52,10 +71,10 @@ export class ThemesManager {
   private setSvgFillColor(color: string): void {
     for (const varName of dynamicColoredIconsSvgUrlVars) {
       const svgUrl = getComputedStyle(document.querySelector(`.${ui.style.player}`)!).getPropertyValue(varName);
-      color = color.replace('#', '%23');
+      const newColor = color.replace('#', '%23');
       document
         .querySelector<HTMLElement>(`.${ui.style.player}`)!
-        .style.setProperty(varName, svgUrl.replace(/fill='%23([a-f0-9]{3}){1,2}\b'/, `fill='${color}'`));
+        .style.setProperty(varName, svgUrl.replace(/fill='%23([a-f0-9]{3}){1,2}\b'/, `fill='${newColor}'`));
     }
   }
 }
