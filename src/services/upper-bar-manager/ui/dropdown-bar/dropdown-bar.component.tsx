@@ -26,7 +26,7 @@ export class DropdownBar extends Component<DropdownBarProps> {
               className={styles.dropdownItem}
               onClick={onClick}
               tabIndex={0}
-              onKeyDown={(event): void => this.handleOnKeyDown(event, () => onClick(event))}
+              onKeyDown={(event): void => this.handleOnKeyDown(event, onClick)}
             >
               <div className={styles.icon}>
                 <Icon id={`icon${index}`} path={svgIcon.path} viewBox={svgIcon.viewBox} />
