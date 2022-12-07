@@ -12,7 +12,7 @@ export class IconWrapper extends Component<IconWrapperProps> {
   private handleOnKeyDown(event: KeyboardEvent): void {
     if (event.keyCode === KeyMap.ENTER || event.keyCode === KeyMap.SPACE) {
       event.preventDefault();
-      this.props.onClick();
+      this.props.onClick(event);
     }
   }
 
