@@ -10,10 +10,10 @@ type DropdownBarProps = {
 };
 
 export class DropdownBar extends Component<DropdownBarProps> {
-  private handleOnKeyDown(event: KeyboardEvent, onClick: () => void): void {
+  private handleOnKeyDown(event: KeyboardEvent, onClick: (e: MouseEvent | KeyboardEvent) => void): void {
     if (event.keyCode === KeyMap.ENTER || event.keyCode === KeyMap.SPACE) {
       event.preventDefault();
-      onClick();
+      onClick(event);
     }
   }
   render(): ComponentChild {
