@@ -1,8 +1,9 @@
 import { h, createRef, RefObject, FunctionalComponent, ComponentClass } from 'preact';
-import { KalturaPlayer } from 'kaltura-player-js';
+import { KalturaPlayer, PlaykitJS } from 'kaltura-player-js';
 import { PanelItemWrapper } from '../ui/panel-item-wrapper/panel-item-wrapper.component';
 import { PanelComponentProps, SidePanelItem } from './side-panel-item';
 import { UpperBarManager } from '../../upper-bar-manager/upper-bar-manager';
+import { pluginName } from '../../../ui-managers';
 
 /**
  * Panel item metadata
@@ -10,6 +11,7 @@ import { UpperBarManager } from '../../upper-bar-manager/upper-bar-manager';
  */
 export class ItemWrapper {
   private static nextId = 0;
+  private static logger = PlaykitJS.getLogger(pluginName);
   public readonly id: number;
   public iconId: number | undefined;
   public readonly item: SidePanelItem;
@@ -58,7 +60,11 @@ export class ItemWrapper {
   }
 
   public update(): void {
-    this.panelItemComponentRef.current!.forceUpdate();
+    if (this.panelItemComponentRef.current) {
+      this.panelItemComponentRef.current.forceUpdate();
+    } else {
+      ItemWrapper.logger.warn(`Panel component of label: ${this.item.label} id: ${this.id} can not be force updated because the component ref is not set yet`);
+    }
   }
 
   private injectPanelComponent(): void {
