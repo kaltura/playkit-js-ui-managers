@@ -24,5 +24,5 @@ export interface IconDto {
    * You can also define the handler inside the component itself and send an empty function here
    * (also useful as backwards compatibility for some plugins)
    */
-  onClick: () => void;
+  onClick: (e: MouseEvent | KeyboardEvent) => void;
 }

@@ -4,7 +4,7 @@ const { KeyMap } = ui.utils;
 
 type IconWrapperProps = {
   ref: RefObject<IconWrapper>;
-  onClick: () => void;
+  onClick: (e: MouseEvent | KeyboardEvent) => void;
 };
 
 // eslint-disable-next-line react/prefer-stateless-function
@@ -12,7 +12,7 @@ export class IconWrapper extends Component<IconWrapperProps> {
   private handleOnKeyDown(event: KeyboardEvent): void {
     if (event.keyCode === KeyMap.ENTER || event.keyCode === KeyMap.SPACE) {
       event.preventDefault();
-      this.props.onClick();
+      this.props.onClick(event);
     }
   }
 
