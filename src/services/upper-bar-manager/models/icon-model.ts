@@ -12,7 +12,7 @@ export class IconModel {
   public readonly id: number;
   public label: KalturaPluginNames | string;
   public componentRef: RefObject<IconWrapper>;
-  public onClick: () => void;
+  public onClick: (e: MouseEvent | KeyboardEvent) => void;
   public component: ComponentClass<Record<string, never>> | FunctionalComponent<Record<string, never>>;
   public svgIcon: SvgIcon;
   constructor(item: IconDto) {

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.2](https://github.com/kaltura/playkit-js-ui-managers/compare/v1.3.1...v1.3.2) (2022-12-28)
+
+
+### Bug Fixes
+
+* **FEC-12793:** Propagate keyboard event ([#22](https://github.com/kaltura/playkit-js-ui-managers/issues/22)) ([60e7cbf](https://github.com/kaltura/playkit-js-ui-managers/commit/60e7cbf5166f96ea6af0fce61231661b3b4397fd))
+
 ### [1.3.1](https://github.com/kaltura/playkit-js-ui-managers/compare/v1.3.0...v1.3.1) (2022-12-07)
 
 
