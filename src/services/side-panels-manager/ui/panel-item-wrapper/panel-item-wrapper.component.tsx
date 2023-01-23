@@ -36,7 +36,7 @@ export class PanelItemWrapper extends Component<PanelItemWrapperProps, PanelItem
   render(): ComponentChild {
     return (
       <div
-        className={[styles.sidePanel, this.state.on ? styles.active : ''].join(' ')}
+        className={[styles.sidePanelWrapper, this.state.on ? styles.activeState : ''].join(' ')}
         style={!this.state.on && !this.switchMode ? { transition: `visibility ${defaultTransitionTime}ms` } : ''}
       >
         {cloneElement(this.props.children as VNode)}
