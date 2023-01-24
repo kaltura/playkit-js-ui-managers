@@ -4,7 +4,7 @@
   position: absolute;
   padding: 8px 4px;
   width: 166px;  // replace to min-width and grow with text
-  background-color: $tone-7;
+  background-color: $tone-7-color;
   border-radius: 4px;
   top: 44px;
   right: 0;
@@ -25,7 +25,7 @@
     }
 
     &:hover {
-      background-color: $tone-6;
+      background-color: $tone-6-color;
     }
 
     .dropdown-item-description {
