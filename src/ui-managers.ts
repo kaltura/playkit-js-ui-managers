@@ -35,4 +35,11 @@ export class UIManagers extends BasePlugin<UiManagerConfig> {
   public static isValid(): boolean {
     return true;
   }
+
+  public loadMedia(): void {
+    // The plugins icons have to be force updated on presets transition
+    this.player.ready().then(() => {
+      this.player.getService<UpperBarManager>('upperBarManager').sync();
+    });
+  }
 }

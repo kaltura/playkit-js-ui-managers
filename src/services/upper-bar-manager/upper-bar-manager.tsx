@@ -73,6 +73,11 @@ export class UpperBarManager {
     });
   }
 
+  public sync(): void {
+    const icons = Array.from(this.componentsRegistry.values());
+    this.displayedBarComponentRef.current!.update(icons);
+  }
+
   private static validateItem(icon: IconDto): boolean {
     return typeof icon.onClick === 'function' && typeof icon.component === 'function';
   }
