@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.3](https://github.com/kaltura/playkit-js-ui-managers/compare/v1.3.2...v1.3.3) (2023-01-25)
+
+
+### Bug Fixes
+
+* **FEC-12880:** UI Managers - update sass vars name imported from playkit-js-ui ([#23](https://github.com/kaltura/playkit-js-ui-managers/issues/23)) ([91ca135](https://github.com/kaltura/playkit-js-ui-managers/commit/91ca135b9080488fe3ce92340d9ebcd744e9c526))
+
 ### [1.3.2](https://github.com/kaltura/playkit-js-ui-managers/compare/v1.3.1...v1.3.2) (2022-12-28)
 
 
