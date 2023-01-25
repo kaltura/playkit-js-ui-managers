@@ -7,6 +7,7 @@ import { KalturaPluginNames } from '../../types/ui-managers-config';
 const { ReservedPresetAreas, ReservedPresetNames } = ui;
 
 type UpperBarManagerConfig = { pluginsIconsOrder: { [key in KalturaPluginNames | string]: number } };
+type IconsOrder = { [key in KalturaPluginNames | string]: number };
 
 export class UpperBarManager {
   private readonly player: KalturaPlayer;
@@ -28,8 +29,7 @@ export class UpperBarManager {
     if (UpperBarManager.validateItem(icon)) {
       const newIcon: IconModel = new IconModel(icon);
       this.componentsRegistry.set(newIcon.id, newIcon);
-      const icons = Array.from(this.componentsRegistry.values());
-      this.displayedBarComponentRef.current!.update(icons);
+      this.displayedBarComponentRef.current!.update();
       this.logger.debug(`Icon Id: '${newIcon.id}' '${newIcon.label}' added`);
       return newIcon.id;
     }
@@ -41,8 +41,7 @@ export class UpperBarManager {
     const icon: IconModel | undefined = this.componentsRegistry.get(itemId);
     if (icon) {
       this.componentsRegistry.delete(itemId);
-      const icons = Array.from(this.componentsRegistry.values());
-      this.displayedBarComponentRef.current!.update(icons);
+      this.displayedBarComponentRef.current!.update();
       this.logger.debug(`Icon Id: '${icon.id}' Label: '${icon.label}' removed`);
     } else {
       this.logger.warn(`${itemId} is not registered`);
@@ -62,13 +61,18 @@ export class UpperBarManager {
     }
   }
 
-  private injectDisplayedBarComponentWrapper(iconsOrder: { [key in KalturaPluginNames | string]: number }): void {
+  private _getControls = (iconsOrder: IconsOrder) => {
+    const icons = Array.from(this.componentsRegistry.values());
+    return icons.sort((a, b) => (iconsOrder[a.label] > iconsOrder[b.label] ? 1 : -1));
+  };
+
+  private injectDisplayedBarComponentWrapper(iconsOrder: IconsOrder): void {
     this.player.ui.addComponent({
       label: 'Right-Upper-Bar-Wrapper',
       presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
       area: ReservedPresetAreas.TopBarRightControls,
       get: () => {
-        return <DisplayedBar ref={this.displayedBarComponentRef} iconsOrder={iconsOrder} />;
+        return <DisplayedBar ref={this.displayedBarComponentRef} getControls={() => this._getControls(iconsOrder)} />;
       }
     });
   }
