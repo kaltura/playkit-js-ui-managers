@@ -4,7 +4,6 @@ import { IconWrapper } from '../icon-wrapper/icon-wrapper.component';
 import * as styles from './displayed-bar.component.scss';
 import { ui } from 'kaltura-player-js';
 import { MoreIcon } from '../more-icon/more-icon.component';
-import { KalturaPluginNames } from '../../../../types/ui-managers-config';
 
 const { PLAYER_SIZE } = ui.Components;
 const { connect } = ui.redux;
@@ -16,29 +15,23 @@ const mapStateToProps = (state) => ({
   playerSize: state.shell.playerSize
 });
 
-type DisplayedBarState = {
-  controls: IconModel[];
-};
-
 type DisplayedBarProps = {
+  getControls: () => IconModel[];
   ref: RefObject<DisplayedBar>;
-  iconsOrder: { [key in KalturaPluginNames | string]: number };
+};
+type PropsFromRedux = {
+  playerSize?: string;
 };
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 @connect(mapStateToProps, null, null, { forwardRef: true })
-export class DisplayedBar extends Component<DisplayedBarProps, DisplayedBarState> {
-  constructor() {
-    super();
-    this.state = { controls: [] };
-  }
-
-  private splitControlsIntoDisplayedAndDropdown(playerSize: string): {
+export class DisplayedBar extends Component<DisplayedBarProps & PropsFromRedux> {
+  private splitControlsIntoDisplayedAndDropdown(): {
     displayedControls: IconModel[];
     dropdownControls: IconModel[];
   } {
-    switch (playerSize) {
+    switch (this.props.playerSize) {
       case PLAYER_SIZE.TINY:
         return { displayedControls: [], dropdownControls: [] };
       case PLAYER_SIZE.EXTRA_SMALL:
@@ -49,10 +42,9 @@ export class DisplayedBar extends Component<DisplayedBarProps, DisplayedBarState
     }
   }
 
-  update(icons: IconModel[]): void {
-    icons.sort((a, b) => (this.props.iconsOrder[a.label] > this.props.iconsOrder[b.label] ? 1 : -1));
-    this.setState({ controls: icons });
-  }
+  public update = () => {
+    this.forceUpdate();
+  };
 
   private splitControls(numberOfDisplayedIcon: number): {
     displayedControls: IconModel[];
@@ -60,12 +52,13 @@ export class DisplayedBar extends Component<DisplayedBarProps, DisplayedBarState
   } {
     let displayedControls: IconModel[];
     let dropdownControls: IconModel[];
+    const controls = this.props.getControls();
 
-    if (this.state.controls.length > numberOfDisplayedIcon + 1) {
-      displayedControls = this.state.controls.slice(0, numberOfDisplayedIcon);
-      dropdownControls = this.state.controls.slice(numberOfDisplayedIcon);
+    if (controls.length > numberOfDisplayedIcon + 1) {
+      displayedControls = controls.slice(0, numberOfDisplayedIcon);
+      dropdownControls = controls.slice(numberOfDisplayedIcon);
     } else {
-      displayedControls = this.state.controls;
+      displayedControls = controls;
       dropdownControls = [];
     }
     return { displayedControls, dropdownControls };
@@ -74,7 +67,7 @@ export class DisplayedBar extends Component<DisplayedBarProps, DisplayedBarState
   render(): ComponentChild {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const { displayedControls, dropdownControls } = this.splitControlsIntoDisplayedAndDropdown(this.props.playerSize);
+    const { displayedControls, dropdownControls } = this.splitControlsIntoDisplayedAndDropdown();
     return (
       <div className={styles.rightUpperBarWrapperContainer}>
         {displayedControls.map(({ id, component, onClick, componentRef }) => {
@@ -85,7 +78,7 @@ export class DisplayedBar extends Component<DisplayedBarProps, DisplayedBarState
             </IconWrapper>
           );
         })}
-        {dropdownControls.length && <MoreIcon icons={dropdownControls} />}
+        {dropdownControls.length > 0 && <MoreIcon icons={dropdownControls} />}
       </div>
     );
   }
