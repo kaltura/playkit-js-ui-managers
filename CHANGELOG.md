@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.4](https://github.com/kaltura/playkit-js-ui-managers/compare/v1.3.3...v1.3.4) (2023-01-26)
+
+
+### Bug Fixes
+
+* **FEV-1653:** when switch from Live entry to VOD then back to Live, all plugins icons are missing ([#24](https://github.com/kaltura/playkit-js-ui-managers/issues/24)) ([d014b9a](https://github.com/kaltura/playkit-js-ui-managers/commit/d014b9ab16f685c2884e9ffa5702da30c2c33871))
+
 ### [1.3.3](https://github.com/kaltura/playkit-js-ui-managers/compare/v1.3.2...v1.3.3) (2023-01-25)
 
 
