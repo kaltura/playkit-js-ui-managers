@@ -2,7 +2,7 @@ import { h, Component, ComponentChild } from 'preact';
 import * as styles from './dropdown-bar.component.scss';
 import { IconModel } from '../../models/icon-model';
 import { ui } from 'kaltura-player-js';
-import { A11yWrapper } from '@playkit-js/common';
+import { A11yWrapper } from '@playkit-js/common/dist/hoc/a11y-wrapper';
 const { Icon } = ui.Components;
 
 type DropdownBarProps = {
