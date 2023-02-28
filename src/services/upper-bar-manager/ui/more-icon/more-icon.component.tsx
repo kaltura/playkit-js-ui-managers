@@ -1,4 +1,5 @@
-import { h, Component, ComponentChild, createRef, RefObject, Fragment } from 'preact';
+import { h, Component, ComponentChild, createRef, RefObject } from 'preact';
+import { A11yWrapper } from '@playkit-js/common/dist/hoc/a11y-wrapper';
 import { PlaykitUI, ui } from 'kaltura-player-js';
 import * as styles from './more-icon.component.scss';
 import { IconModel } from '../../models/icon-model';
@@ -8,8 +9,7 @@ import { pluginName } from '../../../../ui-managers';
 
 const { Icon, Tooltip } = ui.Components;
 const { withEventManager } = ui.Event;
-const { withText } = ui.preacti18n;
-const { KeyMap } = ui.utils;
+const { withText, Text } = ui.preacti18n;
 const ICON_PATH =
   // eslint-disable-next-line max-len
   'M16 22a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm0-11a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm0-11a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2z';
@@ -24,7 +24,7 @@ type MoreIconProps = {
 };
 
 @withEventManager
-@withText({ moreIconTxt: 'controls.moreIcon' })
+@withText({ moreIconTxt: <Text id="controls.moreIcon">More</Text> })
 export class MoreIcon extends Component<MoreIconProps, MoreIconState> {
   private readonly moreButtonRef: RefObject<HTMLButtonElement>;
   constructor() {
@@ -45,41 +45,32 @@ export class MoreIcon extends Component<MoreIconProps, MoreIconState> {
     }
   }
 
-  private handleOnClick(): void {
+  private handleOnClick = (): void => {
     this.setState((prevState) => ({ toggle: !prevState.toggle }));
-  }
-
-  private handleOnKeyDown(event: KeyboardEvent): void {
-    if (event.keyCode === KeyMap.ENTER || event.keyCode === KeyMap.SPACE) {
-      event.preventDefault();
-      this.setState((prevState) => ({ toggle: !prevState.toggle }));
-    }
-  }
+  };
 
   // close icon when click outside
   render(): ComponentChild {
     return (
-      <>
-        <div style={{ position: 'relative' }}>
-          <Tooltip label={this.props.moreIconTxt!}>
+      <div style={{ position: 'relative' }}>
+        <Tooltip label={this.props.moreIconTxt!}>
+          <A11yWrapper onClick={this.handleOnClick}>
             <button
               ref={this.moreButtonRef}
               className={`${ui.style.upperBarIcon} ${styles.moreIcon}`}
-              onClick={(): void => this.handleOnClick()}
-              onKeyDown={(event): void => this.handleOnKeyDown(event)}
               tabIndex={0}
               aria-label={this.props.moreIconTxt}
             >
               <Icon id={`${pluginName}-upper-bar-manager`} path={ICON_PATH} viewBox={'0 0 32 32'} />
             </button>
-          </Tooltip>
-          {this.state.toggle && (
-            <div>
-              <DropdownBar controls={this.props.icons} />
-            </div>
-          )}
-        </div>
-      </>
+          </A11yWrapper>
+        </Tooltip>
+        {this.state.toggle && (
+          <div>
+            <DropdownBar controls={this.props.icons} />
+          </div>
+        )}
+      </div>
     );
   }
 }
