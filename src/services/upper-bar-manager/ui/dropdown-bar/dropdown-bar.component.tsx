@@ -1,4 +1,4 @@
-import { h, Component, ComponentChild } from 'preact';
+import { h, Component, ComponentChild, Fragment } from 'preact';
 import * as styles from './dropdown-bar.component.scss';
 import { IconModel } from '../../models/icon-model';
 import { ui } from 'kaltura-player-js';
@@ -15,14 +15,16 @@ export class DropdownBar extends Component<DropdownBarProps> {
       <div className={styles.moreDropdown} role="menu" aria-expanded="true">
         {this.props.controls.map(({ id, label, svgIcon, onClick }, index) => {
           return (
-            <A11yWrapper onClick={onClick} role="menuitem">
-              <div key={id} className={styles.dropdownItem} tabIndex={0} aria-label={label}>
-                <div className={styles.icon}>
-                  <Icon id={`icon${index}`} path={svgIcon.path} viewBox={svgIcon.viewBox} />
+            <Fragment key={id}>
+              <A11yWrapper onClick={onClick} role="menuitem">
+                <div className={styles.dropdownItem} tabIndex={0} aria-label={label}>
+                  <div className={styles.icon}>
+                    <Icon id={`icon${index}`} path={svgIcon.path} viewBox={svgIcon.viewBox} />
+                  </div>
+                  <span className={styles.dropdownItemDescription}>{label}</span>
                 </div>
-                <span className={styles.dropdownItemDescription}>{label}</span>
-              </div>
-            </A11yWrapper>
+              </A11yWrapper>
+            </Fragment>
           );
         })}
       </div>
