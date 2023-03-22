@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.5](https://github.com/kaltura/playkit-js-ui-managers/compare/v1.3.4...v1.3.5) (2023-03-22)
+
+
+### Bug Fixes
+
+* **FEC-12737:** There is no aria-label for "more plugins" ([#26](https://github.com/kaltura/playkit-js-ui-managers/issues/26)) ([b18d325](https://github.com/kaltura/playkit-js-ui-managers/commit/b18d3254e0c8b644454b1c5ac3ae7ee503500895))
+* **FEC-13027:** CSS is bundled without neither a prefix and nor a hash which pollute the global namespace ([#27](https://github.com/kaltura/playkit-js-ui-managers/issues/27)) ([89ce03c](https://github.com/kaltura/playkit-js-ui-managers/commit/89ce03c62c7cd23f8ad1ce954c7f6cddb8c6368a))
+
 ### [1.3.4](https://github.com/kaltura/playkit-js-ui-managers/compare/v1.3.3...v1.3.4) (2023-01-26)
 
 
