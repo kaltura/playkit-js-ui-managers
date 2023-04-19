@@ -1,6 +1,6 @@
 {
   "name": "@playkit-js/ui-managers",
-  "version": "1.3.2",
+  "version": "1.3.5",
   "description": "",
   "main": "dist/playkit-ui-manager.js",
   "types": "types/index.d.ts",
@@ -101,5 +101,8 @@
   ],
   "kaltura": {
     "name": "uiManagers"
+  },
+  "dependencies": {
+    "@playkit-js/common": "^1.1.3"
   }
 }

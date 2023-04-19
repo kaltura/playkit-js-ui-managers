@@ -1,4 +1,5 @@
 const path = require('path');
+const CSS_MODULE_PREFIX = 'playkit';
 
 module.exports = (env, { mode }) => {
   return {
@@ -25,8 +26,7 @@ module.exports = (env, { mode }) => {
               options: {
                 esModule: true,
                 modules: {
-                  // localIdentName: '[local]_[hash:base64:5]',
-                  localIdentName: '[local]',
+                  localIdentName: `${CSS_MODULE_PREFIX}-[local]_[hash:base64:2]`,
                   namedExport: true
                 }
               }
