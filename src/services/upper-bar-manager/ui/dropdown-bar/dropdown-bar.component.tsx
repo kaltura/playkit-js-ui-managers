@@ -7,6 +7,7 @@ const { Icon } = ui.Components;
 
 type DropdownBarProps = {
   controls: IconModel[];
+  onDropdownClick: () => void;
 };
 
 export class DropdownBar extends Component<DropdownBarProps> {
@@ -16,7 +17,13 @@ export class DropdownBar extends Component<DropdownBarProps> {
         {this.props.controls.map(({ id, label, svgIcon, onClick }, index) => {
           return (
             <Fragment key={id}>
-              <A11yWrapper onClick={onClick} role="menuitem">
+              <A11yWrapper
+                onClick={(e) => {
+                  onClick(e);
+                  this.props.onDropdownClick();
+                }}
+                role="menuitem"
+              >
                 <div className={styles.dropdownItem} tabIndex={0} aria-label={label}>
                   <div className={styles.icon}>
                     <Icon id={`icon${index}`} path={svgIcon.path} viewBox={svgIcon.viewBox} />
