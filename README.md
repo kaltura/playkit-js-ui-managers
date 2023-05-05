@@ -1,8 +1,11 @@
-[![Build Status](https://app.travis-ci.com/kaltura/playkit-js-ui-managers.svg?branch=master)](https://app.travis-ci.com/kaltura/playkit-js-ui-managers)
+
+# PlayKit JS UI Managers - Kaltura UI Managers for the [Kaltura Player JS]
+
+* playkit-js-ui-managers
+
+[![Build Status](https://github.com/kaltura/playkit-js-ui-managers/actions/workflows/run_canary_full_flow.yaml/badge.svg)](https://github.com/kaltura/playkit-js-ui-managers/actions/workflows/run_canary_full_flow.yaml)
 [![](https://img.shields.io/npm/v/@playkit-js/ui-managers/latest.svg)](https://www.npmjs.com/package/@playkit-js/ui-managers)
 [![](https://img.shields.io/npm/v/@playkit-js/ui-managers/canary.svg)](https://www.npmjs.com/package/@playkit-js/ui-managers/v/canary)
-
-# playkit-js-ui-managers
 
 playkit-js-ui-managers is a [kaltura player] plugin that groups several UI services,
 in order to simplify and facilitate the customization of the [kaltura player] UI by providing a simple and clean API.
