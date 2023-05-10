@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.3.7 (2023-05-10)
+
+
+### Bug Fixes
+
+* **FEC-13145:** upgrade dependancies for common and ui-managers ([fd6760c](https://github.com/kaltura/playkit-js-ui-managers/commit/fd6760c101f74d46c7efd3c786fc12382afac6fd))
+
 ### 1.3.6 (2023-05-03)
 
 ### [1.3.5](https://github.com/kaltura/playkit-js-ui-managers/compare/v1.3.4...v1.3.5) (2023-03-22)
