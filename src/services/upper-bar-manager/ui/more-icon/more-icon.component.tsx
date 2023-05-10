@@ -49,6 +49,10 @@ export class MoreIcon extends Component<MoreIconProps, MoreIconState> {
     this.setState((prevState) => ({ toggle: !prevState.toggle }));
   };
 
+  private onDropdownClick = (): void => {
+    this.setState({ toggle: false });
+  };
+
   // close icon when click outside
   render(): ComponentChild {
     return (
@@ -67,7 +71,7 @@ export class MoreIcon extends Component<MoreIconProps, MoreIconState> {
         </Tooltip>
         {this.state.toggle && (
           <div>
-            <DropdownBar controls={this.props.icons} />
+            <DropdownBar onDropdownClick={this.onDropdownClick} controls={this.props.icons} />
           </div>
         )}
       </div>
