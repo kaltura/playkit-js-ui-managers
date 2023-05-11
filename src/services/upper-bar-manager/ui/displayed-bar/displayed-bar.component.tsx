@@ -2,7 +2,7 @@ import { h, Component, ComponentChild, RefObject } from 'preact';
 import { IconModel } from '../../models/icon-model';
 import { IconWrapper } from '../icon-wrapper/icon-wrapper.component';
 import * as styles from './displayed-bar.component.scss';
-import { ui } from 'kaltura-player-js';
+import { ui } from '@playkit-js/kaltura-player-js';
 import { MoreIcon } from '../more-icon/more-icon.component';
 
 const { PLAYER_SIZE } = ui.Components;

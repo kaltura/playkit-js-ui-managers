@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { createSandbox, spy } from 'sinon';
 import '../../src/index';
-import { setup } from 'kaltura-player-js';
+import { setup } from '@playkit-js/kaltura-player-js';
 import { IconComponent } from '../mock/compenents/icon.component';
 import { config, targetId } from '../mock/config';
 import { mediaData } from '../mock/media-sourc';

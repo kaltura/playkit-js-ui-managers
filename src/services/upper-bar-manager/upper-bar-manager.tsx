@@ -1,4 +1,4 @@
-import { KalturaPlayer, Logger, ui } from 'kaltura-player-js';
+import { KalturaPlayer, Logger, ui } from '@playkit-js/kaltura-player-js';
 import { IconDto } from './models/icon-dto';
 import { IconModel } from './models/icon-model';
 import { h, RefObject, createRef } from 'preact';

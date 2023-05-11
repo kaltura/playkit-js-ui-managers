@@ -1,4 +1,4 @@
-import { BasePlugin, registerPlugin, ui } from 'kaltura-player-js';
+import { BasePlugin, registerPlugin, ui } from '@playkit-js/kaltura-player-js';
 const { h, preact } = ui;
 
 class IconComponent extends preact.Component {

@@ -1,4 +1,4 @@
-import { BasePlugin, KalturaPlayer } from 'kaltura-player-js';
+import { BasePlugin, KalturaPlayer } from '@playkit-js/kaltura-player-js';
 import { SidePanelsManager } from './services/side-panels-manager/side-panels-manager';
 import { UpperBarManager } from './services/upper-bar-manager/upper-bar-manager';
 import { UiManagerConfig } from './types/ui-managers-config';

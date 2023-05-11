@@ -1,5 +1,5 @@
 import { h, createRef, RefObject, FunctionalComponent, ComponentClass } from 'preact';
-import { KalturaPlayer } from 'kaltura-player-js';
+import { KalturaPlayer } from '@playkit-js/kaltura-player-js';
 import { PanelItemWrapper } from '../ui/panel-item-wrapper/panel-item-wrapper.component';
 import { PanelComponentProps, SidePanelItem } from './side-panel-item';
 import { UpperBarManager } from '../../upper-bar-manager/upper-bar-manager';

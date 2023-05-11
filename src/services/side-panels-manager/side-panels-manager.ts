@@ -1,4 +1,4 @@
-import { ui, KalturaPlayer, Logger, PlaykitUI } from 'kaltura-player-js';
+import { ui, KalturaPlayer, Logger, PlaykitUI } from '@playkit-js/kaltura-player-js';
 import { SidePanelItem } from './models/side-panel-item';
 import { ItemWrapper } from './models/item-wrapper';
 const { SidePanelModes, SidePanelPositions, ReservedPresetNames } = ui;
