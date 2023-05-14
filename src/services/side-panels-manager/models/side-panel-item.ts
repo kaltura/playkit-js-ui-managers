@@ -1,5 +1,5 @@
 import { ComponentClass, FunctionalComponent } from 'preact';
-import { PlaykitUI } from 'kaltura-player-js';
+import { PlaykitUI } from '@playkit-js/kaltura-player-js';
 import { SvgIcon } from '../../upper-bar-manager/models/svg-icon';
 
 export type PanelComponentProps = {

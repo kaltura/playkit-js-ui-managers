@@ -6,7 +6,7 @@ declare module "services/upper-bar-manager/models/svg-icon" {
 }
 declare module "services/side-panels-manager/models/side-panel-item" {
     import { ComponentClass, FunctionalComponent } from 'preact';
-    import { PlaykitUI } from 'kaltura-player-js';
+    import { PlaykitUI } from '@playkit-js/kaltura-player-js';
     import { SvgIcon } from "services/upper-bar-manager/models/svg-icon";
     export type PanelComponentProps = {
         isActive: boolean;
@@ -77,7 +77,7 @@ declare module "services/upper-bar-manager/ui/dropdown-bar/dropdown-bar.componen
 }
 declare module "services/upper-bar-manager/ui/more-icon/more-icon.component" {
     import { Component, ComponentChild } from 'preact';
-    import { PlaykitUI } from 'kaltura-player-js';
+    import { PlaykitUI } from '@playkit-js/kaltura-player-js';
     import { IconModel } from "services/upper-bar-manager/models/icon-model";
     import EventManager = PlaykitUI.EventManager;
     type MoreIconState = {
@@ -120,7 +120,7 @@ declare module "services/upper-bar-manager/ui/displayed-bar/displayed-bar.compon
     }
 }
 declare module "services/upper-bar-manager/upper-bar-manager" {
-    import { KalturaPlayer, Logger } from 'kaltura-player-js';
+    import { KalturaPlayer, Logger } from '@playkit-js/kaltura-player-js';
     import { IconDto } from "services/upper-bar-manager/models/icon-dto";
     import { KalturaPluginNames } from "ui-managers";
     type UpperBarManagerConfig = {
@@ -147,7 +147,7 @@ declare module "services/upper-bar-manager/upper-bar-manager" {
 }
 declare module "services/side-panels-manager/models/item-wrapper" { }
 declare module "services/side-panels-manager/side-panels-manager" {
-    import { KalturaPlayer, Logger } from 'kaltura-player-js';
+    import { KalturaPlayer, Logger } from '@playkit-js/kaltura-player-js';
     import { SidePanelItem } from "services/side-panels-manager/models/side-panel-item";
     export class SidePanelsManager {
         private readonly player;

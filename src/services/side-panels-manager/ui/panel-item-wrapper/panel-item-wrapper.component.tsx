@@ -1,6 +1,6 @@
 import { h, Component, ComponentChild, RefObject, cloneElement, VNode } from 'preact';
 import * as styles from './panel-item-wrapper.component.scss';
-import { ui } from 'kaltura-player-js';
+import { ui } from '@playkit-js/kaltura-player-js';
 
 const { defaultTransitionTime } = ui.style;
 

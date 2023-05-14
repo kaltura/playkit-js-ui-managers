@@ -1,6 +1,6 @@
 import { h, Component, ComponentChild, createRef, RefObject } from 'preact';
 import { A11yWrapper } from '@playkit-js/common/dist/hoc/a11y-wrapper';
-import { PlaykitUI, ui } from 'kaltura-player-js';
+import { PlaykitUI, ui } from '@playkit-js/kaltura-player-js';
 import * as styles from './more-icon.component.scss';
 import { IconModel } from '../../models/icon-model';
 import { DropdownBar } from '../dropdown-bar/dropdown-bar.component';

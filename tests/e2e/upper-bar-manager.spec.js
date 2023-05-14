@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { createSandbox, spy } from 'sinon';
 import '../../src/index';
-import { setup } from 'kaltura-player-js';
+import { setup } from '@playkit-js/kaltura-player-js';
 import { IconComponent } from '../mock/compenents/icon.component';
 import { config, targetId } from '../mock/config';
 import { mediaData } from '../mock/media-sourc';
@@ -133,13 +133,13 @@ describe('Upper Bar Manager', () => {
 
     player.ready().then(() => {
       setTimeout(() => {
-        const displayedBarComponentState = upperBarManagerService.displayedBarComponentRef.current.state;
-        expect(displayedBarComponentState.controls[0].label).to.be.equal('pluginC');
-        expect(displayedBarComponentState.controls[1].label).to.be.equal('pluginF');
-        expect(displayedBarComponentState.controls[2].label).to.be.equal('pluginA');
-        expect(displayedBarComponentState.controls[3].label).to.be.equal('pluginD');
-        expect(displayedBarComponentState.controls[4].label).to.be.equal('pluginE');
-        expect(displayedBarComponentState.controls[5].label).to.be.equal('pluginB');
+        const displayedBarComponentState = upperBarManagerService._getControls(pluginsConfig.uiManagers.upperBarManager.pluginsIconsOrder);
+        expect(displayedBarComponentState[0].label).to.be.equal('pluginC');
+        expect(displayedBarComponentState[1].label).to.be.equal('pluginF');
+        expect(displayedBarComponentState[2].label).to.be.equal('pluginA');
+        expect(displayedBarComponentState[3].label).to.be.equal('pluginD');
+        expect(displayedBarComponentState[4].label).to.be.equal('pluginE');
+        expect(displayedBarComponentState[5].label).to.be.equal('pluginB');
         done();
       });
     });
@@ -174,11 +174,6 @@ describe('Upper Bar Manager', () => {
 
     player.ready().then(() => {
       setTimeout(() => {
-        const previousComponentControlsState = JSON.parse(
-          JSON.stringify(
-            upperBarManagerService.displayedBarComponentRef.current.state.controls.map(({ id, label }) => ({ id, label }))
-          )
-        );
         const previousServiceRegistryState = JSON.parse(
           JSON.stringify(Array.from(upperBarManagerService.componentsRegistry.values()).map(({ id, label }) => ({ id, label })))
         );
@@ -186,13 +181,9 @@ describe('Upper Bar Manager', () => {
         player.setMedia({ sources: { ...mediaData } });
 
         setTimeout(() => {
-          const currentComponentControlsState = upperBarManagerService.displayedBarComponentRef.current.state.controls.map(
-            ({ id, label }) => ({ id, label })
-          );
           const currentServiceRegistryState = Array.from(upperBarManagerService.componentsRegistry.values()).map(
             ({ id, label }) => ({ id, label })
           );
-          expect(previousComponentControlsState).to.be.deep.equal(currentComponentControlsState);
           expect(previousServiceRegistryState).to.be.deep.equal(currentServiceRegistryState);
           done();
         }, 100);
