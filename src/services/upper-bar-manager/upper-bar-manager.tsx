@@ -61,10 +61,10 @@ export class UpperBarManager {
     }
   }
 
-  private _getControls = (iconsOrder: IconsOrder) => {
+  private getControls(iconsOrder: IconsOrder): IconModel[] {
     const icons = Array.from(this.componentsRegistry.values());
     return icons.sort((a, b) => (iconsOrder[a.label] > iconsOrder[b.label] ? 1 : -1));
-  };
+  }
 
   private injectDisplayedBarComponentWrapper(iconsOrder: IconsOrder): void {
     this.player.ui.addComponent({
@@ -72,7 +72,7 @@ export class UpperBarManager {
       presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
       area: ReservedPresetAreas.TopBarRightControls,
       get: () => {
-        return <DisplayedBar ref={this.displayedBarComponentRef} getControls={() => this._getControls(iconsOrder)} />;
+        return <DisplayedBar ref={this.displayedBarComponentRef} getControls={(): IconModel[] => this.getControls(iconsOrder)} />;
       }
     });
   }

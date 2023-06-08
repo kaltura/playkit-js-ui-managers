@@ -1,4 +1,4 @@
-import { h, Component, ComponentChild, RefObject, createRef } from 'preact';
+import { h, Component, ComponentChild, RefObject } from 'preact';
 import { IconModel } from '../../models/icon-model';
 import { IconWrapper } from '../icon-wrapper/icon-wrapper.component';
 import * as styles from './displayed-bar.component.scss';
