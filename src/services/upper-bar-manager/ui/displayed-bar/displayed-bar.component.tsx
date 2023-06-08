@@ -90,8 +90,8 @@ export class DisplayedBar extends Component<DisplayedBarProps & PropsFromRedux, 
           return (
             <IconWrapper
               key={id}
-              onClick={(e): void => {
-                onClick(e);
+              onClick={(...e): void => {
+                onClick(...e);
                 this.closeDropdown();
               }}
               ref={componentRef}
