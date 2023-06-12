@@ -1146,10 +1146,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@playkit-js/common@^1.2.3":
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/@playkit-js/common/-/common-1.2.3.tgz#29bf06e966ad97d5d077e0e28b1803b9cb6714fb"
-  integrity sha512-c3SHyQQ9Y9iM1q/6Gaay1GA9INkHQqg7uMJPP8AeXBjfyTs1H4W96EDAAX/96iDCYLjxZbp4UBsMR3RmTN9OrA==
+"@playkit-js/common@^1.2.10":
+  version "1.2.10"
+  resolved "https://registry.yarnpkg.com/@playkit-js/common/-/common-1.2.10.tgz#c66edc706ae449689b53ccf342dc0eb9f18a9dbe"
+  integrity sha512-jmh08OLxizkddFH7m8w6UGkC5Z9GvIIsl3Ol5Vp2o5d00MvIRho8bUJISPR+ac0mQY/WarpbFm8iRQl7Kwo+oQ==
   dependencies:
     "@playkit-js/playkit-js-ui" "^0.77.1"
     classnames "^2.3.2"
