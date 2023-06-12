@@ -1,26 +1,17 @@
 import { h, Component, ComponentChild, RefObject, cloneElement, VNode } from 'preact';
-import { ui } from '@playkit-js/kaltura-player-js';
-const { KeyMap } = ui.utils;
+import { A11yWrapper } from '@playkit-js/common/dist/hoc/a11y-wrapper';
 
 type IconWrapperProps = {
   ref: RefObject<IconWrapper>;
   onClick: (e: MouseEvent | KeyboardEvent) => void;
 };
 
-// eslint-disable-next-line react/prefer-stateless-function
 export class IconWrapper extends Component<IconWrapperProps> {
-  private handleOnKeyDown(event: KeyboardEvent): void {
-    if (event.keyCode === KeyMap.ENTER || event.keyCode === KeyMap.SPACE) {
-      event.preventDefault();
-      this.props.onClick(event);
-    }
-  }
-
   render(): ComponentChild {
     return (
-      <div onClick={this.props.onClick} onKeyDown={(event): void => this.handleOnKeyDown(event)}>
-        {cloneElement(this.props.children as VNode)}
-      </div>
+      <A11yWrapper onClick={this.props.onClick}>
+        <div>{cloneElement(this.props.children as VNode)}</div>
+      </A11yWrapper>
     );
   }
 }

@@ -18,7 +18,7 @@ export class DropdownBar extends Component<DropdownBarProps> {
           return (
             <Fragment key={id}>
               <A11yWrapper
-                onClick={(e) => {
+                onClick={(e): void => {
                   onClick(e);
                   this.props.onDropdownClick();
                 }}
