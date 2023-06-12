@@ -16,7 +16,7 @@ const mapStateToProps = (state) => ({
 });
 
 type DisplayedBarState = {
-  toggle: boolean;
+  showDropdown: boolean;
 };
 
 type DisplayedBarProps = {
@@ -33,15 +33,15 @@ type PropsFromRedux = {
 export class DisplayedBar extends Component<DisplayedBarProps & PropsFromRedux, DisplayedBarState> {
   constructor() {
     super();
-    this.state = { toggle: false };
+    this.state = { showDropdown: false };
   }
 
   private handleOnClick = (): void => {
-    this.setState((prevState) => ({ toggle: !prevState.toggle }));
+    this.setState((prevState) => ({ showDropdown: !prevState.showDropdown }));
   };
 
   private closeDropdown(): void {
-    this.setState({ toggle: false });
+    this.setState({ showDropdown: false });
   }
 
   private splitControlsIntoDisplayedAndDropdown(): {
@@ -101,7 +101,7 @@ export class DisplayedBar extends Component<DisplayedBarProps & PropsFromRedux, 
           );
         })}
         {dropdownControls.length > 0 && (
-          <MoreIcon showDropdown={this.state.toggle} onClick={this.handleOnClick} icons={dropdownControls} />
+          <MoreIcon showDropdown={this.state.showDropdown} onClick={this.handleOnClick} icons={dropdownControls} />
         )}
       </div>
     );
