@@ -15,6 +15,10 @@ const mapStateToProps = (state) => ({
   playerSize: state.shell.playerSize
 });
 
+type DisplayedBarState = {
+  showDropdown: boolean;
+};
+
 type DisplayedBarProps = {
   getControls: () => IconModel[];
   ref: RefObject<DisplayedBar>;
@@ -26,7 +30,20 @@ type PropsFromRedux = {
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 @connect(mapStateToProps, null, null, { forwardRef: true })
-export class DisplayedBar extends Component<DisplayedBarProps & PropsFromRedux> {
+export class DisplayedBar extends Component<DisplayedBarProps & PropsFromRedux, DisplayedBarState> {
+  constructor() {
+    super();
+    this.state = { showDropdown: false };
+  }
+
+  private handleOnClick = (): void => {
+    this.setState((prevState) => ({ showDropdown: !prevState.showDropdown }));
+  };
+
+  private closeDropdown(): void {
+    this.setState({ showDropdown: false });
+  }
+
   private splitControlsIntoDisplayedAndDropdown(): {
     displayedControls: IconModel[];
     dropdownControls: IconModel[];
@@ -42,7 +59,7 @@ export class DisplayedBar extends Component<DisplayedBarProps & PropsFromRedux> 
     }
   }
 
-  public update = () => {
+  public update = (): void => {
     this.forceUpdate();
   };
 
@@ -65,20 +82,27 @@ export class DisplayedBar extends Component<DisplayedBarProps & PropsFromRedux> 
   }
 
   render(): ComponentChild {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     const { displayedControls, dropdownControls } = this.splitControlsIntoDisplayedAndDropdown();
     return (
       <div className={styles.rightUpperBarWrapperContainer}>
         {displayedControls.map(({ id, component, onClick, componentRef }) => {
           const IconWrapperComponent = component!;
           return (
-            <IconWrapper key={id} onClick={onClick} ref={componentRef}>
+            <IconWrapper
+              key={id}
+              onClick={(...e): void => {
+                onClick(...e);
+                this.closeDropdown();
+              }}
+              ref={componentRef}
+            >
               <IconWrapperComponent />
             </IconWrapper>
           );
         })}
-        {dropdownControls.length > 0 && <MoreIcon icons={dropdownControls} />}
+        {dropdownControls.length > 0 && (
+          <MoreIcon showDropdown={this.state.showDropdown} onClick={this.handleOnClick} icons={dropdownControls} />
+        )}
       </div>
     );
   }

@@ -14,22 +14,20 @@ const ICON_PATH =
   // eslint-disable-next-line max-len
   'M16 22a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm0-11a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm0-11a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2z';
 
-type MoreIconState = {
-  toggle: boolean;
-};
 type MoreIconProps = {
   icons: IconModel[];
+  onClick: () => void;
+  showDropdown: boolean;
   moreIconTxt?: string;
   eventManager?: EventManager;
 };
 
 @withEventManager
 @withText({ moreIconTxt: <Text id="controls.moreIcon">More</Text> })
-export class MoreIcon extends Component<MoreIconProps, MoreIconState> {
+export class MoreIcon extends Component<MoreIconProps> {
   private readonly moreButtonRef: RefObject<HTMLButtonElement>;
   constructor() {
     super();
-    this.state = { toggle: false };
     this.moreButtonRef = createRef();
   }
 
@@ -38,27 +36,16 @@ export class MoreIcon extends Component<MoreIconProps, MoreIconState> {
   }
 
   handleClickOutside(event: PointerEvent): void {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    if (this.moreButtonRef && !this.moreButtonRef.current!.contains(event.target)) {
+    if (this.moreButtonRef && !this.moreButtonRef.current!.contains(event.target as Node)) {
       this.setState({ toggle: false });
     }
   }
 
-  private handleOnClick = (): void => {
-    this.setState((prevState) => ({ toggle: !prevState.toggle }));
-  };
-
-  private onDropdownClick = (): void => {
-    this.setState({ toggle: false });
-  };
-
-  // close icon when click outside
   render(): ComponentChild {
     return (
       <div style={{ position: 'relative' }}>
         <Tooltip label={this.props.moreIconTxt!}>
-          <A11yWrapper onClick={this.handleOnClick}>
+          <A11yWrapper onClick={this.props.onClick}>
             <button
               ref={this.moreButtonRef}
               className={`${ui.style.upperBarIcon} ${styles.moreIcon}`}
@@ -69,9 +56,9 @@ export class MoreIcon extends Component<MoreIconProps, MoreIconState> {
             </button>
           </A11yWrapper>
         </Tooltip>
-        {this.state.toggle && (
+        {this.props.showDropdown && (
           <div>
-            <DropdownBar onDropdownClick={this.onDropdownClick} controls={this.props.icons} />
+            <DropdownBar onDropdownClick={this.props.onClick} controls={this.props.icons} />
           </div>
         )}
       </div>

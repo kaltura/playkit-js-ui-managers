@@ -14,11 +14,11 @@ export class DropdownBar extends Component<DropdownBarProps> {
   render(): ComponentChild {
     return (
       <div className={styles.moreDropdown} role="menu" aria-expanded="true">
-        {this.props.controls.map(({ id, label, svgIcon, onClick }, index) => {
+        {this.props.controls.map(({ id, label, svgIcon, onClick }) => {
           return (
             <Fragment key={id}>
               <A11yWrapper
-                onClick={(e) => {
+                onClick={(e): void => {
                   onClick(e);
                   this.props.onDropdownClick();
                 }}
@@ -26,7 +26,7 @@ export class DropdownBar extends Component<DropdownBarProps> {
               >
                 <div className={styles.dropdownItem} tabIndex={0} aria-label={label}>
                   <div className={styles.icon}>
-                    <Icon id={`icon${index}`} path={svgIcon.path} viewBox={svgIcon.viewBox} />
+                    <Icon id={`icon${id}`} path={svgIcon.path} viewBox={svgIcon.viewBox} />
                   </div>
                   <span className={styles.dropdownItemDescription}>{label}</span>
                 </div>

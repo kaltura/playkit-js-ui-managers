@@ -133,7 +133,7 @@ describe('Upper Bar Manager', () => {
 
     player.ready().then(() => {
       setTimeout(() => {
-        const displayedBarComponentState = upperBarManagerService._getControls(pluginsConfig.uiManagers.upperBarManager.pluginsIconsOrder);
+        const displayedBarComponentState = upperBarManagerService.getControls(pluginsConfig.uiManagers.upperBarManager.pluginsIconsOrder);
         expect(displayedBarComponentState[0].label).to.be.equal('pluginC');
         expect(displayedBarComponentState[1].label).to.be.equal('pluginF');
         expect(displayedBarComponentState[2].label).to.be.equal('pluginA');
