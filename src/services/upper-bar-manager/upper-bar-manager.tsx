@@ -69,7 +69,7 @@ export class UpperBarManager {
   private injectDisplayedBarComponentWrapper(iconsOrder: IconsOrder): void {
     this.player.ui.addComponent({
       label: 'Right-Upper-Bar-Wrapper',
-      presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
+      presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live, ReservedPresetNames.Img],
       area: ReservedPresetAreas.TopBarRightControls,
       get: () => {
         return <DisplayedBar ref={this.displayedBarComponentRef} getControls={(): IconModel[] => this.getControls(iconsOrder)} />;
