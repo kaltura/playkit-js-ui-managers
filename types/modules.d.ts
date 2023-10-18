@@ -1,3 +1,5 @@
+import { PlaykitUI } from "@playkit-js/kaltura-player-js";
+
 declare module "services/upper-bar-manager/models/svg-icon" {
     export interface SvgIcon {
         path: string;
@@ -35,6 +37,7 @@ declare module "services/upper-bar-manager/models/icon-dto" {
         component: ComponentClass<Record<string, never>> | FunctionalComponent<Record<string, never>>;
         svgIcon: SvgIcon;
         onClick: () => void;
+        presets?: PlaykitUI.ReservedPresetName[];
     }
 }
 declare module "services/upper-bar-manager/ui/icon-wrapper/icon-wrapper.component" {
