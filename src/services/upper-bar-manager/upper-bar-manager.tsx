@@ -6,7 +6,7 @@ import { DisplayedBar } from './ui/displayed-bar/displayed-bar.component';
 import { KalturaPluginNames } from '../../types/ui-managers-config';
 const { ReservedPresetAreas, ReservedPresetNames } = ui;
 
-const relevantPresets = Object.values(ReservedPresetNames).filter(
+const presets = Object.values(ReservedPresetNames).filter(
   (preset) => preset !== ReservedPresetNames.Idle && preset !== ReservedPresetNames.Error
 );
 
@@ -26,7 +26,7 @@ export class UpperBarManager {
     this.componentsRegistry = new Map<number, IconModel>();
     this.logger = logger;
     this.displayedBarComponentRefs = {};
-    relevantPresets.forEach((preset) => (this.displayedBarComponentRefs[preset] = createRef()));
+    presets.forEach((preset) => (this.displayedBarComponentRefs[preset] = createRef()));
     this.injectDisplayedBarComponentWrapper(config.pluginsIconsOrder);
   }
 
@@ -34,9 +34,7 @@ export class UpperBarManager {
     if (UpperBarManager.validateItem(icon)) {
       const newIcon: IconModel = new IconModel(icon);
       this.componentsRegistry.set(newIcon.id, newIcon);
-      newIcon.presets.forEach((preset) => {
-        this.displayedBarComponentRefs[preset].current?.update();
-      });
+      newIcon.presets.forEach((preset) => this.displayedBarComponentRefs[preset].current?.update());
       this.logger.debug(`Icon Id: '${newIcon.id}' '${newIcon.label}' added`);
       return newIcon.id;
     }
@@ -48,9 +46,7 @@ export class UpperBarManager {
     const icon: IconModel | undefined = this.componentsRegistry.get(itemId);
     if (icon) {
       this.componentsRegistry.delete(itemId);
-      icon.presets.forEach((preset) => {
-        this.displayedBarComponentRefs[preset].current?.update();
-      });
+      icon.presets.forEach((preset) => this.displayedBarComponentRefs[preset].current?.update());
       this.logger.debug(`Icon Id: '${icon.id}' Label: '${icon.label}' removed`);
     } else {
       this.logger.warn(`${itemId} is not registered`);
@@ -76,7 +72,7 @@ export class UpperBarManager {
   }
 
   private injectDisplayedBarComponentWrapper(iconsOrder: IconsOrder): void {
-    for (const preset of relevantPresets) {
+    for (const preset of presets) {
       this.player.ui.addComponent({
         label: 'Right-Upper-Bar-Wrapper',
         presets: [preset],
