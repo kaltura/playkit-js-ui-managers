@@ -3,6 +3,8 @@ import { IconDto } from './icon-dto';
 import { IconWrapper } from '../ui/icon-wrapper/icon-wrapper.component';
 import { SvgIcon } from './svg-icon';
 import { KalturaPluginNames } from '../../../types/ui-managers-config';
+import { PlaykitUI, ui } from '@playkit-js/kaltura-player-js';
+const { ReservedPresetNames } = ui;
 
 export class IconModel {
   private static nextId = 0;
@@ -12,6 +14,7 @@ export class IconModel {
   public onClick: (e: MouseEvent | KeyboardEvent) => void;
   public component: ComponentClass<Record<string, never>> | FunctionalComponent<Record<string, never>>;
   public svgIcon: SvgIcon;
+  public presets: PlaykitUI.ReservedPresetName[];
   constructor(item: IconDto) {
     this.id = ++IconModel.nextId;
     this.label = item.label;
@@ -19,6 +22,8 @@ export class IconModel {
     this.svgIcon = item.svgIcon;
     this.onClick = item.onClick;
     this.componentRef = createRef();
+    this.presets =
+      item.presets && item.presets.length > 0 ? item.presets : [ReservedPresetNames.Playback, ReservedPresetNames.Live];
   }
 
   public update(): void {

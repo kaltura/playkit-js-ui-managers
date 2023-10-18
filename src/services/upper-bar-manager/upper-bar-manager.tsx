@@ -6,6 +6,10 @@ import { DisplayedBar } from './ui/displayed-bar/displayed-bar.component';
 import { KalturaPluginNames } from '../../types/ui-managers-config';
 const { ReservedPresetAreas, ReservedPresetNames } = ui;
 
+const UPPER_BAR_PRESETS = Object.values(ReservedPresetNames).filter(
+  (preset) => preset !== ReservedPresetNames.Idle && preset !== ReservedPresetNames.Error
+);
+
 type UpperBarManagerConfig = { pluginsIconsOrder: { [key in KalturaPluginNames | string]: number } };
 type IconsOrder = { [key in KalturaPluginNames | string]: number };
 
@@ -13,7 +17,7 @@ export class UpperBarManager {
   private readonly player: KalturaPlayer;
   private readonly logger: Logger;
   private readonly componentsRegistry: Map<number, IconModel>;
-  private readonly displayedBarComponentRef: RefObject<DisplayedBar>;
+  private readonly displayedBarComponentRefs: Record<string, RefObject<DisplayedBar>>;
   /**
    * @ignore
    */
@@ -21,7 +25,8 @@ export class UpperBarManager {
     this.player = player;
     this.componentsRegistry = new Map<number, IconModel>();
     this.logger = logger;
-    this.displayedBarComponentRef = createRef();
+    this.displayedBarComponentRefs = {};
+    UPPER_BAR_PRESETS.forEach((preset) => (this.displayedBarComponentRefs[preset] = createRef()));
     this.injectDisplayedBarComponentWrapper(config.pluginsIconsOrder);
   }
 
@@ -29,7 +34,7 @@ export class UpperBarManager {
     if (UpperBarManager.validateItem(icon)) {
       const newIcon: IconModel = new IconModel(icon);
       this.componentsRegistry.set(newIcon.id, newIcon);
-      this.displayedBarComponentRef.current!.update();
+      newIcon.presets.forEach((preset) => this.displayedBarComponentRefs[preset].current?.update());
       this.logger.debug(`Icon Id: '${newIcon.id}' '${newIcon.label}' added`);
       return newIcon.id;
     }
@@ -41,7 +46,7 @@ export class UpperBarManager {
     const icon: IconModel | undefined = this.componentsRegistry.get(itemId);
     if (icon) {
       this.componentsRegistry.delete(itemId);
-      this.displayedBarComponentRef.current!.update();
+      icon.presets.forEach((preset) => this.displayedBarComponentRefs[preset].current?.update());
       this.logger.debug(`Icon Id: '${icon.id}' Label: '${icon.label}' removed`);
     } else {
       this.logger.warn(`${itemId} is not registered`);
@@ -67,14 +72,21 @@ export class UpperBarManager {
   }
 
   private injectDisplayedBarComponentWrapper(iconsOrder: IconsOrder): void {
-    this.player.ui.addComponent({
-      label: 'Right-Upper-Bar-Wrapper',
-      presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live, ReservedPresetNames.Img],
-      area: ReservedPresetAreas.TopBarRightControls,
-      get: () => {
-        return <DisplayedBar ref={this.displayedBarComponentRef} getControls={(): IconModel[] => this.getControls(iconsOrder)} />;
-      }
-    });
+    for (const preset of UPPER_BAR_PRESETS) {
+      this.player.ui.addComponent({
+        label: 'Right-Upper-Bar-Wrapper',
+        presets: [preset],
+        area: ReservedPresetAreas.TopBarRightControls,
+        get: () => {
+          return (
+            <DisplayedBar
+              ref={this.displayedBarComponentRefs[preset]}
+              getControls={(): IconModel[] => this.getControls(iconsOrder).filter((icon) => icon.presets.includes(preset))}
+            />
+          );
+        }
+      });
+    }
   }
 
   private static validateItem(icon: IconDto): boolean {
