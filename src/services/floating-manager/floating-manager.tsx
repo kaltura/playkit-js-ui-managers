@@ -15,34 +15,6 @@ export interface FloatingManagerOptions {
   eventManager: PlaykitUI.EventManager;
 }
 
-// const presetAreasMapping = {
-//   VideoArea: {
-//     Playback: 'VideoArea',
-//     Live: 'VideoArea'
-//   },
-//   PresetArea: {
-//     Playback: 'VideoArea',
-//     Live: 'VideoArea'
-//   },
-//   InteractiveArea: {
-//     Playback: 'VideoArea',
-//     Live: 'VideoArea'
-//   }
-// };
-
-const presetAreasMapping = {
-  Playback: {
-    VideoArea: 'VideoArea',
-    PresetArea: 'PresetArea',
-    InteractiveArea: 'InteractiveArea'
-  },
-  Live: {
-    VideoArea: 'VideoArea',
-    PresetArea: 'PresetArea',
-    InteractiveArea: 'InteractiveArea'
-  }
-};
-
 const areaToPresetMapping = {
   VideoArea: {
     Live: 'VideoArea',
