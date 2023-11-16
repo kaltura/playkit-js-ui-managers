@@ -1,5 +1,3 @@
-import { PlaykitUI } from "@playkit-js/kaltura-player-js";
-
 declare module "services/upper-bar-manager/models/svg-icon" {
     export interface SvgIcon {
         path: string;
@@ -28,15 +26,47 @@ declare module "services/side-panels-manager/models/side-panel-item" {
     }
 }
 declare module "services/side-panels-manager/ui/panel-item-wrapper/panel-item-wrapper.component" { }
+declare module "types/ui-managers-config" {
+    export type KalturaPluginNames = 'Navigation' | 'Q&A' | 'Transcript' | 'Download' | 'Playlist' | 'Related' | 'Share' | 'Info' | 'Moderation';
+    export type UiManagerConfig = {
+        upperBarManager: {
+            pluginsIconsOrder: {
+                [key in KalturaPluginNames | string]: number;
+            };
+        };
+    };
+}
 declare module "services/upper-bar-manager/models/icon-dto" {
     import { ComponentClass, FunctionalComponent } from 'preact';
-    import { KalturaPluginNames } from "ui-managers";
     import { SvgIcon } from "services/upper-bar-manager/models/svg-icon";
+    import { KalturaPluginNames } from "types/ui-managers-config";
+    import { PlaykitUI } from '@playkit-js/kaltura-player-js';
     export interface IconDto {
+        /**
+         * An ID (usually the plugin name in case of a plugin) - used for icons order calculations
+         * has to be corresponds to the names of the icons (plugins) names in the
+         * ui-managers config (under upperBarManager.pluginsIconsOrder)
+         */
         label: KalturaPluginNames | string;
+        /**
+         * The icon react component
+         */
         component: ComponentClass<Record<string, never>> | FunctionalComponent<Record<string, never>>;
+        /**
+         * Icon that will appear in the dropdown menu
+         */
         svgIcon: SvgIcon;
-        onClick: () => void;
+        /**
+         * The icon handler
+         *
+         * @remarks
+         * You can also define the handler inside the component itself and send an empty function here
+         * (also useful as backwards compatibility for some plugins)
+         */
+        onClick: (e: MouseEvent | KeyboardEvent) => void;
+        /**
+         * Relevant presets for the icon
+         */
         presets?: PlaykitUI.ReservedPresetName[];
     }
 }
@@ -44,7 +74,7 @@ declare module "services/upper-bar-manager/ui/icon-wrapper/icon-wrapper.componen
     import { Component, ComponentChild, RefObject } from 'preact';
     type IconWrapperProps = {
         ref: RefObject<IconWrapper>;
-        onClick: () => void;
+        onClick: (e: MouseEvent | KeyboardEvent) => void;
     };
     export class IconWrapper extends Component<IconWrapperProps> {
         render(): ComponentChild;
@@ -53,17 +83,19 @@ declare module "services/upper-bar-manager/ui/icon-wrapper/icon-wrapper.componen
 declare module "services/upper-bar-manager/models/icon-model" {
     import { ComponentClass, FunctionalComponent, RefObject } from 'preact';
     import { IconDto } from "services/upper-bar-manager/models/icon-dto";
-    import { KalturaPluginNames } from "ui-managers";
     import { IconWrapper } from "services/upper-bar-manager/ui/icon-wrapper/icon-wrapper.component";
     import { SvgIcon } from "services/upper-bar-manager/models/svg-icon";
+    import { KalturaPluginNames } from "types/ui-managers-config";
+    import { PlaykitUI } from '@playkit-js/kaltura-player-js';
     export class IconModel {
         private static nextId;
         readonly id: number;
         label: KalturaPluginNames | string;
         componentRef: RefObject<IconWrapper>;
-        onClick: () => void;
+        onClick: (e: MouseEvent | KeyboardEvent) => void;
         component: ComponentClass<Record<string, never>> | FunctionalComponent<Record<string, never>>;
         svgIcon: SvgIcon;
+        presets: PlaykitUI.ReservedPresetName[];
         constructor(item: IconDto);
         update(): void;
     }
@@ -73,6 +105,7 @@ declare module "services/upper-bar-manager/ui/dropdown-bar/dropdown-bar.componen
     import { IconModel } from "services/upper-bar-manager/models/icon-model";
     type DropdownBarProps = {
         controls: IconModel[];
+        onDropdownClick: () => void;
     };
     export class DropdownBar extends Component<DropdownBarProps> {
         render(): ComponentChild;
@@ -83,41 +116,40 @@ declare module "services/upper-bar-manager/ui/more-icon/more-icon.component" {
     import { PlaykitUI } from '@playkit-js/kaltura-player-js';
     import { IconModel } from "services/upper-bar-manager/models/icon-model";
     import EventManager = PlaykitUI.EventManager;
-    type MoreIconState = {
-        toggle: boolean;
-    };
     type MoreIconProps = {
         icons: IconModel[];
+        onClick: () => void;
+        showDropdown: boolean;
         moreIconTxt?: string;
         eventManager?: EventManager;
     };
-    export class MoreIcon extends Component<MoreIconProps, MoreIconState> {
+    export class MoreIcon extends Component<MoreIconProps> {
         private readonly moreButtonRef;
         constructor();
         componentDidMount(): void;
         handleClickOutside(event: PointerEvent): void;
-        private handleOnClick;
-        private handleOnKeyDown;
         render(): ComponentChild;
     }
 }
 declare module "services/upper-bar-manager/ui/displayed-bar/displayed-bar.component" {
     import { Component, ComponentChild, RefObject } from 'preact';
     import { IconModel } from "services/upper-bar-manager/models/icon-model";
-    import { KalturaPluginNames } from "ui-managers";
     type DisplayedBarState = {
-        controls: IconModel[];
+        showDropdown: boolean;
     };
     type DisplayedBarProps = {
+        getControls: () => IconModel[];
         ref: RefObject<DisplayedBar>;
-        iconsOrder: {
-            [key in KalturaPluginNames | string]: number;
-        };
     };
-    export class DisplayedBar extends Component<DisplayedBarProps, DisplayedBarState> {
+    type PropsFromRedux = {
+        playerSize?: string;
+    };
+    export class DisplayedBar extends Component<DisplayedBarProps & PropsFromRedux, DisplayedBarState> {
         constructor();
+        private handleOnClick;
+        private closeDropdown;
         private splitControlsIntoDisplayedAndDropdown;
-        update(icons: IconModel[]): void;
+        update: () => void;
         private splitControls;
         render(): ComponentChild;
     }
@@ -125,7 +157,7 @@ declare module "services/upper-bar-manager/ui/displayed-bar/displayed-bar.compon
 declare module "services/upper-bar-manager/upper-bar-manager" {
     import { KalturaPlayer, Logger } from '@playkit-js/kaltura-player-js';
     import { IconDto } from "services/upper-bar-manager/models/icon-dto";
-    import { KalturaPluginNames } from "ui-managers";
+    import { KalturaPluginNames } from "types/ui-managers-config";
     type UpperBarManagerConfig = {
         pluginsIconsOrder: {
             [key in KalturaPluginNames | string]: number;
@@ -135,7 +167,7 @@ declare module "services/upper-bar-manager/upper-bar-manager" {
         private readonly player;
         private readonly logger;
         private readonly componentsRegistry;
-        private readonly displayedBarComponentRef;
+        private readonly displayedBarComponentRefs;
         /**
          * @ignore
          */
@@ -144,6 +176,7 @@ declare module "services/upper-bar-manager/upper-bar-manager" {
         remove(itemId: number): void;
         isActive(itemId: number): boolean;
         update(iconId: number): void;
+        private getControls;
         private injectDisplayedBarComponentWrapper;
         private static validateItem;
     }
@@ -187,15 +220,211 @@ declare module "services/side-panels-manager/side-panels-manager" {
         private static validateItem;
     }
 }
+declare module "services/preset-manager/ui-player-adapter" {
+    import { Component } from 'preact';
+    import { KalturaPlayer } from '@playkit-js/kaltura-player-js';
+    export interface UIPlayerAdapterProps {
+        player: KalturaPlayer;
+        onMount: (player: KalturaPlayer) => void;
+        onUnmount: (player: KalturaPlayer) => void;
+    }
+    export class UIPlayerAdapter extends Component<UIPlayerAdapterProps> {
+        static defaultProps: {
+            player: any;
+        };
+        componentDidMount(): void;
+        componentWillUnmount(): void;
+        render(): any;
+    }
+}
+declare module "services/preset-manager/models/preset-item-data" {
+    import { ComponentChild } from 'preact';
+    export enum ReservedPresetNames {
+        Playback = "Playback",
+        Live = "Live"
+    }
+    export enum ReservedPresetAreas {
+        'PresetFloating' = "PresetFloating",
+        'BottomBarLeftControls' = "BottomBarLeftControls",
+        'BottomBarRightControls' = "BottomBarRightControls",
+        'TopBarLeftControls' = "TopBarLeftControls",
+        'TopBarRightControls' = "TopBarRightControls",
+        'SidePanelTop' = "SidePanelTop",
+        'SidePanelLeft' = "SidePanelLeft",
+        'SidePanelRight' = "SidePanelRight",
+        'SidePanelBottom' = "SidePanelBottom",
+        'PresetArea' = "PresetArea",
+        'InteractiveArea' = "InteractiveArea",
+        'PlayerArea' = "PlayerArea",
+        'VideoArea' = "VideoArea"
+    }
+    export enum RelativeToTypes {
+        Before = "Before",
+        After = "After",
+        Replace = "Replace"
+    }
+    export interface PresetItemData {
+        label: string;
+        fillContainer?: boolean;
+        isolateComponent?: boolean;
+        presetAreas: Record<ReservedPresetNames | string, ReservedPresetAreas | string>;
+        renderChild: () => ComponentChild;
+        relativeTo?: {
+            type: RelativeToTypes;
+            name: string;
+        };
+    }
+}
+declare module "services/preset-manager/ui/preset-item" {
+    import { ComponentChild } from 'preact';
+    import { PresetItemData } from "services/preset-manager/models/preset-item-data";
+    import { KalturaPlayer } from '@playkit-js/kaltura-player-js';
+    import { ManagedComponent } from '@playkit-js/common/dist/ui-common//managed-component';
+    export interface PresetItemOptions {
+        kalturaPlayer: KalturaPlayer;
+        data: PresetItemData;
+    }
+    export interface KalturaPlayerPresetComponent {
+        label: string;
+        presets: string[];
+        container: string;
+        get: () => () => ManagedComponent | ComponentChild;
+        afterComponent?: string;
+        beforeComponent?: string;
+        replaceComponent?: string;
+    }
+    export class PresetItem {
+        private _options;
+        constructor(options: PresetItemOptions);
+        get playerConfig(): KalturaPlayerPresetComponent[];
+        private _render;
+        private _onDestroy;
+        private _onCreate;
+    }
+}
+declare module "services/preset-manager/preset-manager" {
+    import { EventsManager } from '@playkit-js/common/dist/ui-common/events-manager';
+    import { KalturaPlayer, PlaykitUI } from '@playkit-js/kaltura-player-js';
+    import { PresetItemData } from "services/preset-manager/models/preset-item-data";
+    import { KalturaPlayerPresetComponent } from "services/preset-manager/ui/preset-item";
+    export interface PresetManagerOptions {
+        kalturaPlayer: KalturaPlayer;
+        eventManager: PlaykitUI.EventManager;
+    }
+    export enum PresetManagerEventTypes {
+        PresetResizeEvent = "PresetResizeEvent",
+        VideoResizeEvent = "VideoResizeEvent"
+    }
+    export interface PresetResizeEvent {
+        type: PresetManagerEventTypes.PresetResizeEvent;
+    }
+    export interface VideoResizeEvent {
+        type: PresetManagerEventTypes.VideoResizeEvent;
+    }
+    export type PresetManagerEvents = PresetResizeEvent | VideoResizeEvent;
+    export class PresetManager {
+        private _events;
+        private _items;
+        private _pendingItems;
+        private _eventManager;
+        private _kalturaPlayer;
+        constructor(options: PresetManagerOptions);
+        private _registerToPlayer;
+        private _notifyVideoResize;
+        private _notifyUIPresetResize;
+        private _unregisterToPlayer;
+        on: EventsManager<PresetManagerEvents>['on'];
+        off: EventsManager<PresetManagerEvents>['off'];
+        add(data: PresetItemData): void;
+        registerComponents(): KalturaPlayerPresetComponent[];
+    }
+}
+declare module "services/floating-manager/models/floating-item-data" {
+    import { ComponentChild } from 'preact';
+    import { PlayerSize, VideoSize } from '@playkit-js/common/dist/ui-common/common-types';
+    export type FloatingUIMode = 'MediaLoaded' | 'OnDemand' | 'Immediate' | 'FirstPlay';
+    export type FloatingPosition = 'VideoArea' | 'PresetArea' | 'InteractiveArea';
+    export interface FloatingItemData {
+        label: string;
+        mode: FloatingUIMode;
+        renderContent: (floatingItemProps: FloatingItemProps) => ComponentChild;
+        className?: string;
+        position: FloatingPosition;
+    }
+    export interface FloatingItemProps {
+        currentTime: number;
+        canvas: {
+            playerSize: PlayerSize;
+            videoSize: VideoSize;
+        };
+    }
+}
+declare module "services/floating-manager/ui/floating-item" {
+    import { h } from 'preact';
+    import { FloatingItemData, FloatingItemProps } from "services/floating-manager/models/floating-item-data";
+    import { KalturaPlayer, PlaykitUI } from '@playkit-js/kaltura-player-js';
+    export interface FloatingItemOptions {
+        kalturaPlayer: KalturaPlayer;
+        eventManager: PlaykitUI.EventManager;
+        data: FloatingItemData;
+    }
+    export class FloatingItem {
+        private _destroyed;
+        private _options;
+        private _isShown;
+        private _componentRef;
+        private _eventManager;
+        constructor(options: FloatingItemOptions);
+        get data(): FloatingItemData;
+        remove: () => void;
+        add: () => void;
+        update: () => void;
+        /**
+         * destory the ui item
+         */
+        destroy(): void;
+        renderFloatingChild(props: FloatingItemProps): h.JSX.Element;
+        private _addPlayerBindings;
+    }
+}
+declare module "services/floating-manager/floating-manager" {
+    import { PresetManager } from "services/preset-manager/preset-manager";
+    import { KalturaPlayer, PlaykitUI } from '@playkit-js/kaltura-player-js';
+    import { FloatingItem } from "services/floating-manager/ui/floating-item";
+    import { FloatingItemData } from "services/floating-manager/models/floating-item-data";
+    export interface FloatingManagerOptions {
+        kalturaPlayer: KalturaPlayer;
+        presetManager: PresetManager;
+        eventManager: PlaykitUI.EventManager;
+    }
+    export class FloatingManager {
+        private _options;
+        private _eventManager;
+        private _registered;
+        private _items;
+        private _componentRef;
+        private _cache;
+        constructor(_options: FloatingManagerOptions);
+        /**
+         * initialize new floating ui item
+         * @param item
+         */
+        add(data: FloatingItemData): FloatingItem | null;
+        remove(item: FloatingItem): void;
+        reset(): void;
+        private _getRendererProps;
+        private _updateCachedCanvas;
+        private _renderItems;
+        private _renderChild;
+        private _updateComponents;
+        private _onTimeUpdate;
+        private _onMediaLoaded;
+        private _onLoadedData;
+        private _addPlayerBindings;
+        registerUIComponents(): import("services/preset-manager/ui/preset-item").KalturaPlayerPresetComponent[];
+    }
+}
 declare module "ui-managers" {
     export const pluginName = "uiManagers";
-    export type KalturaPluginNames = 'Navigation' | 'Q&A' | 'Transcript' | 'Download' | 'Playlist' | 'Related' | 'Share' | 'Info' | 'Moderation';
-    export type UiManagerConfig = {
-        upperBarManager: {
-            pluginsIconsOrder: {
-                [key in KalturaPluginNames | string]: number;
-            };
-        };
-    };
 }
 declare module "index" { }
