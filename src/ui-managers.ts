@@ -38,7 +38,7 @@ export class UIManagers extends BasePlugin<UiManagerConfig> {
     });
     player.registerService(
       'floatingManager',
-      new FloatingManager({ presetManager, kalturaPlayer: player, eventManager: this.eventManager })
+      new FloatingManager({ presetManager, kalturaPlayer: player, logger: this.logger, eventManager: this.eventManager })
     );
   }
 

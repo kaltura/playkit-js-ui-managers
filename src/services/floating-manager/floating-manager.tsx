@@ -1,10 +1,10 @@
 import { ComponentChild, h } from 'preact';
 import { PresetManager, PresetManagerEventTypes } from '../preset-manager/preset-manager';
 import { PlayerSize, VideoSize } from '@playkit-js/common/dist/ui-common/common-types';
-import { getPlayerSize, getVideoSize } from '@playkit-js/common/dist/ui-common//player-utils';
+import { getPlayerSize, getVideoSize } from '@playkit-js/common/dist/ui-common/player-utils';
 import { ManagedComponent } from '@playkit-js/common/dist/ui-common/managed-component';
 
-import { KalturaPlayer, PlaykitUI } from '@playkit-js/kaltura-player-js';
+import { KalturaPlayer, PlaykitUI, Logger } from '@playkit-js/kaltura-player-js';
 
 import { FloatingItem } from './ui/floating-item';
 import { FloatingItemData, FloatingItemProps, FloatingPosition } from './models/floating-item-data';
@@ -13,6 +13,7 @@ export interface FloatingManagerOptions {
   kalturaPlayer: KalturaPlayer;
   presetManager: PresetManager;
   eventManager: PlaykitUI.EventManager;
+  logger: Logger;
 }
 
 const areaToPresetMapping = {
@@ -33,6 +34,7 @@ const areaToPresetMapping = {
 export class FloatingManager {
   private _eventManager: PlaykitUI.EventManager;
   private _registered = false;
+  private _logger: Logger;
 
   private _items: Record<FloatingPosition, FloatingItem[]> = {
     VideoArea: [],
@@ -66,6 +68,7 @@ export class FloatingManager {
         renderChild: () => this._renderChild(areaType as FloatingPosition)
       });
     });
+    this._logger = _options.logger;
     this._eventManager = _options.eventManager;
     this._addPlayerBindings();
     this._updateCachedCanvas();
@@ -99,8 +102,7 @@ export class FloatingManager {
       positionItems[itemIndex].destroy();
       positionItems.splice(itemIndex, 1);
     } else {
-      // console.warn(`couldn't remove ${item} since it wasn't found`);
-      // TODO
+      this._logger.warn(`couldn't remove ${item} since it wasn't found`);
     }
   }
 
@@ -112,8 +114,7 @@ export class FloatingManager {
       try {
         item.destroy();
       } catch (e) {
-        // TODO log error
-        // console.warn(e);
+        this._logger.warn(e);
       }
     });
 

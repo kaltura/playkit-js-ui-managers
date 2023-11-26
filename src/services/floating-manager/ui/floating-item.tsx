@@ -11,15 +11,12 @@ export interface FloatingItemOptions {
 }
 
 export class FloatingItem {
-  private _destroyed = false;
   private _options: FloatingItemOptions;
   private _isShown = false;
   private _componentRef: ManagedComponent | null = null;
-  private _eventManager: PlaykitUI.EventManager;
 
   constructor(options: FloatingItemOptions) {
     this._options = options;
-    this._eventManager = options.eventManager;
 
     this._addPlayerBindings();
   }
@@ -58,7 +55,6 @@ export class FloatingItem {
    * destory the ui item
    */
   destroy(): void {
-    this._destroyed = true;
     this.remove();
   }
 
@@ -78,15 +74,14 @@ export class FloatingItem {
   }
 
   private _addPlayerBindings(): void {
-    const { kalturaPlayer, data } = this._options;
+    const { kalturaPlayer, data, eventManager } = this._options;
 
     if (data.mode === 'MediaLoaded') {
-      this._eventManager.listenOnce(kalturaPlayer, kalturaPlayer.Event.Core.MEDIA_LOADED, this.add);
-      // kalturaPlayer.addEventListener(kalturaPlayer.Event.MEDIA_LOADED, this.add);
+      eventManager.listenOnce(kalturaPlayer, kalturaPlayer.Event.Core.MEDIA_LOADED, this.add);
     }
 
     if (data.mode === 'FirstPlay') {
-      this._eventManager.listenOnce(kalturaPlayer, kalturaPlayer.Event.Core.FIRST_PLAY, this.add);
+      eventManager.listenOnce(kalturaPlayer, kalturaPlayer.Event.Core.FIRST_PLAY, this.add);
     }
 
     if (data.mode === 'Immediate') {
