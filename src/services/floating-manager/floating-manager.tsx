@@ -60,6 +60,7 @@ export class FloatingManager {
 
   constructor(private _options: FloatingManagerOptions) {
     Object.keys(areaToPresetMapping).forEach((areaType) => {
+      // add floating manager in every preset
       this._options.presetManager.add({
         label: 'floating-manager',
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -91,12 +92,12 @@ export class FloatingManager {
     };
 
     const item = new FloatingItem(itemOptions);
-    this._items[data.position].push(item);
+    this._items[data.position as FloatingPosition].push(item);
     return item;
   }
 
   public remove(item: FloatingItem) {
-    const positionItems = this._items[item.data.position];
+    const positionItems = this._items[item.data.position as FloatingPosition];
     const itemIndex = positionItems.indexOf(item);
     if (itemIndex > -1) {
       positionItems[itemIndex].destroy();
@@ -207,12 +208,16 @@ export class FloatingManager {
     });
   }
 
-  public registerUIComponents() {
-    if (this._registered) {
-      return [];
-    }
-
-    this._registered = true;
-    return this._options.presetManager.registerComponents();
+  public injectFloatingManager() {
+    //
   }
+
+  // public registerUIComponents() {
+  //   if (this._registered) {
+  //     return [];
+  //   }
+
+  //   this._registered = true;
+  //   return this._options.presetManager.registerComponents();
+  // }
 }

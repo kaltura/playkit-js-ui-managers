@@ -6,7 +6,7 @@ import { KalturaPlayer, PlaykitUI } from '@playkit-js/kaltura-player-js';
 
 import { UIPlayerAdapter } from './ui-player-adapter';
 import { PresetItemData } from './models/preset-item-data';
-import { KalturaPlayerPresetComponent, PresetItem } from './ui/preset-item';
+import { PresetItem } from './ui/preset-item';
 
 export interface PresetManagerOptions {
   kalturaPlayer: KalturaPlayer;
@@ -34,8 +34,11 @@ export class PresetManager {
   private _pendingItems: PresetItem[] = [];
   private _eventManager: PlaykitUI.EventManager;
   private _kalturaPlayer: KalturaPlayer;
+  private _isRegistered = false;
 
   constructor(options: PresetManagerOptions) {
+    this._eventManager = options.eventManager;
+    this._kalturaPlayer = options.kalturaPlayer;
     this.add({
       label: 'preset-manager',
       presetAreas: { Playback: 'PlayerArea', Live: 'PlayerArea' },
@@ -43,9 +46,6 @@ export class PresetManager {
         <UIPlayerAdapter player={options.kalturaPlayer} onMount={this._registerToPlayer} onUnmount={this._unregisterToPlayer} />
       )
     });
-
-    this._eventManager = options.eventManager;
-    this._kalturaPlayer = options.kalturaPlayer;
   }
 
   private _registerToPlayer = () => {
@@ -79,16 +79,42 @@ export class PresetManager {
       data
     });
 
-    this._pendingItems.push(component);
+    // this._pendingItems.push(component);
+
+    // this.registerComponents();
+    const configs = component.playerConfig;
+    for (const config of configs) {
+      const { label, presets, container, get } = config;
+
+      this._kalturaPlayer.ui.addComponent({
+        label,
+        presets,
+        container,
+        get
+      });
+    }
   }
 
-  public registerComponents(): KalturaPlayerPresetComponent[] {
-    let configs: KalturaPlayerPresetComponent[] = [];
-    this._pendingItems.forEach((item) => {
-      configs = [...configs, ...item.playerConfig];
-    });
-    this._items = [...this._items, ...this._pendingItems];
-    this._pendingItems = [];
-    return configs.filter(Boolean) as KalturaPlayerPresetComponent[];
-  }
+  // // TODO check if this works
+  // public registerComponents(): void {
+  //   let configs: KalturaPlayerPresetComponent[] = [];
+  //   this._pendingItems.forEach((item) => {
+  //     configs = [...configs, ...item.playerConfig];
+  //   });
+  //   this._items = [...this._items, ...this._pendingItems];
+  //   this._pendingItems = [];
+
+  //   for (const config of configs) {
+  //     const { label, presets, container, get } = config;
+
+  //     this._kalturaPlayer.ui.addComponent({
+  //       label,
+  //       presets,
+  //       container,
+  //       get
+  //     });
+  //   }
+
+  //   //return configs.filter(Boolean) as KalturaPlayerPresetComponent[];
+  // }
 }
