@@ -279,7 +279,7 @@ declare module "services/preset-manager/ui/preset-item" {
     import { ComponentChild } from 'preact';
     import { PresetItemData } from "services/preset-manager/models/preset-item-data";
     import { KalturaPlayer } from '@playkit-js/kaltura-player-js';
-    import { ManagedComponent } from '@playkit-js/common/dist/ui-common//managed-component';
+    import { ManagedComponent } from '@playkit-js/common/dist/ui-common/managed-component';
     export interface PresetItemOptions {
         kalturaPlayer: KalturaPlayer;
         data: PresetItemData;
@@ -306,7 +306,6 @@ declare module "services/preset-manager/preset-manager" {
     import { EventsManager } from '@playkit-js/common/dist/ui-common/events-manager';
     import { KalturaPlayer, PlaykitUI } from '@playkit-js/kaltura-player-js';
     import { PresetItemData } from "services/preset-manager/models/preset-item-data";
-    import { KalturaPlayerPresetComponent } from "services/preset-manager/ui/preset-item";
     export interface PresetManagerOptions {
         kalturaPlayer: KalturaPlayer;
         eventManager: PlaykitUI.EventManager;
@@ -328,6 +327,7 @@ declare module "services/preset-manager/preset-manager" {
         private _pendingItems;
         private _eventManager;
         private _kalturaPlayer;
+        private _isRegistered;
         constructor(options: PresetManagerOptions);
         private _registerToPlayer;
         private _notifyVideoResize;
@@ -336,7 +336,6 @@ declare module "services/preset-manager/preset-manager" {
         on: EventsManager<PresetManagerEvents>['on'];
         off: EventsManager<PresetManagerEvents>['off'];
         add(data: PresetItemData): void;
-        registerComponents(): KalturaPlayerPresetComponent[];
     }
 }
 declare module "services/floating-manager/models/floating-item-data" {
@@ -369,11 +368,9 @@ declare module "services/floating-manager/ui/floating-item" {
         data: FloatingItemData;
     }
     export class FloatingItem {
-        private _destroyed;
         private _options;
         private _isShown;
         private _componentRef;
-        private _eventManager;
         constructor(options: FloatingItemOptions);
         get data(): FloatingItemData;
         remove: () => void;
@@ -389,18 +386,20 @@ declare module "services/floating-manager/ui/floating-item" {
 }
 declare module "services/floating-manager/floating-manager" {
     import { PresetManager } from "services/preset-manager/preset-manager";
-    import { KalturaPlayer, PlaykitUI } from '@playkit-js/kaltura-player-js';
+    import { KalturaPlayer, PlaykitUI, Logger } from '@playkit-js/kaltura-player-js';
     import { FloatingItem } from "services/floating-manager/ui/floating-item";
     import { FloatingItemData } from "services/floating-manager/models/floating-item-data";
     export interface FloatingManagerOptions {
         kalturaPlayer: KalturaPlayer;
         presetManager: PresetManager;
         eventManager: PlaykitUI.EventManager;
+        logger: Logger;
     }
     export class FloatingManager {
         private _options;
         private _eventManager;
         private _registered;
+        private _logger;
         private _items;
         private _componentRef;
         private _cache;
@@ -421,7 +420,178 @@ declare module "services/floating-manager/floating-manager" {
         private _onMediaLoaded;
         private _onLoadedData;
         private _addPlayerBindings;
-        registerUIComponents(): import("services/preset-manager/ui/preset-item").KalturaPlayerPresetComponent[];
+        injectFloatingManager(): void;
+    }
+}
+declare module "services/toast-manager/models/toast-severity" {
+    export type ToastSeverity = 'Info' | 'Success' | 'Warning' | 'Error';
+}
+declare module "services/toast-manager/ui/toast/close-icon" {
+    import { h } from 'preact';
+    export const CloseIcon: () => h.JSX.Element;
+}
+declare module "services/toast-manager/ui/toast/toast" {
+    import { Component, h } from 'preact';
+    import { ToastSeverity } from "services/toast-manager/models/toast-severity";
+    export interface ToastProps {
+        id: string;
+        title: string;
+        text: string;
+        icon: any;
+        severity: ToastSeverity;
+        onClose: (id: string) => void;
+        onClick: () => void;
+    }
+    interface ToastState {
+        isShown: boolean;
+    }
+    export class Toast extends Component<ToastProps, ToastState> {
+        state: {
+            isShown: boolean;
+        };
+        private _onClick;
+        private _onClose;
+        private _getToastSeverityClass;
+        render(): h.JSX.Element;
+    }
+}
+declare module "services/toast-manager/ui/toasts-container/toasts-container" {
+    import { Component, h } from 'preact';
+    import { ToastProps } from "services/toast-manager/ui/toast/toast";
+    export interface ToastsContainerProps {
+        toasts: ToastProps[];
+    }
+    export class ToastsContainer extends Component<ToastsContainerProps> {
+        render(): h.JSX.Element;
+    }
+}
+declare module "services/toast-manager/toast-manager" {
+    import { FloatingManager } from "services/floating-manager/floating-manager";
+    import { ToastSeverity } from "services/toast-manager/models/toast-severity";
+    export interface ToastManagerOptions {
+        floatingManager: FloatingManager;
+    }
+    export interface ToastItemData {
+        title: string;
+        text: string;
+        icon: any;
+        severity: ToastSeverity;
+        duration: number;
+        onClick: () => void;
+    }
+    export class ToastManager {
+        private options;
+        private _options;
+        private _toasts;
+        private _floatingItem;
+        constructor(options: ToastManagerOptions);
+        add(data: ToastItemData): void;
+        reset(): void;
+        private _startDurationTimer;
+        private _remove;
+        private _addToastsContainer;
+        private _removeToastsContainer;
+        private _updateToastsUI;
+        private _findToastIndexById;
+    }
+}
+declare module "services/banner-manager/models/banner-content" {
+    export interface BannerContent {
+        text: string;
+        title?: string;
+        icon?: any;
+    }
+}
+declare module "services/banner-manager/ui/banner/someone-asks-large" {
+    import { h } from 'preact';
+    export const SomeoneAsksLarge: (props: any) => h.JSX.Element;
+}
+declare module "services/banner-manager/ui/banner/someone-asks-small" {
+    import { h } from 'preact';
+    export const SomeoneAsksSmall: (props: any) => h.JSX.Element;
+}
+declare module "services/banner-manager/ui/banner/banner" {
+    import { Component, h } from 'preact';
+    import { BannerContent } from "services/banner-manager/models/banner-content";
+    export interface BannerProps {
+        content: BannerContent;
+    }
+    export class Banner extends Component<BannerProps> {
+        render({ content }: BannerProps): h.JSX.Element;
+        private _defaultIcon;
+    }
+}
+declare module "services/banner-manager/ui/banner/index" {
+    export { Banner } from "services/banner-manager/ui/banner/banner";
+}
+declare module "services/banner-manager/ui/banner-container/close-small" {
+    import { h } from 'preact';
+    export const CloseSmall: (props: any) => h.JSX.Element;
+}
+declare module "services/banner-manager/ui/banner-container/close-large" {
+    import { h } from 'preact';
+    export const CloseLarge: (props: any) => h.JSX.Element;
+}
+declare module "services/banner-manager/ui/banner-container/banner-container" {
+    import { Component, h } from 'preact';
+    export interface BannerContainerProps {
+        onClose: () => void;
+        theme: BannerTheme;
+    }
+    interface BannerTheme {
+        backgroundColor: string;
+        blur: string;
+    }
+    export class BannerContainer extends Component<BannerContainerProps> {
+        render(props: BannerContainerProps): h.JSX.Element;
+    }
+}
+declare module "services/banner-manager/banner-manager" {
+    import { FloatingManager } from "services/floating-manager/floating-manager";
+    import { FloatingItemProps } from "services/floating-manager/models/floating-item-data";
+    import { ComponentChild } from 'preact';
+    import { KalturaPlayer } from '@playkit-js/kaltura-player-js';
+    import { BannerContent } from "services/banner-manager/models/banner-content";
+    export interface BannerConfig {
+        theme: {
+            backgroundColor: string;
+            blur: string;
+        };
+    }
+    export interface BannerOptions {
+        content: BannerContent;
+        autoClose?: boolean;
+        duration?: number;
+        renderContent?: (content: BannerContent, floatingItemProps: FloatingItemProps) => ComponentChild;
+    }
+    export interface BannerManagerOptions {
+        floatingManager: FloatingManager;
+        kalturaPlayer: KalturaPlayer;
+    }
+    export interface BannerState {
+        visibilityMode: VisibilityMode;
+    }
+    export enum VisibilityMode {
+        VISIBLE = "VISIBLE",
+        HIDDEN = "HIDDEN"
+    }
+    /**
+     * banner manager manages the display (add / remove) of a single banner in the player.
+     */
+    export class BannerManager {
+        private options;
+        private _options;
+        private _floatingItem;
+        private _timerSubscription;
+        private _bannerConfig;
+        constructor(options: BannerManagerOptions);
+        add(props: BannerOptions): BannerState;
+        remove(): void;
+        reset(): void;
+        private _createRenderBanner;
+        private _handleCloseEvent;
+        private _startDurationTimer;
+        private _getState;
     }
 }
 declare module "ui-managers" {
