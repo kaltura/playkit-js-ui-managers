@@ -207,17 +207,4 @@ export class FloatingManager {
       this._updateComponents();
     });
   }
-
-  public injectFloatingManager() {
-    //
-  }
-
-  // public registerUIComponents() {
-  //   if (this._registered) {
-  //     return [];
-  //   }
-
-  //   this._registered = true;
-  //   return this._options.presetManager.registerComponents();
-  // }
 }

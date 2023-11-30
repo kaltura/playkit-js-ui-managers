@@ -30,11 +30,8 @@ export type PresetManagerEvents = PresetResizeEvent | VideoResizeEvent;
 
 export class PresetManager {
   private _events: EventsManager<PresetManagerEvents> = new EventsManager<PresetManagerEvents>();
-  private _items: PresetItem[] = [];
-  private _pendingItems: PresetItem[] = [];
   private _eventManager: PlaykitUI.EventManager;
   private _kalturaPlayer: KalturaPlayer;
-  private _isRegistered = false;
 
   constructor(options: PresetManagerOptions) {
     this._eventManager = options.eventManager;
@@ -79,9 +76,6 @@ export class PresetManager {
       data
     });
 
-    // this._pendingItems.push(component);
-
-    // this.registerComponents();
     const configs = component.playerConfig;
     for (const config of configs) {
       const { label, presets, container, get } = config;
@@ -94,27 +88,4 @@ export class PresetManager {
       });
     }
   }
-
-  // // TODO check if this works
-  // public registerComponents(): void {
-  //   let configs: KalturaPlayerPresetComponent[] = [];
-  //   this._pendingItems.forEach((item) => {
-  //     configs = [...configs, ...item.playerConfig];
-  //   });
-  //   this._items = [...this._items, ...this._pendingItems];
-  //   this._pendingItems = [];
-
-  //   for (const config of configs) {
-  //     const { label, presets, container, get } = config;
-
-  //     this._kalturaPlayer.ui.addComponent({
-  //       label,
-  //       presets,
-  //       container,
-  //       get
-  //     });
-  //   }
-
-  //   //return configs.filter(Boolean) as KalturaPlayerPresetComponent[];
-  // }
 }
