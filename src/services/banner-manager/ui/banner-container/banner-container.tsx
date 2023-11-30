@@ -1,7 +1,7 @@
 import { Component, h } from 'preact';
 import * as styles from './banner-container.scss';
-import { CloseSmall } from './close-small';
-import { CloseLarge } from './close-large';
+
+import { Icon, IconSize } from '@playkit-js/common/dist/icon';
 
 export interface BannerContainerProps {
   onClose: () => void;
@@ -27,8 +27,12 @@ export class BannerContainer extends Component<BannerContainerProps> {
           className={styles.bannerContainer}
         >
           <button className={styles.closeButton} onClick={props.onClose}>
-            <CloseSmall className={styles.small} />
-            <CloseLarge className={styles.large} />
+            <div className={styles.small}>
+              <Icon size={IconSize.small} name="close" />
+            </div>
+            <div className={styles.large}>
+              <Icon size={IconSize.large} name="close" />
+            </div>
           </button>
           {this.props.children}
         </div>

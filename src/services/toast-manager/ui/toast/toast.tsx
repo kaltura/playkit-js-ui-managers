@@ -1,7 +1,7 @@
 import { Component, h } from 'preact';
 import * as styles from './toast.scss';
 import { ToastSeverity } from '../../models/toast-severity';
-import { CloseIcon } from './close-icon';
+import { Icon, IconSize } from '@playkit-js/common/dist/icon';
 
 export interface ToastProps {
   id: string;
@@ -56,7 +56,9 @@ export class Toast extends Component<ToastProps, ToastState> {
     return (
       <div className={styles.toastWrapper + ' ' + this._getToastSeverityClass()} onClick={this._onClick}>
         <button className={styles.closeButton} onClick={this._onClose}>
-          <CloseIcon />
+          {/* <CloseIcon /> */}
+
+          <Icon size={IconSize.small} name="close" />
         </button>
         <div className={styles.title}>{title}</div>
         <div className={styles.toastBody}>
