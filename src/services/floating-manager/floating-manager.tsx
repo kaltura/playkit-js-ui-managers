@@ -1,8 +1,9 @@
 import { ComponentChild, h } from 'preact';
 import { PresetManager, PresetManagerEventTypes } from '../preset-manager/preset-manager';
+import { ManagedComponent } from '../preset-manager/ui/managed-component';
+
 import { PlayerSize, VideoSize } from '@playkit-js/common/dist/ui-common/common-types';
 import { getPlayerSize, getVideoSize } from '@playkit-js/common/dist/ui-common/player-utils';
-import { ManagedComponent } from '@playkit-js/common/dist/ui-common/managed-component';
 
 import { KalturaPlayer, PlaykitUI, Logger } from '@playkit-js/kaltura-player-js';
 

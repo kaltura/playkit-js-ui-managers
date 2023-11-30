@@ -1,7 +1,8 @@
 import { h } from 'preact';
 import { FloatingItemData, FloatingItemProps } from '../models/floating-item-data';
 
-import { ManagedComponent } from '@playkit-js/common/dist/ui-common/managed-component';
+import { ManagedComponent } from '../../preset-manager/ui/managed-component';
+
 import { KalturaPlayer, PlaykitUI } from '@playkit-js/kaltura-player-js';
 
 export interface FloatingItemOptions {

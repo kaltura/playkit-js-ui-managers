@@ -3,7 +3,8 @@ import { PresetItemData, RelativeToTypes } from '../models/preset-item-data';
 
 import { KalturaPlayer } from '@playkit-js/kaltura-player-js';
 
-import { ManagedComponent } from '@playkit-js/common/dist/ui-common/managed-component';
+import { ManagedComponent } from '../../preset-manager/ui/managed-component';
+
 import { InjectedComponent } from '@playkit-js/common/dist/ui-common/injected-component';
 
 export interface PresetItemOptions {
