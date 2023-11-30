@@ -275,11 +275,34 @@ declare module "services/preset-manager/models/preset-item-data" {
         };
     }
 }
+declare module "services/preset-manager/ui/managed-component" {
+    import { h, Component, ComponentChildren } from 'preact';
+    type ManagedComponentState = {
+        toggler: boolean;
+    };
+    type ManagedComponentProps = {
+        isShown: () => boolean;
+        renderChildren: (playerSize: string) => ComponentChildren;
+        label: string;
+        fillContainer: boolean;
+        playerSize?: string;
+        updateOnPlayerSizeChanged?: boolean;
+    };
+    export class ManagedComponent extends Component<ManagedComponentProps, ManagedComponentState> {
+        static defaultProps: {
+            fillContainer: boolean;
+        };
+        update(): void;
+        shouldComponentUpdate(prevProps: Readonly<ManagedComponentProps>): boolean;
+        componentDidMount(): void;
+        render(): h.JSX.Element;
+    }
+}
 declare module "services/preset-manager/ui/preset-item" {
     import { ComponentChild } from 'preact';
     import { PresetItemData } from "services/preset-manager/models/preset-item-data";
     import { KalturaPlayer } from '@playkit-js/kaltura-player-js';
-    import { ManagedComponent } from '@playkit-js/common/dist/ui-common/managed-component';
+    import { ManagedComponent } from "services/preset-manager/ui/managed-component";
     export interface PresetItemOptions {
         kalturaPlayer: KalturaPlayer;
         data: PresetItemData;
@@ -323,11 +346,8 @@ declare module "services/preset-manager/preset-manager" {
     export type PresetManagerEvents = PresetResizeEvent | VideoResizeEvent;
     export class PresetManager {
         private _events;
-        private _items;
-        private _pendingItems;
         private _eventManager;
         private _kalturaPlayer;
-        private _isRegistered;
         constructor(options: PresetManagerOptions);
         private _registerToPlayer;
         private _notifyVideoResize;
@@ -420,15 +440,10 @@ declare module "services/floating-manager/floating-manager" {
         private _onMediaLoaded;
         private _onLoadedData;
         private _addPlayerBindings;
-        injectFloatingManager(): void;
     }
 }
 declare module "services/toast-manager/models/toast-severity" {
     export type ToastSeverity = 'Info' | 'Success' | 'Warning' | 'Error';
-}
-declare module "services/toast-manager/ui/toast/close-icon" {
-    import { h } from 'preact';
-    export const CloseIcon: () => h.JSX.Element;
 }
 declare module "services/toast-manager/ui/toast/toast" {
     import { Component, h } from 'preact';
@@ -523,14 +538,6 @@ declare module "services/banner-manager/ui/banner/banner" {
 }
 declare module "services/banner-manager/ui/banner/index" {
     export { Banner } from "services/banner-manager/ui/banner/banner";
-}
-declare module "services/banner-manager/ui/banner-container/close-small" {
-    import { h } from 'preact';
-    export const CloseSmall: (props: any) => h.JSX.Element;
-}
-declare module "services/banner-manager/ui/banner-container/close-large" {
-    import { h } from 'preact';
-    export const CloseLarge: (props: any) => h.JSX.Element;
 }
 declare module "services/banner-manager/ui/banner-container/banner-container" {
     import { Component, h } from 'preact';
