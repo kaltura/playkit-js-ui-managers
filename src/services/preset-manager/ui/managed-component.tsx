@@ -15,6 +15,7 @@ type ManagedComponentProps = {
   updateOnPlayerSizeChanged?: boolean;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mapStateToProps = (state: Record<string, any>) => ({
   playerSize: state.shell.playerSize
 });
