@@ -26,7 +26,7 @@ export class DropdownBar extends Component<DropdownBarProps> {
               >
                 <div className={styles.dropdownItem} tabIndex={0} aria-label={label}>
                   <div className={styles.icon}>
-                    <Icon id={`icon${id}`} path={svgIcon.path} viewBox={svgIcon.viewBox} />
+                    <Icon id={`icon-${label}-${id}`} path={svgIcon.path} viewBox={svgIcon.viewBox} />
                   </div>
                   <span className={styles.dropdownItemDescription}>{label}</span>
                 </div>
