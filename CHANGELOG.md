@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.4.2 (2023-12-07)
+
+
+### Bug Fixes
+
+* **FEC-13502:** add more specific key for dropdown icons ([#47](https://github.com/kaltura/playkit-js-ui-managers/issues/47)) ([417b1bc](https://github.com/kaltura/playkit-js-ui-managers/commit/417b1bc3a398ba0265938583fd900b04908d96f3))
+
 ### 1.4.1 (2023-11-12)
 
 ## 1.4.0 (2023-11-12)
