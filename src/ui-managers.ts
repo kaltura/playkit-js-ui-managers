@@ -2,6 +2,10 @@ import { BasePlugin, KalturaPlayer } from '@playkit-js/kaltura-player-js';
 import { SidePanelsManager } from './services/side-panels-manager/side-panels-manager';
 import { UpperBarManager } from './services/upper-bar-manager/upper-bar-manager';
 import { UiManagerConfig } from './types/ui-managers-config';
+import { FloatingManager } from './services/floating-manager/floating-manager';
+import { PresetManager } from './services/preset-manager/preset-manager';
+import { ToastManager } from './services/toast-manager/toast-manager';
+import { BannerManager } from './services/banner-manager/banner-manager';
 
 export const pluginName = 'uiManagers';
 
@@ -30,6 +34,19 @@ export class UIManagers extends BasePlugin<UiManagerConfig> {
     super(name, player, config);
     player.registerService('sidePanelsManager', new SidePanelsManager(player, this.logger));
     player.registerService('upperBarManager', new UpperBarManager(player, this.logger, this.config.upperBarManager));
+    const presetManager = new PresetManager({
+      kalturaPlayer: player,
+      eventManager: this.eventManager
+    });
+    const floatingManager = new FloatingManager({
+      presetManager,
+      kalturaPlayer: player,
+      logger: this.logger,
+      eventManager: this.eventManager
+    });
+    player.registerService('floatingManager', floatingManager);
+    player.registerService('toastManager', new ToastManager({ floatingManager }));
+    player.registerService('bannerManager', new BannerManager({ floatingManager, kalturaPlayer: player }));
   }
 
   public static isValid(): boolean {

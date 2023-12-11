@@ -32,8 +32,8 @@
     "test:debug": "DEBUG_UNIT_TESTS=1 karma start karma.conf.js --auto-watch --no-single-run --browsers Chrome",
     "test:watch": "karma start karma.conf.js --auto-watch --no-single-run",
     "types:check": "tsc src/index.ts src/types/global.d.ts --jsx react --jsxFactory h --noEmit --target ESNext --moduleResolution node --experimentalDecorators --jsxFragmentFactory Fragment",
-    "types:ganarate": "tsc src/index.ts src/types/global.d.ts --declaration --emitDeclarationOnly --outFile types/modules.ts --jsx react --jsxFactory h --jsxFragmentFactory Fragment --stripInternal true --target ESNext --moduleResolution node --experimentalDecorators",
-    "docs:ganarate": "typedoc",
+    "types:generate": "tsc src/index.ts src/types/global.d.ts --declaration --emitDeclarationOnly --outFile types/modules.ts --jsx react --jsxFactory h --jsxFragmentFactory Fragment --stripInternal true --target ESNext --moduleResolution node --experimentalDecorators",
+    "docs:generate": "typedoc",
     "lint:check": "eslint src --ext .ts,.tsx --color",
     "lint:fix": "npm run lint:check -- --fix",
     "prettier:fix": "prettier --write .",
@@ -41,7 +41,7 @@
     "pushTaggedRelease": "git push --follow-tags --no-verify origin master",
     "prepare:demo": "sh scripts/prepare-demo.sh",
     "commit:dist": "git add --force --all dist demo && (git commit -m 'chore: update dist' || exit 0)",
-    "pre:commit": "npm run types:check && npm run lint:check && npm run types:ganarate && npm run docs:ganarate"
+    "pre:commit": "npm run types:check && npm run lint:check && npm run types:generate && npm run docs:generate"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",

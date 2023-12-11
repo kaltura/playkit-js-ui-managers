@@ -1,0 +1,112 @@
+.defaultBannerRoot {
+    display: flex;
+    max-width: 100%;
+    height: 100%;
+    transition: all 0.5s ease;
+    text-align: left;
+  }
+  
+  .bannerWrapper {
+    padding: 18px 17px 17px 16px;
+  }
+  
+  .iconContainer {
+    height: 100%;
+    width: 64px;
+  }
+  
+  .iconWrapper {
+    position: relative;
+    height: 48px;
+    width: 48px;
+    background-color: rgba(255, 255, 255, 0.14);
+    border-radius: 50%;
+    transition: all 0.5s ease;
+  }
+  
+  .iconImage {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    left: calc(50% - 16px);
+    top: calc(50% - 16px);
+    transition: all 0.5s ease;
+    padding: 0;
+    .small {
+      display: none;
+    }
+  }
+  
+  .bannerBody {
+    height: 100%;
+    flex: 1 1 auto;
+    overflow: hidden;
+  }
+  
+  .title {
+    opacity: 0.9;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    color: #ebebeb;
+  }
+  
+  .text {
+    opacity: 0.9;
+    font-size: 24px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.21;
+    letter-spacing: normal;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.5s ease;
+  }
+  
+  :global {
+    .playkit-size-md {
+      :local {
+        .bannerWrapper {
+          padding: 14px 16px 14px;
+        }
+        .iconContainer {
+          width: 44px;
+        }
+        .iconWrapper {
+          height: 32px;
+          width: 32px;
+        }
+        .iconImage {
+          width: 20px;
+          height: 20px;
+          left: calc(50% - 10px);
+          top: calc(50% - 10px);
+          .small {
+            display: block;
+          }
+          .large {
+            display: none;
+          }
+        }
+        .bannerBody {
+          flex: 1 1 auto;
+        }
+        .title {
+          font-size: 12px;
+          font-weight: bold;
+          line-height: 1.17;
+        }
+        .text {
+          font-size: 15px;
+          line-height: 1.27;
+        }
+      }
+    }
+  }
+  
