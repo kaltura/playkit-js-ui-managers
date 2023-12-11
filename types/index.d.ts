@@ -1,5 +1,6 @@
 /// <reference types="./modules" />
 
+export { ToastSeverity } from 'services/toast-manager/models/toast-severity';
 export { FloatingManager } from "services/floating-manager/floating-manager";
 export { FloatingItem } from "services/floating-manager/ui/floating-item";
 export { FloatingItemProps } from "services/floating-manager/models/floating-item-data";
