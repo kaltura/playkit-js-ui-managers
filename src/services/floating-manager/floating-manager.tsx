@@ -109,8 +109,6 @@ export class FloatingManager {
   }
 
   public reset(): void {
-    const { kalturaPlayer } = this._options;
-
     const allItems = [...this._items.VideoArea, ...this._items.InteractiveArea, ...this._items.PresetArea];
     allItems.forEach((item) => {
       try {
@@ -123,10 +121,6 @@ export class FloatingManager {
     this._items.VideoArea = [];
     this._items.PresetArea = [];
     this._items.InteractiveArea = [];
-
-    this._eventManager.unlisten(kalturaPlayer, kalturaPlayer.Event.Core.TIME_UPDATE, this._onTimeUpdate);
-    this._eventManager.unlisten(kalturaPlayer, kalturaPlayer.Event.Core.MEDIA_LOADED, this._onMediaLoaded);
-    this._eventManager.unlisten(kalturaPlayer, kalturaPlayer.Event.Core.LOADED_DATA, this._onLoadedData);
   }
 
   private _getRendererProps(props: Partial<FloatingItemProps>): FloatingItemProps {
