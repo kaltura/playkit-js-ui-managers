@@ -1,19 +1,39 @@
 .toastsContainer {
     position: absolute;
-    right: 0;
-    top: 0;
-    padding: 8px 16px 0;
     min-width: 120px;
     max-width: 310px;
     display: flex;
     flex-direction: column;
+    z-index: 2;
+    &.top-right {
+        right: 0;
+        top: 0;
+    }
+    &.top-left {
+        left: 0;
+        top: 0;
+        .toastRow {
+            align-self: flex-start;
+        }
+    }
+    &.bottom-right {
+        right: 0;
+        bottom: 0;
+    }
+    &.bottom-left {
+        left: 0;
+        bottom: 0;
+        .toastRow {
+            align-self: flex-start;
+        }
+    }
 }
 
 .toastRow {
-    height: 42px;
+    height: 58px;
     min-width: 120px;
     max-width: 310px;
-    margin-bottom: 8px;
+    margin-top: 8px;
     overflow: hidden;
     overflow-wrap: break-word;
     text-overflow: ellipsis;

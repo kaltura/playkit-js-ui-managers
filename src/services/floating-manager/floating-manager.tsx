@@ -9,6 +9,7 @@ import { KalturaPlayer, PlaykitUI, Logger } from '@playkit-js/kaltura-player-js'
 
 import { FloatingItem } from './ui/floating-item';
 import { FloatingItemData, FloatingItemProps, FloatingPosition } from './models/floating-item-data';
+import { ToastEvent } from '../toast-manager/models';
 
 export interface FloatingManagerOptions {
   kalturaPlayer: KalturaPlayer;
@@ -201,5 +202,7 @@ export class FloatingManager {
       this._updateCachedCanvas();
       this._updateComponents();
     });
+
+    this._eventManager.listen(kalturaPlayer, ToastEvent.SHOW_TOAST, () => this._updateComponents());
   }
 }

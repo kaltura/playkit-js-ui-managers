@@ -8,12 +8,13 @@ import { FloatingItem } from '../floating-manager/ui/floating-item';
 
 import { ToastProps } from './ui/toast/toast';
 
-import { ToastSeverity } from './models/toast-severity';
+import { ToastSeverity, ToastType, ToastEvent } from './models';
 
 import { ToastsContainer } from './ui/toasts-container/toasts-container';
 
 export interface ToastManagerOptions {
   floatingManager: FloatingManager;
+  dispatchToastEvent: (event: string) => void;
 }
 
 export interface ToastItemData {
@@ -24,6 +25,7 @@ export interface ToastItemData {
   severity: ToastSeverity;
   duration: number;
   onClick: () => void;
+  toastType?: ToastType;
 }
 
 interface ManagedToasts {
@@ -37,14 +39,16 @@ export class ToastManager {
   private _options: ToastManagerOptions;
   private _toasts: ManagedToasts[] = [];
   private _floatingItem: FloatingItem | null = null;
+  private _dispatchToastEvent: (event: string) => void;
 
-  constructor(private options: ToastManagerOptions) {
+  constructor(private options: ToastManagerOptions, private dispatchToastEvent: (event: string) => void) {
     this._options = options;
+    this._dispatchToastEvent = dispatchToastEvent;
   }
 
   public add(data: ToastItemData): void {
-    const { duration, ...props } = data;
-    if (!this._floatingItem) this._addToastsContainer();
+    const { duration, toastType, ...props } = data;
+    if (!this._floatingItem) this._addToastsContainer(toastType);
     const managedToast = {
       toastProps: {
         ...props,
@@ -57,6 +61,7 @@ export class ToastManager {
     this._toasts.push(managedToast);
     this._updateToastsUI();
     this._startDurationTimer(managedToast);
+    this.dispatchToastEvent(ToastEvent.SHOW_TOAST);
   }
 
   public reset(): void {
@@ -81,7 +86,7 @@ export class ToastManager {
     if (this._toasts.length === 0) this._removeToastsContainer();
   };
 
-  private _addToastsContainer(): void {
+  private _addToastsContainer(toastType?: ToastType): void {
     this._floatingItem = this._options.floatingManager.add({
       label: 'Toasts',
       mode: 'Immediate',
@@ -89,6 +94,7 @@ export class ToastManager {
       renderContent: () => {
         return (
           <ToastsContainer
+            toastType={toastType}
             toasts={this._toasts.map((toast) => {
               return toast.toastProps;
             })}

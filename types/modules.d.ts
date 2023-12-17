@@ -445,6 +445,9 @@ declare module "services/floating-manager/floating-manager" {
 declare module "services/toast-manager/models/toast-severity" {
     export type ToastSeverity = 'Info' | 'Success' | 'Warning' | 'Error';
 }
+declare module "services/toast-manager/models/toast-type" {
+    export enum ToastType { TopRight = 'topRight', TopLeft = 'topLeft', BottomRight = 'bottomRight', BottomLeft = 'bottomLeft' }
+}
 declare module "services/toast-manager/ui/toast/toast" {
     import { Component, h } from 'preact';
     import { ToastSeverity } from "services/toast-manager/models/toast-severity";
@@ -483,6 +486,7 @@ declare module "services/toast-manager/ui/toasts-container/toasts-container" {
 declare module "services/toast-manager/toast-manager" {
     import { FloatingManager } from "services/floating-manager/floating-manager";
     import { ToastSeverity } from "services/toast-manager/models/toast-severity";
+    import { ToastType } from "services/toast-manager/models/toast-type";
     export interface ToastManagerOptions {
         floatingManager: FloatingManager;
     }
@@ -493,6 +497,7 @@ declare module "services/toast-manager/toast-manager" {
         severity: ToastSeverity;
         duration: number;
         onClick: () => void;
+        toastType?: ToastType;
     }
     export class ToastManager {
         private options;
