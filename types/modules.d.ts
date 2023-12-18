@@ -404,27 +404,10 @@ declare module "services/floating-manager/ui/floating-item" {
         private _addPlayerBindings;
     }
 }
-declare module "services/toast-manager/models/toast-severity" {
-    export type ToastSeverity = 'Info' | 'Success' | 'Warning' | 'Error';
-}
-declare module "services/toast-manager/models/toast-type" {
-    export enum ToastType {
-        TopRight = "topRight",
-        TopLeft = "topLeft",
-        BottomRight = "bottomRight",
-        BottomLeft = "bottomLeft"
-    }
-}
-declare module "services/toast-manager/models/toast-event" {
-    export const ToastEvent: {
-        SHOW_TOAST: string;
+declare module "event-type/ui-managers-event" {
+    export const UiManagersEvent: {
+        UPDATE_COMPONENTS: string;
     };
-}
-declare module "services/toast-manager/models/index" {
-    import { ToastSeverity } from "services/toast-manager/models/toast-severity";
-    import { ToastType } from "services/toast-manager/models/toast-type";
-    import { ToastEvent } from "services/toast-manager/models/toast-event";
-    export { ToastSeverity, ToastType, ToastEvent };
 }
 declare module "services/floating-manager/floating-manager" {
     import { PresetManager } from "services/preset-manager/preset-manager";
@@ -463,6 +446,22 @@ declare module "services/floating-manager/floating-manager" {
         private _onLoadedData;
         private _addPlayerBindings;
     }
+}
+declare module "services/toast-manager/models/toast-severity" {
+    export type ToastSeverity = 'Info' | 'Success' | 'Warning' | 'Error';
+}
+declare module "services/toast-manager/models/toast-type" {
+    export enum ToastType {
+        TopRight = "topRight",
+        TopLeft = "topLeft",
+        BottomRight = "bottomRight",
+        BottomLeft = "bottomLeft"
+    }
+}
+declare module "services/toast-manager/models/index" {
+    import { ToastSeverity } from "services/toast-manager/models/toast-severity";
+    import { ToastType } from "services/toast-manager/models/toast-type";
+    export { ToastSeverity, ToastType };
 }
 declare module "services/toast-manager/ui/toast/toast" {
     import { Component, h } from 'preact';
@@ -506,7 +505,7 @@ declare module "services/toast-manager/toast-manager" {
     import { ToastSeverity, ToastType } from "services/toast-manager/models/index";
     export interface ToastManagerOptions {
         floatingManager: FloatingManager;
-        dispatchToastEvent: (event: string) => void;
+        dispatchEvent: (event: string) => void;
     }
     export interface ToastItemData {
         title: string;
@@ -519,12 +518,12 @@ declare module "services/toast-manager/toast-manager" {
     }
     export class ToastManager {
         private options;
-        private dispatchToastEvent;
+        private dispatchEvent;
         private _options;
         private _toasts;
         private _floatingItem;
-        private _dispatchToastEvent;
-        constructor(options: ToastManagerOptions, dispatchToastEvent: (event: string) => void);
+        private _dispatchEvent;
+        constructor(options: ToastManagerOptions, dispatchEvent: (event: string) => void);
         add(data: ToastItemData): void;
         reset(): void;
         private _startDurationTimer;

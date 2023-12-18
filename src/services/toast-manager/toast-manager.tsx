@@ -8,13 +8,14 @@ import { FloatingItem } from '../floating-manager/ui/floating-item';
 
 import { ToastProps } from './ui/toast/toast';
 
-import { ToastSeverity, ToastType, ToastEvent } from './models';
+import { ToastSeverity, ToastType } from './models';
 
 import { ToastsContainer } from './ui/toasts-container/toasts-container';
+import { UiManagersEvent } from '../../event-type/ui-managers-event';
 
 export interface ToastManagerOptions {
   floatingManager: FloatingManager;
-  dispatchToastEvent: (event: string) => void;
+  dispatchEvent: (event: string) => void;
 }
 
 export interface ToastItemData {
@@ -39,11 +40,11 @@ export class ToastManager {
   private _options: ToastManagerOptions;
   private _toasts: ManagedToasts[] = [];
   private _floatingItem: FloatingItem | null = null;
-  private _dispatchToastEvent: (event: string) => void;
+  private _dispatchEvent: (event: string) => void;
 
-  constructor(private options: ToastManagerOptions, private dispatchToastEvent: (event: string) => void) {
+  constructor(private options: ToastManagerOptions, private dispatchEvent: (event: string) => void) {
     this._options = options;
-    this._dispatchToastEvent = dispatchToastEvent;
+    this._dispatchEvent = dispatchEvent;
   }
 
   public add(data: ToastItemData): void {
@@ -61,7 +62,7 @@ export class ToastManager {
     this._toasts.push(managedToast);
     this._updateToastsUI();
     this._startDurationTimer(managedToast);
-    this.dispatchToastEvent(ToastEvent.SHOW_TOAST);
+    this.dispatchEvent(UiManagersEvent.UPDATE_COMPONENTS);
   }
 
   public reset(): void {
@@ -94,7 +95,7 @@ export class ToastManager {
       renderContent: () => {
         return (
           <ToastsContainer
-            toastType={toastType}
+            toastType={toastType || ToastType.BottomLeft}
             toasts={this._toasts.map((toast) => {
               return toast.toastProps;
             })}
