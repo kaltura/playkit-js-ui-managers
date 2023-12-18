@@ -1,3 +1,5 @@
+@import '~@playkit-js/playkit-js-ui';
+
 .toastWrapper {
     position: relative;
     min-width: 120px;
@@ -6,26 +8,27 @@
     border-radius: 4px;
     background-color: #222222;
     border-left-style: solid;
-    border-left-width: 4px;
+    border-left-width: 2px;
     text-align: left;
+    padding: 8px;
   }
-  
+
   .infoToast {
-    border-left-color: #01ACCD;
+    border-left-color: $primary-color;
   }
-  
+
   .successToast {
-    border-left-color: #009E48;
+    border-left-color: $success-color;
   }
-  
+
   .warnToast {
-    border-left-color: #F9A71B;
+    border-left-color: $warning-color;
   }
-  
+
   .errorToast {
-    border-left-color: #E7585D;
+    border-left-color: $danger-color;
   }
-  
+
   .closeButton {
     position: absolute;
     background-color: transparent;
@@ -37,12 +40,14 @@
     background-repeat: no-repeat;
     border: none;
     padding: 0;
-  
+    margin-top: 8px;
+    margin-right: 8px;
+
     &:hover {
       cursor: pointer;
     }
   }
-  
+
   .title {
     font-size: 12px;
     font-weight: normal;
@@ -50,21 +55,21 @@
     font-stretch: normal;
     line-height: 1.17;
     letter-spacing: normal;
-    color: #cccccc;
+    color: $tone-1-color;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     padding-top: 4px;
     padding-right: 16px;
-    padding-left: 12px;
   }
-  
+
   .toastBody {
     position: relative;
     width: 100%;
-    padding: 2px 16px 5px 12px;
+    padding: 0px 16px 5px 0px;
+    margin-top: 8px;
   }
-  
+
   .iconContainer {
     position: relative;
     height: 16px;
@@ -72,12 +77,12 @@
     float: left;
     margin-right: 7px;
   }
-  
+
   .iconWrapper {
     height: 16px;
     width: 16px;
   }
-  
+
   .text {
     font-size: 14px;
     font-weight: bold;
@@ -85,10 +90,9 @@
     font-stretch: normal;
     line-height: normal;
     letter-spacing: normal;
-    color: #cccccc;
+    color: $tone-1-color;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  
-  
+

@@ -45,7 +45,9 @@ export class UIManagers extends BasePlugin<UiManagerConfig> {
       eventManager: this.eventManager
     });
     player.registerService('floatingManager', floatingManager);
-    player.registerService('toastManager', new ToastManager({ floatingManager }));
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    player.registerService('toastManager', new ToastManager({ floatingManager }, (event: string) => this.dispatchEvent(event)));
     player.registerService('bannerManager', new BannerManager({ floatingManager, kalturaPlayer: player }));
   }
 

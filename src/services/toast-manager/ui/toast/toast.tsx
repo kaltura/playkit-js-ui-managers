@@ -1,6 +1,6 @@
 import { Component, h } from 'preact';
 import * as styles from './toast.scss';
-import { ToastSeverity } from '../../models/toast-severity';
+import { ToastSeverity } from '../../models';
 import { Icon, IconSize } from '@playkit-js/common/dist/icon';
 
 export interface ToastProps {

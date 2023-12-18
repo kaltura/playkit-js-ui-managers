@@ -404,6 +404,11 @@ declare module "services/floating-manager/ui/floating-item" {
         private _addPlayerBindings;
     }
 }
+declare module "event-type/ui-managers-event" {
+    export const UiManagersEvent: {
+        UPDATE_COMPONENTS: string;
+    };
+}
 declare module "services/floating-manager/floating-manager" {
     import { PresetManager } from "services/preset-manager/preset-manager";
     import { KalturaPlayer, PlaykitUI, Logger } from '@playkit-js/kaltura-player-js';
@@ -445,9 +450,22 @@ declare module "services/floating-manager/floating-manager" {
 declare module "services/toast-manager/models/toast-severity" {
     export type ToastSeverity = 'Info' | 'Success' | 'Warning' | 'Error';
 }
+declare module "services/toast-manager/models/toast-type" {
+    export enum ToastType {
+        TopRight = "topRight",
+        TopLeft = "topLeft",
+        BottomRight = "bottomRight",
+        BottomLeft = "bottomLeft"
+    }
+}
+declare module "services/toast-manager/models/index" {
+    import { ToastSeverity } from "services/toast-manager/models/toast-severity";
+    import { ToastType } from "services/toast-manager/models/toast-type";
+    export { ToastSeverity, ToastType };
+}
 declare module "services/toast-manager/ui/toast/toast" {
     import { Component, h } from 'preact';
-    import { ToastSeverity } from "services/toast-manager/models/toast-severity";
+    import { ToastSeverity } from "services/toast-manager/models/index";
     export interface ToastProps {
         id: string;
         title: string;
@@ -473,8 +491,10 @@ declare module "services/toast-manager/ui/toast/toast" {
 declare module "services/toast-manager/ui/toasts-container/toasts-container" {
     import { Component, h } from 'preact';
     import { ToastProps } from "services/toast-manager/ui/toast/toast";
+    import { ToastType } from "services/toast-manager/models/index";
     export interface ToastsContainerProps {
         toasts: ToastProps[];
+        toastType?: ToastType;
     }
     export class ToastsContainer extends Component<ToastsContainerProps> {
         render(): h.JSX.Element;
@@ -482,9 +502,10 @@ declare module "services/toast-manager/ui/toasts-container/toasts-container" {
 }
 declare module "services/toast-manager/toast-manager" {
     import { FloatingManager } from "services/floating-manager/floating-manager";
-    import { ToastSeverity } from "services/toast-manager/models/toast-severity";
+    import { ToastSeverity, ToastType } from "services/toast-manager/models/index";
     export interface ToastManagerOptions {
         floatingManager: FloatingManager;
+        dispatchEvent: (event: string) => void;
     }
     export interface ToastItemData {
         title: string;
@@ -493,13 +514,16 @@ declare module "services/toast-manager/toast-manager" {
         severity: ToastSeverity;
         duration: number;
         onClick: () => void;
+        toastType?: ToastType;
     }
     export class ToastManager {
         private options;
+        private dispatchEvent;
         private _options;
         private _toasts;
         private _floatingItem;
-        constructor(options: ToastManagerOptions);
+        private _dispatchEvent;
+        constructor(options: ToastManagerOptions, dispatchEvent: (event: string) => void);
         add(data: ToastItemData): void;
         reset(): void;
         private _startDurationTimer;
