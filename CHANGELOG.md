@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.5.0 (2023-12-19)
+
+
+### Features
+
+* **FEC-13515:** change position and design of the toast comp ([#50](https://github.com/kaltura/playkit-js-ui-managers/issues/50)) ([06fd674](https://github.com/kaltura/playkit-js-ui-managers/commit/06fd674c7b89f5b74ca534d660c3d6cc38f8277a))
+
 ### 1.4.2 (2023-12-07)
 
 
