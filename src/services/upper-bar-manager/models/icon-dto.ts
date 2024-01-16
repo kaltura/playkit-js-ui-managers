@@ -9,7 +9,8 @@ export interface IconDto {
    * has to be corresponds to the names of the icons (plugins) names in the
    * ui-managers config (under upperBarManager.pluginsIconsOrder)
    */
-  label: KalturaPluginNames | string;
+  displayName: string;
+  ariaLabel: any;
   /**
    * The icon react component
    */

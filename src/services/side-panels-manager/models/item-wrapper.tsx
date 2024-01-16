@@ -2,7 +2,6 @@ import { h, createRef, RefObject, FunctionalComponent, ComponentClass } from 'pr
 import { KalturaPlayer } from '@playkit-js/kaltura-player-js';
 import { PanelItemWrapper } from '../ui/panel-item-wrapper/panel-item-wrapper.component';
 import { PanelComponentProps, SidePanelItem } from './side-panel-item';
-import { UpperBarManager } from '../../upper-bar-manager/upper-bar-manager';
 
 /**
  * Panel item metadata
@@ -14,26 +13,15 @@ export class ItemWrapper {
   public iconId: number | undefined;
   public readonly item: SidePanelItem;
   private readonly player: KalturaPlayer;
-  private readonly upperBarManager: UpperBarManager;
   private panelItemComponentRef!: RefObject<PanelItemWrapper>;
   private removePanelComponentFn!: () => void;
   private isActive: boolean;
-  constructor(item: SidePanelItem, player: KalturaPlayer, onClick: (panelItemId: number) => void) {
+  constructor(item: SidePanelItem, player: KalturaPlayer) {
     this.id = ++ItemWrapper.nextId;
     this.item = item;
     this.player = player;
-    this.upperBarManager = this.player.getService<UpperBarManager>('upperBarManager');
     this.isActive = false;
     this.injectPanelComponent();
-    if (item.iconComponent) {
-      const itemId = this.id;
-      this.iconId = this.upperBarManager.add({
-        label: this.item.label,
-        svgIcon: this.item.iconComponent!.svgIcon,
-        onClick: () => onClick(itemId),
-        component: this.item.iconComponent!.component!
-      });
-    }
   }
 
   public activate(): void {
@@ -54,7 +42,6 @@ export class ItemWrapper {
 
   public remove(): void {
     this.removePanelComponentFn();
-    if (this.item.iconComponent?.component) this.upperBarManager.remove(this.iconId!);
   }
 
   public update(): void {

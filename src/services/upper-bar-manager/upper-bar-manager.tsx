@@ -35,7 +35,7 @@ export class UpperBarManager {
       const newIcon: IconModel = new IconModel(icon);
       this.componentsRegistry.set(newIcon.id, newIcon);
       newIcon.presets.forEach((preset) => this.displayedBarComponentRefs[preset].current?.update());
-      this.logger.debug(`Icon Id: '${newIcon.id}' '${newIcon.label}' added`);
+      this.logger.debug(`Icon Id: '${newIcon.id}' DisplayName: '${newIcon.displayName}' added`);
       return newIcon.id;
     }
     this.logger.warn('Invalid Icon parameters', icon);
@@ -47,7 +47,7 @@ export class UpperBarManager {
     if (icon) {
       this.componentsRegistry.delete(itemId);
       icon.presets.forEach((preset) => this.displayedBarComponentRefs[preset].current?.update());
-      this.logger.debug(`Icon Id: '${icon.id}' Label: '${icon.label}' removed`);
+      this.logger.debug(`Icon Id: '${icon.id}' DisplayName: '${icon.displayName}' removed`);
     } else {
       this.logger.warn(`${itemId} is not registered`);
     }
@@ -68,7 +68,7 @@ export class UpperBarManager {
 
   private getControls(iconsOrder: IconsOrder): IconModel[] {
     const icons = Array.from(this.componentsRegistry.values());
-    return icons.sort((a, b) => (iconsOrder[a.label] > iconsOrder[b.label] ? 1 : -1));
+    return icons.sort((a, b) => (iconsOrder[a.displayName] > iconsOrder[b.displayName] ? 1 : -1));
   }
 
   private injectDisplayedBarComponentWrapper(iconsOrder: IconsOrder): void {

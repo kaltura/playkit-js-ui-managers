@@ -9,7 +9,8 @@ const { ReservedPresetNames } = ui;
 export class IconModel {
   private static nextId = 0;
   public readonly id: number;
-  public label: KalturaPluginNames | string;
+  public displayName: string;
+  public ariaLabel: any ;
   public componentRef: RefObject<IconWrapper>;
   public onClick: (e: MouseEvent | KeyboardEvent) => void;
   public component: ComponentClass<Record<string, never>> | FunctionalComponent<Record<string, never>>;
@@ -17,7 +18,8 @@ export class IconModel {
   public presets: PlaykitUI.ReservedPresetName[];
   constructor(item: IconDto) {
     this.id = ++IconModel.nextId;
-    this.label = item.label;
+    this.displayName = item.displayName;
+    this.ariaLabel = item.ariaLabel;
     this.component = item.component;
     this.svgIcon = item.svgIcon;
     this.onClick = item.onClick;

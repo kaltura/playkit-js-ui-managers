@@ -42,7 +42,7 @@ module.exports = (env, { mode }) => {
       ]
     },
     resolve: {
-      extensions: ['.tsx', '.ts', '.js']
+      extensions: ['.tsx', '.ts', '.js', '.json']
     },
     output: {
       filename: 'playkit-ui-managers.js',

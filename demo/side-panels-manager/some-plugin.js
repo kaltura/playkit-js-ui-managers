@@ -1,7 +1,7 @@
 const { BasePlugin, registerPlugin, ui } = KalturaPlayer;
 const { SidePanelModes, SidePanelPositions, ReservedPresetNames } = ui;
 
-const ICON_PATH = 'M318.641 446.219l236.155-142.257c-0.086-1.754-0.129-3.52-0.129-5.295 0-58.91 47.756-106.667 106.667-106.667s106.667 47.756 106.667 106.667c0 58.91-47.756 106.667-106.667 106.667-33.894 0-64.095-15.808-83.633-40.454l-236.467 142.445c-0.132-3.064-0.394-6.095-0.779-9.087l7.271-12.835-0.117 53.333-7.183-12.743c0.399-3.046 0.67-6.131 0.806-9.252l236.467 142.383c19.538-24.648 49.741-40.457 83.636-40.457 58.91 0 106.667 47.756 106.667 106.667s-47.756 106.667-106.667 106.667c-58.91 0-106.667-47.756-106.667-106.667 0-1.775 0.043-3.539 0.129-5.293l-236.19-142.216c-19.528 24.867-49.868 40.841-83.939 40.841-58.91 0-106.667-47.756-106.667-106.667s47.756-106.667 106.667-106.667c34.091 0 64.447 15.993 83.974 40.886zM234.667 554.667c23.564 0 42.667-19.103 42.667-42.667s-19.103-42.667-42.667-42.667c-23.564 0-42.667 19.103-42.667 42.667s19.103 42.667 42.667 42.667zM661.333 341.333c23.564 0 42.667-19.103 42.667-42.667s-19.103-42.667-42.667-42.667c-23.564 0-42.667 19.103-42.667 42.667s19.103 42.667 42.667 42.667zM661.333 768c23.564 0 42.667-19.103 42.667-42.667s-19.103-42.667-42.667-42.667c-23.564 0-42.667 19.103-42.667 42.667s19.103 42.667 42.667 42.667z';
+const ICON_PATH = 'M16 4c6.627 0 12 5.373 12 12s-5.373 12-12 12S4 22.627 4 16 9.373 4 16 4zm0 2C10.477 6 6 10.477 6 16s4.477 10 10 10 10-4.477 10-10S21.523 6 16 6zm0 9a1 1 0 0 1 1 .99v4.02a.992.992 0 0 1-.883.983L16 21a1 1 0 0 1-1-.99v-4.02c0-.507.383-.926.883-.983L16 15zm0-4.2a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z'
 
 
 import {
@@ -24,7 +24,7 @@ export class somePlugin extends BasePlugin {
     super(name, player);
     this.player.ready().then(() => {
       const panelItemAId = this.player.getService('sidePanelsManager').add({
-        label: 'Panel A',
+        label: 'Panel-A',
         panelComponent: PanelItemComponent,
         iconComponent: {component: IconComponent, svgIcon: {path: ICON_PATH}},
         presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
@@ -38,8 +38,10 @@ export class somePlugin extends BasePlugin {
         }
       });
 
+      this.addUpperBarIcon('Panel-A', panelItemAId, IconComponent);
+
       const PanelItemBId = this.player.getService('sidePanelsManager').add({
-        label: 'Panel B',
+        label: 'Panel-B',
         panelComponent: AnotherPanelItemComponent,
         iconComponent: {component: AnotherIconComponent, svgIcon: {path: ICON_PATH}},
         presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
@@ -47,8 +49,10 @@ export class somePlugin extends BasePlugin {
         expandMode: SidePanelModes.ALONGSIDE
       });
 
+      this.addUpperBarIcon('Panel-B', PanelItemBId, AnotherIconComponent);
+
       const PanelItemCId = this.player.getService('sidePanelsManager').add({
-        label: 'Panel C',
+        label: 'Panel-C',
         panelComponent: SomePanelItemComponent,
         iconComponent: {component: SomeIconComponent, svgIcon: {path: ICON_PATH}},
         presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
@@ -56,14 +60,18 @@ export class somePlugin extends BasePlugin {
         expandMode: SidePanelModes.OVER
       });
 
+      this.addUpperBarIcon('Panel-C', PanelItemCId, SomeIconComponent);
+
       const PanelItemDId = this.player.getService('sidePanelsManager').add({
-        label: 'Panel D',
+        label: 'Panel-D',
         panelComponent: MorePanelItemComponent,
         iconComponent: {component: MoreIconComponent, svgIcon: {path: ICON_PATH}},
         presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
         position: SidePanelPositions.BOTTOM,
         expandMode: SidePanelModes.ALONGSIDE
       });
+
+      this.addUpperBarIcon('Panel-D', PanelItemDId, MoreIconComponent);
 
       this.player.getService('sidePanelsManager').activateItem(panelItemAId);
       console.log(this.player.getService('sidePanelsManager').isItemActive(panelItemAId));
@@ -74,6 +82,24 @@ export class somePlugin extends BasePlugin {
         // false
       }, 3000);
     });
+  }
+
+  addUpperBarIcon(pluginName, panelItemAIconId, IconComponent) {
+    this.player.getService('upperBarManager').add({
+      displayName: pluginName,
+      ariaLabel: pluginName,
+      svgIcon: {path: ICON_PATH},
+      component: IconComponent,
+      onClick: () => this.toggle(panelItemAIconId)
+    });
+  }
+
+  toggle(panelItemId) {
+    if (this.player.getService('sidePanelsManager').isItemActive(panelItemId)) {
+      this.player.getService('sidePanelsManager').deactivateItem(panelItemId);
+    } else {
+      this.player.getService('sidePanelsManager').activateItem(panelItemId);
+    }
   }
 
 
