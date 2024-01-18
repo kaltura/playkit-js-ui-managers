@@ -1,6 +1,5 @@
 import { ComponentClass, FunctionalComponent } from 'preact';
 import { SvgIcon } from './svg-icon';
-import { KalturaPluginNames } from '../../../types/ui-managers-config';
 import { PlaykitUI } from '@playkit-js/kaltura-player-js';
 
 export interface IconDto {

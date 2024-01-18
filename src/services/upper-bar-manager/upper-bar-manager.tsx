@@ -3,14 +3,13 @@ import { IconDto } from './models/icon-dto';
 import { IconModel } from './models/icon-model';
 import { h, RefObject, createRef } from 'preact';
 import { DisplayedBar } from './ui/displayed-bar/displayed-bar.component';
-import { KalturaPluginNames } from '../../types/ui-managers-config';
+import { KalturaPluginNames } from '../../types/kaltura-plugin-names';
 const { ReservedPresetAreas, ReservedPresetNames } = ui;
 
 const UPPER_BAR_PRESETS = Object.values(ReservedPresetNames).filter(
   (preset) => preset !== ReservedPresetNames.Idle && preset !== ReservedPresetNames.Error
 );
 
-type UpperBarManagerConfig = { pluginsIconsOrder: { [key in KalturaPluginNames | string]: number } };
 type IconsOrder = { [key in KalturaPluginNames | string]: number };
 
 export class UpperBarManager {
@@ -22,7 +21,7 @@ export class UpperBarManager {
   /**
    * @ignore
    */
-  constructor(player: KalturaPlayer, logger: Logger, config: UpperBarManagerConfig) {
+  constructor(player: KalturaPlayer, logger: Logger) {
     this.player = player;
     this.componentsRegistry = new Map<number, IconModel>();
     this.logger = logger;
