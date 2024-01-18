@@ -18,6 +18,7 @@ export class UpperBarManager {
   private readonly logger: Logger;
   private readonly componentsRegistry: Map<number, IconModel>;
   private readonly displayedBarComponentRefs: Record<string, RefObject<DisplayedBar>>;
+  private iconsOrder: IconsOrder;
   /**
    * @ignore
    */
@@ -26,19 +27,21 @@ export class UpperBarManager {
     this.componentsRegistry = new Map<number, IconModel>();
     this.logger = logger;
     this.displayedBarComponentRefs = {};
+    this.iconsOrder = {} as IconsOrder;
     UPPER_BAR_PRESETS.forEach((preset) => (this.displayedBarComponentRefs[preset] = createRef()));
-    this.injectDisplayedBarComponentWrapper(config.pluginsIconsOrder);
+    this.injectDisplayedBarComponentWrapper();
   }
 
   public add(icon: IconDto): number | undefined {
     if (UpperBarManager.validateItem(icon)) {
       const newIcon: IconModel = new IconModel(icon);
       this.componentsRegistry.set(newIcon.id, newIcon);
+      this.iconsOrder[icon.displayName] = icon.order;
       newIcon.presets.forEach((preset) => this.displayedBarComponentRefs[preset].current?.update());
-      this.logger.debug(`Icon Id: '${newIcon.id}' DisplayName: '${newIcon.displayName}' added`);
+      this.logger.debug(`control '${newIcon.displayName}' added, id: '${newIcon.id}' `);
       return newIcon.id;
     }
-    this.logger.warn('Invalid Icon parameters', icon);
+    this.logger.warn('Invalid parameters', JSON.stringify(icon));
     return undefined;
   }
 
@@ -47,7 +50,7 @@ export class UpperBarManager {
     if (icon) {
       this.componentsRegistry.delete(itemId);
       icon.presets.forEach((preset) => this.displayedBarComponentRefs[preset].current?.update());
-      this.logger.debug(`Icon Id: '${icon.id}' DisplayName: '${icon.displayName}' removed`);
+      this.logger.debug(`control '${icon.displayName}' removed, id: '${icon.id}' `);
     } else {
       this.logger.warn(`${itemId} is not registered`);
     }
@@ -71,7 +74,8 @@ export class UpperBarManager {
     return icons.sort((a, b) => (iconsOrder[a.displayName] > iconsOrder[b.displayName] ? 1 : -1));
   }
 
-  private injectDisplayedBarComponentWrapper(iconsOrder: IconsOrder): void {
+  private injectDisplayedBarComponentWrapper(): void {
+    const iconsOrder = this.iconsOrder;
     for (const preset of UPPER_BAR_PRESETS) {
       this.player.ui.addComponent({
         label: 'Right-Upper-Bar-Wrapper',

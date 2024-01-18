@@ -11,6 +11,7 @@ export interface IconDto {
    */
   displayName: string;
   ariaLabel: any;
+  order: number;
   /**
    * The icon react component
    */
