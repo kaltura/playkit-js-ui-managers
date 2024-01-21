@@ -70,7 +70,7 @@ export class UpperBarManager {
 
   private getControls(iconsOrder: IconsOrder): IconModel[] {
     const icons = Array.from(this.componentsRegistry.values());
-    return icons.sort((a, b) => (iconsOrder[a.displayName] - iconsOrder[b.displayName]));
+    return icons.sort((a, b) => iconsOrder[a.displayName] - iconsOrder[b.displayName]);
   }
 
   private injectDisplayedBarComponentWrapper(): void {
