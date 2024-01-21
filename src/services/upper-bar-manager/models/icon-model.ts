@@ -10,6 +10,7 @@ export class IconModel {
   public readonly id: number;
   public displayName: string;
   public ariaLabel: any;
+  public order: number;
   public componentRef: RefObject<IconWrapper>;
   public onClick: (e: MouseEvent | KeyboardEvent) => void;
   public component: ComponentClass<Record<string, never>> | FunctionalComponent<Record<string, never>>;
@@ -19,6 +20,7 @@ export class IconModel {
     this.id = ++IconModel.nextId;
     this.displayName = item.displayName;
     this.ariaLabel = item.ariaLabel;
+    this.order = item.order;
     this.component = item.component;
     this.svgIcon = item.svgIcon;
     this.onClick = item.onClick;

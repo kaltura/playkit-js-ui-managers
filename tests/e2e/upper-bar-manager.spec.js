@@ -1,11 +1,12 @@
 import { expect } from 'chai';
 import { createSandbox, spy } from 'sinon';
 import '../../src/index';
-import { setup } from '@playkit-js/kaltura-player-js';
+import { setup, ui } from "@playkit-js/kaltura-player-js";
 import { IconComponent } from '../mock/compenents/icon.component';
 import { config, targetId } from '../mock/config';
 import { mediaData } from '../mock/media-sourc';
 import '../mock/plugins/index';
+const { ReservedPresetNames } = ui;
 
 describe('Upper Bar Manager', () => {
   let player;
@@ -38,11 +39,11 @@ describe('Upper Bar Manager', () => {
     await player.ready();
 
     // Do
-    const iconId = upperBarManagerService.add({ label: 'icon', component: IconComponent, onClick: () => {} });
+    const iconId = upperBarManagerService.add({ displayName: 'icon', component: IconComponent, onClick: () => {} });
 
     // Expect
     expect(upperBarManagerService.componentsRegistry.size).to.equal(1);
-    expect(upperBarManagerService.componentsRegistry.get(iconId).label).equal('icon');
+    expect(upperBarManagerService.componentsRegistry.get(iconId).displayName).equal('icon');
   });
 
   it('Remove icon', async () => {
@@ -53,7 +54,7 @@ describe('Upper Bar Manager', () => {
     await player.ready();
 
     // Do
-    const iconId = upperBarManagerService.add({ label: 'icon', component: IconComponent, onClick: () => {} });
+    const iconId = upperBarManagerService.add({ displayName: 'icon', component: IconComponent, onClick: () => {} });
     upperBarManagerService.remove(iconId);
 
     // Expect
@@ -68,8 +69,8 @@ describe('Upper Bar Manager', () => {
     await player.ready();
 
     // Do
-    const iconId1 = upperBarManagerService.add({ label: 'icon1', component: IconComponent, onClick: () => {} });
-    const iconId2 = upperBarManagerService.add({ label: 'icon2', component: IconComponent, onClick: () => {} });
+    const iconId1 = upperBarManagerService.add({ displayName: 'icon1', component: IconComponent, onClick: () => {} });
+    const iconId2 = upperBarManagerService.add({ displayName: 'icon2', component: IconComponent, onClick: () => {} });
     upperBarManagerService.remove(iconId1);
 
     // Expect
@@ -85,8 +86,8 @@ describe('Upper Bar Manager', () => {
 
     // Do
     player.ready().then(() => {
-      const icon1Id = upperBarManagerService.add({ label: 'icon1', component: IconComponent, onClick: () => {} });
-      const icon2Id = upperBarManagerService.add({ label: 'icon2', component: IconComponent, onClick: () => {} });
+      const icon1Id = upperBarManagerService.add({ displayName: 'icon1', component: IconComponent, onClick: () => {} });
+      const icon2Id = upperBarManagerService.add({ displayName: 'icon2', component: IconComponent, onClick: () => {} });
       setTimeout(() => {
         const iconModel1 = upperBarManagerService.componentsRegistry.get(icon1Id);
         const iconModel2 = upperBarManagerService.componentsRegistry.get(icon2Id);
@@ -107,24 +108,13 @@ describe('Upper Bar Manager', () => {
   it('icons order state compatible with the configuration', (done) => {
     // Given
     const pluginsConfig = {
-      uiManagers: {
-        upperBarManager: {
-          pluginsIconsOrder: {
-            pluginC: 100,
-            pluginF: 110,
-            pluginA: 120,
-            pluginD: 130,
-            pluginE: 140,
-            pluginB: 150
-          }
-        }
-      },
-      pluginA: {},
-      pluginB: {},
-      pluginC: {},
-      pluginD: {},
-      pluginE: {},
-      pluginF: {}
+      uiManagers: {},
+      'Plugin-A': { iconOrder: 120 },
+      'Plugin-B': { iconOrder: 150 },
+      'Plugin-C': { iconOrder: 100 },
+      'Plugin-D': { iconOrder: 130 },
+      'Plugin-E': { iconOrder: 140 },
+      'Plugin-F': { iconOrder: 110 }
     };
 
     player = setup({ ...config, plugins: pluginsConfig });
@@ -133,39 +123,29 @@ describe('Upper Bar Manager', () => {
 
     player.ready().then(() => {
       setTimeout(() => {
-        const displayedBarComponentState = upperBarManagerService.getControls(pluginsConfig.uiManagers.upperBarManager.pluginsIconsOrder);
-        expect(displayedBarComponentState[0].label).to.be.equal('pluginC');
-        expect(displayedBarComponentState[1].label).to.be.equal('pluginF');
-        expect(displayedBarComponentState[2].label).to.be.equal('pluginA');
-        expect(displayedBarComponentState[3].label).to.be.equal('pluginD');
-        expect(displayedBarComponentState[4].label).to.be.equal('pluginE');
-        expect(displayedBarComponentState[5].label).to.be.equal('pluginB');
+        const displayedBarComponentState = upperBarManagerService.getControls(upperBarManagerService.iconsOrder);
+        // const displayedBarComponentState = Array.from(this.componentsRegistry.values());
+        expect(displayedBarComponentState[0].displayName).to.be.equal('Plugin-C');
+        expect(displayedBarComponentState[1].displayName).to.be.equal('Plugin-F');
+        expect(displayedBarComponentState[2].displayName).to.be.equal('Plugin-A');
+        expect(displayedBarComponentState[3].displayName).to.be.equal('Plugin-D');
+        expect(displayedBarComponentState[4].displayName).to.be.equal('Plugin-E');
+        expect(displayedBarComponentState[5].displayName).to.be.equal('Plugin-B');
         done();
-      });
+      }, 1000);
     });
   });
 
   it('icons order state is preserved on change media', (done) => {
     // Given
     const pluginsConfig = {
-      uiManagers: {
-        upperBarManager: {
-          pluginsIconsOrder: {
-            pluginC: 100,
-            pluginF: 110,
-            pluginA: 120,
-            pluginD: 130,
-            pluginE: 140,
-            pluginB: 150
-          }
-        }
-      },
-      pluginA: {},
-      pluginB: {},
-      pluginC: {},
-      pluginD: {},
-      pluginE: {},
-      pluginF: {}
+      uiManagers: {},
+      'Plugin-A': { iconOrder: 120 },
+      'Plugin-B': { iconOrder: 150 },
+      'Plugin-C': { iconOrder: 100 },
+      'Plugin-D': { iconOrder: 130 },
+      'Plugin-E': { iconOrder: 140 },
+      'Plugin-F': { iconOrder: 110 }
     };
 
     player = setup({ ...config, plugins: pluginsConfig });
@@ -175,14 +155,14 @@ describe('Upper Bar Manager', () => {
     player.ready().then(() => {
       setTimeout(() => {
         const previousServiceRegistryState = JSON.parse(
-          JSON.stringify(Array.from(upperBarManagerService.componentsRegistry.values()).map(({ id, label }) => ({ id, label })))
+          JSON.stringify(Array.from(upperBarManagerService.componentsRegistry.values()).map(({ id, displayName }) => ({ id, displayName })))
         );
 
         player.setMedia({ sources: { ...mediaData } });
 
         setTimeout(() => {
           const currentServiceRegistryState = Array.from(upperBarManagerService.componentsRegistry.values()).map(
-            ({ id, label }) => ({ id, label })
+            ({ id, displayName }) => ({ id, displayName })
           );
           expect(previousServiceRegistryState).to.be.deep.equal(currentServiceRegistryState);
           done();
