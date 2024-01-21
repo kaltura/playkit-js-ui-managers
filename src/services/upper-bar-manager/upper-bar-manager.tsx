@@ -40,7 +40,7 @@ export class UpperBarManager {
       this.logger.debug(`control '${newIcon.displayName}' added, id: '${newIcon.id}' `);
       return newIcon.id;
     }
-    this.logger.warn('Invalid parameters', JSON.stringify(icon));
+    this.logger.error('icon cannot be added due to invalid parameters', JSON.stringify(icon));
     return undefined;
   }
 
@@ -51,7 +51,7 @@ export class UpperBarManager {
       icon.presets.forEach((preset) => this.displayedBarComponentRefs[preset].current?.update());
       this.logger.debug(`control '${icon.displayName}' removed, id: '${icon.id}' `);
     } else {
-      this.logger.warn(`${itemId} is not registered`);
+      this.logger.warn(`control ${itemId} is not registered`);
     }
   }
 
@@ -64,13 +64,13 @@ export class UpperBarManager {
     if (icon) {
       icon.update();
     } else {
-      this.logger.warn(`${iconId} is not registered`);
+      this.logger.warn(`control ${iconId} is not registered`);
     }
   }
 
   private getControls(iconsOrder: IconsOrder): IconModel[] {
     const icons = Array.from(this.componentsRegistry.values());
-    return icons.sort((a, b) => (iconsOrder[a.displayName] > iconsOrder[b.displayName] ? 1 : -1));
+    return icons.sort((a, b) => (iconsOrder[a.displayName] - iconsOrder[b.displayName]));
   }
 
   private injectDisplayedBarComponentWrapper(): void {
