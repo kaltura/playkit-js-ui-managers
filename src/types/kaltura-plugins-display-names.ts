@@ -1,4 +1,4 @@
-export type KalturaPluginNames =
+export type KalturaPluginsDisplayNames =
     | 'Navigation'
     | 'Q&A'
     | 'Transcript'

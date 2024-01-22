@@ -26,6 +26,7 @@ export class PluginE extends BasePlugin {
       this.iconId = this.player.getService('upperBarManager').add({
         displayName: 'Plugin-E',
         ariaLabel: 'Plugin-E',
+        order: 140,
         component: IconComponent,
         svgIcon: {path: ICON_PATH},
         onClick: () => alert('hello from plugin E')

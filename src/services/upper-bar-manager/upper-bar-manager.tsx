@@ -3,14 +3,14 @@ import { IconDto } from './models/icon-dto';
 import { IconModel } from './models/icon-model';
 import { h, RefObject, createRef } from 'preact';
 import { DisplayedBar } from './ui/displayed-bar/displayed-bar.component';
-import { KalturaPluginNames } from '../../types/kaltura-plugin-names';
+import { KalturaPluginsDisplayNames } from '../../types/kaltura-plugins-display-names';
 const { ReservedPresetAreas, ReservedPresetNames } = ui;
 
 const UPPER_BAR_PRESETS = Object.values(ReservedPresetNames).filter(
   (preset) => preset !== ReservedPresetNames.Idle && preset !== ReservedPresetNames.Error
 );
 
-type IconsOrder = { [key in KalturaPluginNames | string]: number };
+type IconsOrder = { [key in KalturaPluginsDisplayNames | string]: number };
 
 export class UpperBarManager {
   private readonly player: KalturaPlayer;
