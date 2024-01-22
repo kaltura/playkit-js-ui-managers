@@ -31,7 +31,7 @@ and transpiled in ECMAScript5 using [Babel](https://babeljs.io/) and the [TypeSc
   Manages and controls the side panel, including: 
   
   - When an item is activated in a panel, the other items in that panel are automatically deactivated.
-  - Automatically deactivates a panel when its counter panel is activated\
+  - Automatically deactivates a panel when its counter panel is activated.
   
     Full API documentation can be found [here](https://kaltura.github.io/playkit-js-ui-managers/docs/api/classes/services_upper_bar_manager_upper_bar_manager.UpperBarManager.html)
   
