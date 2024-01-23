@@ -3,42 +3,44 @@ import { IconDto } from './models/icon-dto';
 import { IconModel } from './models/icon-model';
 import { h, RefObject, createRef } from 'preact';
 import { DisplayedBar } from './ui/displayed-bar/displayed-bar.component';
-import { KalturaPluginNames } from '../../types/ui-managers-config';
+import { KalturaPluginsDisplayNames } from '../../types/kaltura-plugins-display-names';
 const { ReservedPresetAreas, ReservedPresetNames } = ui;
 
 const UPPER_BAR_PRESETS = Object.values(ReservedPresetNames).filter(
   (preset) => preset !== ReservedPresetNames.Idle && preset !== ReservedPresetNames.Error
 );
 
-type UpperBarManagerConfig = { pluginsIconsOrder: { [key in KalturaPluginNames | string]: number } };
-type IconsOrder = { [key in KalturaPluginNames | string]: number };
+type IconsOrder = { [key in KalturaPluginsDisplayNames | string]: number };
 
 export class UpperBarManager {
   private readonly player: KalturaPlayer;
   private readonly logger: Logger;
   private readonly componentsRegistry: Map<number, IconModel>;
   private readonly displayedBarComponentRefs: Record<string, RefObject<DisplayedBar>>;
+  private iconsOrder: IconsOrder;
   /**
    * @ignore
    */
-  constructor(player: KalturaPlayer, logger: Logger, config: UpperBarManagerConfig) {
+  constructor(player: KalturaPlayer, logger: Logger) {
     this.player = player;
     this.componentsRegistry = new Map<number, IconModel>();
     this.logger = logger;
     this.displayedBarComponentRefs = {};
+    this.iconsOrder = {} as IconsOrder;
     UPPER_BAR_PRESETS.forEach((preset) => (this.displayedBarComponentRefs[preset] = createRef()));
-    this.injectDisplayedBarComponentWrapper(config.pluginsIconsOrder);
+    this.injectDisplayedBarComponentWrapper();
   }
 
   public add(icon: IconDto): number | undefined {
     if (UpperBarManager.validateItem(icon)) {
       const newIcon: IconModel = new IconModel(icon);
       this.componentsRegistry.set(newIcon.id, newIcon);
+      this.iconsOrder[icon.displayName] = icon.order;
       newIcon.presets.forEach((preset) => this.displayedBarComponentRefs[preset].current?.update());
-      this.logger.debug(`Icon Id: '${newIcon.id}' '${newIcon.label}' added`);
+      this.logger.debug(`control '${newIcon.displayName}' added, id: '${newIcon.id}' `);
       return newIcon.id;
     }
-    this.logger.warn('Invalid Icon parameters', icon);
+    this.logger.error('icon cannot be added due to invalid parameters', JSON.stringify(icon));
     return undefined;
   }
 
@@ -47,9 +49,9 @@ export class UpperBarManager {
     if (icon) {
       this.componentsRegistry.delete(itemId);
       icon.presets.forEach((preset) => this.displayedBarComponentRefs[preset].current?.update());
-      this.logger.debug(`Icon Id: '${icon.id}' Label: '${icon.label}' removed`);
+      this.logger.debug(`control '${icon.displayName}' removed, id: '${icon.id}' `);
     } else {
-      this.logger.warn(`${itemId} is not registered`);
+      this.logger.warn(`control ${itemId} is not registered`);
     }
   }
 
@@ -62,16 +64,17 @@ export class UpperBarManager {
     if (icon) {
       icon.update();
     } else {
-      this.logger.warn(`${iconId} is not registered`);
+      this.logger.warn(`control ${iconId} is not registered`);
     }
   }
 
   private getControls(iconsOrder: IconsOrder): IconModel[] {
     const icons = Array.from(this.componentsRegistry.values());
-    return icons.sort((a, b) => (iconsOrder[a.label] > iconsOrder[b.label] ? 1 : -1));
+    return icons.sort((a, b) => iconsOrder[a.displayName] - iconsOrder[b.displayName]);
   }
 
-  private injectDisplayedBarComponentWrapper(iconsOrder: IconsOrder): void {
+  private injectDisplayedBarComponentWrapper(): void {
+    const iconsOrder = this.iconsOrder;
     for (const preset of UPPER_BAR_PRESETS) {
       this.player.ui.addComponent({
         label: 'Right-Upper-Bar-Wrapper',

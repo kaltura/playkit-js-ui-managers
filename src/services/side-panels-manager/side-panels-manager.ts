@@ -28,12 +28,12 @@ export class SidePanelsManager {
 
   public add(item: SidePanelItem): number | void {
     if (SidePanelsManager.validateItem(item)) {
-      const newItemWrapper: ItemWrapper = new ItemWrapper(item, this.player, (id: number) => this.toggle(id));
+      const newItemWrapper: ItemWrapper = new ItemWrapper(item, this.player);
       this.componentsRegistry.set(newItemWrapper.id, newItemWrapper);
       this.logger.debug('New Panel Item Added', item);
       return newItemWrapper.id;
     }
-    this.logger.warn('Invalid SidePanelItem parameters', item);
+    this.logger.error('Invalid SidePanelItem parameters', item);
   }
 
   public remove(itemId: number): void {
@@ -149,15 +149,13 @@ export class SidePanelsManager {
   }
 
   private static validateItem(item: SidePanelItem): boolean {
-    const { label, panelComponent, iconComponent, position, expandMode, onActivate, onDeactivate, presets } = item;
+    const { label, panelComponent, position, expandMode, onActivate, onDeactivate, presets } = item;
     return !!(
       label &&
       Object.values(SidePanelPositions).includes(position) &&
       Object.values(SidePanelModes).includes(expandMode) &&
       presets.every((preset) => Object.values(ReservedPresetNames).includes(preset)) &&
       typeof panelComponent === 'function' &&
-      ((typeof iconComponent?.component === 'function' && typeof iconComponent?.svgIcon.path === 'string') ||
-        iconComponent === undefined) &&
       (typeof onActivate === 'function' || onActivate === undefined) &&
       (typeof onDeactivate === 'function' || onDeactivate === undefined)
     );

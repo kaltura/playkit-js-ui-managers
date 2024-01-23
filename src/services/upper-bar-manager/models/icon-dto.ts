@@ -1,15 +1,20 @@
 import { ComponentClass, FunctionalComponent } from 'preact';
 import { SvgIcon } from './svg-icon';
-import { KalturaPluginNames } from '../../../types/ui-managers-config';
 import { PlaykitUI } from '@playkit-js/kaltura-player-js';
 
 export interface IconDto {
   /**
-   * An ID (usually the plugin name in case of a plugin) - used for icons order calculations
-   * has to be corresponds to the names of the icons (plugins) names in the
-   * ui-managers config (under upperBarManager.pluginsIconsOrder)
+   * An ID uniquely identify a control (should be the plugin name in case of a plugin icon)
    */
-  label: KalturaPluginNames | string;
+  displayName: string;
+  /**
+   * An HTML Aria label attribute that would be attached to the provided icon - string | </Text> of preact-i18n Element
+   */
+  ariaLabel: any;
+  /**
+   * The plugin priority order (the lower the number the higher the priority - the order is from left to right - flows from upper bar (max 5 icon) to dropdown bar(the reset and again from top to bottom))
+   */
+  order: number;
   /**
    * The icon react component
    */

@@ -2,14 +2,15 @@ import { ComponentClass, FunctionalComponent, RefObject, createRef } from 'preac
 import { IconDto } from './icon-dto';
 import { IconWrapper } from '../ui/icon-wrapper/icon-wrapper.component';
 import { SvgIcon } from './svg-icon';
-import { KalturaPluginNames } from '../../../types/ui-managers-config';
 import { PlaykitUI, ui } from '@playkit-js/kaltura-player-js';
 const { ReservedPresetNames } = ui;
 
 export class IconModel {
   private static nextId = 0;
   public readonly id: number;
-  public label: KalturaPluginNames | string;
+  public displayName: string;
+  public ariaLabel: any;
+  public order: number;
   public componentRef: RefObject<IconWrapper>;
   public onClick: (e: MouseEvent | KeyboardEvent) => void;
   public component: ComponentClass<Record<string, never>> | FunctionalComponent<Record<string, never>>;
@@ -17,7 +18,9 @@ export class IconModel {
   public presets: PlaykitUI.ReservedPresetName[];
   constructor(item: IconDto) {
     this.id = ++IconModel.nextId;
-    this.label = item.label;
+    this.displayName = item.displayName;
+    this.ariaLabel = item.ariaLabel;
+    this.order = item.order;
     this.component = item.component;
     this.svgIcon = item.svgIcon;
     this.onClick = item.onClick;

@@ -6,6 +6,8 @@
     "preserveSymlinks": true,
     "jsx": "react",
     "jsxFactory": "h",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "jsxFragmentFactory": "Fragment",
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
