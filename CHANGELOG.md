@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.5.2 (2024-02-04)
+
+
+### Bug Fixes
+
+* **FEC-13517:** Wrong and inconsistent order of plugins & Plugins buttons sometimes display with the wrong icon ([#51](https://github.com/kaltura/playkit-js-ui-managers/issues/51)) ([281cb2a](https://github.com/kaltura/playkit-js-ui-managers/commit/281cb2a2a550d51287608aa4ec72eb2ed0e91335))
+
 ### 1.5.1 (2024-01-22)
 
 ## 1.5.0 (2023-12-19)
