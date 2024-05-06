@@ -94,6 +94,35 @@ export class SidePanelsManager {
     return false;
   }
 
+  public isItemDetouched(itemId: number): boolean {
+    const itemWrapper: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
+    if (itemWrapper) {
+      return itemWrapper.isDetached();
+    }
+    this.logger.warn(`${itemId} is not registered`);
+    return false;
+  }
+
+  public detachItem(itemId: number): void {
+    const itemWrapper: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
+    if (itemWrapper) {
+      this.deactivateItem(itemId);
+      itemWrapper.detach();
+    } else {
+      this.logger.warn(`${itemId} is not registered`);
+    }
+  }
+
+  public attachItem(itemId: number): void {
+    const itemWrapper: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
+    if (itemWrapper) {
+      itemWrapper.attach();
+      this.activateItem(itemId);
+    } else {
+      this.logger.warn(`${itemId} is not registered`);
+    }
+  }
+
   /**
    * Rerender (uses preact Component.forceUpdate api under the hoods) the side panel item component
    * It's just for backward compatibility you should not use it.

@@ -40,6 +40,34 @@ export class ItemWrapper {
     this.isActive = false;
   }
 
+  public detach(): void {
+    const state = this.player.ui.store.getState();
+    const { playerClientRect } = state.shell;
+    const el = document.createElement('div');
+    el.style.zIndex = '2';
+    el.style.position = 'absolute';
+    // el.style.top = `${playerClientRect.y + playerClientRect.height + 12}px`; // TODO: move DELTA to const
+    el.style.top = `714px`; // TODO: move DELTA to const
+    el.style.left = `${playerClientRect.x}px`;
+
+    // el.style.width = playerClientRect.width;
+    el.style.width = '1024px';
+    el.style.height = `${Math.round(playerClientRect.height / 3)}px`;
+    el.className = 'playkit-player detouch-container';
+
+    document.body.appendChild(el);
+
+    this.panelItemComponentRef.current!.detach(el);
+  }
+
+  public attach(): void {
+    this.panelItemComponentRef.current!.attach();
+  }
+
+  public isDetached(): boolean {
+    return this.panelItemComponentRef.current?.isDetached() || false;
+  }
+
   public remove(): void {
     this.removePanelComponentFn();
   }
