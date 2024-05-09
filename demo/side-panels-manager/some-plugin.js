@@ -30,12 +30,6 @@ export class somePlugin extends BasePlugin {
         presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
         position: SidePanelPositions.LEFT,
         expandMode: SidePanelModes.ALONGSIDE,
-        onActivate: () => {
-          console.log('panel has now been activated');
-        },
-        onDeactivate: () => {
-          console.log('panel has now been deactivated');
-        }
       });
 
       this.addUpperBarIcon('Panel-A', panelItemAId, IconComponent);
