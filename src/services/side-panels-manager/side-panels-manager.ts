@@ -1,6 +1,6 @@
 import { ui, KalturaPlayer, Logger, PlaykitUI } from '@playkit-js/kaltura-player-js';
 import { SidePanelItem } from './models/side-panel-item';
-import { ItemWrapper } from './models/item-wrapper';
+import { ItemWrapper, DetachWindowOptions } from './models/item-wrapper';
 const { SidePanelModes, SidePanelPositions, ReservedPresetNames } = ui;
 
 const COUNTER_PANELS: Record<PlaykitUI.SidePanelPosition, PlaykitUI.SidePanelPosition> = {
@@ -94,7 +94,7 @@ export class SidePanelsManager {
     return false;
   }
 
-  public isItemDetouched(itemId: number): boolean {
+  public isItemDetached(itemId: number): boolean {
     const itemWrapper: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (itemWrapper) {
       return itemWrapper.isDetached();
@@ -102,17 +102,18 @@ export class SidePanelsManager {
     this.logger.warn(`${itemId} is not registered`);
     return false;
   }
-
-  public detachItem(itemId: number): void {
+  public detachItem(itemId: number, options: DetachWindowOptions): void {
     const itemWrapper: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (itemWrapper) {
       this.deactivateItem(itemId);
-      itemWrapper.detach();
+      itemWrapper.detach({
+        ...options,
+        onAttach: () => this.attachItem(itemId)
+      });
     } else {
       this.logger.warn(`${itemId} is not registered`);
     }
   }
-
   public attachItem(itemId: number): void {
     const itemWrapper: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (itemWrapper) {
@@ -121,6 +122,13 @@ export class SidePanelsManager {
     } else {
       this.logger.warn(`${itemId} is not registered`);
     }
+  }
+  public getDetachedRef(itemId: number) {
+    if (this.isItemDetached(itemId)) {
+      const itemWrapper: ItemWrapper = this.componentsRegistry.get(itemId)!;
+      return itemWrapper.getDetachedRef();
+    }
+    return null;
   }
 
   /**

@@ -1,16 +1,24 @@
-import { h, Component, ComponentChild, RefObject, cloneElement, VNode, Fragment } from 'preact';
-import { Button } from '@playkit-js/common/dist/components/button';
+import {
+  h,
+  Component,
+  ComponentChild,
+  RefObject,
+  cloneElement,
+  VNode,
+  Fragment,
+  ComponentClass,
+  FunctionalComponent
+} from 'preact';
 import * as styles from './panel-item-wrapper.component.scss';
 import { ui } from '@playkit-js/kaltura-player-js';
-import { DraggableWrapper } from '../draggable-wrapper';
-
 const { defaultTransitionTime } = ui.style;
 // @ts-ignore
-const { createPortal } = KalturaPlayer.ui;
+const { createPortal } = ui;
 
 type PanelItemWrapperState = {
   on: boolean;
   detachRef: HTMLDivElement | null;
+  attachPlaceholder: ComponentClass | FunctionalComponent;
 };
 
 type PanelItemWrapperProps = {
@@ -25,7 +33,11 @@ export class PanelItemWrapper extends Component<PanelItemWrapperProps, PanelItem
   private switchMode: boolean;
   constructor() {
     super();
-    this.state = { on: false, detachRef: null };
+    this.state = {
+      on: false,
+      detachRef: null,
+      attachPlaceholder: () => null
+    };
     this.switchMode = false;
   }
 
@@ -42,14 +54,17 @@ export class PanelItemWrapper extends Component<PanelItemWrapperProps, PanelItem
     return Boolean(this.state.detachRef);
   }
 
-  public detach(detachRef: any): void {
-    this.setState({ detachRef });
+  public detach(detachRef: HTMLDivElement, attachPlaceholder: ComponentClass | FunctionalComponent): void {
+    this.setState({ detachRef, attachPlaceholder });
   }
 
   public attach = (): void => {
-    this.state.detachRef?.remove();
-    this.setState({ detachRef: null });
+    this.setState({ detachRef: null, attachPlaceholder: () => null });
   };
+
+  public get detachRef() {
+    return this.state.detachRef;
+  }
 
   render(): ComponentChild {
     const node = cloneElement(this.props.children as VNode);
@@ -58,12 +73,10 @@ export class PanelItemWrapper extends Component<PanelItemWrapperProps, PanelItem
         className={[styles.sidePanelWrapper, this.state.on ? styles.activeState : ''].join(' ')}
         style={!this.state.on && !this.switchMode ? { transition: `visibility ${defaultTransitionTime}ms` } : ''}
       >
-        {this.state.detachRef ? (
+        {this.detachRef ? (
           <Fragment>
-            {createPortal(<DraggableWrapper detachRef={this.state.detachRef}>{node}</DraggableWrapper>, this.state.detachRef)}
-            <Button className={styles.attachButton} onClick={this.attach}>
-              Attach
-            </Button>
+            {createPortal(node, this.detachRef)}
+            <this.state.attachPlaceholder />
           </Fragment>
         ) : (
           node
