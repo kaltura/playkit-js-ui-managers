@@ -83,7 +83,7 @@ export class DisplayedBar extends Component<DisplayedBarProps & PropsFromRedux, 
 
   render(): ComponentChild {
     const { displayedControls, dropdownControls } = this.splitControlsIntoDisplayedAndDropdown();
-    return (
+    return displayedControls.length > 0 ? (
       <div className={styles.rightUpperBarWrapperContainer}>
         {displayedControls.map(({ id, component, onClick, componentRef }) => {
           const IconWrapperComponent = component!;
@@ -104,6 +104,6 @@ export class DisplayedBar extends Component<DisplayedBarProps & PropsFromRedux, 
           <MoreIcon showDropdown={this.state.showDropdown} onClick={this.handleOnClick} icons={dropdownControls} />
         )}
       </div>
-    );
+    ) : undefined;
   }
 }
