@@ -69,6 +69,7 @@ export class ItemWrapper {
     newWindowParams += `,top=${options?.top || 'auto'}, left=${options?.left || 'auto'}`;
     this._detachWindow = window.open('', '_blank', newWindowParams);
     this._detachWindow!.document.title = options?.title;
+    this._detachWindow?.focus();
 
     // copy and set styles to the new window
     const currentPageHead = document.head;
