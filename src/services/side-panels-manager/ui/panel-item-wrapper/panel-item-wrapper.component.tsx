@@ -12,6 +12,7 @@ import {
 import * as styles from './panel-item-wrapper.component.scss';
 import { ui } from '@playkit-js/kaltura-player-js';
 const { defaultTransitionTime } = ui.style;
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const { createPortal } = ui;
 
@@ -50,13 +51,9 @@ export class PanelItemWrapper extends Component<PanelItemWrapperProps, PanelItem
     this.setState({ on: false });
   }
 
-  public isDetached(): boolean {
-    return Boolean(this.state.detachRef);
-  }
-
-  public detach(detachRef: HTMLDivElement, attachPlaceholder: ComponentClass | FunctionalComponent): void {
+  public detach = (detachRef: HTMLDivElement, attachPlaceholder: ComponentClass | FunctionalComponent): void => {
     this.setState({ detachRef, attachPlaceholder });
-  }
+  };
 
   public attach = (): void => {
     this.setState({ detachRef: null, attachPlaceholder: () => null });

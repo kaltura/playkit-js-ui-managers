@@ -111,15 +111,15 @@ export class ItemWrapper {
   }
 
   public attach = (): void => {
-    if (this.isDetached()) {
+    if (this.isDetached) {
       this.panelItemComponentRef.current!.attach();
       this._closeDetachedWindow();
     }
   };
 
-  public isDetached = (): boolean => {
+  public get isDetached() {
     return Boolean(this._detachWindow);
-  };
+  }
 
   public getDetachedRef() {
     return this.panelItemComponentRef.current?.detachRef;

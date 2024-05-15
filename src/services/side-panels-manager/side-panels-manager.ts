@@ -97,7 +97,7 @@ export class SidePanelsManager {
   public isItemDetached(itemId: number): boolean {
     const itemWrapper: ItemWrapper | undefined = this.componentsRegistry.get(itemId);
     if (itemWrapper) {
-      return itemWrapper.isDetached();
+      return itemWrapper.isDetached;
     }
     this.logger.warn(`${itemId} is not registered`);
     return false;
