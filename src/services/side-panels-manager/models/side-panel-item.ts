@@ -12,3 +12,10 @@ export interface SidePanelItem {
   readonly position: PlaykitUI.SidePanelPosition;
   readonly expandMode: PlaykitUI.SidePanelMode;
 }
+
+export const DETACHED_WINDOW_STYLES = {
+  margin: '0px',
+  backgroundColor: '#000'
+};
+export const DETACH_CONTAINER_CLASS = 'playkit-player detach-sidebar-container';
+export const CLOSE_DETACH_EVENTS = ['beforeunload', 'popstate'];
