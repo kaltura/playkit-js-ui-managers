@@ -11,12 +11,32 @@ declare module "services/side-panels-manager/models/side-panel-item" {
         readonly position: PlaykitUI.SidePanelPosition;
         readonly expandMode: PlaykitUI.SidePanelMode;
     }
+    export const DETACHED_WINDOW_STYLES: {
+        margin: string;
+        backgroundColor: string;
+    };
+    export const DETACH_CONTAINER_CLASS = "playkit-player detach-sidebar-container";
+    export const CLOSE_DETACH_EVENTS: string[];
 }
 declare module "services/side-panels-manager/ui/panel-item-wrapper/panel-item-wrapper.component" { }
-declare module "services/side-panels-manager/models/item-wrapper" { }
+declare module "services/side-panels-manager/models/item-wrapper" {
+    import { FunctionalComponent, ComponentClass } from 'preact';
+    export interface DetachWindowOptions {
+        onAttach?: () => void;
+        top?: number;
+        left?: number;
+        width: number;
+        height: number;
+        title: string;
+        maxWidth?: number;
+        maxHeight?: number;
+        attachPlaceholder?: ComponentClass | FunctionalComponent;
+    }
+}
 declare module "services/side-panels-manager/side-panels-manager" {
     import { KalturaPlayer, Logger } from '@playkit-js/kaltura-player-js';
     import { SidePanelItem } from "services/side-panels-manager/models/side-panel-item";
+    import { DetachWindowOptions } from "services/side-panels-manager/models/item-wrapper";
     export class SidePanelsManager {
         private readonly player;
         private readonly activePanels;
@@ -31,6 +51,10 @@ declare module "services/side-panels-manager/side-panels-manager" {
         activateItem(itemId: number): void;
         deactivateItem(itemId: number): void;
         isItemActive(itemId: number): boolean;
+        isItemDetached(itemId: number): boolean;
+        detachItem(itemId: number, options: DetachWindowOptions): void;
+        attachItem(itemId: number): void;
+        getDetachedRef(itemId: number): HTMLDivElement;
         /**
          * Rerender (uses preact Component.forceUpdate api under the hoods) the side panel item component
          * It's just for backward compatibility you should not use it.
