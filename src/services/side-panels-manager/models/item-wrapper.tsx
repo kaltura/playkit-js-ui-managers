@@ -48,7 +48,6 @@ export class ItemWrapper {
   public activate(): void {
     if (this.panelItemComponentRef.current) {
       this.panelItemComponentRef.current!.on();
-      this.item.onActivate?.();
       this.isActive = true;
     } else {
       setTimeout(() => this.activate());
@@ -57,7 +56,6 @@ export class ItemWrapper {
 
   public deactivate(switchMode = false): void {
     this.panelItemComponentRef.current!.off(switchMode);
-    this.item.onDeactivate?.();
     this.isActive = false;
   }
 

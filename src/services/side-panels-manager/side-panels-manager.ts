@@ -186,15 +186,13 @@ export class SidePanelsManager {
   }
 
   private static validateItem(item: SidePanelItem): boolean {
-    const { label, panelComponent, position, expandMode, onActivate, onDeactivate, presets } = item;
+    const { label, panelComponent, position, expandMode, presets } = item;
     return !!(
       label &&
       Object.values(SidePanelPositions).includes(position) &&
       Object.values(SidePanelModes).includes(expandMode) &&
       presets.every((preset) => Object.values(ReservedPresetNames).includes(preset)) &&
-      typeof panelComponent === 'function' &&
-      (typeof onActivate === 'function' || onActivate === undefined) &&
-      (typeof onDeactivate === 'function' || onDeactivate === undefined)
+      typeof panelComponent === 'function'
     );
   }
 }

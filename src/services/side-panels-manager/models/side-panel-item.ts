@@ -11,8 +11,6 @@ export interface SidePanelItem {
   readonly presets: PlaykitUI.ReservedPresetName[];
   readonly position: PlaykitUI.SidePanelPosition;
   readonly expandMode: PlaykitUI.SidePanelMode;
-  readonly onActivate?: () => void;
-  readonly onDeactivate?: () => void;
 }
 
 export const DETACHED_WINDOW_STYLES = {

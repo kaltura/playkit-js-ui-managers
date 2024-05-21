@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.5.3 (2024-05-19)
+
+
+### Bug Fixes
+
+* **FEC-13709:** remove player top bar if there is no content in it ([#53](https://github.com/kaltura/playkit-js-ui-managers/issues/53)) ([e0a5641](https://github.com/kaltura/playkit-js-ui-managers/commit/e0a5641fcb607fa9f7b2ca43c5cd06898f0e4a80))
+
 ### 1.5.2 (2024-02-04)
 
 

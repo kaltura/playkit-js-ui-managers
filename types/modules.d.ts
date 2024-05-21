@@ -1,53 +1,80 @@
+declare module "services/side-panels-manager/models/side-panel-item" {
+    import { ComponentClass, FunctionalComponent } from 'preact';
+    import { PlaykitUI } from '@playkit-js/kaltura-player-js';
+    export type PanelComponentProps = {
+        isActive: boolean;
+    };
+    export interface SidePanelItem {
+        readonly label: string;
+        readonly panelComponent: ComponentClass<PanelComponentProps> | FunctionalComponent<PanelComponentProps>;
+        readonly presets: PlaykitUI.ReservedPresetName[];
+        readonly position: PlaykitUI.SidePanelPosition;
+        readonly expandMode: PlaykitUI.SidePanelMode;
+    }
+}
+declare module "services/side-panels-manager/ui/panel-item-wrapper/panel-item-wrapper.component" { }
+declare module "services/side-panels-manager/models/item-wrapper" { }
+declare module "services/side-panels-manager/side-panels-manager" {
+    import { KalturaPlayer, Logger } from '@playkit-js/kaltura-player-js';
+    import { SidePanelItem } from "services/side-panels-manager/models/side-panel-item";
+    export class SidePanelsManager {
+        private readonly player;
+        private readonly activePanels;
+        private readonly componentsRegistry;
+        private readonly logger;
+        /**
+         * @ignore
+         */
+        constructor(player: KalturaPlayer, logger: Logger);
+        add(item: SidePanelItem): number | void;
+        remove(itemId: number): void;
+        activateItem(itemId: number): void;
+        deactivateItem(itemId: number): void;
+        isItemActive(itemId: number): boolean;
+        /**
+         * Rerender (uses preact Component.forceUpdate api under the hoods) the side panel item component
+         * It's just for backward compatibility you should not use it.
+         */
+        update(itemId: number): void;
+        /**
+         * @ignore
+         */
+        reset(): void;
+        /**
+         * @ignore
+         */
+        destroy(): void;
+        private removeAllItems;
+        private toggle;
+        private expand;
+        private collapse;
+        private static getCounterPanelPosition;
+        private static validateItem;
+    }
+}
 declare module "services/upper-bar-manager/models/svg-icon" {
     export interface SvgIcon {
         path: string;
         viewBox?: string;
     }
 }
-declare module "services/side-panels-manager/models/side-panel-item" {
-    import { ComponentClass, FunctionalComponent } from 'preact';
-    import { PlaykitUI } from '@playkit-js/kaltura-player-js';
-    import { SvgIcon } from "services/upper-bar-manager/models/svg-icon";
-    export type PanelComponentProps = {
-        isActive: boolean;
-    };
-    export interface SidePanelItem {
-        readonly label: string;
-        readonly iconComponent?: {
-            component: ComponentClass<Record<string, never>> | FunctionalComponent<Record<string, never>>;
-            svgIcon: SvgIcon;
-        };
-        readonly panelComponent: ComponentClass<PanelComponentProps> | FunctionalComponent<PanelComponentProps>;
-        readonly presets: PlaykitUI.ReservedPresetName[];
-        readonly position: PlaykitUI.SidePanelPosition;
-        readonly expandMode: PlaykitUI.SidePanelMode;
-        readonly onActivate?: () => void;
-        readonly onDeactivate?: () => void;
-    }
-}
-declare module "services/side-panels-manager/ui/panel-item-wrapper/panel-item-wrapper.component" { }
-declare module "types/ui-managers-config" {
-    export type KalturaPluginNames = 'Navigation' | 'Q&A' | 'Transcript' | 'Download' | 'Playlist' | 'Related' | 'Share' | 'Info' | 'Moderation';
-    export type UiManagerConfig = {
-        upperBarManager: {
-            pluginsIconsOrder: {
-                [key in KalturaPluginNames | string]: number;
-            };
-        };
-    };
-}
 declare module "services/upper-bar-manager/models/icon-dto" {
     import { ComponentClass, FunctionalComponent } from 'preact';
     import { SvgIcon } from "services/upper-bar-manager/models/svg-icon";
-    import { KalturaPluginNames } from "types/ui-managers-config";
     import { PlaykitUI } from '@playkit-js/kaltura-player-js';
     export interface IconDto {
         /**
-         * An ID (usually the plugin name in case of a plugin) - used for icons order calculations
-         * has to be corresponds to the names of the icons (plugins) names in the
-         * ui-managers config (under upperBarManager.pluginsIconsOrder)
+         * An ID uniquely identify a control (should be the plugin name in case of a plugin icon)
          */
-        label: KalturaPluginNames | string;
+        displayName: string;
+        /**
+         * An HTML Aria label attribute that would be attached to the provided icon - string | </Text> of preact-i18n Element
+         */
+        ariaLabel: any;
+        /**
+         * The plugin priority order (the lower the number the higher the priority - the order is from left to right - flows from upper bar (max 5 icon) to dropdown bar(the reset and again from top to bottom))
+         */
+        order: number;
         /**
          * The icon react component
          */
@@ -85,12 +112,13 @@ declare module "services/upper-bar-manager/models/icon-model" {
     import { IconDto } from "services/upper-bar-manager/models/icon-dto";
     import { IconWrapper } from "services/upper-bar-manager/ui/icon-wrapper/icon-wrapper.component";
     import { SvgIcon } from "services/upper-bar-manager/models/svg-icon";
-    import { KalturaPluginNames } from "types/ui-managers-config";
     import { PlaykitUI } from '@playkit-js/kaltura-player-js';
     export class IconModel {
         private static nextId;
         readonly id: number;
-        label: KalturaPluginNames | string;
+        displayName: string;
+        ariaLabel: any;
+        order: number;
         componentRef: RefObject<IconWrapper>;
         onClick: (e: MouseEvent | KeyboardEvent) => void;
         component: ComponentClass<Record<string, never>> | FunctionalComponent<Record<string, never>>;
@@ -154,69 +182,28 @@ declare module "services/upper-bar-manager/ui/displayed-bar/displayed-bar.compon
         render(): ComponentChild;
     }
 }
+declare module "types/kaltura-plugins-display-names" {
+    export type KalturaPluginsDisplayNames = 'Navigation' | 'Q&A' | 'Transcript' | 'Download' | 'Playlist' | 'Related' | 'Share' | 'Info' | 'Moderation';
+}
 declare module "services/upper-bar-manager/upper-bar-manager" {
     import { KalturaPlayer, Logger } from '@playkit-js/kaltura-player-js';
     import { IconDto } from "services/upper-bar-manager/models/icon-dto";
-    import { KalturaPluginNames } from "types/ui-managers-config";
-    type UpperBarManagerConfig = {
-        pluginsIconsOrder: {
-            [key in KalturaPluginNames | string]: number;
-        };
-    };
     export class UpperBarManager {
         private readonly player;
         private readonly logger;
         private readonly componentsRegistry;
         private readonly displayedBarComponentRefs;
+        private iconsOrder;
         /**
          * @ignore
          */
-        constructor(player: KalturaPlayer, logger: Logger, config: UpperBarManagerConfig);
+        constructor(player: KalturaPlayer, logger: Logger);
         add(icon: IconDto): number | undefined;
         remove(itemId: number): void;
         isActive(itemId: number): boolean;
         update(iconId: number): void;
         private getControls;
         private injectDisplayedBarComponentWrapper;
-        private static validateItem;
-    }
-}
-declare module "services/side-panels-manager/models/item-wrapper" { }
-declare module "services/side-panels-manager/side-panels-manager" {
-    import { KalturaPlayer, Logger } from '@playkit-js/kaltura-player-js';
-    import { SidePanelItem } from "services/side-panels-manager/models/side-panel-item";
-    export class SidePanelsManager {
-        private readonly player;
-        private readonly activePanels;
-        private readonly componentsRegistry;
-        private readonly logger;
-        /**
-         * @ignore
-         */
-        constructor(player: KalturaPlayer, logger: Logger);
-        add(item: SidePanelItem): number | void;
-        remove(itemId: number): void;
-        activateItem(itemId: number): void;
-        deactivateItem(itemId: number): void;
-        isItemActive(itemId: number): boolean;
-        /**
-         * Rerender (uses preact Component.forceUpdate api under the hoods) the side panel item component
-         * It's just for backward compatibility you should not use it.
-         */
-        update(itemId: number): void;
-        /**
-         * @ignore
-         */
-        reset(): void;
-        /**
-         * @ignore
-         */
-        destroy(): void;
-        private removeAllItems;
-        private toggle;
-        private expand;
-        private collapse;
-        private static getCounterPanelPosition;
         private static validateItem;
     }
 }
