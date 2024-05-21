@@ -1,10 +1,13 @@
 import { h, createRef, RefObject, FunctionalComponent, ComponentClass } from 'preact';
 import { KalturaPlayer } from '@playkit-js/kaltura-player-js';
 import { PanelItemWrapper } from '../ui/panel-item-wrapper/panel-item-wrapper.component';
-import { PanelComponentProps, SidePanelItem } from './side-panel-item';
-
-const DETACH_CONTAINER_CLASS = 'playkit-player detach-sidebar-container';
-const CLOSE_DETACH_EVENTS = ['beforeunload', 'popstate'];
+import {
+  PanelComponentProps,
+  SidePanelItem,
+  DETACHED_WINDOW_STYLES,
+  DETACH_CONTAINER_CLASS,
+  CLOSE_DETACH_EVENTS
+} from './side-panel-item';
 
 export interface DetachWindowOptions {
   onAttach?: () => void;
@@ -32,6 +35,7 @@ export class ItemWrapper {
   private removePanelComponentFn!: () => void;
   private isActive: boolean;
   private _detachWindow: Window | null = null;
+  private _closingDetachWindow = false;
 
   constructor(item: SidePanelItem, player: KalturaPlayer) {
     this.id = ++ItemWrapper.nextId;
@@ -79,10 +83,10 @@ export class ItemWrapper {
     styles.forEach((style) => {
       const newStyle = this._detachWindow!.document.createElement('style');
       newStyle!.textContent = style.textContent;
-      newPageHead?.appendChild(newStyle!);
+      newPageHead.appendChild(newStyle!);
     });
-    newPageBody!.style.margin = '0px';
-    newPageBody!.style.backgroundColor = 'black';
+
+    Object.assign(newPageBody.style, DETACHED_WINDOW_STYLES);
 
     // Append the <div> element to the new window's document
     this._detachWindow?.document.body.appendChild(el);
@@ -90,7 +94,7 @@ export class ItemWrapper {
     // handle close of new window
     this._detachWindow!.onbeforeunload = () => {
       options?.onAttach?.();
-      this._detachWindow = null;
+      this._closeDetachedWindow();
     };
     CLOSE_DETACH_EVENTS.forEach((closeEvent) => {
       window.addEventListener(closeEvent, this._closeDetachedWindow);
@@ -136,13 +140,16 @@ export class ItemWrapper {
   }
 
   private _closeDetachedWindow = () => {
-    if (this._detachWindow && !this._detachWindow.closed) {
-      this._detachWindow?.close();
+    if (!this._detachWindow || this._closingDetachWindow) {
+      return;
     }
+    this._closingDetachWindow = true;
     CLOSE_DETACH_EVENTS.forEach((closeEvent) => {
       window.removeEventListener(closeEvent, this._closeDetachedWindow);
     });
+    this._detachWindow.close();
     this._detachWindow = null;
+    this._closingDetachWindow = false;
   };
 
   private injectPanelComponent(): void {
