@@ -69,6 +69,45 @@ export class somePlugin extends BasePlugin {
 }
 ```
 
+## Detach panel
+
+Panel can be detached to new window, API:
+### Detach
+Detach panel by id with options
+```
+this.player.getService('sidePanelsManager').detachItem(panelItemId, options);
+```
+options:
+```
+  top?: number;
+  left?: number;
+  width: number;
+  height: number;
+  title: string;
+  maxWidth?: number;
+  maxHeight?: number;
+  attachPlaceholder?: ComponentClass | FunctionalComponent;
+  onDetach?: () => void;
+  onAttach?: () => void;
+  onDetachResize?: (x: number, y: number) => void;
+  onDetachMove?: (x: number, y: number) => void;
+```
+### Attach
+Attach panel by id
+```
+this.player.getService('sidePanelsManager').attachItem(panelItemId);
+```
+### isItemDetached
+Check if panel currently detached
+```
+this.player.getService('sidePanelsManager').isItemDetached(panelItemId);
+```
+### getDetachedRef
+Returns detached dom element if panel detached
+```
+this.player.getService('sidePanelsManager').getDetachedRef(panelItemId);
+```
+
 ## Configuration
 
 You can see the Ui managers plugin full configuration options [here](https://kaltura.github.io/playkit-js-ui-managers/docs/api/types/types_ui_managers_config.UiManagerConfig.html)
