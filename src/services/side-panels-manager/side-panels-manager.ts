@@ -108,7 +108,7 @@ export class SidePanelsManager {
       this.deactivateItem(itemId);
       itemWrapper.detach({
         ...options,
-        onAttach: () => this.attachItem(itemId)
+        onDetachWindowClose: () => this.attachItem(itemId)
       });
     } else {
       this.logger.warn(`${itemId} is not registered`);

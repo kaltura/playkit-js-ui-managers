@@ -19,3 +19,4 @@ export const DETACHED_WINDOW_STYLES = {
 };
 export const DETACH_CONTAINER_CLASS = 'playkit-player detach-sidebar-container';
 export const CLOSE_DETACH_EVENTS = ['beforeunload', 'popstate'];
+export const DETACH_POSITION_INTERVAL = 1000;
