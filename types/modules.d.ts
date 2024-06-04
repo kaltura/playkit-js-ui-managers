@@ -32,8 +32,6 @@ declare module "services/side-panels-manager/models/item-wrapper" {
         maxWidth?: number;
         maxHeight?: number;
         attachPlaceholder?: ComponentClass | FunctionalComponent;
-        onDetach?: () => void;
-        onAttach?: () => void;
         onDetachResize?: (x: number, y: number) => void;
         onDetachMove?: (x: number, y: number) => void;
     }

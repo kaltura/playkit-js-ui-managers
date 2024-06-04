@@ -20,8 +20,6 @@ export interface DetachWindowOptions {
   maxWidth?: number;
   maxHeight?: number;
   attachPlaceholder?: ComponentClass | FunctionalComponent;
-  onDetach?: () => void;
-  onAttach?: () => void;
   onDetachResize?: (x: number, y: number) => void;
   onDetachMove?: (x: number, y: number) => void;
 }
@@ -42,10 +40,10 @@ export class ItemWrapper {
 
   private _detachWindow: Window | null = null;
   private _closingDetachWindow = false;
+  private _attachingDetachWindow = false;
   private _detachWindowPosition = { screenX: 0, screenY: 0 };
   private _detachWindowSize = { innerWidth: 0, innerHeight: 0 };
   private _detachWindowAnalyticsInterval: ReturnType<typeof setInterval> | null = null;
-  private _onAttach: (() => void) | null = null;
 
   constructor(item: SidePanelItem, player: KalturaPlayer) {
     this.id = ++ItemWrapper.nextId;
@@ -101,6 +99,9 @@ export class ItemWrapper {
 
     // handle close of new window
     this._detachWindow!.onbeforeunload = () => {
+      if (this._attachingDetachWindow) {
+        return;
+      }
       options.onDetachWindowClose();
       this._closeDetachedWindow();
     };
@@ -149,16 +150,12 @@ export class ItemWrapper {
       }, DETACH_POSITION_INTERVAL);
     }
 
-    if (options.onAttach) {
-      this._onAttach = options.onAttach;
-    }
-
-    options.onDetach?.();
     this.panelItemComponentRef.current!.detach(el, options?.attachPlaceholder || (() => null));
   }
 
   public attach = (): void => {
     if (this.isDetached) {
+      this._attachingDetachWindow = true;
       this.panelItemComponentRef.current!.attach();
       this._closeDetachedWindow();
     }
@@ -200,15 +197,12 @@ export class ItemWrapper {
     this._detachWindow.close();
     this._detachWindow = null;
     this._closingDetachWindow = false;
+    this._attachingDetachWindow = false;
     this._setDetachWindowPosition(0, 0);
     this._setDetachWindowSize(0, 0);
     if (this._detachWindowAnalyticsInterval) {
       clearInterval(this._detachWindowAnalyticsInterval);
       this._detachWindowAnalyticsInterval = null;
-    }
-    if (this._onAttach) {
-      this._onAttach();
-      this._onAttach = null;
     }
   };
 

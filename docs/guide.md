@@ -87,10 +87,9 @@ options:
   maxWidth?: number;
   maxHeight?: number;
   attachPlaceholder?: ComponentClass | FunctionalComponent;
-  onDetach?: () => void;
-  onAttach?: () => void;
   onDetachResize?: (x: number, y: number) => void;
   onDetachMove?: (x: number, y: number) => void;
+  onDetachWindowClose?: () => void;
 ```
 ### Attach
 Attach panel by id
