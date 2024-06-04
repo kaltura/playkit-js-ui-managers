@@ -17,12 +17,13 @@ declare module "services/side-panels-manager/models/side-panel-item" {
     };
     export const DETACH_CONTAINER_CLASS = "playkit-player detach-sidebar-container";
     export const CLOSE_DETACH_EVENTS: string[];
+    export const DETACH_POSITION_INTERVAL = 1000;
 }
 declare module "services/side-panels-manager/ui/panel-item-wrapper/panel-item-wrapper.component" { }
 declare module "services/side-panels-manager/models/item-wrapper" {
     import { FunctionalComponent, ComponentClass } from 'preact';
     export interface DetachWindowOptions {
-        onAttach?: () => void;
+        onDetachWindowClose: () => void;
         top?: number;
         left?: number;
         width: number;
@@ -31,6 +32,10 @@ declare module "services/side-panels-manager/models/item-wrapper" {
         maxWidth?: number;
         maxHeight?: number;
         attachPlaceholder?: ComponentClass | FunctionalComponent;
+        onDetach?: () => void;
+        onAttach?: () => void;
+        onDetachResize?: (x: number, y: number) => void;
+        onDetachMove?: (x: number, y: number) => void;
     }
 }
 declare module "services/side-panels-manager/side-panels-manager" {
