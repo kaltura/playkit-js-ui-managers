@@ -3,6 +3,7 @@
 - [Getting started](#getting-started)
     - [First step: setup](#first-step-setup)
     - [Second step: access and use the desired service inside the plugin](#second-step-access-and-use-the-desired-service-inside-the-plugin)
+- [Detach](#detach)
 - [Configuration](#configuration)
 - [Full working example](https://github.com/kaltura/playkit-js-ui-managers/tree/master/demo)
 
@@ -71,7 +72,9 @@ export class somePlugin extends BasePlugin {
 
 ## Detach panel
 
-Panel can be detached to new window, API:
+Panel content can be rendered in new browser window, attach placeholder renders instead of original content inside panel when the new window opened.
+Once new window closed original content moves back to panel.
+
 ### Detach
 Detach panel by id with options
 ```
@@ -79,17 +82,17 @@ this.player.getService('sidePanelsManager').detachItem(panelItemId, options);
 ```
 options:
 ```
-  top?: number;
-  left?: number;
-  width: number;
-  height: number;
-  title: string;
-  maxWidth?: number;
-  maxHeight?: number;
-  attachPlaceholder?: ComponentClass | FunctionalComponent;
-  onDetachResize?: (x: number, y: number) => void;
-  onDetachMove?: (x: number, y: number) => void;
-  onDetachWindowClose?: () => void;
+  top?: number; // top position of new window, default 0
+  left?: number; // left position of new window, default 0
+  width: number; // width of new window, default 'auto'
+  height: number; // height of new window, default 'auto'
+  title: string; // title of new window
+  maxWidth?: number; // max width of new window (on resize)
+  maxHeight?: number; // max height of new window (on resize)
+  attachPlaceholder?: ComponentClass | FunctionalComponent; // component that renders inside panel when original content renders inside new window
+  onDetachResize?: (x: number, y: number) => void; // callback on the new window resize
+  onDetachMove?: (x: number, y: number) => void; // callback on the new window moved (changed position)
+  onDetachWindowClose?: () => void; // callback when user closes the new window by "x" button (system)
 ```
 ### Attach
 Attach panel by id
