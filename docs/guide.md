@@ -80,20 +80,8 @@ Detach panel by id with options
 ```
 this.player.getService('sidePanelsManager').detachItem(panelItemId, options);
 ```
-options:
-```
-  top?: number; // top position of new window, default 0
-  left?: number; // left position of new window, default 0
-  width: number; // width of new window, default 'auto'
-  height: number; // height of new window, default 'auto'
-  title: string; // title of new window
-  maxWidth?: number; // max width of new window (on resize)
-  maxHeight?: number; // max height of new window (on resize)
-  attachPlaceholder?: ComponentClass | FunctionalComponent; // component that renders inside panel when original content renders inside new window
-  onDetachResize?: (x: number, y: number) => void; // callback on the new window resize
-  onDetachMove?: (x: number, y: number) => void; // callback on the new window moved (changed position)
-  onDetachWindowClose?: () => void; // callback when user closes the new window by "x" button (system)
-```
+You can see detach options [here](https://kaltura.github.io/playkit-js-ui-managers/docs/api/interfaces/side_panels_manager_side_panels_manager._internal_.DetachWindowOptions.html)
+
 ### Attach
 Attach panel by id
 ```
