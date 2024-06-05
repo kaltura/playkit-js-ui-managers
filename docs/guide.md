@@ -3,6 +3,7 @@
 - [Getting started](#getting-started)
     - [First step: setup](#first-step-setup)
     - [Second step: access and use the desired service inside the plugin](#second-step-access-and-use-the-desired-service-inside-the-plugin)
+- [Detach](#detach)
 - [Configuration](#configuration)
 - [Full working example](https://github.com/kaltura/playkit-js-ui-managers/tree/master/demo)
 
@@ -67,6 +68,34 @@ export class somePlugin extends BasePlugin {
     });
   }
 }
+```
+
+## Detach panel
+
+Panel content can be rendered in new browser window, attach placeholder renders instead of original content inside panel when the new window opened.
+Once new window closed original content moves back to panel.
+
+### Detach
+Detach panel by id with options
+```
+this.player.getService('sidePanelsManager').detachItem(panelItemId, options);
+```
+You can see detach options [here](https://kaltura.github.io/playkit-js-ui-managers/docs/api/interfaces/side_panels_manager_side_panels_manager._internal_.DetachWindowOptions.html)
+
+### Attach
+Attach panel by id
+```
+this.player.getService('sidePanelsManager').attachItem(panelItemId);
+```
+### isItemDetached
+Check if panel currently detached
+```
+this.player.getService('sidePanelsManager').isItemDetached(panelItemId);
+```
+### getDetachedRef
+Returns detached dom element if panel detached
+```
+this.player.getService('sidePanelsManager').getDetachedRef(panelItemId);
 ```
 
 ## Configuration

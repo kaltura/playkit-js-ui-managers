@@ -6,11 +6,12 @@ import {
   SidePanelItem,
   DETACHED_WINDOW_STYLES,
   DETACH_CONTAINER_CLASS,
-  CLOSE_DETACH_EVENTS
+  CLOSE_DETACH_EVENTS,
+  DETACH_POSITION_INTERVAL
 } from './side-panel-item';
 
 export interface DetachWindowOptions {
-  onAttach?: () => void;
+  onDetachWindowClose: () => void;
   top?: number;
   left?: number;
   width: number;
@@ -19,6 +20,8 @@ export interface DetachWindowOptions {
   maxWidth?: number;
   maxHeight?: number;
   attachPlaceholder?: ComponentClass | FunctionalComponent;
+  onDetachResize?: (x: number, y: number) => void;
+  onDetachMove?: (x: number, y: number) => void;
 }
 
 /**
@@ -34,8 +37,13 @@ export class ItemWrapper {
   private panelItemComponentRef!: RefObject<PanelItemWrapper>;
   private removePanelComponentFn!: () => void;
   private isActive: boolean;
+
   private _detachWindow: Window | null = null;
   private _closingDetachWindow = false;
+  private _attachingDetachWindow = false;
+  private _detachWindowPosition = { screenX: 0, screenY: 0 };
+  private _detachWindowSize = { innerWidth: 0, innerHeight: 0 };
+  private _detachWindowAnalyticsInterval: ReturnType<typeof setInterval> | null = null;
 
   constructor(item: SidePanelItem, player: KalturaPlayer) {
     this.id = ++ItemWrapper.nextId;
@@ -91,7 +99,10 @@ export class ItemWrapper {
 
     // handle close of new window
     this._detachWindow!.onbeforeunload = () => {
-      options?.onAttach?.();
+      if (this._attachingDetachWindow) {
+        return;
+      }
+      options.onDetachWindowClose();
       this._closeDetachedWindow();
     };
     CLOSE_DETACH_EVENTS.forEach((closeEvent) => {
@@ -110,11 +121,41 @@ export class ItemWrapper {
         }
       });
     }
+
+    // handle window move and resize
+    if (options.onDetachMove || options.onDetachResize) {
+      const { screenX, screenY } = this._detachWindow!;
+      this._setDetachWindowPosition(screenX, screenY);
+      const { innerWidth, innerHeight } = this._detachWindow!;
+      this._setDetachWindowSize(innerWidth, innerHeight);
+
+      // use interval since there no handlers for new window position change
+      this._detachWindowAnalyticsInterval = setInterval(() => {
+        if (
+          options.onDetachMove &&
+          (this._detachWindow!.screenX !== this._detachWindowPosition.screenX ||
+            this._detachWindow!.screenY !== this._detachWindowPosition.screenY)
+        ) {
+          this._setDetachWindowPosition(this._detachWindow!.screenX, this._detachWindow!.screenY);
+          options.onDetachMove(this._detachWindow!.screenX, this._detachWindow!.screenY);
+        }
+        if (
+          options.onDetachResize &&
+          (this._detachWindow!.innerWidth !== this._detachWindowSize.innerWidth ||
+            this._detachWindow!.innerHeight !== this._detachWindowSize.innerHeight)
+        ) {
+          this._setDetachWindowSize(this._detachWindow!.innerWidth, this._detachWindow!.innerHeight);
+          options.onDetachResize(this._detachWindow!.innerWidth, this._detachWindow!.innerHeight);
+        }
+      }, DETACH_POSITION_INTERVAL);
+    }
+
     this.panelItemComponentRef.current!.detach(el, options?.attachPlaceholder || (() => null));
   }
 
   public attach = (): void => {
     if (this.isDetached) {
+      this._attachingDetachWindow = true;
       this.panelItemComponentRef.current!.attach();
       this._closeDetachedWindow();
     }
@@ -137,6 +178,14 @@ export class ItemWrapper {
     this.panelItemComponentRef.current!.forceUpdate();
   }
 
+  private _setDetachWindowPosition = (x: number, y: number) => {
+    this._detachWindowPosition = { screenX: x, screenY: y };
+  };
+
+  private _setDetachWindowSize = (width: number, height: number) => {
+    this._detachWindowSize = { innerWidth: width, innerHeight: height };
+  };
+
   private _closeDetachedWindow = () => {
     if (!this._detachWindow || this._closingDetachWindow) {
       return;
@@ -148,6 +197,13 @@ export class ItemWrapper {
     this._detachWindow.close();
     this._detachWindow = null;
     this._closingDetachWindow = false;
+    this._attachingDetachWindow = false;
+    this._setDetachWindowPosition(0, 0);
+    this._setDetachWindowSize(0, 0);
+    if (this._detachWindowAnalyticsInterval) {
+      clearInterval(this._detachWindowAnalyticsInterval);
+      this._detachWindowAnalyticsInterval = null;
+    }
   };
 
   private injectPanelComponent(): void {
