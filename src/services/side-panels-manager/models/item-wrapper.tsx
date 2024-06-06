@@ -44,6 +44,7 @@ export class ItemWrapper {
   private _detachWindowPosition = { screenX: 0, screenY: 0 };
   private _detachWindowSize = { innerWidth: 0, innerHeight: 0 };
   private _detachWindowAnalyticsInterval: ReturnType<typeof setInterval> | null = null;
+  private _initialDetachWindowSizeSet = false;
 
   constructor(item: SidePanelItem, player: KalturaPlayer) {
     this.id = ++ItemWrapper.nextId;
@@ -126,11 +127,13 @@ export class ItemWrapper {
     if (options.onDetachMove || options.onDetachResize) {
       const { screenX, screenY } = this._detachWindow!;
       this._setDetachWindowPosition(screenX, screenY);
-      const { innerWidth, innerHeight } = this._detachWindow!;
-      this._setDetachWindowSize(innerWidth, innerHeight);
 
       // use interval since there no handlers for new window position change
       this._detachWindowAnalyticsInterval = setInterval(() => {
+        if (!this._initialDetachWindowSizeSet) {
+          this._setDetachWindowSize(this._detachWindow!.innerWidth, this._detachWindow!.innerHeight);
+          this._initialDetachWindowSizeSet = true;
+        }
         if (
           options.onDetachMove &&
           (this._detachWindow!.screenX !== this._detachWindowPosition.screenX ||
@@ -198,6 +201,7 @@ export class ItemWrapper {
     this._detachWindow = null;
     this._closingDetachWindow = false;
     this._attachingDetachWindow = false;
+    this._initialDetachWindowSizeSet = false;
     this._setDetachWindowPosition(0, 0);
     this._setDetachWindowSize(0, 0);
     if (this._detachWindowAnalyticsInterval) {
