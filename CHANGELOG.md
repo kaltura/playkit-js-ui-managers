@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.5.4 (2024-06-13)
+
+
+### Bug Fixes
+
+* **FEC-13991:** handle initial size of detach window ([#57](https://github.com/kaltura/playkit-js-ui-managers/issues/57)) ([596cd86](https://github.com/kaltura/playkit-js-ui-managers/commit/596cd8670bcf71208e1bf8d4997b8a0879b71020))
+
 ### 1.5.3 (2024-05-19)
 
 
