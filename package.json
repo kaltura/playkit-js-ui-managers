@@ -1,6 +1,6 @@
 {
   "name": "@playkit-js/ui-managers",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "",
   "main": "dist/playkit-ui-manager.js",
   "types": "types/index.d.ts",
