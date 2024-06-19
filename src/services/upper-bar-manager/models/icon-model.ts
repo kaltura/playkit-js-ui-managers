@@ -30,6 +30,6 @@ export class IconModel {
   }
 
   public update(): void {
-    this.componentRef.current!.forceUpdate();
+    this.componentRef.current?.forceUpdate();
   }
 }

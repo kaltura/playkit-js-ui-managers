@@ -64,7 +64,7 @@ export class ItemWrapper {
   }
 
   public deactivate(switchMode = false): void {
-    this.panelItemComponentRef.current!.off(switchMode);
+    this.panelItemComponentRef.current?.off(switchMode);
     this.isActive = false;
   }
 
@@ -178,7 +178,7 @@ export class ItemWrapper {
   }
 
   public update(): void {
-    this.panelItemComponentRef.current!.forceUpdate();
+    this.panelItemComponentRef.current?.forceUpdate();
   }
 
   private _setDetachWindowPosition = (x: number, y: number) => {
