@@ -1,0 +1,47 @@
+@import '~@playkit-js/playkit-js-ui';
+
+.dropdown-item {
+  border-radius: 4px;
+  padding: 4px 12px 4px 15px;
+  display: flex;
+  margin: 4px 0;
+  cursor: pointer;
+  align-items: center;
+
+  .icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      display: inline-block;
+    }
+  }
+
+  &:hover {
+    background-color: $tone-6-color;
+  }
+
+  .dropdown-item-description {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 700;
+    padding-left: 11px;
+    overflow: hidden;
+    white-space: nowrap;
+
+    &.trim-text {
+      text-overflow: ellipsis;
+    }
+  }
+
+  .comparison-text {
+    position: absolute;
+    font-size: 14px;
+    font-weight: 700;
+    left: 0;
+    padding: 0;
+  }
+}
