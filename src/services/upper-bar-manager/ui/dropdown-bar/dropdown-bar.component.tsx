@@ -31,10 +31,11 @@ export class DropdownBar extends Component<DropdownBarProps> {
       style: { maxHeight: `${maxHeightStyle}px` }
     };
 
+    const controlsLength = this.props.controls.length;
     return (
       <div {...dropDownProps}>
         <Scrollable isVertical={true}>
-          {this.props.controls.map(({ id, displayName, ariaLabel, svgIcon, onClick }) => {
+          {this.props.controls.map(({ id, displayName, ariaLabel, svgIcon, onClick }: IconModel, index: number) => {
             const icon = typeof svgIcon === 'function' ? svgIcon() : svgIcon;
             const text = typeof ariaLabel === 'function' ? ariaLabel() : ariaLabel;
             return (
@@ -45,6 +46,7 @@ export class DropdownBar extends Component<DropdownBarProps> {
                 icon={icon}
                 onClick={onClick}
                 onDropdownClick={this.props.onDropdownClick}
+                tooltipPosition={index === controlsLength - 1 ? 'top' : 'bottom'}
               />
             );
           })}

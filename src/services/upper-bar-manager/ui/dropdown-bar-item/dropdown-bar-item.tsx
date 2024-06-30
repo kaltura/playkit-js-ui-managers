@@ -12,11 +12,12 @@ type DropdownBarItemProps = {
   icon: SvgIcon;
   onClick: (e: KeyboardEvent | MouseEvent) => void;
   onDropdownClick: () => void;
+  tooltipPosition: string;
 };
 
 const PADDING = 11;
 
-const DropdownBarItem = ({ displayName, text, icon, onClick, onDropdownClick }: DropdownBarItemProps) => {
+const DropdownBarItem = ({ displayName, text, icon, onClick, onDropdownClick, tooltipPosition }: DropdownBarItemProps) => {
   const comparisonTextRef = useRef<HTMLSpanElement | null>(null);
   const textRef = useRef<HTMLSpanElement | null>(null);
 
@@ -73,8 +74,19 @@ const DropdownBarItem = ({ displayName, text, icon, onClick, onDropdownClick }: 
       </A11yWrapper>
     );
   };
-
-  return <Fragment>{showTooltip ? <Tooltip label={text}>{renderContent()}</Tooltip> : renderContent()}</Fragment>;
+  return (
+    <Fragment>
+      {showTooltip ? (
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        <Tooltip label={text} type={tooltipPosition}>
+          {renderContent()}
+        </Tooltip>
+      ) : (
+        renderContent()
+      )}
+    </Fragment>
+  );
 };
 
 export { DropdownBarItem };
