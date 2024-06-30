@@ -3,38 +3,10 @@
 .more-dropdown {
   position: absolute;
   padding: 8px 4px;
-  width: 166px;  // replace to min-width and grow with text
+  width: 200px;  // replace to min-width and grow with text
   background-color: $tone-7-color;
   border-radius: 4px;
   top: 44px;
   right: 0;
-
-  .dropdown-item {
-    border-radius: 4px;
-    padding: 4px 12px 4px 15px;
-    display: flex;
-    margin: 4px 0;
-    cursor: pointer;
-
-    .icon {
-      width: 24px;
-      height: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    &:hover {
-      background-color: $tone-6-color;
-    }
-
-    .dropdown-item-description {
-      display: flex;
-      flex: 1;
-      font-size: 14px;
-      font-weight: 700;
-      align-items: center;
-      padding-left: 11px;
-    }
-  }
+  overflow: hidden;
 }

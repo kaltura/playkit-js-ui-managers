@@ -51,7 +51,8 @@ module.exports = (env, { mode }) => {
     },
     externals: {
       '@playkit-js/kaltura-player-js': 'root KalturaPlayer',
-      preact: 'root KalturaPlayer.ui.preact'
+      preact: 'root KalturaPlayer.ui.preact',
+      'preact/hooks': 'root KalturaPlayer.ui.preactHooks',
     },
     devServer: {
       static: {

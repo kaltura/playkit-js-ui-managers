@@ -1,6 +1,6 @@
 import { h, Component, ComponentChild, createRef, RefObject } from 'preact';
 import { A11yWrapper } from '@playkit-js/common/dist/hoc/a11y-wrapper';
-import { PlaykitUI, ui } from '@playkit-js/kaltura-player-js';
+import { KalturaPlayer, PlaykitUI, ui } from '@playkit-js/kaltura-player-js';
 import * as styles from './more-icon.component.scss';
 import { IconModel } from '../../models/icon-model';
 import { DropdownBar } from '../dropdown-bar/dropdown-bar.component';
@@ -20,6 +20,7 @@ type MoreIconProps = {
   showDropdown: boolean;
   moreIconTxt?: string;
   eventManager?: EventManager;
+  player: KalturaPlayer;
 };
 
 @withEventManager
@@ -58,7 +59,7 @@ export class MoreIcon extends Component<MoreIconProps> {
         </Tooltip>
         {this.props.showDropdown && (
           <div>
-            <DropdownBar onDropdownClick={this.props.onClick} controls={this.props.icons} />
+            <DropdownBar onDropdownClick={this.props.onClick} controls={this.props.icons} player={this.props.player} />
           </div>
         )}
       </div>
