@@ -16,7 +16,7 @@ export class IconModel {
   public component: ComponentClass<Record<string, never>> | FunctionalComponent<Record<string, never>>;
   public svgIcon: SvgIcon | (() => SvgIcon);
   public presets: PlaykitUI.ReservedPresetName[];
-  public selfManagement: boolean;
+  public shouldHandleOnClick: boolean;
   constructor(item: IconDto) {
     this.id = ++IconModel.nextId;
     this.displayName = item.displayName;
@@ -28,7 +28,7 @@ export class IconModel {
     this.componentRef = createRef();
     this.presets =
       item.presets && item.presets.length > 0 ? item.presets : [ReservedPresetNames.Playback, ReservedPresetNames.Live];
-    this.selfManagement = item.selfManagement || false;
+    this.shouldHandleOnClick = typeof item.shouldHandleOnClick === 'boolean' ? item.shouldHandleOnClick : true;
   }
 
   public update(): void {

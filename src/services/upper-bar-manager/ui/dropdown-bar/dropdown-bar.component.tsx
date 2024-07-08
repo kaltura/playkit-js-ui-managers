@@ -13,13 +13,16 @@ type DropdownBarProps = {
   player: KalturaPlayer;
 };
 
-const TOP_BAR_HEIGHT = 60;
 const PADDING_FROM_BOTTOM = 16;
 
 export class DropdownBar extends Component<DropdownBarProps> {
   calculateMaxHeight(): number {
     const playerHeight = this.props.player.getVideoElement().clientHeight;
-    return playerHeight - TOP_BAR_HEIGHT - PADDING_FROM_BOTTOM;
+    // taking the topBarMaxHeight from the window because ui-managers repo is not working with updated ui version
+    // once aligning ui-managers with latest ui we can import ui and get the topBarMaxHeight from there, instead of window
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    return playerHeight - Number(window.KalturaPlayer.ui.style.topBarMaxHeight) - PADDING_FROM_BOTTOM;
   }
 
   render(): ComponentChild {

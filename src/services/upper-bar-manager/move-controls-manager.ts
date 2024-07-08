@@ -42,12 +42,12 @@ export class MoveControlsManager {
       const { controlsToMove } = newState.bottomBar;
       if (controlsToMove.length > 0) {
         this.logger.debug('Adding core controls to upper bar: ', controlsToMove);
-        controlsToMove.forEach((compName: string) => {
-          const comp: IconDto = bottomBarRegistryManager.registry.get(compName);
-          if (comp) {
-            const iconId = this.upperBarManager.add(comp);
+        controlsToMove.forEach((componentName: string) => {
+          const componentToMove: IconDto = bottomBarRegistryManager.registry.get(componentName);
+          if (componentToMove) {
+            const iconId = this.upperBarManager.add(componentToMove);
             if (typeof iconId === 'number') {
-              this.iconIds.set(compName, iconId);
+              this.iconIds.set(componentName, iconId);
             }
           }
         });

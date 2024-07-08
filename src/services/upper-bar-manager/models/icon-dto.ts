@@ -36,7 +36,7 @@ export interface IconDto {
    */
   presets?: PlaykitUI.ReservedPresetName[];
   /**
-   * An indication whether the component can manage itself or not
+   * An indication whether the upper bar should handle the onClick callback of the component or not
    */
-  selfManagement?: boolean;
+  shouldHandleOnClick?: boolean;
 }

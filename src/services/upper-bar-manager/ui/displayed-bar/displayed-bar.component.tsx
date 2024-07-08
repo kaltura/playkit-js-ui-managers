@@ -86,13 +86,13 @@ export class DisplayedBar extends Component<DisplayedBarProps & PropsFromRedux, 
     const { displayedControls, dropdownControls } = this.splitControlsIntoDisplayedAndDropdown();
     return displayedControls.length > 0 ? (
       <div className={styles.rightUpperBarWrapperContainer}>
-        {displayedControls.map(({ id, component, onClick, componentRef, selfManagement }) => {
+        {displayedControls.map(({ id, component, onClick, componentRef, shouldHandleOnClick }) => {
           const IconWrapperComponent = component!;
           return (
             <IconWrapper
               key={id}
               onClick={(...e): void => {
-                if (!selfManagement) {
+                if (shouldHandleOnClick) {
                   onClick(...e);
                 }
                 this.closeDropdown();
