@@ -79,7 +79,7 @@ const DropdownBarItem = ({ displayName, text, icon, onClick, onDropdownClick, to
       {showTooltip ? (
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        <Tooltip label={text} type={tooltipPosition}>
+        <Tooltip label={text} type={tooltipPosition} className={styles.moreItemTooltip}>
           {renderContent()}
         </Tooltip>
       ) : (
