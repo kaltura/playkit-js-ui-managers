@@ -43,7 +43,7 @@ export class MoveControlsManager {
       if (controlsToMove.length > 0) {
         this.logger.debug('Adding core controls to upper bar: ', controlsToMove);
         controlsToMove.forEach((componentName: string) => {
-          const componentToMove: IconDto = bottomBarRegistryManager.registry.get(componentName);
+          const componentToMove: IconDto = bottomBarRegistryManager.getComponentItem(componentName);
           if (componentToMove) {
             const iconId = this.upperBarManager.add(componentToMove);
             if (typeof iconId === 'number') {
