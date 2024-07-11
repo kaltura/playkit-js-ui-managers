@@ -1,8 +1,6 @@
-import { KalturaPlayer, Logger, ui } from '@playkit-js/kaltura-player-js';
+import { KalturaPlayer, Logger } from '@playkit-js/kaltura-player-js';
 import { UpperBarManager } from './upper-bar-manager';
 import { IconDto } from './models/icon-dto';
-
-const { redux } = ui;
 
 export class MoveControlsManager {
   private readonly player: KalturaPlayer;
@@ -12,7 +10,7 @@ export class MoveControlsManager {
   private currentState: any;
   private iconIds: Map<string, number>;
 
-  constructor(player: KalturaPlayer, logger: Logger, upperBarManager: UpperBarManager) {
+  constructor(player: KalturaPlayer, logger: Logger, upperBarManager: UpperBarManager, redux: any) {
     this.player = player;
     this.logger = logger;
     this.store = redux.useStore();

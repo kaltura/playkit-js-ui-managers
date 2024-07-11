@@ -5,7 +5,7 @@ import { h, RefObject, createRef } from 'preact';
 import { DisplayedBar } from './ui/displayed-bar/displayed-bar.component';
 import { KalturaPluginsDisplayNames } from '../../types/kaltura-plugins-display-names';
 import { MoveControlsManager } from './move-controls-manager';
-const { ReservedPresetAreas, ReservedPresetNames } = ui;
+const { ReservedPresetAreas, ReservedPresetNames, redux } = ui;
 
 const UPPER_BAR_PRESETS = Object.values(ReservedPresetNames).filter(
   (preset) => preset !== ReservedPresetNames.Idle && preset !== ReservedPresetNames.Error
@@ -31,7 +31,7 @@ export class UpperBarManager {
     this.iconsOrder = {} as IconsOrder;
     UPPER_BAR_PRESETS.forEach((preset) => (this.displayedBarComponentRefs[preset] = createRef()));
     this.injectDisplayedBarComponentWrapper();
-    this.moveControlsManager = new MoveControlsManager(player, logger, this);
+    this.moveControlsManager = new MoveControlsManager(player, logger, this, redux);
   }
 
   public add(icon: IconDto): number | undefined {
