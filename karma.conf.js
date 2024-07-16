@@ -55,7 +55,15 @@ module.exports = function (config) {
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: false,
 
-    // start these browsers
+    // custom browser launcher - chrome with flags
+    customLaunchers: {
+      ChromeWithFlags: {
+        base: 'Chrome',
+        flags: ['--no-sandbox', '--autoplay-policy=no-user-gesture-required', '--mute-audio', '--max-web-media-player-count=1000']
+      }
+    },
+
+    // start these browsers by default
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['ChromeHeadless'],
 

@@ -14,8 +14,9 @@ export class IconModel {
   public componentRef: RefObject<IconWrapper>;
   public onClick: (e: MouseEvent | KeyboardEvent) => void;
   public component: ComponentClass<Record<string, never>> | FunctionalComponent<Record<string, never>>;
-  public svgIcon: SvgIcon;
+  public svgIcon: SvgIcon | (() => SvgIcon);
   public presets: PlaykitUI.ReservedPresetName[];
+  public shouldHandleOnClick: boolean;
   constructor(item: IconDto) {
     this.id = ++IconModel.nextId;
     this.displayName = item.displayName;
@@ -27,6 +28,7 @@ export class IconModel {
     this.componentRef = createRef();
     this.presets =
       item.presets && item.presets.length > 0 ? item.presets : [ReservedPresetNames.Playback, ReservedPresetNames.Live];
+    this.shouldHandleOnClick = typeof item.shouldHandleOnClick === 'boolean' ? item.shouldHandleOnClick : true;
   }
 
   public update(): void {

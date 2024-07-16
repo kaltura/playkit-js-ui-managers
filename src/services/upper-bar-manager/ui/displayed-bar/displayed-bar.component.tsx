@@ -2,7 +2,7 @@ import { h, Component, ComponentChild, RefObject } from 'preact';
 import { IconModel } from '../../models/icon-model';
 import { IconWrapper } from '../icon-wrapper/icon-wrapper.component';
 import * as styles from './displayed-bar.component.scss';
-import { ui } from '@playkit-js/kaltura-player-js';
+import { KalturaPlayer, ui } from '@playkit-js/kaltura-player-js';
 import { MoreIcon } from '../more-icon/more-icon.component';
 
 const { PLAYER_SIZE } = ui.Components;
@@ -22,6 +22,7 @@ type DisplayedBarState = {
 type DisplayedBarProps = {
   getControls: () => IconModel[];
   ref: RefObject<DisplayedBar>;
+  player: KalturaPlayer;
 };
 type PropsFromRedux = {
   playerSize?: string;
@@ -85,13 +86,15 @@ export class DisplayedBar extends Component<DisplayedBarProps & PropsFromRedux, 
     const { displayedControls, dropdownControls } = this.splitControlsIntoDisplayedAndDropdown();
     return displayedControls.length > 0 ? (
       <div className={styles.rightUpperBarWrapperContainer}>
-        {displayedControls.map(({ id, component, onClick, componentRef }) => {
+        {displayedControls.map(({ id, component, onClick, componentRef, shouldHandleOnClick }) => {
           const IconWrapperComponent = component!;
           return (
             <IconWrapper
               key={id}
               onClick={(...e): void => {
-                onClick(...e);
+                if (shouldHandleOnClick) {
+                  onClick(...e);
+                }
                 this.closeDropdown();
               }}
               ref={componentRef}
@@ -101,7 +104,12 @@ export class DisplayedBar extends Component<DisplayedBarProps & PropsFromRedux, 
           );
         })}
         {dropdownControls.length > 0 && (
-          <MoreIcon showDropdown={this.state.showDropdown} onClick={this.handleOnClick} icons={dropdownControls} />
+          <MoreIcon
+            showDropdown={this.state.showDropdown}
+            onClick={this.handleOnClick}
+            icons={dropdownControls}
+            player={this.props.player}
+          />
         )}
       </div>
     ) : undefined;

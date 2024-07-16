@@ -22,7 +22,7 @@ export interface IconDto {
   /**
    * Icon that will appear in the dropdown menu
    */
-  svgIcon: SvgIcon;
+  svgIcon: SvgIcon | (() => SvgIcon);
   /**
    * The icon handler
    *
@@ -35,4 +35,8 @@ export interface IconDto {
    * Relevant presets for the icon
    */
   presets?: PlaykitUI.ReservedPresetName[];
+  /**
+   * An indication whether the upper bar should handle the onClick callback of the component or not
+   */
+  shouldHandleOnClick?: boolean;
 }
