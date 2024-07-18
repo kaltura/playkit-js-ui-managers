@@ -1,4 +1,5 @@
 const path = require('path');
+const packageData = require('./package.json');
 const CSS_MODULE_PREFIX = 'playkit';
 
 module.exports = (env, { mode }) => {
@@ -20,7 +21,13 @@ module.exports = (env, { mode }) => {
         {
           test: /\.scss/,
           use: [
-            'style-loader',
+            {
+              loader: 'style-loader',
+              options: {
+                attributes: {id: `${packageData.name}`},
+                injectType: "singletonStyleTag"
+              }
+            },
             {
               loader: 'css-loader',
               options: {
