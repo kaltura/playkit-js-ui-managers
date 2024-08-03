@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.6.0 (2024-08-03)
+
+
+### Features
+
+* **FEC-13945:** move core controls to upper bar ([#59](https://github.com/kaltura/playkit-js-ui-managers/issues/59)) ([1db6d1b](https://github.com/kaltura/playkit-js-ui-managers/commit/1db6d1b0595acdcaa4970228c81243832834bcf6))
+
 ### 1.5.6 (2024-06-30)
 
 
