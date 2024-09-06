@@ -104,6 +104,6 @@
     "name": "uiManagers"
   },
   "dependencies": {
-    "@playkit-js/common": "^1.2.10"
+    "@playkit-js/common": "^1.5.18"
   }
 }
