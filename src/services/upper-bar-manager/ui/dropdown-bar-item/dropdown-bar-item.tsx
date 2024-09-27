@@ -1,4 +1,5 @@
 import { h, Fragment, VNode } from 'preact';
+import { renderToString } from 'preact-render-to-string';
 import { useState, useRef, useLayoutEffect } from 'preact/hooks';
 import * as styles from './dropdown-bar-item.scss';
 import { ui } from '@playkit-js/kaltura-player-js';
@@ -16,6 +17,8 @@ type DropdownBarItemProps = {
 };
 
 const PADDING = 11;
+
+const { withText, Text } = ui.preacti18n;
 
 const DropdownBarItem = ({ displayName, text, icon, onClick, onDropdownClick, tooltipPosition }: DropdownBarItemProps) => {
   const comparisonTextRef = useRef<HTMLSpanElement | null>(null);
@@ -58,6 +61,8 @@ const DropdownBarItem = ({ displayName, text, icon, onClick, onDropdownClick, to
     textElement
   );
 
+  const textString = typeof text === 'string' ? text : renderToString(text);
+
   const renderContent = (): VNode => {
     return (
       <A11yWrapper
@@ -67,7 +72,7 @@ const DropdownBarItem = ({ displayName, text, icon, onClick, onDropdownClick, to
         }}
         role="menuitem"
       >
-        <div className={styles.dropdownItem} tabIndex={0} aria-label={text}>
+        <div className={styles.dropdownItem} tabIndex={0} aria-label={textString}>
           <div className={styles.icon}>{renderIcon()}</div>
           {content}
         </div>
