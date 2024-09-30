@@ -1,6 +1,7 @@
 import { h, Fragment, VNode } from 'preact';
 import { useState, useRef, useLayoutEffect } from 'preact/hooks';
 import * as styles from './dropdown-bar-item.scss';
+import { renderToString } from 'preact-render-to-string';
 import { ui } from '@playkit-js/kaltura-player-js';
 import { A11yWrapper } from '@playkit-js/common/dist/hoc/a11y-wrapper';
 import { SvgIcon } from '../../models/svg-icon';
@@ -58,6 +59,8 @@ const DropdownBarItem = ({ displayName, text, icon, onClick, onDropdownClick, to
     textElement
   );
 
+  const textString = typeof text === 'string' ? text : renderToString(text);
+
   const renderContent = (): VNode => {
     return (
       <A11yWrapper
@@ -67,7 +70,7 @@ const DropdownBarItem = ({ displayName, text, icon, onClick, onDropdownClick, to
         }}
         role="menuitem"
       >
-        <div className={styles.dropdownItem} tabIndex={0} aria-label={text}>
+        <div className={styles.dropdownItem} tabIndex={0} aria-label={textString}>
           <div className={styles.icon}>{renderIcon()}</div>
           {content}
         </div>
