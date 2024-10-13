@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.6.1 (2024-10-13)
+
+
+### Bug Fixes
+
+* **ADA-1612:** Removed generic role ([#62](https://github.com/kaltura/playkit-js-ui-managers/issues/62)) ([1c8c3ae](https://github.com/kaltura/playkit-js-ui-managers/commit/1c8c3ae90013bbe825f9f2079e720ed2e2ea2acc))
+
 ## 1.6.0 (2024-08-03)
 
 
