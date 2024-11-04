@@ -5541,6 +5541,11 @@ preact-i18n@^2.0.0-preactx.2:
   dependencies:
     dlv "^1.1.2"
 
+preact-render-to-string@^6.5.11:
+  version "6.5.11"
+  resolved "https://registry.npmjs.org/preact-render-to-string/-/preact-render-to-string-6.5.11.tgz#467e69908a453497bb93d4d1fc35fb749a78e027"
+  integrity sha512-ubnauqoGczeGISiOh6RjX0/cdaF8v/oDXIjO85XALCQjwQP+SB4RDXXtvZ6yTYSjG+PC1QRP2AhPgCEsM2EvUw==
+
 preact@^10.0.0:
   version "10.13.2"
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.13.2.tgz#2c40c73d57248b57234c4ae6cd9ab9d8186ebc0a"
