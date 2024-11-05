@@ -104,7 +104,7 @@
     "name": "uiManagers"
   },
   "dependencies": {
-    "@playkit-js/common": "1.5.18",
+    "@playkit-js/common": "1.5.20",
     "preact-render-to-string": "^6.5.11"
   }
 }
