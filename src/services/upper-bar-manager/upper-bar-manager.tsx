@@ -76,6 +76,20 @@ export class UpperBarManager {
     return icons.sort((a, b) => iconsOrder[a.displayName] - iconsOrder[b.displayName]);
   }
 
+  public focusPluginButton(pluginName: string) {
+    let pluginButton;
+    const controls = this.getControls(this.iconsOrder);
+    const pluginElement = controls.find((control) => control.displayName === pluginName)?.componentRef?.current
+      ?.base as HTMLElement;
+    if (pluginElement) {
+      pluginButton = pluginElement.querySelector('button');
+    } else {
+      const rightControls = this.displayedBarComponentRefs.Playback.current?.base as HTMLElement;
+      const buttons = rightControls.getElementsByTagName('button');
+      pluginButton = buttons[buttons.length - 1];
+    }
+    pluginButton?.focus();
+  }
   private injectDisplayedBarComponentWrapper(): void {
     const iconsOrder = this.iconsOrder;
     for (const preset of UPPER_BAR_PRESETS) {
