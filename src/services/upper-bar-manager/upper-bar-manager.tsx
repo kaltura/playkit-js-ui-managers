@@ -76,17 +76,16 @@ export class UpperBarManager {
     return icons.sort((a, b) => iconsOrder[a.displayName] - iconsOrder[b.displayName]);
   }
 
-  public focusPluginButton(pluginName: string) {
+  public focusPluginButton(pluginId: number) {
     let pluginButton;
     const controls = this.getControls(this.iconsOrder);
-    const pluginElement = controls.find((control) => control.displayName === pluginName)?.componentRef?.current
-      ?.base as HTMLElement;
+    const pluginElement = controls.find((control) => control.id === pluginId)?.componentRef?.current?.base as HTMLElement;
     if (pluginElement) {
-      pluginButton = pluginElement.querySelector('button');
+      pluginButton = pluginElement.querySelector('[tabindex="0"]') as HTMLElement;
     } else {
       const rightControls = this.displayedBarComponentRefs.Playback.current?.base as HTMLElement;
-      const buttons = rightControls.getElementsByTagName('button');
-      pluginButton = buttons[buttons.length - 1];
+      const buttons = rightControls.querySelectorAll('[tabindex="0"]');
+      pluginButton = buttons[buttons.length - 1] as HTMLElement;
     }
     pluginButton?.focus();
   }
