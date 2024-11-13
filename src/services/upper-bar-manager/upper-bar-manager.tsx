@@ -77,9 +77,8 @@ export class UpperBarManager {
   }
 
   public getMorePluginButton() {
-    const rightControls = this.displayedBarComponentRefs.Playback.current?.base as HTMLElement;
-    const buttons = rightControls.querySelectorAll('[tabindex="0"]');
-    return Array.from(buttons).find((button) => button.classList.contains('playkit-more-icon_fR')) as HTMLButtonElement;
+    const moreElement = this.displayedBarComponentRefs.Playback.current?.moreIconRef?.current?.base as HTMLElement;
+    return moreElement?.querySelector('[tabindex="0"]') as HTMLButtonElement;
   }
 
   public focusPluginButton(pluginId: number) {
