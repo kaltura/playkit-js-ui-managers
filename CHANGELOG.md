@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.6.2 (2024-11-14)
+
+
+### Bug Fixes
+
+* **ADA-1777:** University of Illinois Urbana-Champaign (ADA) V7 player issues Priority 2([#8](https://github.com/kaltura/playkit-js-ui-managers/issues/8)) transcript panel does not immediately follow the toggle button ([#66](https://github.com/kaltura/playkit-js-ui-managers/issues/66)) ([9634d47](https://github.com/kaltura/playkit-js-ui-managers/commit/9634d4763a0f710a318fd4eda57e70da1de99403))
+
 ### 1.6.1 (2024-10-13)
 
 
