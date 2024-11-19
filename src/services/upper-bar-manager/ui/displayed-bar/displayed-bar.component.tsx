@@ -1,4 +1,4 @@
-import { h, Component, ComponentChild, RefObject } from 'preact';
+import { h, Component, ComponentChild, RefObject, createRef } from 'preact';
 import { IconModel } from '../../models/icon-model';
 import { IconWrapper } from '../icon-wrapper/icon-wrapper.component';
 import * as styles from './displayed-bar.component.scss';
@@ -32,6 +32,7 @@ type PropsFromRedux = {
 // @ts-ignore
 @connect(mapStateToProps, null, null, { forwardRef: true })
 export class DisplayedBar extends Component<DisplayedBarProps & PropsFromRedux, DisplayedBarState> {
+  public moreIconRef = createRef<MoreIcon>();
   constructor() {
     super();
     this.state = { showDropdown: false };
@@ -109,6 +110,9 @@ export class DisplayedBar extends Component<DisplayedBarProps & PropsFromRedux, 
             onClick={this.handleOnClick}
             icons={dropdownControls}
             player={this.props.player}
+            ref={(node) => {
+              this.moreIconRef.current = node;
+            }}
           />
         )}
       </div>

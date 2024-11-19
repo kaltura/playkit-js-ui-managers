@@ -76,6 +76,11 @@ export class UpperBarManager {
     return icons.sort((a, b) => iconsOrder[a.displayName] - iconsOrder[b.displayName]);
   }
 
+  public getMorePluginButton() {
+    const moreElement = this.displayedBarComponentRefs.Playback.current?.moreIconRef?.current?.base as HTMLElement;
+    return moreElement?.querySelector('[tabindex="0"]') as HTMLButtonElement;
+  }
+
   public focusPluginButton(pluginId: number) {
     let pluginButton;
     const controls = this.getControls(this.iconsOrder);
@@ -83,9 +88,7 @@ export class UpperBarManager {
     if (pluginElement) {
       pluginButton = pluginElement.querySelector('[tabindex="0"]') as HTMLElement;
     } else {
-      const rightControls = this.displayedBarComponentRefs.Playback.current?.base as HTMLElement;
-      const buttons = rightControls.querySelectorAll('[tabindex="0"]');
-      pluginButton = buttons[buttons.length - 1] as HTMLElement;
+      pluginButton = this.getMorePluginButton();
     }
     pluginButton?.focus();
   }
