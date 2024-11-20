@@ -81,7 +81,7 @@ export class UpperBarManager {
     return moreElement?.querySelector('[tabindex="0"]') as HTMLButtonElement;
   }
 
-  public focusPluginButton(pluginId: number) {
+  public focusPluginButton(pluginId: number, event?: KeyboardEvent) {
     let pluginButton;
     const controls = this.getControls(this.iconsOrder);
     const pluginElement = controls.find((control) => control.id === pluginId)?.componentRef?.current?.base as HTMLElement;
@@ -90,7 +90,10 @@ export class UpperBarManager {
     } else {
       pluginButton = this.getMorePluginButton();
     }
-    pluginButton?.focus();
+    if (pluginButton) {
+      event?.preventDefault();
+      pluginButton.focus();
+    }
   }
   private injectDisplayedBarComponentWrapper(): void {
     const iconsOrder = this.iconsOrder;
