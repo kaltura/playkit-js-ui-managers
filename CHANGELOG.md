@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.6.3 (2024-11-28)
+
+
+### Bug Fixes
+
+* **ADA-1777:** University of Illinois Urbana-Champaign (ADA) V7 playe… ([#68](https://github.com/kaltura/playkit-js-ui-managers/issues/68)) ([cef5e9f](https://github.com/kaltura/playkit-js-ui-managers/commit/cef5e9f0b68d91551588bd506112225ee5e5a51d)), closes [#8](https://github.com/kaltura/playkit-js-ui-managers/issues/8) [kaltura/playkit-js-transcript#228](https://github.com/kaltura/playkit-js-transcript/issues/228)
+
 ### 1.6.2 (2024-11-14)
 
 
