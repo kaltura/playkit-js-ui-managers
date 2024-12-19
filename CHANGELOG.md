@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.6.4 (2024-12-19)
+
+
+### Bug Fixes
+
+* **ADA-1787:** update common version ([#69](https://github.com/kaltura/playkit-js-ui-managers/issues/69)) ([69b8931](https://github.com/kaltura/playkit-js-ui-managers/commit/69b89317439051b22fa8dc8f296a9a7a0de4bbbb))
+
 ### 1.6.3 (2024-11-28)
 
 
