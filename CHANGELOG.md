@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.7.0 (2025-01-23)
+
+
+### Features
+
+* **FEC-14239:** Rename Catalan locale from ca to ca_es ([#71](https://github.com/kaltura/playkit-js-ui-managers/issues/71)) ([922ea40](https://github.com/kaltura/playkit-js-ui-managers/commit/922ea40b201d862dc87bfaaaf7cbb21dfdeb8fb2))
+
 ### 1.6.4 (2024-12-19)
 
 
