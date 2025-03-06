@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.8.0 (2025-03-06)
+
+
+### Features
+
+* **FEC-14380:** update package.json ([#75](https://github.com/kaltura/playkit-js-ui-managers/issues/75)) ([03a2be3](https://github.com/kaltura/playkit-js-ui-managers/commit/03a2be30d82ff59d041197f71d89759184b2b7ae))
+
 ## 1.7.0 (2025-01-23)
 
 
