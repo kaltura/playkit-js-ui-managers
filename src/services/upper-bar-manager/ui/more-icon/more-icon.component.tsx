@@ -45,7 +45,7 @@ export class MoreIcon extends Component<MoreIconProps> {
   render(): ComponentChild {
     return (
       <div style={{ position: 'relative' }}>
-        <Tooltip label={this.props.moreIconTxt!}>
+        <Tooltip label={this.props.moreIconTxt!} type="bottom-left" strictPosition>
           <A11yWrapper onClick={this.props.onClick}>
             <button
               ref={this.moreButtonRef}
