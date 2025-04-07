@@ -13,7 +13,7 @@ export class Banner extends Component<BannerProps> {
     const { text, title = 'Audience asks:', icon = this._defaultIcon() } = content;
 
     return (
-      <div className={styles.defaultBannerRoot + ' ' + styles.bannerWrapper}>
+      <div className={styles.defaultBannerRoot + ' ' + styles.bannerWrapper} role="alert" aria-live="polite">
         <div className={styles.iconContainer}>
           <div className={styles.iconWrapper}>{icon}</div>
         </div>
