@@ -61,7 +61,7 @@ export class Toast extends Component<ToastProps, ToastState> {
           <Icon size={IconSize.small} name="close" />
         </button>
         <div className={styles.title}>{title}</div>
-        <div className={styles.toastBody}>
+        <div className={styles.toastBody} role='alert' aria-live="assertive">
           <div className={styles.iconContainer}>
             <div className={styles.iconWrapper}>{icon}</div>
           </div>
