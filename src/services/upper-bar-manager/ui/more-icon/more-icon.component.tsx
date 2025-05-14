@@ -45,7 +45,7 @@ export class MoreIcon extends Component<MoreIconProps> {
   render(): ComponentChild {
     return (
       <div style={{ position: 'relative' }}>
-        {/* @ts-expect-error */}
+        {/* @ts-expect-error - Tooltip type prop not part of declared props */}
         <Tooltip label={this.props.moreIconTxt!} type="bottom-left" strictPosition>
           <A11yWrapper onClick={this.props.onClick}>
             <button
