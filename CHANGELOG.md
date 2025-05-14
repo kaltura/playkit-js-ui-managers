@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.8.1 (2025-04-24)
+
+
+### Bug Fixes
+
+* **ADA-1733:** Announce Toast Notifications ([#78](https://github.com/kaltura/playkit-js-ui-managers/issues/78)) ([a779015](https://github.com/kaltura/playkit-js-ui-managers/commit/a779015098a639324f09a262056ae109db971606))
+
 ## 1.8.0 (2025-03-06)
 
 
