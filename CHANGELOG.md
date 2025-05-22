@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.8.2 (2025-05-22)
+
+
+### Bug Fixes
+
+* **ADA-1736:** Fix tooltip type ([#76](https://github.com/kaltura/playkit-js-ui-managers/issues/76)) ([a1f6cc6](https://github.com/kaltura/playkit-js-ui-managers/commit/a1f6cc630b8a59d63a20a3d618100dee6b2d0ddb))
+
 ### 1.8.1 (2025-04-24)
 
 
