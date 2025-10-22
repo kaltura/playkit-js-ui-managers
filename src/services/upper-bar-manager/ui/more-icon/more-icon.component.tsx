@@ -24,7 +24,7 @@ type MoreIconProps = {
 };
 
 @withEventManager
-@withText({ moreIconTxt: <Text id="controls.moreIcon">More</Text> })
+@withText({ moreIconTxt: <Text id="uiManagers.moreIcon">More</Text> })
 export class MoreIcon extends Component<MoreIconProps> {
   private readonly moreButtonRef: RefObject<HTMLButtonElement>;
   constructor() {
