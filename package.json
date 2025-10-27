@@ -6,7 +6,8 @@
   "types": "types/index.d.ts",
   "files": [
     "dist/",
-    "types/"
+    "types/",
+    "translations"
   ],
   "license": "Apache-2.0",
   "homepage": "https://github.com/kaltura/playkit-js-ui-managers#readme",
