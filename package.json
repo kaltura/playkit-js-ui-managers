@@ -7,7 +7,7 @@
   "files": [
     "dist/",
     "types/",
-    "translations"
+    "translations/"
   ],
   "license": "Apache-2.0",
   "homepage": "https://github.com/kaltura/playkit-js-ui-managers#readme",
