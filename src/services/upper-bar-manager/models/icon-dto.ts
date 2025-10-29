@@ -43,4 +43,8 @@ export interface IconDto {
    * An indication whether the upper bar should handle the onClick callback of the component or not
    */
   shouldHandleOnClick?: boolean;
+  /**
+   * An indication whether the icon is disabled or not
+   */
+  isDisabled?: boolean;
 }

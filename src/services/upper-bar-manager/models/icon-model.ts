@@ -18,6 +18,7 @@ export class IconModel {
   public svgIcon: SvgIcon | (() => SvgIcon);
   public presets: PlaykitUI.ReservedPresetName[];
   public shouldHandleOnClick: boolean;
+  public isDisabled: boolean;
   constructor(item: IconDto) {
     this.id = ++IconModel.nextId;
     this.displayName = item.displayName;
@@ -31,6 +32,7 @@ export class IconModel {
     this.presets =
       item.presets && item.presets.length > 0 ? item.presets : [ReservedPresetNames.Playback, ReservedPresetNames.Live];
     this.shouldHandleOnClick = typeof item.shouldHandleOnClick === 'boolean' ? item.shouldHandleOnClick : true;
+    this.isDisabled = item.isDisabled || false;
   }
 
   public update(): void {
