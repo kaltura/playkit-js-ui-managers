@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.8.3 (2025-10-23)
+
+
+### Bug Fixes
+
+* **FEC-14604:** update key name in i18n files from controls to uiManagers ([#81](https://github.com/kaltura/playkit-js-ui-managers/issues/81)) ([a115394](https://github.com/kaltura/playkit-js-ui-managers/commit/a115394c7b858aae40888c02eed23c860c7d4480))
+
 ### 1.8.2 (2025-05-22)
 
 
