@@ -38,14 +38,16 @@ export class DropdownBar extends Component<DropdownBarProps> {
     return (
       <div {...dropDownProps}>
         <Scrollable isVertical={true}>
-          {this.props.controls.map(({ id, displayName, ariaLabel, svgIcon, onClick }: IconModel, index: number) => {
+          {this.props.controls.map(({ id, displayName, label, ariaLabel, svgIcon, onClick }: IconModel, index: number) => {
             const icon = typeof svgIcon === 'function' ? svgIcon() : svgIcon;
-            const text = typeof ariaLabel === 'function' ? ariaLabel() : ariaLabel;
+            const text = typeof label === 'function' ? label() : label;
+            const ariaLabelText = typeof ariaLabel === 'function' ? ariaLabel() : ariaLabel;
             return (
               <DropdownBarItem
                 key={id}
                 displayName={displayName}
                 text={text}
+                ariaLabel={ariaLabelText}
                 icon={icon}
                 onClick={onClick}
                 onDropdownClick={this.props.onDropdownClick}

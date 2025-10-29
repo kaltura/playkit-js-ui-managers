@@ -10,6 +10,7 @@ const { Icon, Tooltip } = ui.Components;
 type DropdownBarItemProps = {
   displayName: string;
   text: string;
+  ariaLabel: string;
   icon: SvgIcon;
   onClick: (e: KeyboardEvent | MouseEvent) => void;
   onDropdownClick: () => void;
@@ -18,7 +19,15 @@ type DropdownBarItemProps = {
 
 const PADDING = 11;
 
-const DropdownBarItem = ({ displayName, text, icon, onClick, onDropdownClick, tooltipPosition }: DropdownBarItemProps) => {
+const DropdownBarItem = ({
+  displayName,
+  text,
+  ariaLabel,
+  icon,
+  onClick,
+  onDropdownClick,
+  tooltipPosition
+}: DropdownBarItemProps) => {
   const comparisonTextRef = useRef<HTMLSpanElement | null>(null);
   const textRef = useRef<HTMLSpanElement | null>(null);
 
@@ -59,7 +68,7 @@ const DropdownBarItem = ({ displayName, text, icon, onClick, onDropdownClick, to
     textElement
   );
 
-  const textString = typeof text === 'string' ? text : renderToString(text);
+  const ariaLabelString = typeof ariaLabel === 'string' ? ariaLabel : renderToString(ariaLabel);
 
   const renderContent = (): VNode => {
     return (
@@ -70,7 +79,7 @@ const DropdownBarItem = ({ displayName, text, icon, onClick, onDropdownClick, to
         }}
         role="menuitem"
       >
-        <div className={styles.dropdownItem} tabIndex={0} aria-label={textString}>
+        <div className={styles.dropdownItem} tabIndex={0} aria-label={ariaLabelString}>
           <div className={styles.icon}>{renderIcon()}</div>
           {content}
         </div>
