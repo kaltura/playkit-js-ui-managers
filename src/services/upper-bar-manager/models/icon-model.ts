@@ -9,7 +9,6 @@ export class IconModel {
   private static nextId = 0;
   public readonly id: number;
   public displayName: string;
-  public label: any;
   public ariaLabel: any;
   public order: number;
   public componentRef: RefObject<IconWrapper>;
@@ -21,7 +20,6 @@ export class IconModel {
   constructor(item: IconDto) {
     this.id = ++IconModel.nextId;
     this.displayName = item.displayName;
-    this.label = item.label || item.ariaLabel;
     this.ariaLabel = item.ariaLabel;
     this.order = item.order;
     this.component = item.component;
