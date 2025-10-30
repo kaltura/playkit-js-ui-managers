@@ -43,14 +43,13 @@ export class DropdownBar extends Component<DropdownBarProps> {
               const icon = typeof svgIcon === 'function' ? svgIcon() : svgIcon;
               const text = typeof label === 'function' ? label() : label;
               const ariaLabelText = typeof ariaLabel === 'function' ? ariaLabel() : ariaLabel;
-              const isDisabledValue = typeof isDisabled === 'function' ? isDisabled() : isDisabled;
               return (
                 <DropdownBarItem
                   key={id}
                   displayName={displayName}
                   text={text}
                   ariaLabel={ariaLabelText}
-                  isDisabled={isDisabledValue}
+                  isDisabled={isDisabled}
                   icon={icon}
                   onClick={onClick}
                   onDropdownClick={this.props.onDropdownClick}

@@ -18,7 +18,7 @@ export class IconModel {
   public svgIcon: SvgIcon | (() => SvgIcon);
   public presets: PlaykitUI.ReservedPresetName[];
   public shouldHandleOnClick: boolean;
-  public isDisabled: any;
+  public isDisabled: boolean;
   constructor(item: IconDto) {
     this.id = ++IconModel.nextId;
     this.displayName = item.displayName;
