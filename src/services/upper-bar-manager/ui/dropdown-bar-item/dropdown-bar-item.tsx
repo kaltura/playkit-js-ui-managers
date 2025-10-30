@@ -11,7 +11,6 @@ type DropdownBarItemProps = {
   displayName: string;
   text: string;
   ariaLabel: string;
-  isDisabled?: boolean;
   icon: SvgIcon;
   onClick: (e: KeyboardEvent | MouseEvent) => void;
   onDropdownClick: () => void;
@@ -24,7 +23,6 @@ const DropdownBarItem = ({
   displayName,
   text,
   ariaLabel,
-  isDisabled,
   icon,
   onClick,
   onDropdownClick,
@@ -81,11 +79,7 @@ const DropdownBarItem = ({
         }}
         role="menuitem"
       >
-        <div
-          className={[styles.dropdownItem, isDisabled ? styles.disabled : ''].join(' ')}
-          tabIndex={0}
-          aria-label={ariaLabelString}
-        >
+        <div className={styles.dropdownItem} tabIndex={0} aria-label={ariaLabelString}>
           <div className={styles.icon}>{renderIcon()}</div>
           {content}
         </div>
