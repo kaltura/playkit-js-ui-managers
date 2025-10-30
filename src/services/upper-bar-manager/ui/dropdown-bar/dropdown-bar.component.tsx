@@ -38,21 +38,27 @@ export class DropdownBar extends Component<DropdownBarProps> {
     return (
       <div {...dropDownProps}>
         <Scrollable isVertical={true}>
-          {this.props.controls.map(({ id, displayName, ariaLabel, svgIcon, onClick }: IconModel, index: number) => {
-            const icon = typeof svgIcon === 'function' ? svgIcon() : svgIcon;
-            const text = typeof ariaLabel === 'function' ? ariaLabel() : ariaLabel;
-            return (
-              <DropdownBarItem
-                key={id}
-                displayName={displayName}
-                text={text}
-                icon={icon}
-                onClick={onClick}
-                onDropdownClick={this.props.onDropdownClick}
-                tooltipPosition={index === controlsLength - 1 ? 'top' : 'bottom'}
-              />
-            );
-          })}
+          {this.props.controls.map(
+            ({ id, displayName, label, ariaLabel, svgIcon, onClick, isDisabled }: IconModel, index: number) => {
+              const icon = typeof svgIcon === 'function' ? svgIcon() : svgIcon;
+              const text = typeof label === 'function' ? label() : label;
+              const ariaLabelText = typeof ariaLabel === 'function' ? ariaLabel() : ariaLabel;
+              const isDisabledValue = typeof isDisabled === 'function' ? isDisabled() : isDisabled;
+              return (
+                <DropdownBarItem
+                  key={id}
+                  displayName={displayName}
+                  text={text}
+                  ariaLabel={ariaLabelText}
+                  isDisabled={isDisabledValue}
+                  icon={icon}
+                  onClick={onClick}
+                  onDropdownClick={this.props.onDropdownClick}
+                  tooltipPosition={index === controlsLength - 1 ? 'top' : 'bottom'}
+                />
+              );
+            }
+          )}
         </Scrollable>
       </div>
     );

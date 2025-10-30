@@ -8,6 +8,10 @@ export interface IconDto {
    */
   displayName: string;
   /**
+   * The title of the icon. If empty, the title will default to the value of ariaLabel - string | </Text> of preact-i18n Element
+   */
+  label?: any;
+  /**
    * An HTML Aria label attribute that would be attached to the provided icon - string | </Text> of preact-i18n Element
    */
   ariaLabel: any;
@@ -39,4 +43,8 @@ export interface IconDto {
    * An indication whether the upper bar should handle the onClick callback of the component or not
    */
   shouldHandleOnClick?: boolean;
+  /**
+   * An indication whether the icon is disabled or not
+   */
+  isDisabled?: boolean;
 }
