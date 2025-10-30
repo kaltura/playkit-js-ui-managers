@@ -9,6 +9,7 @@ export class IconModel {
   private static nextId = 0;
   public readonly id: number;
   public displayName: string;
+  public label: any;
   public ariaLabel: any;
   public order: number;
   public componentRef: RefObject<IconWrapper>;
@@ -17,9 +18,11 @@ export class IconModel {
   public svgIcon: SvgIcon | (() => SvgIcon);
   public presets: PlaykitUI.ReservedPresetName[];
   public shouldHandleOnClick: boolean;
+  public isDisabled: any;
   constructor(item: IconDto) {
     this.id = ++IconModel.nextId;
     this.displayName = item.displayName;
+    this.label = item.label || item.ariaLabel;
     this.ariaLabel = item.ariaLabel;
     this.order = item.order;
     this.component = item.component;
@@ -29,6 +32,7 @@ export class IconModel {
     this.presets =
       item.presets && item.presets.length > 0 ? item.presets : [ReservedPresetNames.Playback, ReservedPresetNames.Live];
     this.shouldHandleOnClick = typeof item.shouldHandleOnClick === 'boolean' ? item.shouldHandleOnClick : true;
+    this.isDisabled = item.isDisabled || false;
   }
 
   public update(): void {

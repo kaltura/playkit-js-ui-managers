@@ -8,6 +8,11 @@
   cursor: pointer;
   align-items: center;
 
+  &.disabled {
+    pointer-events: none !important;
+    color: #666;
+  }
+
   .icon {
     width: 24px;
     height: 24px;
