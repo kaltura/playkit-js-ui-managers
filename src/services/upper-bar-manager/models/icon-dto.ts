@@ -46,5 +46,5 @@ export interface IconDto {
   /**
    * An indication whether the icon is disabled or not
    */
-  isDisabled?: boolean;
+  isDisabled?: boolean | (() => boolean);
 }
