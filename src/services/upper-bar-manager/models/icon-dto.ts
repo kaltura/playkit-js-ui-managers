@@ -10,11 +10,11 @@ export interface IconDto {
   /**
    * The title of the icon. If empty, the title will default to the value of ariaLabel - string | </Text> of preact-i18n Element
    */
-  label?: any;
+  label?: string | (() => string);
   /**
    * An HTML Aria label attribute that would be attached to the provided icon - string | </Text> of preact-i18n Element
    */
-  ariaLabel: any;
+  ariaLabel: string | (() => string);
   /**
    * The plugin priority order (the lower the number the higher the priority - the order is from left to right - flows from upper bar (max 5 icon) to dropdown bar(the reset and again from top to bottom))
    */
