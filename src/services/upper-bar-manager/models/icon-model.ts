@@ -9,7 +9,7 @@ export class IconModel {
   private static nextId = 0;
   public readonly id: number;
   public displayName: string;
-  public label: any;
+  public label: string | (() => string);
   public ariaLabel: any;
   public order: number;
   public componentRef: RefObject<IconWrapper>;
