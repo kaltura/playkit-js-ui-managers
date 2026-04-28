@@ -1,0 +1,122 @@
+{
+  "repositoryName": "playkit-js-ui-managers",
+  "packageName": "@playkit-js/ui-managers",
+  "coreResponsibility": {
+    "summary": "A Kaltura Player plugin that provides a unified API layer for managing UI components including side panels, upper bar icons, floating elements, toasts, and banners within the Kaltura Player ecosystem.",
+    "type": "UI Service/Manager Plugin"
+  },
+  "domainAndLogicOwnership": {
+    "featureOwnership": [
+      "Side Panel Management - Controls side panel positioning (top, bottom, left, right), activation/deactivation, expand/collapse modes, and counter-panel logic",
+      "Upper Bar Management - Manages upper bar icon ordering, responsive display based on player size, and icon registry",
+      "Floating Element Management - Handles floating UI components positioned in VideoArea, InteractiveArea, or PresetArea",
+      "Toast Notifications - Manages toast display with configurable severity, duration, and positioning (BottomLeft, etc.)",
+      "Banner Display - Controls single banner display with auto-close functionality and theme configuration",
+      "Preset Management - Coordinates UI components across different player presets (Playback, Live)",
+      "Detachable Panels - Supports detaching side panel content to separate browser windows"
+    ],
+    "dataHandling": [
+      "UI Component Registry - Maintains registry of added UI components (panels, icons, floating items)",
+      "Active Panel State - Tracks currently active side panels per position",
+      "Player Preset State - Manages UI across ReservedPresetNames (Playback, Live, Idle, Error)",
+      "Side Panel Modes - Handles SidePanelModes (ALONGSIDE, OVER, HIDDEN)",
+      "Icon Order Configuration - Stores and applies icon ordering in upper bar",
+      "Canvas/Video Size Cache - Caches player and video dimensions for responsive behavior"
+    ]
+  },
+  "integrationPoints": {
+    "upstream": [
+      "@playkit-js/kaltura-player-js - Core player instance and BasePlugin class",
+      "@playkit-js/playkit-js-ui - UI framework, redux store, reducers, and preset system",
+      "@playkit-js/common - Shared utilities (UUID, player-utils, events-manager)"
+    ],
+    "downstream": [
+      "Kaltura Player Plugins - Any plugin using getService('sidePanelsManager'), getService('upperBarManager'), getService('floatingManager'), getService('toastManager'), or getService('bannerManager')",
+      "Plugin UI Components - Custom panel components, icon components, floating content renderers"
+    ],
+    "externalAPIs": [
+      "Preact - UI rendering framework (h, createRef, Component lifecycle)",
+      "preact-render-to-string - Server-side rendering support for detached windows"
+    ]
+  },
+  "technicalStack": {
+    "primaryLanguages": ["TypeScript", "TSX/JSX"],
+    "frameworks": [
+      "Preact - Component rendering",
+      "Redux - State management via playkit-js-ui store",
+      "Webpack - Build and bundling",
+      "Karma/Mocha/Chai - Testing"
+    ],
+    "entryPoints": [
+      "src/index.ts - Plugin registration entry point",
+      "src/ui-managers.ts - UIManagers plugin class that registers all services",
+      "src/services/side-panels-manager/side-panels-manager.ts - SidePanelsManager service",
+      "src/services/upper-bar-manager/upper-bar-manager.tsx - UpperBarManager service",
+      "src/services/floating-manager/floating-manager.tsx - FloatingManager service",
+      "src/services/toast-manager/toast-manager.tsx - ToastManager service",
+      "src/services/banner-manager/banner-manager.tsx - BannerManager service",
+      "src/services/preset-manager/preset-manager.tsx - PresetManager service"
+    ],
+    "buildOutput": "dist/playkit-ui-manager.js"
+  },
+  "triageKeywords": [
+    "sidePanelsManager",
+    "upperBarManager",
+    "floatingManager",
+    "toastManager",
+    "bannerManager",
+    "side panel",
+    "upper bar",
+    "SidePanelModes",
+    "SidePanelPositions",
+    "panel not opening",
+    "panel not closing",
+    "icon not showing in upper bar",
+    "toast notification",
+    "banner display",
+    "detach panel",
+    "floating overlay",
+    "ui-managers plugin",
+    "getService('sidePanelsManager')",
+    "activateItem",
+    "deactivateItem",
+    "panel expand mode",
+    "ALONGSIDE mode",
+    "OVER mode",
+    "counter panel",
+    "preset area",
+    "TopBarRightControls"
+  ],
+  "serviceRegistry": {
+    "registeredServices": [
+      {
+        "name": "sidePanelsManager",
+        "class": "SidePanelsManager",
+        "purpose": "Add, remove, activate, deactivate, detach/attach side panel items"
+      },
+      {
+        "name": "upperBarManager",
+        "class": "UpperBarManager",
+        "purpose": "Add, remove, update icons in the player upper bar"
+      },
+      {
+        "name": "floatingManager",
+        "class": "FloatingManager",
+        "purpose": "Add, remove floating UI elements in video/interactive/preset areas"
+      },
+      {
+        "name": "toastManager",
+        "class": "ToastManager",
+        "purpose": "Display timed toast notifications with configurable severity and position"
+      },
+      {
+        "name": "bannerManager",
+        "class": "BannerManager",
+        "purpose": "Display single banner overlay with optional auto-close"
+      }
+    ]
+  },
+  "supportedPresets": ["Playback", "Live", "Idle", "Error"],
+  "supportedPanelPositions": ["top", "bottom", "left", "right"],
+  "supportedExpandModes": ["ALONGSIDE", "OVER", "HIDDEN"]
+}
