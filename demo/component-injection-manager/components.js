@@ -1,17 +1,16 @@
 const { ui } = KalturaPlayer;
 const { h, preact } = ui;
 
-// Image Component - displays an image with text
+// Image Component - displays a circular avatar image
 export class ImageComponent extends preact.Component {
   render() {
     const { src, title } = this.props;
-    return h('div', { className: 'injected-image-component' }, [
+    return h('div', { className: 'injected-avatar-component' }, [
       h('img', {
-        src: src || 'https://via.placeholder.com/400x300/3498db/ffffff?text=Demo+Image',
-        alt: title || 'Demo Image',
-        style: { width: '100%', height: 'auto', display: 'block' }
-      }),
-      h('div', { className: 'image-caption' }, title || 'Demo Image Component')
+        src: src || 'avatar-image.png',
+        alt: title || 'Avatar',
+        className: 'avatar-image'
+      })
     ]);
   }
 }

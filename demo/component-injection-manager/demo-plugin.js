@@ -1,5 +1,4 @@
 const { BasePlugin, registerPlugin } = KalturaPlayer;
-const { InjectionPosition } = playkit.ui.managers;
 
 import {
   ImageComponent,
@@ -18,7 +17,7 @@ export class demoPlugin extends BasePlugin {
     this.currentComponentType = null;
 
     this.player.ready().then(() => {
-      const injectionManager = this.player.getService('uiManagers')?.getComponentInjectionManager();
+      const injectionManager = this.player.getService('componentInjectionManager');
 
       if (!injectionManager) {
         console.error('ComponentInjectionManager not found!');
@@ -35,7 +34,7 @@ export class demoPlugin extends BasePlugin {
     // Inject Bottom-Right button
     document.getElementById('inject-bottom-right').addEventListener('click', () => {
       this.injectComponent('bottom-right', ImageComponent, {
-        src: 'https://via.placeholder.com/400x300/e74c3c/ffffff?text=Bottom+Right+Overlay',
+        src: 'avatar-image.png',
         title: 'Bottom Right Image'
       });
       this.currentComponentType = 'image';
