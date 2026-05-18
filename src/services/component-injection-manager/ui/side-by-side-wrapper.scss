@@ -1,0 +1,23 @@
+// src/services/component-injection-manager/ui/side-by-side-wrapper.scss
+.sideBySideWrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+}
+
+.videoContainer,
+.componentContainer {
+  flex: 1;
+  position: relative;
+  height: 100%;
+}
+
+.componentContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+}
