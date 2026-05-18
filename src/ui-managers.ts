@@ -5,6 +5,7 @@ import { FloatingManager } from './services/floating-manager/floating-manager';
 import { PresetManager } from './services/preset-manager/preset-manager';
 import { ToastManager } from './services/toast-manager/toast-manager';
 import { BannerManager } from './services/banner-manager/banner-manager';
+import { ComponentInjectionManager } from './services/component-injection-manager/component-injection-manager';
 
 export const pluginName = 'uiManagers';
 
@@ -14,6 +15,7 @@ export const pluginName = 'uiManagers';
  */
 export class UIManagers extends BasePlugin<never> {
   protected static defaultConfig = {};
+  private _componentInjectionManager!: ComponentInjectionManager;
 
   constructor(name: string, player: KalturaPlayer, config?: never) {
     super(name, player, config);
@@ -34,9 +36,23 @@ export class UIManagers extends BasePlugin<never> {
     // @ts-ignore
     player.registerService('toastManager', new ToastManager({ floatingManager }, (event: string) => this.dispatchEvent(event)));
     player.registerService('bannerManager', new BannerManager({ floatingManager, kalturaPlayer: player }));
+    this._componentInjectionManager = new ComponentInjectionManager({
+      kalturaPlayer: player,
+      eventManager: this.eventManager
+    });
+    player.registerService('componentInjectionManager', this._componentInjectionManager);
   }
 
   public static isValid(): boolean {
     return true;
+  }
+
+  public getComponentInjectionManager(): ComponentInjectionManager {
+    return this._componentInjectionManager;
+  }
+
+  public destroy(): void {
+    this._componentInjectionManager?.destroy();
+    super.destroy();
   }
 }
