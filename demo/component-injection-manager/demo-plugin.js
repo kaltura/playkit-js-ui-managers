@@ -1,10 +1,11 @@
 const { BasePlugin, registerPlugin } = KalturaPlayer;
 
 import {
-  ImageComponent,
+  RoundImageComponent,
   InfoCardComponent,
   VideoInfoComponent,
-  ChatWidgetComponent
+  ChatWidgetComponent,
+  RegularImageComponent
 } from './components.js';
 
 export const pluginName = 'demoPlugin';
@@ -33,7 +34,7 @@ export class demoPlugin extends BasePlugin {
   setupControls() {
     // Inject Bottom-Right button
     document.getElementById('inject-bottom-right').addEventListener('click', () => {
-      this.injectComponent('bottom-right', ImageComponent, {
+      this.injectComponent('bottom-right', RoundImageComponent, {
         src: 'avatar-image.png',
         title: 'Bottom Right Image'
       });
@@ -42,7 +43,7 @@ export class demoPlugin extends BasePlugin {
 
     // Inject Side-by-Side button
     document.getElementById('inject-side-by-side').addEventListener('click', () => {
-      this.injectComponent('side-by-side', ImageComponent, {});
+      this.injectComponent('side-by-side', RegularImageComponent, {});
       this.currentComponentType = 'videoInfo';
     });
 
@@ -75,7 +76,7 @@ export class demoPlugin extends BasePlugin {
         this.injectComponent(position, VideoInfoComponent, {});
         this.currentComponentType = 'videoInfo';
       } else {
-        this.injectComponent(position, ImageComponent, {
+        this.injectComponent(position, RoundImageComponent, {
           src: 'https://via.placeholder.com/400x300/3498db/ffffff?text=New+Image',
           title: 'Replaced Image'
         });
