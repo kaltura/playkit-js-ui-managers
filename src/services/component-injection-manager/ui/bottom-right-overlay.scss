@@ -1,8 +1,7 @@
 // src/services/component-injection-manager/ui/bottom-right-overlay.scss
 .bottomRightOverlay {
   position: absolute;
-  bottom: 80px; // Above bottom bar
-  right: 20px;
-  z-index: 10;
+  bottom: 15px;
+  right: 15px;
   pointer-events: auto;
 }

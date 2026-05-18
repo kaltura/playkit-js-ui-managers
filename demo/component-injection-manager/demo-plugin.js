@@ -42,7 +42,7 @@ export class demoPlugin extends BasePlugin {
 
     // Inject Side-by-Side button
     document.getElementById('inject-side-by-side').addEventListener('click', () => {
-      this.injectComponent('side-by-side', VideoInfoComponent, {});
+      this.injectComponent('side-by-side', ImageComponent, {});
       this.currentComponentType = 'videoInfo';
     });
 
@@ -91,7 +91,7 @@ export class demoPlugin extends BasePlugin {
 
   injectComponent(position, ComponentClass, props) {
     this.injectionManager.inject({
-      position: position,
+      position,
       component: (componentProps) => {
         const { h } = KalturaPlayer.ui.preact;
         return h(ComponentClass, componentProps);
