@@ -71,7 +71,7 @@ export class ItemWrapper {
   public detach(options: DetachWindowOptions): void {
     const el = document.createElement('div');
     el.style.width = '100%';
-    el.style.height = `100%`;
+    el.style.height = '100%';
     el.className = `${DETACH_CONTAINER_CLASS}-${this.id}`;
 
     // create and set params to the new window

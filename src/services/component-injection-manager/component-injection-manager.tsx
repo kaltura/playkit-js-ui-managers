@@ -96,20 +96,13 @@ export class ComponentInjectionManager {
         label: 'component-injection-side-by-side',
         presets: ['Playback', 'Live'],
         container: 'PlayerArea',
-        get: () => (
-          <SideBySideWrapper
-            player={this._kalturaPlayer}
-            component={component}
-            componentProps={props}
-          />
-        )
+        get: () => <SideBySideWrapper player={this._kalturaPlayer} component={component} componentProps={props} />
       });
     }
 
     // Fallback (should never happen)
-    this._eventManager.listenOnce(this._kalturaPlayer, 'error', () => {
-      console.error('[ComponentInjectionManager] Invalid injection position:', position);
-    });
-    return () => {};
+    return () => {
+      // No-op cleanup function
+    };
   }
 }

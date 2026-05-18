@@ -54,7 +54,7 @@ export class Toast extends Component<ToastProps, ToastState> {
     const { text, title, icon } = this.props;
 
     return (
-      <div className={styles.toastWrapper + ' ' + this._getToastSeverityClass()} onClick={this._onClick}>
+      <div className={`${styles.toastWrapper} ${this._getToastSeverityClass()}`} onClick={this._onClick}>
         <button className={styles.closeButton} onClick={this._onClose}>
           {/* <CloseIcon /> */}
 

@@ -38,15 +38,8 @@ export const SideBySideWrapper: FunctionalComponent<SideBySideWrapperProps> = ({
 
   return (
     <div className={styles.sideBySideWrapper}>
-      <div
-        className={styles.videoContainer}
-        ref={videoContainerRef}
-        aria-label="Video player"
-      />
-      <div
-        className={styles.componentContainer}
-        aria-label="Injected component"
-      >
+      <div className={styles.videoContainer} ref={videoContainerRef} aria-label="Video player" />
+      <div className={styles.componentContainer} aria-label="Injected component">
         <InjectedComponent {...componentProps} />
       </div>
     </div>
