@@ -57,33 +57,6 @@ export class demoPlugin extends BasePlugin {
       this.switchPosition('side-by-side');
     });
 
-    // Replace component button
-    document.getElementById('replace-component').addEventListener('click', () => {
-      const position = this.injectionManager.getCurrentPosition() || 'bottom-right';
-
-      // Cycle through different components
-      if (this.currentComponentType === 'image') {
-        this.injectComponent(position, InfoCardComponent, {
-          title: 'Replaced Component',
-          content: 'This is a new component that replaced the previous one!',
-          color: '#9b59b6'
-        });
-        this.currentComponentType = 'infoCard';
-      } else if (this.currentComponentType === 'infoCard') {
-        this.injectComponent(position, ChatWidgetComponent, {});
-        this.currentComponentType = 'chat';
-      } else if (this.currentComponentType === 'chat') {
-        this.injectComponent(position, VideoInfoComponent, {});
-        this.currentComponentType = 'videoInfo';
-      } else {
-        this.injectComponent(position, RoundImageComponent, {
-          src: 'https://via.placeholder.com/400x300/3498db/ffffff?text=New+Image',
-          title: 'Replaced Image'
-        });
-        this.currentComponentType = 'image';
-      }
-    });
-
     // Remove component button
     document.getElementById('remove-component').addEventListener('click', () => {
       this.removeComponent();
@@ -114,8 +87,24 @@ export class demoPlugin extends BasePlugin {
       return;
     }
 
-    this.injectionManager.switchPosition(position);
-    this.updatePositionDisplay();
+    this.injectionManager.remove();
+    switch (position) {
+      case 'bottom-right':
+        this.injectComponent('bottom-right', RoundImageComponent, {
+          src: 'avatar-image.png',
+          title: 'Bottom Right Image'
+        });
+        this.currentComponentType = 'image';
+        break;
+      case 'side-by-side':
+        this.injectComponent('side-by-side', RegularImageComponent, {});
+        break;
+      default:
+        break;
+    }
+
+    // this.injectionManager.switchPosition(position);
+    // this.updatePositionDisplay();
     console.log(`Switched to position: ${position}`);
   }
 

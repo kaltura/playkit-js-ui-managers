@@ -42,22 +42,22 @@ export class ComponentInjectionManager {
     };
   }
 
-  public switchPosition(position: InjectionPosition): void {
-    if (!this._currentComponent) {
-      return;
-    }
-
-    // Skip if already at this position
-    if (this._currentComponent.position === position) {
-      return;
-    }
-
-    // Store component and props
-    const { component, props } = this._currentComponent;
-
-    // Re-inject at new position (handles cleanup automatically)
-    this.inject({ position, component, props });
-  }
+  // public switchPosition(position: InjectionPosition): void {
+  //   if (!this._currentComponent) {
+  //     return;
+  //   }
+  //
+  //   // Skip if already at this position
+  //   if (this._currentComponent.position === position) {
+  //     return;
+  //   }
+  //
+  //   // Store component and props
+  //   const { component, props } = this._currentComponent;
+  //
+  //   // Re-inject at new position (handles cleanup automatically)
+  //   this.inject({ position, component, props });
+  // }
 
   public remove(): void {
     this._removeCurrentComponent();

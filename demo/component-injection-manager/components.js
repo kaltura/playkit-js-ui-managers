@@ -5,7 +5,7 @@ const { h, preact } = ui;
 export class RoundImageComponent extends preact.Component {
   render() {
     const { src, title } = this.props;
-    return h('div', { className: 'injected-avatar-component' }, [
+    return h('div', { className: 'injected-avatar-component-rounded' }, [
       h('img', {
         src: src || 'avatar-image.png',
         alt: title || 'Avatar',
