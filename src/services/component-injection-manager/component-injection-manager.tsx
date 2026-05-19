@@ -91,14 +91,6 @@ export class ComponentInjectionManager {
         get: () => <BottomRightOverlay>{component(props)}</BottomRightOverlay>
       });
 
-      // Query DOM for the wrapper element after render
-      setTimeout(() => {
-        const wrapper = this._kalturaPlayer.getView()?.querySelector('[class*="bottomRightOverlay"]');
-        if (wrapper && this._currentComponent) {
-          this._currentComponent.elementRef = wrapper.parentElement as HTMLElement;
-        }
-      }, 0);
-
       return { removeFunction };
     } else if (position === InjectionPosition.SideBySide) {
       const removeFunction = this._kalturaPlayer.ui.addComponent({
@@ -107,14 +99,6 @@ export class ComponentInjectionManager {
         container: 'PlayerArea',
         get: () => <SideBySideWrapper player={this._kalturaPlayer} component={component} componentProps={props} />
       });
-
-      // Query DOM for the wrapper element after render
-      setTimeout(() => {
-        const wrapper = this._kalturaPlayer.getView()?.querySelector('[class*="sideBySideWrapper"]');
-        if (wrapper && this._currentComponent) {
-          this._currentComponent.elementRef = wrapper.parentElement as HTMLElement;
-        }
-      }, 0);
 
       return { removeFunction };
     }
