@@ -1,6 +1,6 @@
 // src/services/component-injection-manager/ui/side-by-side-wrapper.tsx
 import { h, FunctionalComponent } from 'preact';
-import { useRef, useEffect } from 'preact/hooks';
+import { useRef, useEffect, useMemo } from 'preact/hooks';
 import { KalturaPlayer } from '@playkit-js/kaltura-player-js';
 import { ComponentFactory } from '../models';
 import * as styles from './side-by-side-wrapper.scss';
@@ -36,15 +36,30 @@ export const SideBySideWrapper: FunctionalComponent<SideBySideWrapperProps> = ({
     };
   }, [player]);
 
+  const posterUrl = useMemo(() => {
+    return player.sources.poster;
+  }, [player]);
+
   return (
     <div className={styles.sideBySideWrapper}>
-      <div className={styles.videoContainer} ref={videoContainerRef} aria-label="Video player" />
-      <div
-        className={styles.componentContainer}
-        aria-label="Injected component"
-        style={{ height: videoContainerRef.current?.clientHeight }}
-      >
-        <InjectedComponent {...componentProps} />
+      {/* Layer 1: Poster image background */}
+      {posterUrl && (
+        <div
+          className={styles.posterLayer}
+          style={{ backgroundImage: `url(${posterUrl})` }}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Layer 2: Backdrop overlay */}
+      <div className={styles.backdropLayer} aria-hidden="true" />
+
+      {/* Layer 3: Content layer with video and component */}
+      <div className={styles.contentLayer}>
+        <div className={styles.videoContainer} ref={videoContainerRef} aria-label="Video player" />
+        <div className={styles.componentContainer} aria-label="Injected component">
+          <InjectedComponent {...componentProps} />
+        </div>
       </div>
     </div>
   );

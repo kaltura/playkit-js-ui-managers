@@ -5,18 +5,53 @@
   position: absolute;
   left: 0;
   top: 0;
+  overflow: hidden;
+}
+
+// Layer 1: Poster image background
+.posterLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+// Layer 2: Backdrop overlay
+.backdropLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(20px);
+  z-index: 2;
+}
+
+// Layer 3: Content with video and component
+.contentLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #000;
   padding-right: 20px;
   padding-left: 20px;
+  gap: 16px;
+  z-index: 3;
 }
 
 .videoContainer {
   position: relative;
   aspect-ratio: 16/9;
-  background-color: #000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,6 +74,5 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #000;
   align-self: stretch;
 }

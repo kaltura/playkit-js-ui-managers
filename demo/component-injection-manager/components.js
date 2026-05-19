@@ -22,7 +22,7 @@ export class RegularImageComponent extends preact.Component {
       h('img', {
         src: src || 'avatar-image.png',
         alt: title || 'Avatar',
-        className: 'avatar-image',
+        className: 'avatar-image-regular',
       })
     ]);
   }

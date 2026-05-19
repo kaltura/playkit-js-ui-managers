@@ -28,7 +28,7 @@
           <p><strong>Current Position:</strong> <span id="current-position">None</span></p>
         </div>
       </div>
-      <div id="player-placeholder" style="width: 940px; aspect-ratio: 16/9;"></div>
+      <div id="player-placeholder" style="width: 888px; height: 500px;"></div>
     </div>
     <script type="module">
       import './demo-plugin.js';
@@ -36,9 +36,11 @@
       const config = {
         logLevel: 'DEBUG',
         targetId: 'player-placeholder',
-        provider: {},
+        provider: {
+          partnerId: 2215841
+        },
         playback: {
-          autoplay: true
+          // autoplay: true
         },
         plugins: {
           demoPlugin: {},
@@ -47,19 +49,20 @@
       };
 
       const player = KalturaPlayer.setup(config);
+      player.loadMedia({ entryId: '1_ebs5e9cy' });
 
-      player.setMedia({
-        sources: {
-          hls: [
-            {
-              id: '1_ebs5e9cy_19201,applehttp',
-              url: 'https://cdnapisec.kaltura.com/p/2215841/sp/221584100/playManifest/entryId/1_ebs5e9cy/protocol/https/format/applehttp/flavorIds/1_7fshquo8,1_niqt96wt,1_pnwhqw86,1_jatz0imc/a.m3u8?uiConfId=42237501&playSessionId=590247d5-3516-eac8-aa67-d22bdb9f3a89:c5d13a08-f876-5a30-79bf-453e9291aec5&referrer=aHR0cDovL2xvY2FsaG9zdDo4MDgxLw==&clientTag=html5:v3.2.0',
-              mimetype: 'application/x-mpegURL'
-            }
-          ]
-        }
-      });
-      setTimeout(() => player.pause(), 1000);
+      // player.setMedia({
+      //   sources: {
+      //     hls: [
+      //       {
+      //         id: '1_ebs5e9cy_19201,applehttp',
+      //         url: 'https://cdnapisec.kaltura.com/p/2215841/sp/221584100/playManifest/entryId/1_ebs5e9cy/protocol/https/format/applehttp/flavorIds/1_7fshquo8,1_niqt96wt,1_pnwhqw86,1_jatz0imc/a.m3u8?uiConfId=42237501&playSessionId=590247d5-3516-eac8-aa67-d22bdb9f3a89:c5d13a08-f876-5a30-79bf-453e9291aec5&referrer=aHR0cDovL2xvY2FsaG9zdDo4MDgxLw==&clientTag=html5:v3.2.0',
+      //         mimetype: 'application/x-mpegURL'
+      //       }
+      //     ]
+      //   }
+      // });
+      // setTimeout(() => player.pause(), 1000);
     </script>
   </body>
 </html>

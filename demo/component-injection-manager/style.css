@@ -99,6 +99,16 @@ h1 {
   height: 100%;
 }
 
+.avatar-image-regular {
+    width: auto;
+    height: 100%;
+    max-width: 80%;
+    border-radius: 8px;
+    object-fit: cover;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
 .avatar-image {
   width: auto;
   height: 80%;
