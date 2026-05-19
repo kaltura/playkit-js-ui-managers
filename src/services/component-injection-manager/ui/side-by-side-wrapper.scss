@@ -6,21 +6,6 @@
   left: 0;
   top: 0;
   overflow: hidden;
-
-  // Exit animation class
-  &.exiting {
-    .posterLayer {
-      animation: fadeOut 0.4s ease-out forwards;
-    }
-
-    .backdropLayer {
-      animation: fadeOut 0.4s ease-out forwards;
-    }
-
-    .contentLayer {
-      animation: slideOutDown 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards;
-    }
-  }
 }
 
 // Layer 1: Poster image background
@@ -153,22 +138,3 @@
   }
 }
 
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes slideOutDown {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-}

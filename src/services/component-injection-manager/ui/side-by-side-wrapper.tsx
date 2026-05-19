@@ -9,17 +9,14 @@ export interface SideBySideWrapperProps {
   player: KalturaPlayer;
   component: ComponentFactory;
   componentProps?: Record<string, unknown>;
-  onExitComplete?: () => void;
 }
 
 export const SideBySideWrapper: FunctionalComponent<SideBySideWrapperProps> = ({
   player,
   component: InjectedComponent,
-  componentProps,
-  onExitComplete
+  componentProps
 }) => {
   const videoContainerRef = useRef<HTMLDivElement>(null);
-  const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const videoElement = player.getVideoElement();
@@ -39,44 +36,12 @@ export const SideBySideWrapper: FunctionalComponent<SideBySideWrapperProps> = ({
     };
   }, [player]);
 
-  useEffect(() => {
-    // Listen for custom exit event
-    const handleExit = () => {
-      if (wrapperRef.current) {
-        wrapperRef.current.classList.add('exiting');
-
-        // Wait for animation to complete
-        const handleAnimationEnd = () => {
-          if (onExitComplete) {
-            onExitComplete();
-          }
-        };
-
-        wrapperRef.current.addEventListener('animationend', handleAnimationEnd, { once: true });
-      }
-    };
-
-    const wrapper = wrapperRef.current;
-    if (wrapper) {
-      // Listen on the parent element (the one addComponent creates)
-      const parent = wrapper.parentElement;
-      if (parent) {
-        parent.addEventListener('trigger-exit', handleExit);
-        return () => {
-          parent.removeEventListener('trigger-exit', handleExit);
-        };
-      }
-    }
-
-    return () => {};
-  }, [onExitComplete]);
-
   const posterUrl = useMemo(() => {
     return player.sources.poster;
   }, [player]);
 
   return (
-    <div ref={wrapperRef} className={styles.sideBySideWrapper}>
+    <div className={styles.sideBySideWrapper}>
       {/* Layer 1: Poster image background */}
       {posterUrl && <div className={styles.posterLayer} style={{ backgroundImage: `url(${posterUrl})` }} aria-hidden="true" />}
 

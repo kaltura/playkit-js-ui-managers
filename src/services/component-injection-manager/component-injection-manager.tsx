@@ -13,7 +13,6 @@ interface CurrentComponent {
   props?: Record<string, unknown>;
   position: InjectionPosition;
   removeFunction: () => void;
-  elementRef?: HTMLElement;
 }
 
 export class ComponentInjectionManager {
@@ -33,14 +32,13 @@ export class ComponentInjectionManager {
     }
 
     // Render and store removal function
-    const { removeFunction, elementRef } = this._renderComponent(options);
+    const removeFunction = this._renderComponent(options);
 
     this._currentComponent = {
       component: options.component,
       props: options.props,
       position: options.position,
-      removeFunction,
-      elementRef
+      removeFunction
     };
   }
 
@@ -62,52 +60,32 @@ export class ComponentInjectionManager {
       return;
     }
 
-    const element = this._currentComponent.elementRef;
-    if (element) {
-      // Trigger exit animation
-      const exitEvent = new CustomEvent('trigger-exit');
-      element.dispatchEvent(exitEvent);
-
-      // Wait for animation to complete before removing
-      const handleAnimationEnd = () => {
-        this._currentComponent?.removeFunction();
-      };
-
-      element.addEventListener('animationend', handleAnimationEnd, { once: true });
-    } else {
-      // No element reference, remove immediately
-      this._currentComponent.removeFunction();
-    }
+    // Call removal function (SideBySideWrapper's cleanup will restore video)
+    this._currentComponent.removeFunction();
   }
 
-  private _renderComponent(options: InjectOptions): { removeFunction: () => void; elementRef?: HTMLElement } {
+  private _renderComponent(options: InjectOptions): () => void {
     const { position, component, props } = options;
 
     if (position === InjectionPosition.BottomRight) {
-      const removeFunction = this._kalturaPlayer.ui.addComponent({
+      return this._kalturaPlayer.ui.addComponent({
         label: 'component-injection-bottom-right',
         presets: ['Playback', 'Live'],
         container: 'VideoArea',
         get: () => <BottomRightOverlay>{component(props)}</BottomRightOverlay>
       });
-
-      return { removeFunction };
     } else if (position === InjectionPosition.SideBySide) {
-      const removeFunction = this._kalturaPlayer.ui.addComponent({
+      return this._kalturaPlayer.ui.addComponent({
         label: 'component-injection-side-by-side',
         presets: ['Playback', 'Live'],
         container: 'PlayerArea',
         get: () => <SideBySideWrapper player={this._kalturaPlayer} component={component} componentProps={props} />
       });
-
-      return { removeFunction };
     }
 
     // Fallback (should never happen)
-    return {
-      removeFunction: () => {
-        // No-op cleanup function
-      }
+    return () => {
+      // No-op cleanup function
     };
   }
 }
