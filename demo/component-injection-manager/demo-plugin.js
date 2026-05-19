@@ -95,6 +95,7 @@ export class demoPlugin extends BasePlugin {
         this.injectComponent('side-by-side', RegularImageComponent, {});
         break;
       default:
+        console.log(`Position: [${position}] is not supported`);
         break;
     }
 
