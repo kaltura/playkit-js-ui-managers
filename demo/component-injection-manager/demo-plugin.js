@@ -2,9 +2,6 @@ const { BasePlugin, registerPlugin } = KalturaPlayer;
 
 import {
   RoundImageComponent,
-  InfoCardComponent,
-  VideoInfoComponent,
-  ChatWidgetComponent,
   RegularImageComponent
 } from './components.js';
 
@@ -15,7 +12,6 @@ export class demoPlugin extends BasePlugin {
 
   constructor(name, player) {
     super(name, player);
-    this.currentComponentType = null;
 
     this.player.ready().then(() => {
       const injectionManager = this.player.getService('componentInjectionManager');
@@ -94,7 +90,6 @@ export class demoPlugin extends BasePlugin {
           src: 'avatar-image.png',
           title: 'Bottom Right Image'
         });
-        this.currentComponentType = 'image';
         break;
       case 'side-by-side':
         this.injectComponent('side-by-side', RegularImageComponent, {});
@@ -103,8 +98,6 @@ export class demoPlugin extends BasePlugin {
         break;
     }
 
-    // this.injectionManager.switchPosition(position);
-    // this.updatePositionDisplay();
     console.log(`Switched to position: ${position}`);
   }
 
@@ -116,7 +109,6 @@ export class demoPlugin extends BasePlugin {
     }
 
     this.injectionManager.remove();
-    this.currentComponentType = null;
     this.updatePositionDisplay();
     console.log('Component removed');
   }

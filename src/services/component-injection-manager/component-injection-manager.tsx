@@ -13,6 +13,7 @@ interface CurrentComponent {
   props?: Record<string, unknown>;
   position: InjectionPosition;
   removeFunction: () => void;
+  elementRef?: HTMLElement;
 }
 
 export class ComponentInjectionManager {
@@ -32,32 +33,16 @@ export class ComponentInjectionManager {
     }
 
     // Render and store removal function
-    const removeFunction = this._renderComponent(options);
+    const { removeFunction, elementRef } = this._renderComponent(options);
 
     this._currentComponent = {
       component: options.component,
       props: options.props,
       position: options.position,
-      removeFunction
+      removeFunction,
+      elementRef
     };
   }
-
-  // public switchPosition(position: InjectionPosition): void {
-  //   if (!this._currentComponent) {
-  //     return;
-  //   }
-  //
-  //   // Skip if already at this position
-  //   if (this._currentComponent.position === position) {
-  //     return;
-  //   }
-  //
-  //   // Store component and props
-  //   const { component, props } = this._currentComponent;
-  //
-  //   // Re-inject at new position (handles cleanup automatically)
-  //   this.inject({ position, component, props });
-  // }
 
   public remove(): void {
     this._removeCurrentComponent();
@@ -77,32 +62,68 @@ export class ComponentInjectionManager {
       return;
     }
 
-    // Call removal function (SideBySideWrapper's cleanup will restore video)
-    this._currentComponent.removeFunction();
+    const element = this._currentComponent.elementRef;
+    if (element) {
+      // Trigger exit animation
+      const exitEvent = new CustomEvent('trigger-exit');
+      element.dispatchEvent(exitEvent);
+
+      // Wait for animation to complete before removing
+      const handleAnimationEnd = () => {
+        this._currentComponent?.removeFunction();
+      };
+
+      element.addEventListener('animationend', handleAnimationEnd, { once: true });
+    } else {
+      // No element reference, remove immediately
+      this._currentComponent.removeFunction();
+    }
   }
 
-  private _renderComponent(options: InjectOptions): () => void {
+  private _renderComponent(options: InjectOptions): { removeFunction: () => void; elementRef?: HTMLElement } {
     const { position, component, props } = options;
 
     if (position === InjectionPosition.BottomRight) {
-      return this._kalturaPlayer.ui.addComponent({
+      const removeFunction = this._kalturaPlayer.ui.addComponent({
         label: 'component-injection-bottom-right',
         presets: ['Playback', 'Live'],
         container: 'VideoArea',
         get: () => <BottomRightOverlay>{component(props)}</BottomRightOverlay>
       });
+
+      // Query DOM for the wrapper element after render
+      setTimeout(() => {
+        const wrapper = this._kalturaPlayer.getView()?.querySelector('[class*="bottomRightOverlay"]');
+        if (wrapper && this._currentComponent) {
+          this._currentComponent.elementRef = wrapper.parentElement as HTMLElement;
+        }
+      }, 0);
+
+      return { removeFunction };
     } else if (position === InjectionPosition.SideBySide) {
-      return this._kalturaPlayer.ui.addComponent({
+      const removeFunction = this._kalturaPlayer.ui.addComponent({
         label: 'component-injection-side-by-side',
         presets: ['Playback', 'Live'],
         container: 'PlayerArea',
         get: () => <SideBySideWrapper player={this._kalturaPlayer} component={component} componentProps={props} />
       });
+
+      // Query DOM for the wrapper element after render
+      setTimeout(() => {
+        const wrapper = this._kalturaPlayer.getView()?.querySelector('[class*="sideBySideWrapper"]');
+        if (wrapper && this._currentComponent) {
+          this._currentComponent.elementRef = wrapper.parentElement as HTMLElement;
+        }
+      }, 0);
+
+      return { removeFunction };
     }
 
     // Fallback (should never happen)
-    return () => {
-      // No-op cleanup function
+    return {
+      removeFunction: () => {
+        // No-op cleanup function
+      }
     };
   }
 }
