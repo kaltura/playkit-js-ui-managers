@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { KalturaPlayer, PlaykitUI } from '@playkit-js/kaltura-player-js';
 import { InjectionPosition, InjectOptions, ComponentFactory } from './models';
-import { BottomRightOverlay, SideBySideWrapper } from './ui';
+import { CornerOverlay, SideBySideWrapper } from './ui';
 
 export interface ComponentInjectionManagerOptions {
   kalturaPlayer: KalturaPlayer;
@@ -67,12 +67,18 @@ export class ComponentInjectionManager {
   private _renderComponent(options: InjectOptions): () => void {
     const { position, component, props } = options;
 
-    if (position === InjectionPosition.BottomRight) {
+    // Handle all corner positions
+    if (
+      position === InjectionPosition.TopLeft ||
+      position === InjectionPosition.TopRight ||
+      position === InjectionPosition.BottomLeft ||
+      position === InjectionPosition.BottomRight
+    ) {
       return this._kalturaPlayer.ui.addComponent({
-        label: 'component-injection-bottom-right',
+        label: `component-injection-${position}`,
         presets: ['Playback', 'Live'],
         container: 'VideoArea',
-        get: () => <BottomRightOverlay>{component(props)}</BottomRightOverlay>
+        get: () => <CornerOverlay position={position}>{component(props)}</CornerOverlay>
       });
     } else if (position === InjectionPosition.SideBySide) {
       return this._kalturaPlayer.ui.addComponent({

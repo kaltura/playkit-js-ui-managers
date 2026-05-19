@@ -28,7 +28,28 @@ export class demoPlugin extends BasePlugin {
   }
 
   setupControls() {
-    // Inject Bottom-Right button
+    // Corner position buttons
+    document.getElementById('inject-top-left').addEventListener('click', () => {
+      this.injectComponent('top-left', RoundImageComponent, {
+        src: 'avatar-image.png',
+        title: 'Top Left Image'
+      });
+    });
+
+    document.getElementById('inject-top-right').addEventListener('click', () => {
+      this.injectComponent('top-right', RoundImageComponent, {
+        src: 'avatar-image.png',
+        title: 'Top Right Image'
+      });
+    });
+
+    document.getElementById('inject-bottom-left').addEventListener('click', () => {
+      this.injectComponent('bottom-left', RoundImageComponent, {
+        src: 'avatar-image.png',
+        title: 'Bottom Left Image'
+      });
+    });
+
     document.getElementById('inject-bottom-right').addEventListener('click', () => {
       this.injectComponent('bottom-right', RoundImageComponent, {
         src: 'avatar-image.png',
@@ -39,16 +60,6 @@ export class demoPlugin extends BasePlugin {
     // Inject Side-by-Side button
     document.getElementById('inject-side-by-side').addEventListener('click', () => {
       this.injectComponent('side-by-side', RegularImageComponent, {});
-    });
-
-    // Switch to Bottom-Right button
-    document.getElementById('switch-to-bottom-right').addEventListener('click', () => {
-      this.switchPosition('bottom-right');
-    });
-
-    // Switch to Side-by-Side button
-    document.getElementById('switch-to-side-by-side').addEventListener('click', () => {
-      this.switchPosition('side-by-side');
     });
 
     // Remove component button
@@ -70,35 +81,6 @@ export class demoPlugin extends BasePlugin {
     console.log(`Injected component at position: ${position}`);
   }
 
-  switchPosition(position) {
-    const currentPosition = this.injectionManager.getCurrentPosition();
-    if (!currentPosition) {
-      alert('No component to switch. Please inject a component first.');
-      return;
-    }
-    if (currentPosition === position) {
-      alert(`Component is already at ${position} position.`);
-      return;
-    }
-
-    this.injectionManager.remove();
-    switch (position) {
-      case 'bottom-right':
-        this.injectComponent('bottom-right', RoundImageComponent, {
-          src: 'avatar-image.png',
-          title: 'Bottom Right Image'
-        });
-        break;
-      case 'side-by-side':
-        this.injectComponent('side-by-side', RegularImageComponent, {});
-        break;
-      default:
-        console.log(`Position: [${position}] is not supported`);
-        break;
-    }
-
-    console.log(`Switched to position: ${position}`);
-  }
 
   removeComponent() {
     const currentPosition = this.injectionManager.getCurrentPosition();

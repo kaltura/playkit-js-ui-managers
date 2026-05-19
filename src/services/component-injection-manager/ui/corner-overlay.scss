@@ -1,8 +1,6 @@
-// src/services/component-injection-manager/ui/bottom-right-overlay.scss
-.bottomRightOverlay {
+// src/services/component-injection-manager/ui/corner-overlay.scss
+.cornerOverlay {
   position: absolute;
-  bottom: 15px;
-  right: 15px;
   pointer-events: auto;
 
   // Smooth entry animation
@@ -10,6 +8,27 @@
 
   // Smooth transitions for position changes
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Corner positions
+.topLeft {
+  top: 15px;
+  left: 15px;
+}
+
+.topRight {
+  top: 15px;
+  right: 15px;
+}
+
+.bottomLeft {
+  bottom: 15px;
+  left: 15px;
+}
+
+.bottomRight {
+  bottom: 15px;
+  right: 15px;
 }
 
 @keyframes fadeInScale {
