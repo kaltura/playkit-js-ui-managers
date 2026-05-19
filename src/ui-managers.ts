@@ -15,7 +15,6 @@ export const pluginName = 'uiManagers';
  */
 export class UIManagers extends BasePlugin<never> {
   protected static defaultConfig = {};
-  private _componentInjectionManager!: ComponentInjectionManager;
 
   constructor(name: string, player: KalturaPlayer, config?: never) {
     super(name, player, config);
@@ -36,23 +35,14 @@ export class UIManagers extends BasePlugin<never> {
     // @ts-ignore
     player.registerService('toastManager', new ToastManager({ floatingManager }, (event: string) => this.dispatchEvent(event)));
     player.registerService('bannerManager', new BannerManager({ floatingManager, kalturaPlayer: player }));
-    this._componentInjectionManager = new ComponentInjectionManager({
+    const componentInjectionManager = new ComponentInjectionManager({
       kalturaPlayer: player,
       eventManager: this.eventManager
     });
-    player.registerService('componentInjectionManager', this._componentInjectionManager);
+    player.registerService('componentInjectionManager', componentInjectionManager);
   }
 
   public static isValid(): boolean {
     return true;
-  }
-
-  public getComponentInjectionManager(): ComponentInjectionManager {
-    return this._componentInjectionManager;
-  }
-
-  public destroy(): void {
-    this._componentInjectionManager?.destroy();
-    super.destroy();
   }
 }

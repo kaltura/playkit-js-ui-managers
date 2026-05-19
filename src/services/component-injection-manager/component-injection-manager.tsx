@@ -51,7 +51,7 @@ export class ComponentInjectionManager {
     return this._currentComponent?.position || null;
   }
 
-  public destroy(): void {
+  public reset(): void {
     this.remove();
   }
 
