@@ -50,7 +50,7 @@ export const SideBySideWrapper: FunctionalComponent<SideBySideWrapperProps> = ({
 
       {/* Layer 3: Content layer with video and component */}
       <div className={styles.contentLayer}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div className={styles.contentContainer}>
           <div className={styles.videoContainer} ref={videoContainerRef} aria-label="Video player" />
           <div className={styles.componentContainer} aria-label="Injected component">
             <InjectedComponent {...componentProps} />

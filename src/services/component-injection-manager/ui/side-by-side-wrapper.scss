@@ -47,12 +47,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-right: 20px;
-  padding-left: 20px;
-  gap: 16px;
 
   // Slide in from bottom with fade
   animation: slideInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.contentContainer {
+  display: flex;
+  align-items: center;
+  padding-right: 20px;
+  padding-left: 20px;
+  gap: 16px;
 }
 
 .videoContainer {
