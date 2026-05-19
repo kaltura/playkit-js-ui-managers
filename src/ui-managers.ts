@@ -5,7 +5,7 @@ import { FloatingManager } from './services/floating-manager/floating-manager';
 import { PresetManager } from './services/preset-manager/preset-manager';
 import { ToastManager } from './services/toast-manager/toast-manager';
 import { BannerManager } from './services/banner-manager/banner-manager';
-import { ComponentInjectionManager } from './services/component-injection-manager/component-injection-manager';
+import { ComponentInjectionManager } from './services/component-injection-manager';
 
 export const pluginName = 'uiManagers';
 
