@@ -18,7 +18,6 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  z-index: 1;
 }
 
 // Layer 2: Backdrop overlay
@@ -28,9 +27,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(20px);
-  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.47);
+  backdrop-filter: blur(48px);
 }
 
 // Layer 3: Content with video and component
@@ -46,7 +44,6 @@
   padding-right: 20px;
   padding-left: 20px;
   gap: 16px;
-  z-index: 3;
 }
 
 .videoContainer {

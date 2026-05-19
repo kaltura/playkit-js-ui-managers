@@ -43,22 +43,18 @@ export const SideBySideWrapper: FunctionalComponent<SideBySideWrapperProps> = ({
   return (
     <div className={styles.sideBySideWrapper}>
       {/* Layer 1: Poster image background */}
-      {posterUrl && (
-        <div
-          className={styles.posterLayer}
-          style={{ backgroundImage: `url(${posterUrl})` }}
-          aria-hidden="true"
-        />
-      )}
+      {posterUrl && <div className={styles.posterLayer} style={{ backgroundImage: `url(${posterUrl})` }} aria-hidden="true" />}
 
       {/* Layer 2: Backdrop overlay */}
       <div className={styles.backdropLayer} aria-hidden="true" />
 
       {/* Layer 3: Content layer with video and component */}
       <div className={styles.contentLayer}>
-        <div className={styles.videoContainer} ref={videoContainerRef} aria-label="Video player" />
-        <div className={styles.componentContainer} aria-label="Injected component">
-          <InjectedComponent {...componentProps} />
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div className={styles.videoContainer} ref={videoContainerRef} aria-label="Video player" />
+          <div className={styles.componentContainer} aria-label="Injected component">
+            <InjectedComponent {...componentProps} />
+          </div>
         </div>
       </div>
     </div>
