@@ -34,13 +34,11 @@ export class demoPlugin extends BasePlugin {
         src: 'avatar-image.png',
         title: 'Bottom Right Image'
       });
-      this.currentComponentType = 'image';
     });
 
     // Inject Side-by-Side button
     document.getElementById('inject-side-by-side').addEventListener('click', () => {
       this.injectComponent('side-by-side', RegularImageComponent, {});
-      this.currentComponentType = 'videoInfo';
     });
 
     // Switch to Bottom-Right button
