@@ -31,28 +31,24 @@ export class demoPlugin extends BasePlugin {
     // Corner position buttons
     document.getElementById('inject-top-left').addEventListener('click', () => {
       this.injectComponent('top-left', RoundImageComponent, {
-        src: 'avatar-image.png',
         title: 'Top Left Image'
       });
     });
 
     document.getElementById('inject-top-right').addEventListener('click', () => {
       this.injectComponent('top-right', RoundImageComponent, {
-        src: 'avatar-image.png',
         title: 'Top Right Image'
       });
     });
 
     document.getElementById('inject-bottom-left').addEventListener('click', () => {
       this.injectComponent('bottom-left', RoundImageComponent, {
-        src: 'avatar-image.png',
         title: 'Bottom Left Image'
       });
     });
 
     document.getElementById('inject-bottom-right').addEventListener('click', () => {
       this.injectComponent('bottom-right', RoundImageComponent, {
-        src: 'avatar-image.png',
         title: 'Bottom Right Image'
       });
     });
