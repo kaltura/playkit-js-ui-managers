@@ -19,7 +19,7 @@ export class RoundImageComponent extends preact.Component {
 
 export class RegularImageComponent extends preact.Component {
   render() {
-    const { src, title } = this.props;
+    const { title } = this.props;
     return h('div', { className: 'injected-avatar-component' }, [
       h('img', {
         src: defaultAvatarUrl,
