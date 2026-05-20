@@ -4,6 +4,8 @@
 
 The Component Injection Manager provides a flexible way to inject custom UI components into the Kaltura Player at various positions. It supports both corner overlays (top-left, top-right, bottom-left, bottom-right) and side-by-side layouts where a component is displayed alongside the video player.
 
+**⚠️ IMPORTANT:** Only ONE component can be injected at a time. Injecting a component at a new position automatically removes any previously injected component.
+
 ## API
 
 ### Constructor
@@ -20,12 +22,19 @@ constructor(options: ComponentInjectionManagerOptions)
 
 #### `inject(options: InjectOptions): void`
 
-Injects a component at the specified position. If a component is already injected, it will be removed first.
+Injects a component at the specified position. If a component is already injected, it will be removed first automatically.
 
 **Parameters:**
 - `options.position` - The position where the component should be injected (see `InjectionPosition` enum)
 - `options.component` - A factory function that returns a Preact VNode
 - `options.props` (optional) - Props to pass to the component
+
+**Example:**
+```typescript
+// This removes the bottom-right injection automatically
+manager.inject({ position: InjectionPosition.BottomRight, component: Avatar });
+manager.inject({ position: InjectionPosition.SideBySide, component: Chat }); // Avatar is removed
+```
 
 #### `remove(): void`
 
