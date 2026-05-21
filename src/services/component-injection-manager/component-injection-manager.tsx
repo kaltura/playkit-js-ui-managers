@@ -1,11 +1,12 @@
 import { h } from 'preact';
-import { KalturaPlayer, PlaykitUI } from '@playkit-js/kaltura-player-js';
+import { KalturaPlayer, Logger, PlaykitUI } from '@playkit-js/kaltura-player-js';
 import { InjectionPosition, InjectOptions, ComponentFactory } from './models';
 import { CornerOverlay, SideBySideWrapper } from './ui';
 
 export interface ComponentInjectionManagerOptions {
   kalturaPlayer: KalturaPlayer;
   eventManager: PlaykitUI.EventManager;
+  logger: Logger;
 }
 
 interface CurrentComponent {
@@ -19,13 +20,20 @@ export class ComponentInjectionManager {
   private _kalturaPlayer: KalturaPlayer;
   private _eventManager: PlaykitUI.EventManager;
   private _currentComponent: CurrentComponent | null = null;
+  private _logger: Logger;
 
   constructor(options: ComponentInjectionManagerOptions) {
     this._kalturaPlayer = options.kalturaPlayer;
     this._eventManager = options.eventManager;
+    this._logger = options.logger;
   }
 
   public inject(options: InjectOptions): void {
+    // Validate component is a function for security
+    if (typeof options.component !== 'function') {
+      this._logger.warn('Component must be a function');
+    }
+
     // Remove existing component if any
     if (this._currentComponent) {
       this._removeCurrentComponent();
