@@ -120,6 +120,10 @@ describe('Component Injection Manager', () => {
 
       // Expect
       expect(componentInjectionManager.getCurrentPosition()).to.equal('side-by-side');
+
+      // CRITICAL: Remove side-by-side injection immediately after this test
+      // to prevent DOM interference with subsequent tests
+      componentInjectionManager.remove();
     });
 
     it('should inject component with props', async () => {
@@ -272,6 +276,10 @@ describe('Component Injection Manager', () => {
 
       // Expect
       expect(componentInjectionManager.getCurrentPosition()).to.equal('side-by-side');
+
+      // CRITICAL: Remove side-by-side injection immediately after this test
+      // to prevent DOM interference with subsequent tests
+      componentInjectionManager.remove();
     });
 
     it('should replace side-by-side with corner overlay', async () => {
