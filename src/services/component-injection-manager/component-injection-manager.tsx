@@ -31,7 +31,8 @@ export class ComponentInjectionManager {
   public inject(options: InjectOptions): void {
     // Validate component is a function for security
     if (typeof options.component !== 'function') {
-      this._logger.warn('Component must be a function');
+      this._logger.error('Component must be a function');
+      return;
     }
 
     // Remove existing component if any

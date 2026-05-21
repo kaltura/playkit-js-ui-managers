@@ -26,8 +26,11 @@ Injects a component at the specified position. If a component is already injecte
 
 **Parameters:**
 - `options.position` - The position where the component should be injected (see `InjectionPosition` enum)
-- `options.component` - A factory function that returns a Preact VNode
+- `options.component` - A factory function that returns a Preact VNode (validated to be a function for security)
 - `options.props` (optional) - Props to pass to the component
+
+**Validation:**
+- If `component` is not a function, an error is logged and the injection is skipped (no component will be injected)
 
 **Example:**
 ```typescript
