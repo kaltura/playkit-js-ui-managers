@@ -5,6 +5,7 @@ import { FloatingManager } from './services/floating-manager/floating-manager';
 import { PresetManager } from './services/preset-manager/preset-manager';
 import { ToastManager } from './services/toast-manager/toast-manager';
 import { BannerManager } from './services/banner-manager/banner-manager';
+import { ComponentInjectionManager } from './services/component-injection-manager';
 
 export const pluginName = 'uiManagers';
 
@@ -34,6 +35,11 @@ export class UIManagers extends BasePlugin<never> {
     // @ts-ignore
     player.registerService('toastManager', new ToastManager({ floatingManager }, (event: string) => this.dispatchEvent(event)));
     player.registerService('bannerManager', new BannerManager({ floatingManager, kalturaPlayer: player }));
+    const componentInjectionManager = new ComponentInjectionManager({
+      kalturaPlayer: player,
+      logger: this.logger
+    });
+    player.registerService('componentInjectionManager', componentInjectionManager);
   }
 
   public static isValid(): boolean {
