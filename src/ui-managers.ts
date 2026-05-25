@@ -37,7 +37,6 @@ export class UIManagers extends BasePlugin<never> {
     player.registerService('bannerManager', new BannerManager({ floatingManager, kalturaPlayer: player }));
     const componentInjectionManager = new ComponentInjectionManager({
       kalturaPlayer: player,
-      eventManager: this.eventManager,
       logger: this.logger
     });
     player.registerService('componentInjectionManager', componentInjectionManager);

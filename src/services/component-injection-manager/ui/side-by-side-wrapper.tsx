@@ -38,7 +38,7 @@ export const SideBySideWrapper: FunctionalComponent<SideBySideWrapperProps> = ({
 
   const posterUrl = useMemo(() => {
     return player.sources.poster;
-  }, [player]);
+  }, [player.sources.poster]);
 
   return (
     <div className={styles.sideBySideWrapper}>

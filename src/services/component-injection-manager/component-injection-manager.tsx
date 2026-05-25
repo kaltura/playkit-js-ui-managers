@@ -1,11 +1,10 @@
 import { h } from 'preact';
-import { KalturaPlayer, Logger, PlaykitUI } from '@playkit-js/kaltura-player-js';
+import { KalturaPlayer, Logger } from '@playkit-js/kaltura-player-js';
 import { InjectionPosition, InjectOptions, ComponentFactory } from './models';
 import { CornerOverlay, SideBySideWrapper } from './ui';
 
 export interface ComponentInjectionManagerOptions {
   kalturaPlayer: KalturaPlayer;
-  eventManager: PlaykitUI.EventManager;
   logger: Logger;
 }
 
@@ -18,13 +17,11 @@ interface CurrentComponent {
 
 export class ComponentInjectionManager {
   private _kalturaPlayer: KalturaPlayer;
-  private _eventManager: PlaykitUI.EventManager;
   private _currentComponent: CurrentComponent | null = null;
   private _logger: Logger;
 
   constructor(options: ComponentInjectionManagerOptions) {
     this._kalturaPlayer = options.kalturaPlayer;
-    this._eventManager = options.eventManager;
     this._logger = options.logger;
   }
 
@@ -42,6 +39,11 @@ export class ComponentInjectionManager {
 
     // Render and store removal function
     const removeFunction = this._renderComponent(options);
+
+    if (!removeFunction) {
+      this._logger.error('Failed to inject component');
+      return;
+    }
 
     this._currentComponent = {
       component: options.component,
@@ -73,7 +75,7 @@ export class ComponentInjectionManager {
     this._currentComponent.removeFunction();
   }
 
-  private _renderComponent(options: InjectOptions): () => void {
+  private _renderComponent(options: InjectOptions): (() => void) | null {
     const { position, component, props } = options;
 
     // Handle all corner positions
@@ -98,9 +100,7 @@ export class ComponentInjectionManager {
       });
     }
 
-    // Fallback (should never happen)
-    return () => {
-      // No-op cleanup function
-    };
+    this._logger.error(`Unsupported injection position: ${position}`);
+    return null;
   }
 }
