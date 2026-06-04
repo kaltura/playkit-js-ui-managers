@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.9.0 (2026-06-04)
+
+
+### Features
+
+* **FEC-14948:** Poc for avatar studio preview ([#89](https://github.com/kaltura/playkit-js-ui-managers/issues/89)) ([3775a7c](https://github.com/kaltura/playkit-js-ui-managers/commit/3775a7caac501f3cc790ce30cd7881d17258228b))
+
 ### 1.8.5 (2025-11-27)
 
 ### 1.8.4 (2025-11-06)
