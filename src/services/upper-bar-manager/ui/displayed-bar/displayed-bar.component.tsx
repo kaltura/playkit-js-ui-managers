@@ -110,9 +110,7 @@ export class DisplayedBar extends Component<DisplayedBarProps & PropsFromRedux, 
             onClick={this.handleOnClick}
             icons={dropdownControls}
             player={this.props.player}
-            ref={(node) => {
-              this.moreIconRef.current = node;
-            }}
+            ref={this.moreIconRef}
           />
         )}
       </div>

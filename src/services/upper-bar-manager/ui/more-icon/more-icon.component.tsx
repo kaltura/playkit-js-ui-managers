@@ -27,20 +27,41 @@ type MoreIconProps = {
 @withText({ moreIconTxt: <Text id="uiManagers.moreIcon">More</Text> })
 export class MoreIcon extends Component<MoreIconProps> {
   private readonly moreButtonRef: RefObject<HTMLButtonElement>;
+  private readonly dropdownRef: RefObject<DropdownBar>;
+  private readonly dropdownContainerRef: RefObject<HTMLDivElement>;
   constructor() {
     super();
     this.moreButtonRef = createRef();
+    this.dropdownRef = createRef();
+    this.dropdownContainerRef = createRef();
   }
 
   componentDidMount(): void {
     this.props.eventManager!.listen(document, 'click', (e: PointerEvent) => this.handleClickOutside(e));
   }
 
-  handleClickOutside(event: PointerEvent): void {
-    if (this.moreButtonRef && !this.moreButtonRef.current!.contains(event.target as Node)) {
-      this.setState({ toggle: false });
+  componentDidUpdate(prevProps: MoreIconProps): void {
+    // Focus first item when dropdown opens
+    if (!prevProps.showDropdown && this.props.showDropdown && this.dropdownRef.current) {
+      this.dropdownRef.current.focusFirstItem();
     }
   }
+
+  handleClickOutside(event: PointerEvent): void {
+    if (
+      this.props.showDropdown &&
+      this.moreButtonRef.current &&
+      !this.moreButtonRef.current.contains(event.target as Node) &&
+      this.dropdownContainerRef.current &&
+      !this.dropdownContainerRef.current.contains(event.target as Node)
+    ) {
+      this.props.onClick(); // Close dropdown
+    }
+  }
+
+  public focusButton = (): void => {
+    this.moreButtonRef.current?.focus();
+  };
 
   render(): ComponentChild {
     return (
@@ -53,14 +74,22 @@ export class MoreIcon extends Component<MoreIconProps> {
               className={`${ui.style.upperBarIcon} ${styles.moreIcon}`}
               tabIndex={0}
               aria-label={this.props.moreIconTxt}
+              aria-haspopup="menu"
+              aria-expanded={this.props.showDropdown}
             >
               <Icon id={`${pluginName}-upper-bar-manager`} path={ICON_PATH} viewBox={'0 0 32 32'} />
             </button>
           </A11yWrapper>
         </Tooltip>
         {this.props.showDropdown && (
-          <div>
-            <DropdownBar onDropdownClick={this.props.onClick} controls={this.props.icons} player={this.props.player} />
+          <div ref={this.dropdownContainerRef}>
+            <DropdownBar 
+              ref={this.dropdownRef}
+              onDropdownClick={this.props.onClick} 
+              controls={this.props.icons} 
+              player={this.props.player}
+              onReturnFocusToButton={this.focusButton}
+            />
           </div>
         )}
       </div>
