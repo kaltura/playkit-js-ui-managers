@@ -1,5 +1,5 @@
 import { h, Fragment, VNode } from 'preact';
-import { useState, useRef, useLayoutEffect } from 'preact/hooks';
+import { useState, useRef, useLayoutEffect, forwardRef, Ref } from 'preact/compat';
 import * as styles from './dropdown-bar-item.scss';
 import { renderToString } from 'preact-render-to-string';
 import { ui } from '@playkit-js/kaltura-player-js';
@@ -20,16 +20,10 @@ type DropdownBarItemProps = {
 
 const PADDING = 11;
 
-const DropdownBarItem = ({
-  displayName,
-  text,
-  ariaLabel,
-  isDisabled,
-  icon,
-  onClick,
-  onDropdownClick,
-  tooltipPosition
-}: DropdownBarItemProps) => {
+const DropdownBarItemComponent = (
+  { displayName, text, ariaLabel, isDisabled, icon, onClick, onDropdownClick, tooltipPosition }: DropdownBarItemProps,
+  ref: Ref<HTMLDivElement>
+): VNode => {
   const comparisonTextRef = useRef<HTMLSpanElement | null>(null);
   const textRef = useRef<HTMLSpanElement | null>(null);
 
@@ -43,7 +37,7 @@ const DropdownBarItem = ({
       const comparisonTextWidth = comparisonTextRef?.current.getBoundingClientRect().width;
       setShowTooltip(comparisonTextWidth > textWidth);
     }
-  });
+  }, [isFinalized, textRef, comparisonTextRef]);
 
   const renderIcon = (): VNode => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -82,8 +76,9 @@ const DropdownBarItem = ({
         role="menuitem"
       >
         <div
+          ref={ref}
           className={[styles.dropdownItem, isDisabled ? styles.disabled : ''].join(' ')}
-          tabIndex={0}
+          tabIndex={-1}
           aria-label={ariaLabelString}
         >
           <div className={styles.icon}>{renderIcon()}</div>
@@ -106,5 +101,7 @@ const DropdownBarItem = ({
     </Fragment>
   );
 };
+
+const DropdownBarItem = forwardRef(DropdownBarItemComponent);
 
 export { DropdownBarItem };
