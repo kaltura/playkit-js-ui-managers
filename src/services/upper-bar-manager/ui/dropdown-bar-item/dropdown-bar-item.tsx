@@ -21,18 +21,9 @@ type DropdownBarItemProps = {
 const PADDING = 11;
 
 const DropdownBarItemComponent = (
-  {
-    displayName,
-    text,
-    ariaLabel,
-    isDisabled,
-    icon,
-    onClick,
-    onDropdownClick,
-    tooltipPosition
-  }: DropdownBarItemProps,
+  { displayName, text, ariaLabel, isDisabled, icon, onClick, onDropdownClick, tooltipPosition }: DropdownBarItemProps,
   ref: Ref<HTMLDivElement>
-) => {
+): VNode => {
   const comparisonTextRef = useRef<HTMLSpanElement | null>(null);
   const textRef = useRef<HTMLSpanElement | null>(null);
 
@@ -46,7 +37,7 @@ const DropdownBarItemComponent = (
       const comparisonTextWidth = comparisonTextRef?.current.getBoundingClientRect().width;
       setShowTooltip(comparisonTextWidth > textWidth);
     }
-  });
+  }, [isFinalized, textRef, comparisonTextRef]);
 
   const renderIcon = (): VNode => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

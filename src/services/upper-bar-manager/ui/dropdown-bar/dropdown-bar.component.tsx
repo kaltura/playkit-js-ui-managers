@@ -34,9 +34,9 @@ export class DropdownBar extends Component<DropdownBarProps, DropdownBarState> {
     // Rebuild refs if controls array length changes
     if (prevProps.controls.length !== this.props.controls.length) {
       const wasOutOfBounds = this.state.focusedIndex >= this.props.controls.length;
-      
+
       this.itemRefs = this.props.controls.map(() => createRef());
-      
+
       if (wasOutOfBounds) {
         // Reset focus index and re-render
         // eslint-disable-next-line react/no-did-update-set-state
