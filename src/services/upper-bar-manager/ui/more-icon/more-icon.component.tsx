@@ -83,10 +83,10 @@ export class MoreIcon extends Component<MoreIconProps> {
         </Tooltip>
         {this.props.showDropdown && (
           <div ref={this.dropdownContainerRef}>
-            <DropdownBar 
+            <DropdownBar
               ref={this.dropdownRef}
-              onDropdownClick={this.props.onClick} 
-              controls={this.props.icons} 
+              onDropdownClick={this.props.onClick}
+              controls={this.props.icons}
               player={this.props.player}
               onReturnFocusToButton={this.focusButton}
             />

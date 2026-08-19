@@ -33,13 +33,19 @@ export class DropdownBar extends Component<DropdownBarProps, DropdownBarState> {
   componentDidUpdate(prevProps: DropdownBarProps): void {
     // Rebuild refs if controls array length changes
     if (prevProps.controls.length !== this.props.controls.length) {
+      const wasOutOfBounds = this.state.focusedIndex >= this.props.controls.length;
+      
       this.itemRefs = this.props.controls.map(() => createRef());
-      // Reset focus index if it's now out of bounds
-      if (this.state.focusedIndex >= this.props.controls.length) {
+      
+      if (wasOutOfBounds) {
+        // Reset focus index and re-render
+        // eslint-disable-next-line react/no-did-update-set-state
         this.setState({ focusedIndex: 0 }, () => {
-          // Focus first item after render completes with new refs
           this.itemRefs[0]?.current?.focus();
         });
+      } else {
+        // Force re-render to attach new refs even though state hasn't changed
+        this.forceUpdate();
       }
     }
   }
@@ -94,7 +100,6 @@ export class DropdownBar extends Component<DropdownBarProps, DropdownBarState> {
     const dropDownProps = {
       className: styles.moreDropdown,
       role: 'menu',
-      ariaExpanded: true,
       style: { maxHeight: `${maxHeightStyle}px` },
       ref: this.containerRef,
       tabIndex: -1,
