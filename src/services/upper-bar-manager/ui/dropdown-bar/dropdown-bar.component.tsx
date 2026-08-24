@@ -40,9 +40,7 @@ export class DropdownBar extends Component<DropdownBarProps, DropdownBarState> {
       if (wasOutOfBounds) {
         // Reset focus index and re-render
         // eslint-disable-next-line react/no-did-update-set-state
-        this.setState({ focusedIndex: 0 }, () => {
-          this.itemRefs[0]?.current?.focus();
-        });
+        this.focusFirstItem();
       } else {
         // Force re-render to attach new refs even though state hasn't changed
         this.forceUpdate();
