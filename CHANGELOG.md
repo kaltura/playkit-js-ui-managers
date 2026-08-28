@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.9.1 (2026-08-28)
+
+
+### Bug Fixes
+
+* **ADA-3478:** Make More dropdown accessible ([#91](https://github.com/kaltura/playkit-js-ui-managers/issues/91)) ([614028b](https://github.com/kaltura/playkit-js-ui-managers/commit/614028bf28593018dd19ae55ba7d0715ccdb6dd5))
+
 ## 1.9.0 (2026-06-04)
 
 
