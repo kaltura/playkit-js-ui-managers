@@ -95,9 +95,13 @@ declare module "services/upper-bar-manager/models/icon-dto" {
          */
         displayName: string;
         /**
+         * The title of the icon. If empty, the title will default to the value of ariaLabel - string | </Text> of preact-i18n Element
+         */
+        label?: string | (() => string);
+        /**
          * An HTML Aria label attribute that would be attached to the provided icon - string | </Text> of preact-i18n Element
          */
-        ariaLabel: any;
+        ariaLabel: string | (() => string);
         /**
          * The plugin priority order (the lower the number the higher the priority - the order is from left to right - flows from upper bar (max 5 icon) to dropdown bar(the reset and again from top to bottom))
          */
@@ -109,7 +113,7 @@ declare module "services/upper-bar-manager/models/icon-dto" {
         /**
          * Icon that will appear in the dropdown menu
          */
-        svgIcon: SvgIcon;
+        svgIcon: SvgIcon | (() => SvgIcon);
         /**
          * The icon handler
          *
@@ -122,6 +126,14 @@ declare module "services/upper-bar-manager/models/icon-dto" {
          * Relevant presets for the icon
          */
         presets?: PlaykitUI.ReservedPresetName[];
+        /**
+         * An indication whether the upper bar should handle the onClick callback of the component or not
+         */
+        shouldHandleOnClick?: boolean;
+        /**
+         * An indication whether the icon is disabled or not
+         */
+        isDisabled?: boolean | (() => boolean);
     }
 }
 declare module "services/upper-bar-manager/ui/icon-wrapper/icon-wrapper.component" {
@@ -144,31 +156,53 @@ declare module "services/upper-bar-manager/models/icon-model" {
         private static nextId;
         readonly id: number;
         displayName: string;
+        label: string | (() => string);
         ariaLabel: any;
         order: number;
         componentRef: RefObject<IconWrapper>;
         onClick: (e: MouseEvent | KeyboardEvent) => void;
         component: ComponentClass<Record<string, never>> | FunctionalComponent<Record<string, never>>;
-        svgIcon: SvgIcon;
+        svgIcon: SvgIcon | (() => SvgIcon);
         presets: PlaykitUI.ReservedPresetName[];
+        shouldHandleOnClick: boolean;
+        isDisabled: boolean | (() => boolean);
         constructor(item: IconDto);
         update(): void;
     }
 }
+declare module "services/upper-bar-manager/ui/dropdown-bar-item/dropdown-bar-item" {
+    import { h } from 'preact';
+    import { SvgIcon } from "services/upper-bar-manager/models/svg-icon";
+    type DropdownBarItemProps = {
+        displayName: string;
+        text: string;
+        ariaLabel: string;
+        isDisabled?: boolean;
+        icon: SvgIcon;
+        onClick: (e: KeyboardEvent | MouseEvent) => void;
+        onDropdownClick: () => void;
+        tooltipPosition: string;
+    };
+    const DropdownBarItem: ({ displayName, text, ariaLabel, isDisabled, icon, onClick, onDropdownClick, tooltipPosition }: DropdownBarItemProps) => h.JSX.Element;
+    export { DropdownBarItem };
+}
 declare module "services/upper-bar-manager/ui/dropdown-bar/dropdown-bar.component" {
     import { Component, ComponentChild } from 'preact';
     import { IconModel } from "services/upper-bar-manager/models/icon-model";
+    import { KalturaPlayer } from '@playkit-js/kaltura-player-js';
     type DropdownBarProps = {
         controls: IconModel[];
         onDropdownClick: () => void;
+        player: KalturaPlayer;
     };
     export class DropdownBar extends Component<DropdownBarProps> {
+        calculateMaxHeight(): number;
         render(): ComponentChild;
     }
 }
 declare module "services/upper-bar-manager/ui/more-icon/more-icon.component" {
     import { Component, ComponentChild } from 'preact';
-    import { PlaykitUI } from '@playkit-js/kaltura-player-js';
+    import { KalturaPlayer, PlaykitUI } from '@playkit-js/kaltura-player-js';
     import { IconModel } from "services/upper-bar-manager/models/icon-model";
     import EventManager = PlaykitUI.EventManager;
     type MoreIconProps = {
@@ -177,6 +211,7 @@ declare module "services/upper-bar-manager/ui/more-icon/more-icon.component" {
         showDropdown: boolean;
         moreIconTxt?: string;
         eventManager?: EventManager;
+        player: KalturaPlayer;
     };
     export class MoreIcon extends Component<MoreIconProps> {
         private readonly moreButtonRef;
@@ -189,17 +224,21 @@ declare module "services/upper-bar-manager/ui/more-icon/more-icon.component" {
 declare module "services/upper-bar-manager/ui/displayed-bar/displayed-bar.component" {
     import { Component, ComponentChild, RefObject } from 'preact';
     import { IconModel } from "services/upper-bar-manager/models/icon-model";
+    import { KalturaPlayer } from '@playkit-js/kaltura-player-js';
+    import { MoreIcon } from "services/upper-bar-manager/ui/more-icon/more-icon.component";
     type DisplayedBarState = {
         showDropdown: boolean;
     };
     type DisplayedBarProps = {
         getControls: () => IconModel[];
         ref: RefObject<DisplayedBar>;
+        player: KalturaPlayer;
     };
     type PropsFromRedux = {
         playerSize?: string;
     };
     export class DisplayedBar extends Component<DisplayedBarProps & PropsFromRedux, DisplayedBarState> {
+        moreIconRef: RefObject<MoreIcon>;
         constructor();
         private handleOnClick;
         private closeDropdown;
@@ -212,6 +251,22 @@ declare module "services/upper-bar-manager/ui/displayed-bar/displayed-bar.compon
 declare module "types/kaltura-plugins-display-names" {
     export type KalturaPluginsDisplayNames = 'Navigation' | 'Q&A' | 'Transcript' | 'Download' | 'Playlist' | 'Related' | 'Share' | 'Info' | 'Moderation';
 }
+declare module "services/upper-bar-manager/move-controls-manager" {
+    import { KalturaPlayer, Logger } from '@playkit-js/kaltura-player-js';
+    import { UpperBarManager } from "services/upper-bar-manager/upper-bar-manager";
+    export class MoveControlsManager {
+        private readonly player;
+        private readonly logger;
+        private store;
+        private upperBarManager;
+        private currentState;
+        private iconIds;
+        constructor(player: KalturaPlayer, logger: Logger, upperBarManager: UpperBarManager, redux: any);
+        private get bottomBarRegistryManager();
+        private get state();
+        private handleStoreChange;
+    }
+}
 declare module "services/upper-bar-manager/upper-bar-manager" {
     import { KalturaPlayer, Logger } from '@playkit-js/kaltura-player-js';
     import { IconDto } from "services/upper-bar-manager/models/icon-dto";
@@ -221,6 +276,7 @@ declare module "services/upper-bar-manager/upper-bar-manager" {
         private readonly componentsRegistry;
         private readonly displayedBarComponentRefs;
         private iconsOrder;
+        private moveControlsManager;
         /**
          * @ignore
          */
@@ -230,6 +286,8 @@ declare module "services/upper-bar-manager/upper-bar-manager" {
         isActive(itemId: number): boolean;
         update(iconId: number): void;
         private getControls;
+        getMorePluginButton(): HTMLButtonElement;
+        focusPluginButton(pluginId: number, event?: KeyboardEvent): void;
         private injectDisplayedBarComponentWrapper;
         private static validateItem;
     }
@@ -639,7 +697,74 @@ declare module "services/banner-manager/banner-manager" {
         private _getState;
     }
 }
+declare module "services/component-injection-manager/models/injection-position" {
+    export enum InjectionPosition {
+        BottomRight = "bottom-right",
+        SideBySide = "side-by-side"
+    }
+}
+declare module "services/component-injection-manager/models/inject-options" {
+    import { VNode } from 'preact';
+    import { InjectionPosition } from "services/component-injection-manager/models/injection-position";
+    export type ComponentFactory = (props?: Record<string, unknown>) => VNode;
+    export interface InjectOptions {
+        position: InjectionPosition;
+        component: ComponentFactory;
+        props?: Record<string, unknown>;
+    }
+}
+declare module "services/component-injection-manager/models/index" {
+    export { InjectionPosition } from "services/component-injection-manager/models/injection-position";
+    export { InjectOptions, ComponentFactory } from "services/component-injection-manager/models/inject-options";
+}
+declare module "services/component-injection-manager/ui/bottom-right-overlay" {
+    import { FunctionalComponent, ComponentChild } from 'preact';
+    export interface BottomRightOverlayProps {
+        children?: ComponentChild;
+    }
+    export const BottomRightOverlay: FunctionalComponent<BottomRightOverlayProps>;
+}
+declare module "services/component-injection-manager/ui/side-by-side-wrapper" {
+    import { FunctionalComponent } from 'preact';
+    import { KalturaPlayer } from '@playkit-js/kaltura-player-js';
+    import { ComponentFactory } from "services/component-injection-manager/models/index";
+    export interface SideBySideWrapperProps {
+        player: KalturaPlayer;
+        component: ComponentFactory;
+        componentProps?: Record<string, unknown>;
+    }
+    export const SideBySideWrapper: FunctionalComponent<SideBySideWrapperProps>;
+}
+declare module "services/component-injection-manager/ui/index" {
+    export { BottomRightOverlay } from "services/component-injection-manager/ui/bottom-right-overlay";
+    export { SideBySideWrapper } from "services/component-injection-manager/ui/side-by-side-wrapper";
+}
+declare module "services/component-injection-manager/component-injection-manager" {
+    import { KalturaPlayer, PlaykitUI } from '@playkit-js/kaltura-player-js';
+    import { InjectionPosition, InjectOptions } from "services/component-injection-manager/models/index";
+    export interface ComponentInjectionManagerOptions {
+        kalturaPlayer: KalturaPlayer;
+        eventManager: PlaykitUI.EventManager;
+    }
+    export class ComponentInjectionManager {
+        private _kalturaPlayer;
+        private _eventManager;
+        private _currentComponent;
+        constructor(options: ComponentInjectionManagerOptions);
+        inject(options: InjectOptions): void;
+        switchPosition(position: InjectionPosition): void;
+        remove(): void;
+        getCurrentPosition(): InjectionPosition | null;
+        destroy(): void;
+        private _removeCurrentComponent;
+        private _renderComponent;
+    }
+}
 declare module "ui-managers" {
     export const pluginName = "uiManagers";
 }
-declare module "index" { }
+declare module "index" {
+    export { ComponentInjectionManager } from "services/component-injection-manager/component-injection-manager";
+    export type { ComponentInjectionManagerOptions } from "services/component-injection-manager/component-injection-manager";
+    export { InjectionPosition, InjectOptions, ComponentFactory } from "services/component-injection-manager/models/index";
+}

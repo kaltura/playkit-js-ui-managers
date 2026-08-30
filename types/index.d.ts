@@ -11,3 +11,7 @@ export { SidePanelsManager } from "services/side-panels-manager/side-panels-mana
 export { UpperBarManager } from "services/upper-bar-manager/upper-bar-manager";
 export { SidePanelItem } from "services/side-panels-manager/models/side-panel-item";
 export { IconDto } from "services/upper-bar-manager/models/icon-dto";
+
+export { ComponentInjectionManager } from "services/component-injection-manager/component-injection-manager";
+export type { ComponentInjectionManagerOptions } from "services/component-injection-manager/component-injection-manager";
+export { InjectionPosition, InjectOptions, ComponentFactory } from "services/component-injection-manager/models";

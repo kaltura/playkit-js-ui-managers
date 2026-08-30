@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Component Injection Manager Demo</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="https://unpkg.com/@playkit-js/kaltura-player-js@canary/dist/kaltura-ovp-player.js"></script>
+    <script src="../playkit-ui-managers.js"></script>
+  </head>
+  <body>
+    <div class="demo-container">
+      <h1>Component Injection Manager Demo</h1>
+      <div class="controls-panel">
+        <h2>Controls</h2>
+        <h3>Corner Positions</h3>
+        <div class="button-group">
+          <button id="inject-top-left" class="demo-button primary">Top-Left</button>
+          <button id="inject-top-right" class="demo-button primary">Top-Right</button>
+        </div>
+        <div class="button-group">
+          <button id="inject-bottom-left" class="demo-button primary">Bottom-Left</button>
+          <button id="inject-bottom-right" class="demo-button primary">Bottom-Right</button>
+        </div>
+        <h3>Side-by-Side</h3>
+        <div class="button-group">
+          <button id="inject-side-by-side" class="demo-button primary">Inject Side-by-Side</button>
+        </div>
+        <h3>Actions</h3>
+        <div class="button-group">
+          <button id="remove-component" class="demo-button danger">Remove Component</button>
+        </div>
+        <div class="info-panel">
+          <p><strong>Current Position:</strong> <span id="current-position">None</span></p>
+        </div>
+      </div>
+      <div id="player-placeholder" style="width: 888px; height: 500px;"></div>
+    </div>
+    <script type="module">
+      import './demo-plugin.js';
+
+      const config = {
+        logLevel: 'DEBUG',
+        targetId: 'player-placeholder',
+        provider: {
+          partnerId: 2215841
+        },
+        playback: {
+          // autoplay: true
+        },
+        plugins: {
+          demoPlugin: {},
+          uiManagers: {}
+        }
+      };
+
+      const player = KalturaPlayer.setup(config);
+      player.loadMedia({ entryId: '1_ebs5e9cy' });
+    </script>
+  </body>
+</html>

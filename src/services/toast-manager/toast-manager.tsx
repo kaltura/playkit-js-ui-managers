@@ -56,7 +56,7 @@ export class ToastManager {
         id: UUID.uuidV1(),
         onClose: this._remove
       },
-      duration: duration,
+      duration,
       timerSubscription: null
     };
     this._toasts.push(managedToast);
