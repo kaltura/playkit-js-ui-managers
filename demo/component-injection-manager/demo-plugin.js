@@ -19,18 +19,29 @@ export class demoPlugin extends BasePlugin {
     this.setupMediaToggle();
 
     this.player.ready().then(() => {
-      const injectionManager = this.player.getService('componentInjectionManager');
-
-      if (!injectionManager) {
-        console.error('ComponentInjectionManager not found!');
-        return;
-      }
-
-      this.injectionManager = injectionManager;
-      // Setup injection controls after injection manager is available
-      this.setupInjectionControls();
-      this.updatePositionDisplay();
+      console.log('Player ready');
+      this.initializeInjectionManager();
     });
+  }
+
+  initializeInjectionManager() {
+    if (this.injectionManager) {
+      console.log('Injection manager already initialized');
+      return;
+    }
+
+    const injectionManager = this.player.getService('componentInjectionManager');
+
+    if (!injectionManager) {
+      console.warn('ComponentInjectionManager not yet available');
+      return;
+    }
+
+    console.log('Injection manager initialized');
+    this.injectionManager = injectionManager;
+    // Setup injection controls after injection manager is available
+    this.setupInjectionControls();
+    this.updatePositionDisplay();
   }
 
   setupMediaToggle() {
@@ -41,6 +52,8 @@ export class demoPlugin extends BasePlugin {
   }
 
   setupInjectionControls() {
+    console.log('Setting up injection controls');
+
     // Corner position buttons
     document.getElementById('inject-top-left').addEventListener('click', () => {
       this.injectComponent('top-left', RoundImageComponent, {
@@ -83,6 +96,11 @@ export class demoPlugin extends BasePlugin {
   }
 
   toggleMedia() {
+    console.log('Toggle media clicked, current type:', this.currentMediaType);
+
+    // Remove any existing injection before switching media
+    this.injectionManager?.remove();
+
     if (this.currentMediaType === 'vod') {
       // Switch to Audio
       this.player.setMedia({
@@ -110,6 +128,11 @@ export class demoPlugin extends BasePlugin {
       this.toggleSideBySideButtons(false); // Show regular button, hide image
       console.log('Switched to VOD');
     }
+
+    // Initialize injection manager after media switch
+    this.initializeInjectionManager();
+    // Update position display after media switch
+    this.updatePositionDisplay();
   }
 
   updateMediaDisplay(mediaType) {
@@ -142,6 +165,10 @@ export class demoPlugin extends BasePlugin {
   }
 
   injectComponent(position, ComponentClass, props) {
+    if (!this.injectionManager) {
+      console.error('Injection manager not ready');
+      return;
+    }
     this.injectionManager.inject({
       position,
       component: (componentProps) => {
@@ -155,6 +182,11 @@ export class demoPlugin extends BasePlugin {
   }
 
   injectComponentWithImage(position, ComponentClass, props) {
+    if (!this.injectionManager) {
+      console.error('Injection manager not ready');
+      return;
+    }
+    console.log('Injecting component with image...');
     this.injectionManager.inject({
       position,
       component: (componentProps) => {
@@ -170,6 +202,10 @@ export class demoPlugin extends BasePlugin {
 
 
   removeComponent() {
+    if (!this.injectionManager) {
+      console.error('Injection manager not ready');
+      return;
+    }
     const currentPosition = this.injectionManager.getCurrentPosition();
     if (!currentPosition) {
       alert('No component to remove.');
@@ -182,6 +218,15 @@ export class demoPlugin extends BasePlugin {
   }
 
   updatePositionDisplay() {
+    if (!this.injectionManager) {
+      const positionElement = document.getElementById('current-position');
+      if (positionElement) {
+        positionElement.textContent = 'None';
+        positionElement.style.color = '#e74c3c';
+        positionElement.style.fontWeight = 'bold';
+      }
+      return;
+    }
     const position = this.injectionManager.getCurrentPosition();
     const positionElement = document.getElementById('current-position');
     if (positionElement) {
