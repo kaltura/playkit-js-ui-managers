@@ -9,12 +9,14 @@ export interface SideBySideWrapperProps {
   player: KalturaPlayer;
   component: ComponentFactory;
   componentProps?: Record<string, unknown>;
+  replaceVideoWithImageUrl?: string; // Optional image URL for replacing the video with image
 }
 
 export const SideBySideWrapper: FunctionalComponent<SideBySideWrapperProps> = ({
   player,
   component: InjectedComponent,
-  componentProps
+  componentProps,
+  replaceVideoWithImageUrl
 }) => {
   const videoContainerRef = useRef<HTMLDivElement>(null);
 
@@ -22,6 +24,21 @@ export const SideBySideWrapper: FunctionalComponent<SideBySideWrapperProps> = ({
     const videoElement = player.getVideoElement();
     const originalParent = videoElement?.parentElement;
 
+    if (replaceVideoWithImageUrl) {
+      // Image Mode: hide video player in original location
+      if (videoElement) {
+        videoElement.style.visibility = 'hidden';
+      }
+
+      // Cleanup: restore video visibility
+      return () => {
+        if (videoElement) {
+          videoElement.style.visibility = '';
+        }
+      };
+    }
+
+    // Video Mode: move video element to container (existing behavior)
     if (videoContainerRef.current && videoElement) {
       // Remove from tab order as video controls are managed by the player
       videoElement.tabIndex = -1;
@@ -34,11 +51,11 @@ export const SideBySideWrapper: FunctionalComponent<SideBySideWrapperProps> = ({
         originalParent.appendChild(videoElement);
       }
     };
-  }, [player]);
+  }, [player, replaceVideoWithImageUrl]);
 
   const posterUrl = useMemo(() => {
-    return player.sources.poster;
-  }, [player.sources.poster]);
+    return replaceVideoWithImageUrl || player.sources.poster;
+  }, [replaceVideoWithImageUrl, player.sources.poster]);
 
   return (
     <div className={styles.sideBySideWrapper}>
@@ -51,7 +68,15 @@ export const SideBySideWrapper: FunctionalComponent<SideBySideWrapperProps> = ({
       {/* Layer 3: Content layer with video and component */}
       <div className={styles.contentLayer}>
         <div className={styles.contentContainer}>
-          <div className={styles.videoContainer} ref={videoContainerRef} aria-label="Video player" />
+          <div
+            className={styles.videoContainer}
+            ref={videoContainerRef}
+            aria-label={replaceVideoWithImageUrl ? 'Image' : 'Video player'}
+          >
+            {replaceVideoWithImageUrl && (
+              <img src={replaceVideoWithImageUrl} alt="Replacement content" className={styles.replacementImage} />
+            )}
+          </div>
           <div className={styles.componentContainer} aria-label="Injected component">
             <InjectedComponent {...componentProps} />
           </div>

@@ -13,6 +13,11 @@ export class demoPlugin extends BasePlugin {
   constructor(name, player) {
     super(name, player);
 
+    this.currentMediaType = 'vod'; // Track current media type
+
+    // Setup media toggle immediately (doesn't need injection manager)
+    this.setupMediaToggle();
+
     this.player.ready().then(() => {
       const injectionManager = this.player.getService('componentInjectionManager');
 
@@ -22,12 +27,20 @@ export class demoPlugin extends BasePlugin {
       }
 
       this.injectionManager = injectionManager;
-      this.setupControls();
+      // Setup injection controls after injection manager is available
+      this.setupInjectionControls();
       this.updatePositionDisplay();
     });
   }
 
-  setupControls() {
+  setupMediaToggle() {
+    // Toggle media button
+    document.getElementById('toggle-media').addEventListener('click', () => {
+      this.toggleMedia();
+    });
+  }
+
+  setupInjectionControls() {
     // Corner position buttons
     document.getElementById('inject-top-left').addEventListener('click', () => {
       this.injectComponent('top-left', RoundImageComponent, {
@@ -58,10 +71,74 @@ export class demoPlugin extends BasePlugin {
       this.injectComponent('side-by-side', RegularImageComponent, {});
     });
 
+    // Inject Side-by-Side with Image button
+    document.getElementById('inject-side-by-side-image').addEventListener('click', () => {
+      this.injectComponentWithImage('side-by-side', RegularImageComponent, {});
+    });
+
     // Remove component button
     document.getElementById('remove-component').addEventListener('click', () => {
       this.removeComponent();
     });
+  }
+
+  toggleMedia() {
+    if (this.currentMediaType === 'vod') {
+      // Switch to Audio
+      this.player.setMedia({
+        sources: {
+          type: 'Unknown',
+          progressive: [
+            {
+              mimetype: 'video/mp4',
+              url: 'https://samplelib.com/mp3/sample-20s.mp3'
+            }
+          ]
+        }
+      });
+      this.currentMediaType = 'audio';
+      this.updateMediaDisplay('Audio');
+      this.updateToggleButton('Switch to VOD');
+      this.toggleSideBySideButtons(true); // Show image button, hide regular
+      console.log('Switched to Audio');
+    } else {
+      // Switch to VOD
+      this.player.loadMedia({ entryId: '1_ebs5e9cy' });
+      this.currentMediaType = 'vod';
+      this.updateMediaDisplay('VOD');
+      this.updateToggleButton('Switch to Audio');
+      this.toggleSideBySideButtons(false); // Show regular button, hide image
+      console.log('Switched to VOD');
+    }
+  }
+
+  updateMediaDisplay(mediaType) {
+    const mediaElement = document.getElementById('current-media');
+    if (mediaElement) {
+      mediaElement.textContent = mediaType;
+      mediaElement.style.color = '#2ecc71';
+      mediaElement.style.fontWeight = 'bold';
+    }
+  }
+
+  updateToggleButton(text) {
+    const toggleButton = document.getElementById('toggle-media');
+    if (toggleButton) {
+      toggleButton.textContent = text;
+    }
+  }
+
+  toggleSideBySideButtons(showImage) {
+    const regularButton = document.getElementById('inject-side-by-side');
+    const imageButton = document.getElementById('inject-side-by-side-image');
+
+    if (showImage) {
+      regularButton.style.display = 'none';
+      imageButton.style.display = 'inline-block';
+    } else {
+      regularButton.style.display = 'inline-block';
+      imageButton.style.display = 'none';
+    }
   }
 
   injectComponent(position, ComponentClass, props) {
@@ -75,6 +152,20 @@ export class demoPlugin extends BasePlugin {
     });
     this.updatePositionDisplay();
     console.log(`Injected component at position: ${position}`);
+  }
+
+  injectComponentWithImage(position, ComponentClass, props) {
+    this.injectionManager.inject({
+      position,
+      component: (componentProps) => {
+        const { h } = KalturaPlayer.ui.preact;
+        return h(ComponentClass, componentProps);
+      },
+      props: props,
+      replaceVideoWithImageUrl: 'https://cfvod.nvq2.ovp.kaltura.com/p/9912/sp/991200/download/entry_id/0_tpi7z5e7/flavor/0_fgmt4m1f/ks/djJ8OTkxMnwfcQR_Wa7Aa7ALtRl989Yezk0C0zYT1xBjZn5IKdQGmBp8NXzil0OOTraNOaYebQRkI5vWbiMfhxaPSKOhhgplARKZvBMqvxK6MWzfEEqsY8X9HwGcupwgvMYtYY9vySpS_WL9kEFg7-WLU4Uh3FhuHun8RjeuOA8FjbRknEAa-t6AmZVIuiN0IRZxVdB8b4D-1CsM_R36tQUSRRxQaq85/file_name/Slide_0_tpi7z5e7_0_bjr63xiv_12_0006.jpg'
+    });
+    this.updatePositionDisplay();
+    console.log(`Injected component with image at position: ${position}`);
   }
 
 

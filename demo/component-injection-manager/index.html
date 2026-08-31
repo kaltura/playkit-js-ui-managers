@@ -11,26 +11,28 @@
     <div class="demo-container">
       <h1>Component Injection Manager Demo</h1>
       <div class="controls-panel">
-        <h2>Controls</h2>
+        <div class="info-panel">
+          <p><strong>Current Media:</strong> <span id="current-media">VOD</span></p>
+          <p><strong>Current Position:</strong> <span id="current-position">None</span></p>
+        </div>
+        <div class="button-group">
+          <button id="toggle-media" class="demo-button success">Switch to Audio</button>
+        </div>
         <h3>Corner Positions</h3>
         <div class="button-group">
           <button id="inject-top-left" class="demo-button primary">Top-Left</button>
           <button id="inject-top-right" class="demo-button primary">Top-Right</button>
-        </div>
-        <div class="button-group">
           <button id="inject-bottom-left" class="demo-button primary">Bottom-Left</button>
           <button id="inject-bottom-right" class="demo-button primary">Bottom-Right</button>
         </div>
         <h3>Side-by-Side</h3>
         <div class="button-group">
-          <button id="inject-side-by-side" class="demo-button primary">Inject Side-by-Side</button>
+          <button id="inject-side-by-side" class="demo-button primary">Side-by-Side</button>
+          <button id="inject-side-by-side-image" class="demo-button primary" style="display: none;">Side-by-Side with Image</button>
         </div>
         <h3>Actions</h3>
         <div class="button-group">
           <button id="remove-component" class="demo-button danger">Remove Component</button>
-        </div>
-        <div class="info-panel">
-          <p><strong>Current Position:</strong> <span id="current-position">None</span></p>
         </div>
       </div>
       <div id="player-placeholder" style="width: 888px; height: 500px;"></div>
@@ -54,6 +56,7 @@
       };
 
       const player = KalturaPlayer.setup(config);
+      // Load VOD by default
       player.loadMedia({ entryId: '1_ebs5e9cy' });
     </script>
   </body>
