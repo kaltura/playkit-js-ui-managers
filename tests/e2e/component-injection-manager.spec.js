@@ -322,4 +322,54 @@ describe('Component Injection Manager', () => {
       expect(componentInjectionManager.getCurrentPosition()).to.be.null;
     });
   });
+
+  describe('Replace Video with Image', () => {
+    // These tests verify that side-by-side injection works with replaceVideoWithImageUrl prop
+    it('should inject side-by-side component with replaceVideoWithImageUrl', async () => {
+      // Given
+      player = setup(config);
+      componentInjectionManager = player.getService('componentInjectionManager');
+      player.setMedia({ sources: { ...mediaData } });
+      await player.ready();
+
+      // Do
+      componentInjectionManager.inject({
+        position: 'side-by-side',
+        component: (props) => h(TestComponent, props),
+        props: { title: 'Test Title' },
+        replaceVideoWithImageUrl: 'https://example.com/image.jpg'
+      });
+
+      // Expect
+      expect(componentInjectionManager.getCurrentPosition()).to.equal('side-by-side');
+
+      // Cleanup
+      componentInjectionManager.remove();
+    });
+
+    it('should not move video element to container when replaceVideoWithImageUrl is provided', async () => {
+      // Given
+      player = setup(config);
+      componentInjectionManager = player.getService('componentInjectionManager');
+      player.setMedia({ sources: { ...mediaData } });
+      await player.ready();
+
+      const videoElement = player.getVideoElement();
+      const originalParent = videoElement.parentElement;
+
+      // Do
+      componentInjectionManager.inject({
+        position: 'side-by-side',
+        component: (props) => h(TestComponent, props),
+        props: { title: 'Test Title' },
+        replaceVideoWithImageUrl: 'https://example.com/image.jpg'
+      });
+
+      // Expect - video should still be in original parent
+      expect(videoElement.parentElement).to.equal(originalParent);
+
+      // Cleanup
+      componentInjectionManager.remove();
+    });
+  });
 });
