@@ -322,4 +322,166 @@ describe('Component Injection Manager', () => {
       expect(componentInjectionManager.getCurrentPosition()).to.be.null;
     });
   });
+
+  describe('Replace Video with Image', () => {
+    it('should hide video player when replaceVideoWithImageUrl is provided', async () => {
+      // Given
+      player = setup(config);
+      componentInjectionManager = player.getService('componentInjectionManager');
+      player.setMedia({ sources: { ...mediaData } });
+      await player.ready();
+
+      const videoElement = player.getVideoElement();
+      expect(videoElement.style.visibility).to.equal('');
+
+      // Do
+      componentInjectionManager.inject({
+        position: 'side-by-side',
+        component: (props) => h(TestComponent, props),
+        props: { title: 'Test Title' },
+        replaceVideoWithImageUrl: 'https://example.com/image.jpg'
+      });
+
+      // Expect
+      expect(videoElement.style.visibility).to.equal('hidden');
+
+      // Cleanup
+      componentInjectionManager.remove();
+    });
+
+    it('should show video player again when component with replaceVideoWithImageUrl is removed', async () => {
+      // Given
+      player = setup(config);
+      componentInjectionManager = player.getService('componentInjectionManager');
+      player.setMedia({ sources: { ...mediaData } });
+      await player.ready();
+
+      const videoElement = player.getVideoElement();
+
+      componentInjectionManager.inject({
+        position: 'side-by-side',
+        component: (props) => h(TestComponent, props),
+        props: { title: 'Test Title' },
+        replaceVideoWithImageUrl: 'https://example.com/image.jpg'
+      });
+
+      expect(videoElement.style.visibility).to.equal('hidden');
+
+      // Do
+      componentInjectionManager.remove();
+
+      // Expect
+      expect(videoElement.style.visibility).to.equal('');
+      expect(componentInjectionManager.getCurrentPosition()).to.be.null;
+    });
+
+    it('should pause video when replaceVideoWithImageUrl is provided', async () => {
+      // Given
+      player = setup(config);
+      componentInjectionManager = player.getService('componentInjectionManager');
+      player.setMedia({ sources: { ...mediaData } });
+      await player.ready();
+
+      const pauseSpy = sandbox.spy(player, 'pause');
+
+      // Do
+      componentInjectionManager.inject({
+        position: 'side-by-side',
+        component: (props) => h(TestComponent, props),
+        props: { title: 'Test Title' },
+        replaceVideoWithImageUrl: 'https://example.com/image.jpg'
+      });
+
+      // Expect
+      expect(pauseSpy.calledOnce).to.be.true;
+
+      // Cleanup
+      componentInjectionManager.remove();
+    });
+
+    it('should not move video element to container when replaceVideoWithImageUrl is provided', async () => {
+      // Given
+      player = setup(config);
+      componentInjectionManager = player.getService('componentInjectionManager');
+      player.setMedia({ sources: { ...mediaData } });
+      await player.ready();
+
+      const videoElement = player.getVideoElement();
+      const originalParent = videoElement.parentElement;
+
+      // Do
+      componentInjectionManager.inject({
+        position: 'side-by-side',
+        component: (props) => h(TestComponent, props),
+        props: { title: 'Test Title' },
+        replaceVideoWithImageUrl: 'https://example.com/image.jpg'
+      });
+
+      // Expect - video should still be in original parent
+      expect(videoElement.parentElement).to.equal(originalParent);
+
+      // Cleanup
+      componentInjectionManager.remove();
+    });
+
+    it('should move video element to container when replaceVideoWithImageUrl is not provided', async () => {
+      // Given
+      player = setup(config);
+      componentInjectionManager = player.getService('componentInjectionManager');
+      player.setMedia({ sources: { ...mediaData } });
+      await player.ready();
+
+      const videoElement = player.getVideoElement();
+      const originalParent = videoElement.parentElement;
+
+      // Do
+      componentInjectionManager.inject({
+        position: 'side-by-side',
+        component: (props) => h(TestComponent, props),
+        props: { title: 'Test Title' }
+      });
+
+      // Expect - video should be moved to new parent
+      expect(videoElement.parentElement).to.not.equal(originalParent);
+
+      // Cleanup
+      componentInjectionManager.remove();
+
+      // After cleanup, video should be back in original parent
+      expect(videoElement.parentElement).to.equal(originalParent);
+    });
+
+    it('should restore video element when switching from image mode to video mode', async () => {
+      // Given
+      player = setup(config);
+      componentInjectionManager = player.getService('componentInjectionManager');
+      player.setMedia({ sources: { ...mediaData } });
+      await player.ready();
+
+      const videoElement = player.getVideoElement();
+
+      // Do - inject with image
+      componentInjectionManager.inject({
+        position: 'side-by-side',
+        component: (props) => h(TestComponent, props),
+        props: { title: 'With Image' },
+        replaceVideoWithImageUrl: 'https://example.com/image.jpg'
+      });
+
+      expect(videoElement.style.visibility).to.equal('hidden');
+
+      // Do - replace with regular side-by-side (no image)
+      componentInjectionManager.inject({
+        position: 'side-by-side',
+        component: (props) => h(TestComponent, props),
+        props: { title: 'Without Image' }
+      });
+
+      // Expect - video should be visible again
+      expect(videoElement.style.visibility).to.equal('');
+
+      // Cleanup
+      componentInjectionManager.remove();
+    });
+  });
 });
