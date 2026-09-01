@@ -57,7 +57,7 @@
       "src/services/banner-manager/banner-manager.tsx - BannerManager service",
       "src/services/preset-manager/preset-manager.tsx - PresetManager service"
     ],
-    "buildOutput": "dist/playkit-ui-manager.js"
+    "buildOutput": "dist/playkit-ui-managers.js"
   },
   "triageKeywords": [
     "sidePanelsManager",

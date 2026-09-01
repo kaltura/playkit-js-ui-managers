@@ -171,7 +171,6 @@ declare module "services/upper-bar-manager/models/icon-model" {
     }
 }
 declare module "services/upper-bar-manager/ui/dropdown-bar-item/dropdown-bar-item" {
-    import { h } from 'preact';
     import { SvgIcon } from "services/upper-bar-manager/models/svg-icon";
     type DropdownBarItemProps = {
         displayName: string;
@@ -183,7 +182,9 @@ declare module "services/upper-bar-manager/ui/dropdown-bar-item/dropdown-bar-ite
         onDropdownClick: () => void;
         tooltipPosition: string;
     };
-    const DropdownBarItem: ({ displayName, text, ariaLabel, isDisabled, icon, onClick, onDropdownClick, tooltipPosition }: DropdownBarItemProps) => h.JSX.Element;
+    const DropdownBarItem: import("preact").FunctionalComponent<Omit<DropdownBarItemProps, "ref"> & {
+        ref?: import("preact").Ref<HTMLDivElement>;
+    }>;
     export { DropdownBarItem };
 }
 declare module "services/upper-bar-manager/ui/dropdown-bar/dropdown-bar.component" {
@@ -194,8 +195,19 @@ declare module "services/upper-bar-manager/ui/dropdown-bar/dropdown-bar.componen
         controls: IconModel[];
         onDropdownClick: () => void;
         player: KalturaPlayer;
+        onReturnFocusToButton: () => void;
     };
-    export class DropdownBar extends Component<DropdownBarProps> {
+    type DropdownBarState = {
+        focusedIndex: number;
+    };
+    export class DropdownBar extends Component<DropdownBarProps, DropdownBarState> {
+        private itemRefs;
+        private containerRef;
+        constructor(props: DropdownBarProps);
+        componentDidUpdate(prevProps: DropdownBarProps): void;
+        focusFirstItem: () => void;
+        private handleKeyDown;
+        private moveFocus;
         calculateMaxHeight(): number;
         render(): ComponentChild;
     }
@@ -215,9 +227,13 @@ declare module "services/upper-bar-manager/ui/more-icon/more-icon.component" {
     };
     export class MoreIcon extends Component<MoreIconProps> {
         private readonly moreButtonRef;
+        private readonly dropdownRef;
+        private readonly dropdownContainerRef;
         constructor();
         componentDidMount(): void;
+        componentDidUpdate(prevProps: MoreIconProps): void;
         handleClickOutside(event: PointerEvent): void;
+        focusButton: () => void;
         render(): ComponentChild;
     }
 }
@@ -699,6 +715,9 @@ declare module "services/banner-manager/banner-manager" {
 }
 declare module "services/component-injection-manager/models/injection-position" {
     export enum InjectionPosition {
+        TopLeft = "top-left",
+        TopRight = "top-right",
+        BottomLeft = "bottom-left",
         BottomRight = "bottom-right",
         SideBySide = "side-by-side"
     }
@@ -711,18 +730,21 @@ declare module "services/component-injection-manager/models/inject-options" {
         position: InjectionPosition;
         component: ComponentFactory;
         props?: Record<string, unknown>;
+        replaceVideoWithImageUrl?: string;
     }
 }
 declare module "services/component-injection-manager/models/index" {
     export { InjectionPosition } from "services/component-injection-manager/models/injection-position";
     export { InjectOptions, ComponentFactory } from "services/component-injection-manager/models/inject-options";
 }
-declare module "services/component-injection-manager/ui/bottom-right-overlay" {
+declare module "services/component-injection-manager/ui/corner-overlay" {
     import { FunctionalComponent, ComponentChild } from 'preact';
-    export interface BottomRightOverlayProps {
+    import { InjectionPosition } from "services/component-injection-manager/models/index";
+    export interface CornerOverlayProps {
         children?: ComponentChild;
+        position: InjectionPosition;
     }
-    export const BottomRightOverlay: FunctionalComponent<BottomRightOverlayProps>;
+    export const CornerOverlay: FunctionalComponent<CornerOverlayProps>;
 }
 declare module "services/component-injection-manager/ui/side-by-side-wrapper" {
     import { FunctionalComponent } from 'preact';
@@ -732,33 +754,38 @@ declare module "services/component-injection-manager/ui/side-by-side-wrapper" {
         player: KalturaPlayer;
         component: ComponentFactory;
         componentProps?: Record<string, unknown>;
+        replaceVideoWithImageUrl?: string;
     }
     export const SideBySideWrapper: FunctionalComponent<SideBySideWrapperProps>;
 }
 declare module "services/component-injection-manager/ui/index" {
-    export { BottomRightOverlay } from "services/component-injection-manager/ui/bottom-right-overlay";
+    export { CornerOverlay } from "services/component-injection-manager/ui/corner-overlay";
     export { SideBySideWrapper } from "services/component-injection-manager/ui/side-by-side-wrapper";
 }
 declare module "services/component-injection-manager/component-injection-manager" {
-    import { KalturaPlayer, PlaykitUI } from '@playkit-js/kaltura-player-js';
+    import { KalturaPlayer, Logger } from '@playkit-js/kaltura-player-js';
     import { InjectionPosition, InjectOptions } from "services/component-injection-manager/models/index";
     export interface ComponentInjectionManagerOptions {
         kalturaPlayer: KalturaPlayer;
-        eventManager: PlaykitUI.EventManager;
+        logger: Logger;
     }
     export class ComponentInjectionManager {
         private _kalturaPlayer;
-        private _eventManager;
         private _currentComponent;
+        private _logger;
         constructor(options: ComponentInjectionManagerOptions);
         inject(options: InjectOptions): void;
-        switchPosition(position: InjectionPosition): void;
         remove(): void;
         getCurrentPosition(): InjectionPosition | null;
-        destroy(): void;
+        reset(): void;
         private _removeCurrentComponent;
         private _renderComponent;
     }
+}
+declare module "services/component-injection-manager/index" {
+    export { ComponentInjectionManager } from "services/component-injection-manager/component-injection-manager";
+    export type { ComponentInjectionManagerOptions } from "services/component-injection-manager/component-injection-manager";
+    export type { InjectionPosition, InjectOptions, ComponentFactory } from "services/component-injection-manager/models/index";
 }
 declare module "ui-managers" {
     export const pluginName = "uiManagers";
