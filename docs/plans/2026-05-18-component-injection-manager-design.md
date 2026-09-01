@@ -9,8 +9,8 @@ A new service in `playkit-js-ui-managers` that allows plugins to inject componen
 
 ## Requirements
 
-- Support two injection positions:
-  1. **Bottom-right overlay**: Component overlays the video in bottom-right corner
+- Support injection positions:
+  1. **Corner overlay**: Component overlays the video in a corner (top-left, top-right, bottom-left, bottom-right)
   2. **Side-by-side**: Video and component split the player area 50/50
 - Only one component can be injected at a time
 - Components remain visible until explicitly removed

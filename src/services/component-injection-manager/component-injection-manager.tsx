@@ -1,7 +1,8 @@
 import { h } from 'preact';
-import { KalturaPlayer, Logger } from '@playkit-js/kaltura-player-js';
+import { KalturaPlayer, Logger, ui } from '@playkit-js/kaltura-player-js';
 import { InjectionPosition, InjectOptions, ComponentFactory } from './models';
 import { CornerOverlay, SideBySideWrapper } from './ui';
+const { ReservedPresetNames } = ui;
 
 export interface ComponentInjectionManagerOptions {
   kalturaPlayer: KalturaPlayer;
@@ -87,16 +88,23 @@ export class ComponentInjectionManager {
     ) {
       return this._kalturaPlayer.ui.addComponent({
         label: `component-injection-${position}`,
-        presets: ['Playback', 'Live'],
+        presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
         container: 'VideoArea',
         get: () => <CornerOverlay position={position}>{component(props)}</CornerOverlay>
       });
     } else if (position === InjectionPosition.SideBySide) {
       return this._kalturaPlayer.ui.addComponent({
         label: 'component-injection-side-by-side',
-        presets: ['Playback', 'Live'],
+        presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
         container: 'PlayerArea',
-        get: () => <SideBySideWrapper player={this._kalturaPlayer} component={component} componentProps={props} />
+        get: () => (
+          <SideBySideWrapper
+            player={this._kalturaPlayer}
+            component={component}
+            componentProps={props}
+            replaceVideoWithImageUrl={options.replaceVideoWithImageUrl}
+          />
+        )
       });
     }
 
