@@ -63,6 +63,15 @@ export class MoreIcon extends Component<MoreIconProps> {
     this.moreButtonRef.current?.focus();
   };
 
+  // Tooltip only reacts to mouseover/mouseleave on its own wrapper div; A11yWrapper drops onFocus/onBlur
+  private handleButtonFocus = (): void => {
+    this.moreButtonRef.current?.parentElement?.dispatchEvent(new MouseEvent('mouseover'));
+  };
+
+  private handleButtonBlur = (): void => {
+    this.moreButtonRef.current?.parentElement?.dispatchEvent(new MouseEvent('mouseleave'));
+  };
+
   render(): ComponentChild {
     return (
       <div style={{ position: 'relative' }}>
@@ -76,6 +85,8 @@ export class MoreIcon extends Component<MoreIconProps> {
               aria-label={this.props.moreIconTxt}
               aria-haspopup="menu"
               aria-expanded={this.props.showDropdown}
+              onFocus={this.handleButtonFocus}
+              onBlur={this.handleButtonBlur}
             >
               <Icon id={`${pluginName}-upper-bar-manager`} path={ICON_PATH} viewBox={'0 0 32 32'} />
             </button>
