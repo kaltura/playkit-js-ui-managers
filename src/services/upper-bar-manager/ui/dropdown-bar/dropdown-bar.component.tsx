@@ -8,6 +8,8 @@ import { DropdownBarItem } from '../dropdown-bar-item/dropdown-bar-item';
 const { Scrollable } = ui.Components;
 
 type DropdownBarProps = {
+  id: string;
+  labelledBy: string;
   controls: IconModel[];
   onDropdownClick: () => void;
   player: KalturaPlayer;
@@ -96,8 +98,10 @@ export class DropdownBar extends Component<DropdownBarProps, DropdownBarState> {
   render(): ComponentChild {
     const maxHeightStyle = this.calculateMaxHeight();
     const dropDownProps = {
+      id: this.props.id,
       className: styles.moreDropdown,
       role: 'menu',
+      'aria-labelledby': this.props.labelledBy,
       style: { maxHeight: `${maxHeightStyle}px` },
       ref: this.containerRef,
       tabIndex: -1,
