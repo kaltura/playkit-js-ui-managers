@@ -1,5 +1,6 @@
 import { h, Component, ComponentChild, createRef, RefObject } from 'preact';
 import { A11yWrapper } from '@playkit-js/common/dist/hoc/a11y-wrapper';
+import { UUID } from '@playkit-js/common/dist/ui-common/uuid';
 import { KalturaPlayer, PlaykitUI, ui } from '@playkit-js/kaltura-player-js';
 import * as styles from './more-icon.component.scss';
 import { IconModel } from '../../models/icon-model';
@@ -23,8 +24,6 @@ type MoreIconProps = {
   player: KalturaPlayer;
 };
 
-let moreIconInstanceCounter = 0;
-
 @withEventManager
 @withText({ moreIconTxt: <Text id="uiManagers.moreIcon">More</Text> })
 export class MoreIcon extends Component<MoreIconProps> {
@@ -38,9 +37,9 @@ export class MoreIcon extends Component<MoreIconProps> {
     this.moreButtonRef = createRef();
     this.dropdownRef = createRef();
     this.dropdownContainerRef = createRef();
-    moreIconInstanceCounter += 1;
-    this.moreButtonId = `${pluginName}-more-button-${moreIconInstanceCounter}`;
-    this.dropdownId = `${pluginName}-more-menu-${moreIconInstanceCounter}`;
+    const id = UUID.uuidV1();
+    this.moreButtonId = `${pluginName}-more-button-${id}`;
+    this.dropdownId = `${pluginName}-more-menu-${id}`;
   }
 
   componentDidMount(): void {
