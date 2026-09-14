@@ -70,6 +70,12 @@ const DropdownBarItemComponent = (
     return (
       <A11yWrapper
         onClick={(e): void => {
+          if (isDisabled) {
+            e.preventDefault();
+            e.stopPropagation();
+            return;
+          }
+
           onClick(e);
           onDropdownClick();
         }}
@@ -80,6 +86,7 @@ const DropdownBarItemComponent = (
           className={[styles.dropdownItem, isDisabled ? styles.disabled : ''].join(' ')}
           tabIndex={-1}
           aria-label={ariaLabelString}
+          aria-disabled={isDisabled ? 'true' : undefined}
         >
           <div className={styles.icon}>{renderIcon()}</div>
           {content}

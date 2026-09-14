@@ -1,5 +1,6 @@
 import { h, Component, ComponentChild, createRef, RefObject } from 'preact';
 import { A11yWrapper } from '@playkit-js/common/dist/hoc/a11y-wrapper';
+import { UUID } from '@playkit-js/common/dist/ui-common/uuid';
 import { KalturaPlayer, PlaykitUI, ui } from '@playkit-js/kaltura-player-js';
 import * as styles from './more-icon.component.scss';
 import { IconModel } from '../../models/icon-model';
@@ -29,11 +30,16 @@ export class MoreIcon extends Component<MoreIconProps> {
   private readonly moreButtonRef: RefObject<HTMLButtonElement>;
   private readonly dropdownRef: RefObject<DropdownBar>;
   private readonly dropdownContainerRef: RefObject<HTMLDivElement>;
+  private readonly moreButtonId: string;
+  private readonly dropdownId: string;
   constructor() {
     super();
     this.moreButtonRef = createRef();
     this.dropdownRef = createRef();
     this.dropdownContainerRef = createRef();
+    const id = UUID.uuidV1();
+    this.moreButtonId = `${pluginName}-more-button-${id}`;
+    this.dropdownId = `${pluginName}-more-menu-${id}`;
   }
 
   componentDidMount(): void {
@@ -79,12 +85,14 @@ export class MoreIcon extends Component<MoreIconProps> {
         <Tooltip label={this.props.moreIconTxt!} type="bottom-left" strictPosition>
           <A11yWrapper onClick={this.props.onClick}>
             <button
+              id={this.moreButtonId}
               ref={this.moreButtonRef}
               className={`${ui.style.upperBarIcon} ${styles.moreIcon}`}
               tabIndex={0}
               aria-label={this.props.moreIconTxt}
               aria-haspopup="menu"
               aria-expanded={this.props.showDropdown}
+              aria-controls={this.props.showDropdown ? this.dropdownId : undefined}
               onFocus={this.handleButtonFocus}
               onBlur={this.handleButtonBlur}
             >
@@ -95,6 +103,8 @@ export class MoreIcon extends Component<MoreIconProps> {
         {this.props.showDropdown && (
           <div ref={this.dropdownContainerRef}>
             <DropdownBar
+              id={this.dropdownId}
+              labelledBy={this.moreButtonId}
               ref={this.dropdownRef}
               onDropdownClick={this.props.onClick}
               controls={this.props.icons}
