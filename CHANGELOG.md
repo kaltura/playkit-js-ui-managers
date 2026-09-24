@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.9.3 (2026-09-24)
+
+
+### Bug Fixes
+
+* **ADA-3504:** Improve more menu accessibility ([#95](https://github.com/kaltura/playkit-js-ui-managers/issues/95)) ([bb52741](https://github.com/kaltura/playkit-js-ui-managers/commit/bb527416398d5817b28faef1902c6528c3dbd7b0))
+
 ### 1.9.2 (2026-09-03)
 
 ### 1.9.1 (2026-08-28)
