@@ -1,5 +1,11 @@
+@import '~@playkit-js/playkit-js-ui';
+
 .right-upper-bar-wrapper-container {
   direction: ltr;
   display: flex;
   align-items: center;
+  background-color: rgba(34, 34, 34, 0.6);
+  border-radius: 64px;
+  padding: 4px 16px;
+  height: fit-content;
 }
